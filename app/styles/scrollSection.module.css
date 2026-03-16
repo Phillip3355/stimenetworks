@@ -1,0 +1,87 @@
+.scrollSection {
+  position: relative;
+  width: 100%;
+  padding: 6rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  overflow: hidden;
+  background: #ffffff;
+  color: #000000;
+  border-top: 1px solid #e0e0e0;
+}
+
+.scrollSection.reverse {
+  flex-direction: row-reverse;
+}
+
+.content {
+  max-width: 800px;
+  z-index: 2;
+  position: relative;
+}
+
+.icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  display: none;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.title {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  color: #000000;
+}
+
+.body {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  opacity: 1;
+  color: #333333;
+}
+
+.body p {
+  margin-bottom: 1rem;
+}
+
+.body p:last-child {
+  margin-bottom: 0;
+}
+
+
+
+@media (max-width: 768px) {
+  .scrollSection {
+    flex-direction: column;
+    padding: 4rem 1rem;
+  }
+
+  .scrollSection.reverse {
+    flex-direction: column;
+  }
+
+  .decoration {
+    width: 200px;
+    height: 200px;
+    right: -5%;
+  }
+
+  .scrollSection.reverse .decoration {
+    right: -5%;
+    left: auto;
+  }
+}

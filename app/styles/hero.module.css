@@ -1,0 +1,184 @@
+.heroSection {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: white;
+  background: url('/minecraft1.png') center center / cover no-repeat;
+}
+
+.backgroundVideo {
+  display: none;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
+  z-index: 2;
+}
+
+/* 배경 애니메이션 요소들 */
+.bgElement1 {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(76, 175, 80, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  top: -200px;
+  left: -200px;
+  z-index: 2;
+  animation: float 20s ease-in-out infinite;
+}
+
+.bgElement2 {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(33, 150, 243, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  bottom: -150px;
+  right: -150px;
+  z-index: 2;
+  animation: float 25s ease-in-out infinite;
+  animation-delay: -5s;
+}
+
+.bgElement3 {
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(156, 39, 176, 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  top: 40%;
+  right: 5%;
+  z-index: 2;
+  animation: float 30s ease-in-out infinite;
+  animation-delay: -10s;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  50% {
+    transform: translateY(30px) translateX(20px);
+  }
+}
+
+.heroContent {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.logoContainer {
+  margin-bottom: 2rem;
+}
+
+.logo {
+  font-size: clamp(4rem, 10vw, 8rem);
+  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+}
+
+.title {
+  font-size: clamp(2rem, 8vw, 5rem);
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  margin: 0;
+  text-transform: uppercase;
+  color: #000000;
+}
+
+.subtitle {
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+  margin: 0;
+  max-width: 600px;
+  color: #333333;
+}
+
+.ctaButton {
+  margin-top: 2rem;
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 2px solid #000000;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  cursor: pointer;
+  border-radius: 50px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.ctaButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s;
+  z-index: -1;
+}
+
+.ctaButton:hover {
+  background: rgba(0, 0, 0, 0.95);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border-color: #000000;
+}
+
+.ctaButton:hover::before {
+  left: 100%;
+}
+
+.scrollIndicator {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.scrollArrow {
+  font-size: 2rem;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}
