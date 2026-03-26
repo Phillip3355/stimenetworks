@@ -9,7 +9,7 @@ import './styles/main.css';
 export default function Home() {
   const serverFeatures = [
     {
-      title: '평화로운 야생서버 | Peaceful Survival Server',
+      title: '폭력적인 야생서버 | Peaceful Survival Server',
       description: '친구들과 함께 마인크래프트 세계를 탐험하고 건축하세요. | Explore and build the Minecraft world together with friends.',
       icon: '',
     },
