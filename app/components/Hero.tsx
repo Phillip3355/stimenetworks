@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import styles from '../styles/hero.module.css';
 
 export default function Hero() {
@@ -36,21 +35,6 @@ export default function Hero() {
         >
           Java Minecraft Server for Everyone
         </motion.p>
-
-        {/* CTA 버튼 */}
-        <motion.button
-          className={styles.ctaButton}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => {
-            window.location.href = 'https://open.kakao.com/o/gHrzH5hi';
-          }}
-        >
-          서버 입장하기 | Join Server
-        </motion.button>
       </div>
 
       {/* 스크롤 인디케이터 */}

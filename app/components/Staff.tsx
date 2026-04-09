@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import Image from 'next/image';
 import styles from '../styles/staff.module.css';
 
 interface StaffMember {
