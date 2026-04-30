@@ -1,0 +1,170 @@
+.main {
+  min-height: 100vh;
+  background: #ffffff;
+  color: #000000;
+}
+
+.heroSection {
+  padding: 6rem 2rem 4rem;
+  text-align: center;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.title {
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-weight: 900;
+  margin: 0 0 1rem 0;
+  color: #000000;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: clamp(1rem, 3vw, 1.3rem);
+  color: #666666;
+  margin: 0;
+  font-weight: 400;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.imageSection {
+  padding: 4rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imagesContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  max-width: 1400px;
+  width: 100%;
+}
+
+.imageContainer {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  background: #ffffff;
+  border: 3px solid #e0e0e0;
+  transition: transform 0.3s ease;
+}
+
+.imageContainer:hover {
+  transform: translateY(-5px);
+}
+
+.mainImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.cardsSection {
+  padding: 4rem 2rem 6rem;
+  background: #f8f9fa;
+}
+
+.cardsContainer {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+}
+
+.explanationCard {
+  background: #ffffff;
+  border: 2px solid #e0e0e0;
+  border-radius: 15px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.explanationCard:hover {
+  border-color: #000000;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
+}
+
+.cardTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  color: #000000;
+}
+
+.cardDescription {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333333;
+  margin: 0;
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .heroSection {
+    padding: 4rem 1rem 3rem;
+  }
+
+  .imageSection {
+    padding: 2rem 1rem;
+  }
+
+  .imagesContainer {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .imageContainer {
+    border-radius: 15px;
+    border-width: 2px;
+  }
+
+  .cardsSection {
+    padding: 3rem 1rem 4rem;
+  }
+
+  .cardsContainer {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .explanationCard {
+    padding: 1.5rem;
+  }
+
+  .cardTitle {
+    font-size: 1.3rem;
+  }
+
+  .cardDescription {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .heroSection {
+    padding: 3rem 1rem 2rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .imageSection {
+    padding: 1rem;
+  }
+
+  .cardsSection {
+    padding: 2rem 1rem 3rem;
+  }
+}

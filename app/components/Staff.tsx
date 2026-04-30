@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { useLanguage } from './LanguageProvider';
 import styles from '../styles/staff.module.css';
 
 interface StaffMember {
@@ -38,6 +39,7 @@ export default function Staff() {
     triggerOnce: true,
     threshold: 0.1,
   });
+  const { t } = useLanguage();
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -61,7 +63,7 @@ export default function Staff() {
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
       >
-        운영진 & 개발자 소개 | Staff & Developers
+        {t('운영진 & 개발자 소개', 'Staff & Developers')}
       </motion.h2>
 
       <motion.div
