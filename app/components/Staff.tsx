@@ -31,13 +31,12 @@ const staffMembers: StaffMember[] = [
     description: 'He is testing new features and providing feedback since 2024.',
     image: '/minecraft2.png',
   },
-
 ];
 
 export default function Staff() {
   const { ref, inView } = useInView({
     triggerOnce: true,
-    threshold: 0.1,
+    threshold: 0.12,
   });
   const { t } = useLanguage();
 
@@ -74,12 +73,12 @@ export default function Staff() {
         variants={containerVariants}
       >
         {staffMembers.map((member, index) => (
-          <motion.div
+          <motion.article
             key={index}
             className={styles.staffCard}
             variants={itemVariants}
-            whileHover={{ y: -5 }}
           >
+            <span className={styles.cornerSquare} />
             <div className={styles.profileImageContainer}>
               <img
                 src={member.image || '/profile-placeholder.png'}
@@ -92,7 +91,7 @@ export default function Staff() {
               <p className={styles.staffRole}>{member.role}</p>
               <p className={styles.staffDescription}>{member.description}</p>
             </div>
-          </motion.div>
+          </motion.article>
         ))}
       </motion.div>
     </section>

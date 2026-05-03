@@ -10,31 +10,29 @@ interface CardProps {
   description: string;
 }
 
-const Card = ({ title, image, description, index }: CardProps & { index: number }) => {
+const Card = ({ title, image, description }: CardProps) => {
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.2,
   });
 
-  const isImageLeft = index % 2 === 0;
-
   return (
-    <motion.div
+    <motion.article
       ref={ref}
       className={styles.card}
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
       transition={{ duration: 0.6 }}
-      whileHover={{ y: -10, boxShadow: '0 20px 40px rgba(0,0,0,0.3)' }}
     >
-      <div className={`${styles.cardContent} ${isImageLeft ? styles.imageLeft : styles.imageRight}`}>
+      <span className={styles.cornerSquare} />
+      <div className={styles.cardImageWrapper}>
         <img src={image} alt={title} className={styles.cardImage} />
-        <div className={styles.cardText}>
-          <h3 className={styles.cardTitle}>{title}</h3>
-          <p className={styles.cardDescription}>{description}</p>
-        </div>
       </div>
-    </motion.div>
+      <div className={styles.cardBody}>
+        <h3 className={styles.cardTitle}>{title}</h3>
+        <p className={styles.cardDescription}>{description}</p>
+      </div>
+    </motion.article>
   );
 };
 
@@ -46,7 +44,7 @@ export default function CardsGrid({ cards }: CardsGridProps) {
   return (
     <div className={styles.cardsGrid}>
       {cards.map((card, index) => (
-        <Card key={index} {...card} index={index} />
+        <Card key={index} {...card} />
       ))}
     </div>
   );

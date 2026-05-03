@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useLanguage } from './LanguageProvider';
 import styles from '../styles/hero.module.css';
@@ -42,18 +43,23 @@ export default function Hero() {
           )}
         </motion.p>
 
-        {/* 버튼 */}
-        <motion.button
-          className={styles.ctaButton}
+        {/* 버튼들 */}
+        <motion.div
+          className={styles.buttonGroup}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => window.location.href = '/server-mechanism'}
         >
-          {t('서버 메커니즘 보기', 'View Server Mechanism')}
-        </motion.button>
+          <Link href="/server-mechanism" className={styles.ctaButton}>
+            {t('메커니즘', 'Mechanism')}
+          </Link>
+          <Link href="/rules" className={styles.ctaButton}>
+            {t('규칙', 'Rules')}
+          </Link>
+          <Link href="/updates" className={styles.ctaButton}>
+            {t('업데이트', 'Updates')}
+          </Link>
+        </motion.div>
       </div>
 
       {/* 스크롤 인디케이터 */}
