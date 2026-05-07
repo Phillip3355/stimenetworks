@@ -77,12 +77,12 @@ function ServerMechanismContent() {
             <h2 className={styles.sectionHeading}>{t('Stime 플랫폼의 구조', 'The Stime Platform Architecture')}</h2>
           </div>
 
-          <div className={styles.featureGrid}>
+          <div className={styles.timelineGrid}>
             {featureCards.map((card, index) => (
-              <article key={index} className={styles.featureCard}>
+              <article key={index} className={styles.timelineCard}>
                 <span className={styles.cornerSquare} />
-                <h3 className={styles.featureTitle}>{t(card.title, card.titleEn)}</h3>
-                <p className={styles.featureDescription}>
+                <h3 className={styles.timelineTitle}>{t(card.title, card.titleEn)}</h3>
+                <p className={styles.timelineText}>
                   {language === 'ko' ? card.descriptionKo : card.descriptionEn}
                 </p>
               </article>

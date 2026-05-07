@@ -91,12 +91,12 @@ function RulesContent() {
             <h2 className={styles.sectionHeading}>{t('서버 규칙 구조', 'Server Rule Structure')}</h2>
           </div>
 
-          <div className={styles.featureGrid}>
+          <div className={styles.timelineGrid}>
             {ruleCards.map((card, index) => (
-              <article key={index} className={styles.featureCard}>
+              <article key={index} className={styles.timelineCard}>
                 <span className={styles.cornerSquare} />
-                <h3 className={styles.featureTitle}>{t(card.title, card.titleEn)}</h3>
-                <p className={styles.featureDescription}>
+                <h3 className={styles.timelineTitle}>{t(card.title, card.titleEn)}</h3>
+                <p className={styles.timelineText}>
                   {language === 'ko' ? card.descriptionKo : card.descriptionEn}
                 </p>
               </article>

@@ -150,4 +150,15 @@
   .subtitle {
     font-size: 15px;
   }
+
+  .buttonGroup {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ctaButton,
+  .secondaryButton {
+    width: 100%;
+    text-align: center;
+  }
 }

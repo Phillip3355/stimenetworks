@@ -13,6 +13,12 @@ const updateCards = [
     descriptionKo: '• 홈페이지 디자인 변경\n• 홈페이지 내용 추가 ',
     descriptionEn: '• Homepage design update\n• Added more content to the website',
   },
+  {
+    title: '2026.05.07',
+    titleEn: 'May 7, 2026',
+    descriptionKo: '• 카드 디자인 변경\n• 홈페이지 내용 추가 ',
+    descriptionEn: '• Card design update\n• Added more content to the website',
+  },
 ];
 
 function UpdatesContent() {
