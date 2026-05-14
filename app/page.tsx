@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import Hero from './components/Hero';
 import CardsGrid from './components/CardsGrid';
-import Staff from './components/Staff';
 import LanguageSwitch from './components/LanguageSwitch';
 import { LanguageProvider, useLanguage } from './components/LanguageProvider';
 
@@ -84,8 +83,6 @@ function HomeContent() {
         </div>
       </section>
 
-      <Staff />
-
       <footer className="footer">
         <div className="footerInner">
           <div>
@@ -97,6 +94,7 @@ function HomeContent() {
             <Link className="footerLink" href="/">{t('홈', 'Home')}</Link>
             <Link className="footerLink" href="/server-mechanism">{t('서버 메커니즘', 'Server Mechanism')}</Link>
             <Link className="footerLink" href="/rules">{t('규칙 보기', 'Rules')}</Link>
+            <Link className="footerLink" href="/recovery-guidelines">{t('복구 가이드라인', 'Recovery Guidelines')}</Link>
             <Link className="footerLink" href="/updates">{t('업데이트 보기', 'Updates')}</Link>
           </div>
           <div>
