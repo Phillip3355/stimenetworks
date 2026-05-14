@@ -8,6 +8,12 @@ import styles from '../styles/server-mechanism.module.css';
 
 const updateCards = [
   {
+    title: '2026.05.14',
+    titleEn: 'May 14, 2026',
+    descriptionKo: '• 홈페이지 버튼 디자인 변경\n• 복구 가이드라인 추가 ',
+    descriptionEn: '• Homepage button design update\n• Added recovery guidelines',
+  },
+  {
     title: '2026.05.03',
     titleEn: 'May 3, 2026',
     descriptionKo: '• 홈페이지 디자인 변경\n• 홈페이지 내용 추가 ',

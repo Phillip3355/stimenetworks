@@ -28,8 +28,8 @@ const recoveryGuidelines = [
   {
     title: '권장 내용',
     titleEn: 'Recommended Practices',
-    descriptionKo: '리플레이나 녹화가 가능한 Medal TV를 설치하거나 다른 녹화 프로그램을 사용하여 플레이 영상을 기록하는 것을 권장드립니다.',
-    descriptionEn: 'It is recommended to install Medal TV or other recording programs to capture gameplay footage.',
+    descriptionKo: '리플레이나 녹화가 가능한 Medal을 설치하거나 다른 녹화 프로그램을 사용하여 플레이 영상을 기록하는 것을 권장드립니다.',
+    descriptionEn: 'It is recommended to install Medal or other recording programs to capture gameplay footage.',
   },
 ];
 
@@ -113,8 +113,8 @@ function RecoveryGuidelinesContent() {
               <h3 className={styles.timelineTitle}>{t('필요한 정보 준비', 'Prepare Required Information')}</h3>
               <p className={styles.timelineText}>
                 {t(
-                  'Medal TV, Nvidia Replay, OBS등으로 녹화된 영상이나 기타 명확한 증거 자료를 준비해주세요.',
-                  'Please prepare recorded footage from Medal TV, Nvidia Replay, OBS, or other clear evidence.'
+                  'Medal, Nvidia Replay, OBS등으로 녹화된 영상이나 기타 명확한 증거 자료를 준비해주세요.',
+                  'Please prepare recorded footage from Medal, Nvidia Replay, OBS, or other clear evidence.'
                 )}
               </p>
             </article>
