@@ -6,14 +6,24 @@
   align-items: center;
   justify-content: flex-start;
   overflow: hidden;
-  background: #000000 url('/minecraft1.png') center center / cover no-repeat;
+  background: #000000;
   color: #ffffff;
+}
+
+.heroBackgroundVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.72) 45%, rgba(0, 0, 0, 0.92) 100%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.8) 40%, rgba(0, 0, 0, 0.94) 100%);
   z-index: 1;
 }
 
@@ -25,10 +35,10 @@
 }
 
 .title {
-  font-size: clamp(36px, 6vw, 48px);
-  font-weight: 700;
-  line-height: 1.25;
-  letter-spacing: -0.02em;
+  font-size: clamp(40px, 6vw, 56px);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
   margin: 0;
   color: #ffffff;
 }
@@ -36,20 +46,54 @@
 .subtitle {
   font-size: 18px;
   font-weight: 400;
-  line-height: 1.75;
+  line-height: 1.85;
   margin: 24px 0 0;
   max-width: 560px;
   color: rgba(255, 255, 255, 0.88);
 }
 
-.submenuItems .ctaButton {
-  padding: 10px 16px;
-  font-size: 13px;
-  font-weight: 500;
+.heroMenuCard {
+  margin-top: 32px;
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 20px 20px 16px;
+  width: 100%;
+}
+
+.menuHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.menuLabel {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.78);
+  margin: 0;
+}
+
+.heroHelperText {
+  margin: 12px 0 0;
+  max-width: 680px;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.submenuItems .ctaButton {
+  padding: 12px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(0, 0, 0, 0.14);
   color: #ffffff;
   cursor: pointer;
   border-radius: 2px;
@@ -76,13 +120,13 @@
 }
 
 .expandButton {
-  padding: 12px 20px;
+  padding: 12px 18px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.1);
+  letter-spacing: 0.08em;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  background: rgba(0, 0, 0, 0.24);
   color: #ffffff;
   cursor: pointer;
   border-radius: 2px;
@@ -96,8 +140,8 @@
 }
 
 .expandButton:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.45);
 }
 
 .expandIcon {
@@ -108,9 +152,10 @@
 .expandedMenu {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 16px;
   width: 100%;
   overflow: hidden;
+  padding: 18px 0 0;
 }
 
 .expandedMenu .ctaButton {
@@ -121,17 +166,17 @@
 .submenuContainer {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
 }
 
 .submenuButton {
-  padding: 12px 20px;
+  padding: 12px 18px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.1);
+  letter-spacing: 0.08em;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(0, 0, 0, 0.18);
   color: #ffffff;
   cursor: pointer;
   border-radius: 2px;
@@ -145,21 +190,21 @@
 }
 
 .submenuButton:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.45);
 }
 
 .submenuIcon {
-  font-size: 10px;
+  font-size: 12px;
   transition: transform 0.3s ease;
-  margin-left: 8px;
+  margin-left: 10px;
 }
 
 .submenuItems {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-left: 16px;
+  gap: 10px;
+  margin-left: 14px;
   overflow: hidden;
 }
 

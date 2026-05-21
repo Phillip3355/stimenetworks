@@ -8,16 +8,16 @@ import styles from '../styles/server-mechanism.module.css';
 
 const updateCards = [
   {
+    title: '2026.05.21',
+    titleEn: 'May 21, 2026',
+    descriptionKo: '• 업데이트 순서 버그 수정\n• 복구 가이드라인 수정\n• 홈페이지 디자인 요소 추가 ',
+    descriptionEn: '• Fixed update order bug\n• Updated recovery guidelines\n• Added more design elements to the website',
+  },
+  {
     title: '2026.05.14',
     titleEn: 'May 14, 2026',
     descriptionKo: '• 홈페이지 버튼 디자인 변경\n• 복구 가이드라인 추가 ',
     descriptionEn: '• Homepage button design update\n• Added recovery guidelines',
-  },
-  {
-    title: '2026.05.03',
-    titleEn: 'May 3, 2026',
-    descriptionKo: '• 홈페이지 디자인 변경\n• 홈페이지 내용 추가 ',
-    descriptionEn: '• Homepage design update\n• Added more content to the website',
   },
   {
     title: '2026.05.07',
@@ -25,6 +25,13 @@ const updateCards = [
     descriptionKo: '• 카드 디자인 변경\n• 홈페이지 내용 추가 ',
     descriptionEn: '• Card design update\n• Added more content to the website',
   },
+  {
+    title: '2026.05.03',
+    titleEn: 'May 3, 2026',
+    descriptionKo: '• 홈페이지 디자인 변경\n• 홈페이지 내용 추가 ',
+    descriptionEn: '• Homepage design update\n• Added more content to the website',
+  },
+
 ];
 
 function UpdatesContent() {

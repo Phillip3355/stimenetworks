@@ -24,6 +24,16 @@ export default function Hero() {
 
   return (
     <section className={styles.heroSection}>
+      {/* 배경 비디오 */}
+      <video
+        className={styles.heroBackgroundVideo}
+        src="/vichouse.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+      />
+
       {/* 배경 오버레이 */}
       <div className={styles.overlay}></div>
 
@@ -57,29 +67,36 @@ export default function Hero() {
           )}
         </motion.p>
 
-        {/* 메뉴 확장 버튼 */}
         <motion.div
-          className={styles.buttonGroup}
+          className={styles.heroMenuCard}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <button
-            className={styles.expandButton}
-            onClick={toggleMenu}
-            aria-expanded={isMenuExpanded}
-          >
-            {t('메뉴 확장하기', 'Expand Menu')}
-            <motion.span
-              className={styles.expandIcon}
-              animate={{ rotate: isMenuExpanded ? 180 : 0 }}
-              transition={{ duration: 0.3 }}
+          <div className={styles.menuHeader}>
+            <p className={styles.menuLabel}>{t('빠른 탐색', 'Quick Navigation')}</p>
+            <button
+              className={styles.expandButton}
+              onClick={toggleMenu}
+              aria-expanded={isMenuExpanded}
             >
-              ▼
-            </motion.span>
-          </button>
+              {t('메뉴 확장하기', 'Expand Menu')}
+              <motion.span
+                className={styles.expandIcon}
+                animate={{ rotate: isMenuExpanded ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                ▼
+              </motion.span>
+            </button>
+          </div>
+          <p className={styles.heroHelperText}>
+            {t(
+              '메커니즘 · 규칙 · 업데이트를 한 곳에서 빠르게 확인할 수 있습니다.',
+              'Open Mechanism, Rules, and Updates from one place.'
+            )}
+          </p>
 
-          {/* 확장된 메뉴 */}
           <AnimatePresence>
             {isMenuExpanded && (
               <motion.div
@@ -89,14 +106,13 @@ export default function Hero() {
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                {/* 서버에 대해 알아보기 */}
                 <div className={styles.submenuContainer}>
                   <button
                     className={styles.submenuButton}
                     onClick={() => toggleSubmenu('about')}
                     aria-expanded={expandedSubmenu === 'about'}
                   >
-                    {t('서버에 대해 알아보기', 'Learn About Server')}
+                    <span>{t('서버에 대해 알아보기', 'Learn About Server')}</span>
                     <motion.span
                       className={styles.submenuIcon}
                       animate={{ rotate: expandedSubmenu === 'about' ? 180 : 0 }}
@@ -125,14 +141,13 @@ export default function Hero() {
                   </AnimatePresence>
                 </div>
 
-                {/* 가이드라인 및 규칙 */}
                 <div className={styles.submenuContainer}>
                   <button
                     className={styles.submenuButton}
                     onClick={() => toggleSubmenu('rules')}
                     aria-expanded={expandedSubmenu === 'rules'}
                   >
-                    {t('가이드라인 및 규칙', 'Guidelines & Rules')}
+                    <span>{t('가이드라인 및 규칙', 'Guidelines & Rules')}</span>
                     <motion.span
                       className={styles.submenuIcon}
                       animate={{ rotate: expandedSubmenu === 'rules' ? 180 : 0 }}

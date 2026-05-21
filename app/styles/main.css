@@ -42,7 +42,7 @@ body {
 
 .sectionCanvas {
   width: 100%;
-  padding: 64px 48px;
+  padding: 80px 48px;
   background: var(--color-canvas);
   border-top: 1px solid var(--color-hairline);
 }
@@ -74,9 +74,9 @@ body {
 .sectionLead {
   font-size: 16px;
   font-weight: 400;
-  line-height: 1.75;
+  line-height: 1.95;
   color: var(--color-body);
-  max-width: 720px;
+  max-width: 820px;
 }
 
 .sectionHeader {
@@ -84,7 +84,7 @@ body {
   align-items: flex-end;
   justify-content: space-between;
   gap: 24px;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
 }
 
 .sectionTitle {

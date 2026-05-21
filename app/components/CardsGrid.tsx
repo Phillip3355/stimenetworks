@@ -10,7 +10,17 @@ interface CardProps {
   description: string;
 }
 
-const Card = ({ title, image, description }: CardProps) => {
+interface CardProps {
+  title: string;
+  image: string;
+  description: string;
+}
+
+interface CardItemProps extends CardProps {
+  index: number;
+}
+
+const Card = ({ title, image, description, index }: CardItemProps) => {
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.2,
@@ -24,6 +34,7 @@ const Card = ({ title, image, description }: CardProps) => {
       animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
       transition={{ duration: 0.6 }}
     >
+      <span className={styles.cardIndex}>{index + 1}</span>
       <span className={styles.cornerSquare} />
       <div className={styles.cardImageWrapper}>
         <img src={image} alt={title} className={styles.cardImage} />
@@ -44,7 +55,7 @@ export default function CardsGrid({ cards }: CardsGridProps) {
   return (
     <div className={styles.cardsGrid}>
       {cards.map((card, index) => (
-        <Card key={index} {...card} />
+        <Card key={index} index={index} {...card} />
       ))}
     </div>
   );

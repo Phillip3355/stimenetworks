@@ -12,17 +12,17 @@ function HomeContent() {
   const serverFeatures = [
     {
       title: t('평화로운 서바이벌 서버', 'Peaceful Survival Server'),
-      image: '/minecraft1.png',
+      image: '/minecraft1.webp',
       description: t('자바/베드락 플레이어 모두에게 안정적인 생존 환경을 제공합니다.', 'Provides stable survival gameplay for both Java and Bedrock players.'),
     },
     {
-      title: t('안티 엑스레이 보호', 'Anti-Xray Protection'),
-      image: '/minecraft2.png',
+      title: t('안티 엑스레이 시스템', 'Anti-Xray system'),
+      image: '/minecraft2.webp',
       description: t('공정한 경쟁을 위해 엑스레이와 부정행위를 방지하는 서버 보안 레이어.', 'A server security layer that blocks X-ray and unfair play for honest competition.'),
     },
     {
       title: t('지속적 운영 & 업데이트', 'Continuous Operations & Updates'),
-      image: '/minecraft3.png',
+      image: '/minecraft3.webp',
       description: t('서버 안정성과 콘텐츠 신선도를 유지하기 위해 정기적으로 운영합니다.', 'Regular operations keep the server stable and content fresh.'),
     },
   ];
@@ -30,12 +30,12 @@ function HomeContent() {
   const communityFeatures = [
     {
       title: t('정기 이벤트', 'Regular Events'),
-      image: '/minecraft4.png',
-      description: t('매월 일정한 시간에 경쟁 및 창작 이벤트를 개최합니다.', 'Monthly competitive and creative events are hosted on schedule.'),
+      image: '/minecraft4.webp',
+      description: t('정기적으로 다양한 건축콘테스트, PVP 아레나등의 이벤트를 진행합니다.', 'Regular events including building competitions and PVP arenas are held on schedule.'),
     },
     {
       title: t('글로벌 연결', 'Global Community'),
-      image: '/minecraft1.png',
+      image: '/minecraft1.webp',
       description: t('한국어와 영어 커뮤니티가 함께 성장하는 협업 중심 공간.', 'A collaboration-first community for Korean and English players.'),
     },
   ];
@@ -56,8 +56,8 @@ function HomeContent() {
           </h2>
           <p className="sectionLead">
             {t(
-              '한 가지 색상, 한 가지 리듬, 한 가지 목표: 평등하고 예민하게 관리된 게임 경험.',
-              'One color, one rhythm, one purpose: a finely tuned, fair gameplay experience.'
+              '두가지 플랫폼, 하나의 서버, 하나의 커뮤니티. Stime Networks는 최고의 기술력과 관리를 제공하기 위해 노력합니다.',
+              'Two platforms, one server, one community. Stime Networks strives to deliver top-tier engineering and management.'
             )}
           </p>
         </div>
