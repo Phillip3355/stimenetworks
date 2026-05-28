@@ -52,8 +52,8 @@ export default function JoinServerPage() {
               <h3 className={styles.timelineTitle}>{t('자바 에디션 접속 방법', 'Java Connection')}</h3>
               <p className={styles.timelineText}>
                 {t(
-                  '• 접속 버전: 1.20.1 또는 1.20.2 버전\n\nPC 마인크래프트를 실행한 뒤 [멀티플레이] -> [서버 추가] 메뉴로 이동하여 부여받은 서버 정보를 등록하고 접속해 주세요.',
-                  '• Connection Version: 1.20.1 or 1.20.2\n\nLaunch your Java Minecraft client, go to [Multiplayer] -> [Add Server], input your assigned server details, and connect.'
+                  '• 접속 버전: 26.1.2 버전\n\nPC 마인크래프트를 실행한 뒤 [멀티플레이] -> [서버 추가] 메뉴로 이동하여 부여받은 서버 정보를 등록하고 접속해 주세요.',
+                  '• Connection Version: 26.1.2\n\nLaunch your Java Minecraft client, go to [Multiplayer] -> [Add Server], input your assigned server details, and connect.'
                 )}
               </p>
             </article>
