@@ -78,8 +78,8 @@ export default function JoinServerPage() {
               <h3 className={styles.timelineTitle}>{t('커뮤니티 가입 안내', 'Community Join Guide')}</h3>
               <p className={styles.timelineText}>
                 {t(
-                  '• 카카오톡 오픈채팅방 (필수 가입)\n  : Stime Networks (서버 전체 긴급 공지 및 주요 소통을 위해 필수로 참여해야 합니다.)\n\n• 공식 디스코드 (선택 가입)\n (서버 이벤트 참여 및 타 플레이어와 음성 대화 등을 위해 선택적으로 가입할 수 있습니다.)',
-                  '• KakaoTalk Open Chat (Mandatory)\n  : Stime Networks (Required to join for server announcements and official communication.)\n\n• Official Discord (Optional)\n (Optional to join for server events and general chat.)'
+                  '• 카카오톡 오픈채팅방 (필수 가입)\n  : Stime Networks (서버 전체 긴급 공지 및 주요 소통을 위해 필수로 참여해야 합니다. 입장 전 닉네임을 마인크래프트 계정과 일치시켜 주세요.)',
+                  '• KakaoTalk Open Chat (Mandatory)\n  : Stime Networks (Required to join for server announcements and official communication. Please align your nickname with your Minecraft account.)'
                 )}
               </p>
             </article>

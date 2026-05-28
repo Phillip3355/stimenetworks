@@ -102,7 +102,6 @@ export default function Home() {
           <div>
             <p className="footerTitle">{t('지원', 'Support')}</p>
             <a className="footerLink" href="mailto:stimemc@example.com">{t('문의', 'Contact')}</a>
-            <a className="footerLink" href="https://discord.gg/stimenetworks">Discord</a>
           </div>
           <div>
             <p className="footerTitle">{t('법적', 'Legal')}</p>

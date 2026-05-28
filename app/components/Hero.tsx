@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useLanguage } from './LanguageProvider';
@@ -10,11 +11,15 @@ export default function Hero() {
 
   return (
     <section className={styles.heroSection}>
-      {/* 배경 이미지 */}
-      <img
+      {/* 배경 이미지 (Next.js Image 컴포넌트 & WebP 최적화) */}
+      <Image
         className={styles.heroBackgroundImage}
-        src="/NEW2.png"
+        src="/NEW2.webp"
         alt="Minecraft background"
+        fill
+        priority
+        sizes="100vw"
+        style={{ objectFit: 'cover' }}
       />
 
       {/* 배경 오버레이 */}

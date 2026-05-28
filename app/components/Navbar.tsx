@@ -117,14 +117,6 @@ export default function Navbar() {
                     >
                       {t('서버에 가입하기', 'Join Server')}
                     </Link>
-                    <a
-                      href="https://discord.gg/stimenetworks"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.panelLink}
-                    >
-                      Discord
-                    </a>
                   </div>
 
                   {/* 카테고리별 동적 링크 컬럼 */}
