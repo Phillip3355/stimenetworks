@@ -2,8 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { LanguageProvider, useLanguage } from '../components/LanguageProvider';
-import LanguageSwitch from '../components/LanguageSwitch';
+import { useLanguage } from '../components/LanguageProvider';
 import styles from '../styles/server-mechanism.module.css';
 
 const featureCards = [
@@ -33,40 +32,33 @@ const featureCards = [
   },
 ];
 
-function ServerMechanismContent() {
+export default function ServerMechanism() {
   const { t, language } = useLanguage();
 
   return (
     <main className={styles.main}>
-      <LanguageSwitch />
       <section className={styles.heroSection}>
         <div className={styles.heroContent}>
           <motion.h1
             className={styles.heroTitle}
-            initial={{ opacity: 0, y: 32 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
           >
             {t('서버 메커니즘', 'Server Mechanism')}
           </motion.h1>
 
           <motion.p
             className={styles.heroSubtitle}
-            initial={{ opacity: 0, y: 32 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
           >
             {t(
               'Stime Networks가 동작하는 방식, 크로스플레이 연결, 공정성, 최신 배포 흐름을 기술 문서처럼 정리합니다.',
               'A concise technical overview of how Stime Networks operates: cross-play sync, fairness enforcement, and continuous deployment.'
             )}
           </motion.p>
-
-          <div className={styles.heroActions}>
-            <Link href="/" className={styles.buttonOutline}>
-              {t('홈으로 돌아가기', 'Back to Home')}
-            </Link>
-          </div>
         </div>
       </section>
 
@@ -87,51 +79,6 @@ function ServerMechanismContent() {
                 </p>
               </article>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.sectionCanvas}>
-        <div className={styles.sectionContent}>
-          <div className={styles.sectionHeader}>
-            <p className={styles.eyebrow}>{t('작동 흐름', 'How it Works')}</p>
-            <h2 className={styles.sectionHeading}>{t('서버가 준비되는 과정', 'How the Server comes online')}</h2>
-          </div>
-
-          <div className={styles.timelineGrid}>
-            <article className={styles.timelineCard}>
-              <span className={styles.cornerSquare} />
-              <p className={styles.timelineDate}>{t('실시간 세션 동기화', 'Real-Time Session Sync')}</p>
-              <h3 className={styles.timelineTitle}>{t('Java ↔ Bedrock 큐레이팅', 'Java ↔ Bedrock Curation')}</h3>
-              <p className={styles.timelineText}>
-                {t(
-                  '두 클라이언트 입력을 하나의 서버 세션으로 통합해 지연과 충돌을 최소화합니다.',
-                  'Merges inputs from both clients into one server session with minimal latency and conflict.'
-                )}
-              </p>
-            </article>
-            <article className={styles.timelineCard}>
-              <span className={styles.cornerSquare} />
-              <p className={styles.timelineDate}>{t('규칙 검증', 'Rules Verification')}</p>
-              <h3 className={styles.timelineTitle}>{t('자동 감지 + 수동 검토', 'Auto detection + manual review')}</h3>
-              <p className={styles.timelineText}>
-                {t(
-                  '행동 패턴을 실시간 분석하고 의심스러운 플레이를 운영진이 검토합니다.',
-                  'Analyzes behavior patterns in real time and escalates suspicious play to moderation.'
-                )}
-              </p>
-            </article>
-            <article className={styles.timelineCard}>
-              <span className={styles.cornerSquare} />
-              <p className={styles.timelineDate}>{t('배포 사이클', 'Deployment Cycle')}</p>
-              <h3 className={styles.timelineTitle}>{t('정기 업데이트 관리', 'Managed periodic rollout')}</h3>
-              <p className={styles.timelineText}>
-                {t(
-                  '새 기능과 서버 패치가 순차적으로 도입되어 안정성과 콘텐츠가 함께 개선됩니다.',
-                  'New features and server patches roll out sequentially, improving stability and content simultaneously.'
-                )}
-              </p>
-            </article>
           </div>
         </div>
       </section>
@@ -188,13 +135,5 @@ function ServerMechanismContent() {
         </div>
       </section>
     </main>
-  );
-}
-
-export default function ServerMechanism() {
-  return (
-    <LanguageProvider>
-      <ServerMechanismContent />
-    </LanguageProvider>
   );
 }

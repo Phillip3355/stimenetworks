@@ -1,16 +1,16 @@
 .heroSection {
   position: relative;
   width: 100%;
-  min-height: 720px;
+  min-height: 600px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   overflow: hidden;
-  background: #000000;
-  color: #ffffff;
+  background: var(--color-canvas);
+  color: var(--color-body);
 }
 
-.heroBackgroundVideo {
+.heroBackgroundImage {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -23,239 +23,111 @@
 .overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.8) 40%, rgba(0, 0, 0, 0.94) 100%);
+  background: rgba(250, 249, 246, 0.42);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   z-index: 1;
 }
 
 .heroContent {
   position: relative;
   z-index: 2;
-  max-width: 720px;
-  padding: 96px 48px;
+  max-width: 800px;
+  padding: 80px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .title {
-  font-size: clamp(40px, 6vw, 56px);
+  font-size: clamp(38px, 6vw, 54px);
   font-weight: 800;
   line-height: 1.15;
   letter-spacing: -0.03em;
   margin: 0;
-  color: #ffffff;
+  color: var(--color-ink);
 }
 
 .subtitle {
-  font-size: 18px;
+  font-size: 1.15rem;
   font-weight: 400;
-  line-height: 1.85;
-  margin: 24px 0 0;
-  max-width: 560px;
-  color: rgba(255, 255, 255, 0.88);
-}
-
-.heroMenuCard {
-  margin-top: 32px;
-  border-radius: 2px;
-  background: rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 20px 20px 16px;
-  width: 100%;
-}
-
-.menuHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.menuLabel {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.75;
   margin: 0;
-}
-
-.heroHelperText {
-  margin: 12px 0 0;
-  max-width: 680px;
-  color: rgba(255, 255, 255, 0.75);
-  font-size: 14px;
-  line-height: 1.8;
-}
-
-.submenuItems .ctaButton {
-  padding: 12px 18px;
-  font-size: 14px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(0, 0, 0, 0.14);
-  color: #ffffff;
-  cursor: pointer;
-  border-radius: 2px;
-  transition: all 0.2s ease;
-  text-decoration: none;
-  display: inline-block;
-  box-sizing: border-box;
-  width: auto;
-  align-self: flex-start;
-  text-align: left;
-}
-
-.submenuItems .ctaButton:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.4);
+  max-width: 600px;
+  color: var(--color-body);
 }
 
 .buttonGroup {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 16px;
-  margin-top: 32px;
-  align-items: flex-start;
+  margin-top: 16px;
 }
 
-.expandButton {
-  padding: 12px 18px;
-  font-size: 14px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  border: 1px solid rgba(255, 255, 255, 0.32);
-  background: rgba(0, 0, 0, 0.24);
-  color: #ffffff;
-  cursor: pointer;
-  border-radius: 2px;
-  transition: all 0.2s ease;
-  display: flex;
+.primaryBtn,
+.secondaryBtn {
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-  width: auto;
-  align-self: flex-start;
-}
-
-.expandButton:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.45);
-}
-
-.expandIcon {
-  font-size: 12px;
-  transition: transform 0.3s ease;
-}
-
-.expandedMenu {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: 100%;
-  overflow: hidden;
-  padding: 18px 0 0;
-}
-
-.expandedMenu .ctaButton {
-  width: auto;
-  align-self: flex-start;
-}
-
-.submenuContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.submenuButton {
-  padding: 12px 18px;
-  font-size: 14px;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 28px;
+  border-radius: var(--radius-sm);
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  background: rgba(0, 0, 0, 0.18);
-  color: #ffffff;
-  cursor: pointer;
-  border-radius: 2px;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-  width: auto;
-  align-self: flex-start;
-}
-
-.submenuButton:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.45);
-}
-
-.submenuIcon {
-  font-size: 12px;
-  transition: transform 0.3s ease;
-  margin-left: 10px;
-}
-
-.submenuItems {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-left: 14px;
-  overflow: hidden;
-}
-
-.secondaryButton {
-  padding: 14px 28px;
-  font-size: 16px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  background: transparent;
-  color: #ffffff;
-  cursor: pointer;
-  border-radius: 2px;
-  transition: all 0.2s ease;
+  font-size: 0.95rem;
   text-decoration: none;
-  display: inline-block;
+  cursor: pointer;
+  transition: all 0.2s ease;
   box-sizing: border-box;
 }
 
-.secondaryButton:hover {
-  border-color: #ffffff;
-  background: rgba(255, 255, 255, 0.15);
+.primaryBtn {
+  background: var(--color-primary);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.12);
 }
 
+.primaryBtn:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-1px);
+}
+
+.secondaryBtn {
+  background: transparent;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+}
+
+.secondaryBtn:hover {
+  background: rgba(30, 58, 138, 0.05);
+  transform: translateY(-1px);
+}
 
 .scrollIndicator {
   position: absolute;
-  bottom: 32px;
+  bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  gap: 4px;
 }
 
 .scrollArrow {
-  font-size: 2rem;
-  color: rgba(255, 255, 255, 0.9);
-  animation: bounce 2s infinite;
+  font-size: 1.5rem;
+  color: var(--color-primary);
+  opacity: 0.7;
 }
 
 @media (max-width: 768px) {
   .heroSection {
-    min-height: 560px;
+    min-height: 520px;
   }
 
   .heroContent {
-    padding: 64px 24px;
+    padding: 60px 24px;
   }
 
   .title {
@@ -263,57 +135,16 @@
   }
 
   .subtitle {
-    font-size: 16px;
-    max-width: 100%;
-  }
-}
-
-@media (max-width: 480px) {
-  .heroSection {
-    min-height: 500px;
-  }
-
-  .heroContent {
-    padding: 48px 16px;
-  }
-
-  .title {
-    font-size: 28px;
-  }
-
-  .subtitle {
-    font-size: 15px;
+    font-size: 1rem;
   }
 
   .buttonGroup {
+    flex-direction: column;
     align-items: stretch;
   }
 
-  .expandButton {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .expandedMenu .ctaButton {
-    width: 100%;
-    text-align: center;
-  }
-
-  .submenuButton {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .submenuItems {
-    margin-left: 0;
-  }
-
-  .submenuItems .ctaButton {
-    width: 100%;
-    text-align: center;
-  }
-
-  .expandedMenu .ctaButton {
+  .primaryBtn,
+  .secondaryBtn {
     width: 100%;
     text-align: center;
   }

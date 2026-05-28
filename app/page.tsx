@@ -3,10 +3,9 @@
 import Link from 'next/link';
 import Hero from './components/Hero';
 import CardsGrid from './components/CardsGrid';
-import LanguageSwitch from './components/LanguageSwitch';
-import { LanguageProvider, useLanguage } from './components/LanguageProvider';
+import { useLanguage } from './components/LanguageProvider';
 
-function HomeContent() {
+export default function Home() {
   const { t } = useLanguage();
 
   const serverFeatures = [
@@ -42,7 +41,6 @@ function HomeContent() {
 
   return (
     <main className="mainContainer">
-      <LanguageSwitch />
       <Hero />
 
       <section className="sectionCanvas">
@@ -66,8 +64,10 @@ function HomeContent() {
       <section className="sectionCanvas">
         <div className="sectionContent">
           <div className="sectionHeader">
-            <p className="eyebrow">{t('핵심 기능', 'Core Capabilities')}</p>
-            <h3 className="sectionTitle">{t('서버 기능', 'Server Features')}</h3>
+            <div>
+              <p className="eyebrow">{t('핵심 기능', 'Core Capabilities')}</p>
+              <h3 className="sectionTitle">{t('서버 기능', 'Server Features')}</h3>
+            </div>
           </div>
           <CardsGrid cards={serverFeatures} />
         </div>
@@ -76,8 +76,10 @@ function HomeContent() {
       <section className="sectionCanvas">
         <div className="sectionContent">
           <div className="sectionHeader">
-            <p className="eyebrow">{t('커뮤니티 설계', 'Community Design')}</p>
-            <h3 className="sectionTitle">{t('커뮤니티 특징', 'Community Features')}</h3>
+            <div>
+              <p className="eyebrow">{t('커뮤니티 설계', 'Community Design')}</p>
+              <h3 className="sectionTitle">{t('커뮤니티 특징', 'Community Features')}</h3>
+            </div>
           </div>
           <CardsGrid cards={communityFeatures} />
         </div>
@@ -109,13 +111,5 @@ function HomeContent() {
         </div>
       </footer>
     </main>
-  );
-}
-
-export default function Home() {
-  return (
-    <LanguageProvider>
-      <HomeContent />
-    </LanguageProvider>
   );
 }

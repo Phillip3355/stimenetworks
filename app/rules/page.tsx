@@ -2,8 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { LanguageProvider, useLanguage } from '../components/LanguageProvider';
-import LanguageSwitch from '../components/LanguageSwitch';
+import { useLanguage } from '../components/LanguageProvider';
 import styles from '../styles/server-mechanism.module.css';
 
 const ruleCards = [
@@ -16,7 +15,7 @@ const ruleCards = [
   {
     title: '소유물 보호',
     titleEn: 'Property Protection',
-    descriptionKo: '건축물 파괴, 도둑질, 공장 기믹 파괴 등 타인의 소유물을 건드리는 행위는 금지됩니다.',
+    descriptionKo: '건축물 파괴, 도둑질, 공장 기믹 파괴 등 타인의 소유물을 건드리는 행위는 금지됩니다. 타인의 엔티티나 주민, 가축을 건드리는 것 또한 재산 피해로 취급됩니다.',
     descriptionEn: 'Destroying buildings, stealing, and sabotaging factories are prohibited. Mob and mechanism damage is also treated as property damage.',
   },
   {
@@ -45,42 +44,33 @@ const ruleCards = [
   },
 ];
 
-
-function RulesContent() {
+export default function RulesPage() {
   const { t, language } = useLanguage();
 
   return (
     <main className={styles.main}>
-      <LanguageSwitch />
-
       <section className={styles.heroSection}>
         <div className={styles.heroContent}>
           <motion.h1
             className={styles.heroTitle}
-            initial={{ opacity: 0, y: 32 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
           >
             {t('규칙 보기', 'Rules')}
           </motion.h1>
 
           <motion.p
             className={styles.heroSubtitle}
-            initial={{ opacity: 0, y: 32 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
           >
             {t(
               'Stime Networks의 플레이 규칙을 명확한 기술 문서처럼 정리합니다.',
               'A precise technical summary of Stime Networks play policies.'
             )}
           </motion.p>
-
-          <div className={styles.heroActions}>
-            <Link href="/" className={styles.buttonOutline}>
-              {t('홈으로 돌아가기', 'Back to Home')}
-            </Link>
-          </div>
         </div>
       </section>
 
@@ -148,7 +138,7 @@ function RulesContent() {
               <h3 className={styles.timelineTitle}>{t('치명적 위반', 'Severe Violation')}</h3>
               <p className={styles.timelineText}>
                 {t(
-                  '중대한 핵 사용, 테러, 복구 불가능한 피해 발생 시 영구 차단됩니다. 이의신청은 @Phillip_0211로 가능하며, 말도 안 되는 신청은 가중처벌됩니다.',
+                  '중대한 핵 사용, 테러, 복구 불가능한 피해 발생 시 영구 차단됩니다. 이의신청은 @Phillip_0211로 가능하며, 부적절한 신청은 가중 처벌됩니다.',
                   'Severe cheating, griefing, or irreversible damage results in permanent ban. Appeals can be submitted to @Phillip_0211, but frivolous appeals may result in harsher penalties.'
                 )}
               </p>
@@ -157,13 +147,5 @@ function RulesContent() {
         </div>
       </section>
     </main>
-  );
-}
-
-export default function RulesPage() {
-  return (
-    <LanguageProvider>
-      <RulesContent />
-    </LanguageProvider>
   );
 }

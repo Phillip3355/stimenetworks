@@ -2,8 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { LanguageProvider, useLanguage } from '../components/LanguageProvider';
-import LanguageSwitch from '../components/LanguageSwitch';
+import { useLanguage } from '../components/LanguageProvider';
 import styles from '../styles/server-mechanism.module.css';
 
 const recoveryGuidelines = [
@@ -33,41 +32,33 @@ const recoveryGuidelines = [
   },
 ];
 
-function RecoveryGuidelinesContent() {
+export default function RecoveryGuidelines() {
   const { t, language } = useLanguage();
 
   return (
     <main className={styles.main}>
-      <LanguageSwitch />
-
       <section className={styles.heroSection}>
         <div className={styles.heroContent}>
           <motion.h1
             className={styles.heroTitle}
-            initial={{ opacity: 0, y: 32 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
           >
             {t('복구 가이드라인', 'Recovery Guidelines')}
           </motion.h1>
 
           <motion.p
             className={styles.heroSubtitle}
-            initial={{ opacity: 0, y: 32 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
           >
             {t(
               '아이템 분실 및 월드 복구에 대한 명확한 절차와 가이드라인입니다.',
               'Clear procedures and guidelines for item loss and world recovery.'
             )}
           </motion.p>
-
-          <div className={styles.heroActions}>
-            <Link href="/" className={styles.buttonOutline}>
-              {t('홈으로 돌아가기', 'Back to Home')}
-            </Link>
-          </div>
         </div>
       </section>
 
@@ -144,13 +135,5 @@ function RecoveryGuidelinesContent() {
         </div>
       </section>
     </main>
-  );
-}
-
-export default function RecoveryGuidelines() {
-  return (
-    <LanguageProvider>
-      <RecoveryGuidelinesContent />
-    </LanguageProvider>
   );
 }

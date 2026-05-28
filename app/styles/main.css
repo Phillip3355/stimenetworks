@@ -1,16 +1,16 @@
 :root {
-  --color-primary: #2776a7;
-  --color-primary-dark: #1d5a80;
-  --color-canvas: #ffffff;
-  --color-surface-soft: #f7f7f7;
-  --color-surface-dark: #000000;
-  --color-hairline: #cccccc;
-  --color-hairline-strong: #5e5e5e;
-  --color-ink: #000000;
-  --color-body: #1a1a1a;
-  --color-mute: #757575;
-  --color-on-dark: #ffffff;
-  --radius-sm: 2px;
+  --color-primary: #1e3a8a;
+  --color-primary-dark: #172554;
+  --color-canvas: #faf9f6;
+  --color-surface-soft: #ffffff;
+  --color-surface-dark: #f3f4f6;
+  --color-hairline: #e5e7eb;
+  --color-hairline-strong: #d1d5db;
+  --color-ink: #111827;
+  --color-body: #1f2937;
+  --color-mute: #6b7280;
+  --color-on-dark: #1f2937;
+  --radius-sm: 6px;
 }
 
 * {
@@ -42,7 +42,7 @@ body {
 
 .sectionCanvas {
   width: 100%;
-  padding: 80px 48px;
+  padding: 80px 0;
   background: var(--color-canvas);
   border-top: 1px solid var(--color-hairline);
 }
@@ -50,6 +50,8 @@ body {
 .sectionContent {
   max-width: 1280px;
   margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
 }
 
 .eyebrow {
@@ -98,9 +100,9 @@ body {
 .footer {
   width: 100%;
   background: var(--color-surface-dark);
-  color: rgba(255, 255, 255, 0.72);
-  padding: 64px 48px;
-  border-top: 1px solid var(--color-hairline-strong);
+  color: var(--color-body);
+  padding: 64px 0;
+  border-top: 1px solid var(--color-hairline);
 }
 
 .footerInner {
@@ -109,13 +111,15 @@ body {
   gap: 32px;
   max-width: 1280px;
   margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
 }
 
 .footerTitle {
   font-size: 15px;
   font-weight: 700;
   margin-bottom: 16px;
-  color: #ffffff;
+  color: var(--color-ink);
 }
 
 .footerText,
@@ -125,25 +129,25 @@ body {
 }
 
 .footerText {
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--color-mute);
   margin: 0;
 }
 
 .footerLink {
   display: block;
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--color-body);
   margin-bottom: 12px;
   transition: color 0.2s ease;
 }
 
 .footerLink:hover {
-  color: #ffffff;
+  color: var(--color-primary);
 }
 
 @media (max-width: 1024px) {
   .sectionCanvas {
-    padding: 56px 32px;
+    padding: 56px 0;
   }
 
   .sectionHeading {
@@ -158,7 +162,7 @@ body {
 
 @media (max-width: 768px) {
   .sectionCanvas {
-    padding: 48px 24px;
+    padding: 48px 0;
   }
 
   .sectionHeading {
@@ -166,7 +170,7 @@ body {
   }
 
   .footer {
-    padding: 48px 24px;
+    padding: 48px 0;
   }
 
   .footerInner {
@@ -176,7 +180,7 @@ body {
 
 @media (max-width: 480px) {
   .sectionCanvas {
-    padding: 32px 16px;
+    padding: 32px 0;
   }
 
   .sectionHeading {
@@ -184,7 +188,7 @@ body {
   }
 
   .footer {
-    padding: 32px 16px;
+    padding: 32px 0;
   }
 
   .footerInner {
