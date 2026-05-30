@@ -7,6 +7,12 @@ import styles from '../styles/server-mechanism.module.css';
 
 const updateCards = [
   {
+    title: '2026.05.30',
+    titleEn: 'May 30, 2026',
+    descriptionKo: '• globals.css 컬러 변수 상속 충돌 해결 (대리석 미색 배경 및 차콜 글씨 렌더링 정상화)\n• 공통 Footer 컴포넌트 추출 및 layout.tsx 전역 마운트로 모든 서브페이지 하단 푸터 연동 완성\n• LanguageSwitch, ScrollSection, 구형 스크립트 등 불필요한 미사용 코드(Dead Code) 350여 라인 일괄 소거 정리',
+    descriptionEn: '• Fixed globals.css color inheritance to fully restore the soft warm white and eye-care charcoal theme\n• Extracted global Footer component and mounted inside RootLayout for seamless footer coverage across all subpages\n• Cleaned up and deleted over 350 lines of unused dead code (LanguageSwitch, ScrollSection, old python tools)',
+  },
+  {
     title: '2026.05.28',
     titleEn: 'May 28, 2026',
     descriptionKo: '• 전체 디자인 미니멀 라이트 테마 전면 적용\n• 상단 고정형 블러 글래스모피즘 네비게이션 헤더 구축\n• 위에서 스윽 내려오는 3열 오프캔버스 전체 메뉴 패널 탑재\n• 마이크로 레이아웃 쉬프트(화면 튕김) 결함 해결\n• 신규 서버 가입 가이드(/join) 및 플레이 전 규칙 권장 CTA 추가\n• 카카오톡 커뮤니티(필수) 및 디스코드(선택) 가입 요건 명시\n• Vercel Analytics 및 Speed Insights 성능 분석 이식',
