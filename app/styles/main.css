@@ -199,3 +199,24 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+/* 럭셔리 커스텀 스크롤바 디자인 (Stripe/Apple 스타일) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-canvas);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-hairline-strong);
+  border-radius: 5px;
+  border: 2px solid var(--color-canvas); /* 여백 효과로 더 얇고 정교하게 표현 */
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
