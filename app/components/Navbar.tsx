@@ -5,12 +5,74 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from './LanguageProvider';
+import { supabase } from '../lib/supabase';
 import styles from '../styles/navbar.module.css';
 
 export default function Navbar() {
   const { t, language, toggleLanguage } = useLanguage();
   const [isOpen, setIsOpen] = useState(false); // 전체 메뉴 열림 상태
   const pathname = usePathname();
+
+  // 구글 로그인 상태 관리
+  const [user, setUser] = useState<any | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    // 1. 초기 세션 조회
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      const activeUser = session?.user ?? null;
+      setUser(activeUser);
+      checkAdmin(activeUser?.email);
+    });
+
+    // 2. 인증 상태 리스너 등록
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      const activeUser = session?.user ?? null;
+      setUser(activeUser);
+      checkAdmin(activeUser?.email);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  const checkAdmin = (email: string | undefined) => {
+    if (!email) {
+      setIsAdmin(false);
+      return;
+    }
+    const adminEmails = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '')
+      .split(',')
+      .map((e) => e.trim().toLowerCase());
+    setIsAdmin(adminEmails.includes(email.toLowerCase()));
+  };
+
+  const handleSignIn = async () => {
+    try {
+      await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+          queryParams: {
+            prompt: 'select_account',
+          },
+        },
+      });
+    } catch (err) {
+      console.error('Sign in error:', err);
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await supabase.auth.signOut();
+      setUser(null);
+      setIsAdmin(false);
+    } catch (err) {
+      console.error('Sign out error:', err);
+    }
+  };
 
   // 페이지 이동 시 전체 메뉴 닫기
   useEffect(() => {
@@ -51,6 +113,24 @@ export default function Navbar() {
 
           {/* 우측 네비게이션 트리거 및 언어 토글 */}
           <div className={styles.actions}>
+            {/* 구글 로그인 / 로그아웃 버튼 */}
+            {user ? (
+              <button
+                onClick={handleSignOut}
+                className={styles.authBtnOut}
+                title={user.email}
+              >
+                {t('로그아웃', 'Sign Out')}
+              </button>
+            ) : (
+              <button
+                onClick={handleSignIn}
+                className={styles.authBtn}
+              >
+                {t('구글 로그인', 'Google Sign In')}
+              </button>
+            )}
+
             {/* 언어 스위치 버튼 */}
             <button
               onClick={toggleLanguage}
@@ -117,6 +197,20 @@ export default function Navbar() {
                     >
                       {t('서버에 가입하기', 'Join Server')}
                     </Link>
+                    <Link
+                      href="/support"
+                      className={`${styles.panelLink} ${pathname === '/support' ? styles.panelLinkActive : ''}`}
+                    >
+                      {t('1:1 문의하기', 'Support Chat')}
+                    </Link>
+                    {isAdmin && (
+                      <Link
+                        href="/taskboard"
+                        className={`${styles.panelLink} ${pathname === '/taskboard' ? styles.panelLinkActive : ''}`}
+                      >
+                        {t('어드민 대시보드', 'Admin Console')}
+                      </Link>
+                    )}
                   </div>
 
                   {/* 카테고리별 동적 링크 컬럼 */}

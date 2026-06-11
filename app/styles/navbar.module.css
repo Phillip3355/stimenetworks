@@ -291,3 +291,39 @@
     text-align: center;
   }
 }
+
+.authBtn {
+  background: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  color: #ffffff;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.authBtn:hover {
+  background: transparent;
+  color: var(--color-primary);
+}
+
+.authBtnOut {
+  background: transparent;
+  border: 1px solid var(--color-hairline-strong);
+  color: var(--color-body);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.authBtnOut:hover {
+  background: #fef2f2;
+  border-color: #fee2e2;
+  color: #ef4444;
+}
+

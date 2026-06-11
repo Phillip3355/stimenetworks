@@ -57,11 +57,11 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          <Link href="/join" className={styles.primaryBtn}>
-            {t('서버에 가입하기', 'Join Server')}
+          <Link href="/support" className={styles.primaryBtn}>
+            {t('문의/업무하기', 'Support / Taskboard')}
           </Link>
-          <Link href="/rules" className={styles.secondaryBtn}>
-            {t('규칙 & 가이드라인', 'View Rules & Guidelines')}
+          <Link href="/join" className={styles.secondaryBtn}>
+            {t('서버에 가입하기', 'Join Server')}
           </Link>
         </motion.div>
       </div>
