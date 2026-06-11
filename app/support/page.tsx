@@ -179,10 +179,14 @@ export default function SupportPage() {
   const handleGoogleSignIn = async () => {
     try {
       setErrorText('');
+      const redirectUrl = process.env.NODE_ENV === 'development'
+        ? 'http://localhost:3000/auth/callback'
+        : 'https://stimemc.xyz/auth/callback';
+        
       await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
+          redirectTo: redirectUrl,
           queryParams: {
             prompt: 'select_account',
           },
@@ -218,6 +222,21 @@ export default function SupportPage() {
     const code = generateInquiryCode();
 
     try {
+      // 0. 1시간 내 문의 3개 제한 확인
+      const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+      const { count, error: countError } = await supabase
+        .from('inquiries')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', user.id)
+        .gte('created_at', oneHourAgo);
+
+      if (countError) throw countError;
+      if (count !== null && count >= 3) {
+        setErrorText(t('1시간 내에 최대 3개의 문의만 생성할 수 있습니다.', 'You can only create up to 3 inquiries per hour.'));
+        setIsSubmitting(false);
+        return;
+      }
+
       // 1. 문의방(inquiries) 생성
       const { data: newInquiry, error: inquiryError } = await supabase
         .from('inquiries')

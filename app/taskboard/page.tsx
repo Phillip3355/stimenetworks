@@ -139,10 +139,14 @@ export default function TaskboardPage() {
   // 구글 로그인 트리거
   const handleGoogleSignIn = async () => {
     try {
+      const redirectUrl = process.env.NODE_ENV === 'development'
+        ? 'http://localhost:3000/auth/callback'
+        : 'https://stimemc.xyz/auth/callback';
+
       await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
+          redirectTo: redirectUrl,
           queryParams: {
             prompt: 'select_account',
           },
