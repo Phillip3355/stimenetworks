@@ -445,22 +445,11 @@ export default function TaskboardPage() {
               </div>
 
               {/* 2열 스플릿 레이아웃 (좌: 문의 리스트 / 우: 상세 채팅) */}
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: '350px 1fr',
-                gap: '32px',
-                minHeight: '650px',
-                alignItems: 'stretch'
-              }}>
+              <div className={`${styles.dashboardGrid} ${styles.taskboardGrid} ${
+                selectedInquiry ? styles.activeChat : ''
+              }`}>
                 {/* 2-1. 좌측: 유저 문의 리스트 */}
-                <div style={{
-                  border: '1px solid var(--color-hairline)',
-                  borderRadius: 'var(--radius-sm)',
-                  background: '#ffffff',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  overflow: 'hidden'
-                }}>
+                <div className={styles.listPanelBox}>
                   <div style={{
                     padding: '20px',
                     borderBottom: '1px solid var(--color-hairline)',
@@ -525,14 +514,7 @@ export default function TaskboardPage() {
                 </div>
 
                 {/* 2-2. 우측: 상세 실시간 채팅 창 */}
-                <div style={{
-                  border: '1px solid var(--color-hairline)',
-                  borderRadius: 'var(--radius-sm)',
-                  background: '#ffffff',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  overflow: 'hidden'
-                }}>
+                <div className={styles.chatPanel}>
                   {selectedInquiry ? (
                     <>
                       {/* 상세 창 헤더 */}
@@ -545,6 +527,18 @@ export default function TaskboardPage() {
                         justifyContent: 'space-between'
                       }}>
                         <div>
+                          <button
+                            type="button"
+                            onClick={() => setSelectedInquiry(null)}
+                            className={styles.mobileBackButton}
+                            style={{
+                              background: 'none', border: 'none', color: 'var(--color-primary)',
+                              cursor: 'pointer', padding: '0 0 8px 0', display: 'flex', alignItems: 'center',
+                              gap: '4px', fontWeight: 600, fontSize: '0.9rem'
+                            }}
+                          >
+                            ← {t('목록으로', 'Back to List')}
+                          </button>
                           <h4 style={{ margin: 0, color: 'var(--color-ink)', fontWeight: 800 }}>
                             {selectedInquiry.nickname} ({selectedInquiry.inquiry_code})
                           </h4>

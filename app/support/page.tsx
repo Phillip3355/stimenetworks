@@ -407,15 +407,12 @@ ${inquiryPurpose.trim()}`;
             // ================= [로그인 완료된 유저 대시보드 스플릿 레이아웃] =================
             <motion.div
               initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-              style={{
-                display: 'grid', gridTemplateColumns: '320px 1fr', gap: '24px',
-                minHeight: '650px', alignItems: 'stretch'
-              }}
+              className={`${styles.dashboardGrid} ${styles.supportGrid} ${
+                (selectedInquiry || isCreatingNew) ? styles.activeChat : ''
+              }`}
             >
               {/* 좌측 패널: 티켓 목록 및 내정보 */}
-              <div style={{
-                display: 'flex', flexDirection: 'column', gap: '24px'
-              }}>
+              <div className={styles.listPanel}>
                 {/* 사용자 정보 카드 */}
                 <div style={{
                   border: '1px solid var(--color-hairline)', borderRadius: 'var(--radius-sm)', background: '#ffffff', padding: '20px'
@@ -490,14 +487,23 @@ ${inquiryPurpose.trim()}`;
               </div>
 
               {/* 우측 패널: 채팅방 또는 새 문의 폼 */}
-              <div style={{
-                border: '1px solid var(--color-hairline)', borderRadius: 'var(--radius-sm)', background: '#ffffff',
-                display: 'flex', flexDirection: 'column', overflow: 'hidden'
-              }}>
+              <div className={styles.chatPanel}>
                 {isCreatingNew ? (
                   // ================= [새 문의 작성 폼] =================
                   <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-                    <div style={{ padding: '24px', borderBottom: '1px solid var(--color-hairline)', background: 'var(--color-canvas)' }}>
+                    <div style={{ padding: '20px 24px', borderBottom: '1px solid var(--color-hairline)', background: 'var(--color-canvas)' }}>
+                      <button
+                        type="button"
+                        onClick={() => setIsCreatingNew(false)}
+                        className={styles.mobileBackButton}
+                        style={{
+                          background: 'none', border: 'none', color: 'var(--color-primary)',
+                          cursor: 'pointer', padding: '0 0 8px 0', display: 'flex', alignItems: 'center',
+                          gap: '4px', fontWeight: 600, fontSize: '0.9rem'
+                        }}
+                      >
+                        ← {t('목록으로', 'Back to List')}
+                      </button>
                       <h3 style={{ margin: 0, fontWeight: 800 }}>{t('새로운 1:1 문의 접수', 'Submit a New Ticket')}</h3>
                       <p style={{ margin: '8px 0 0', fontSize: '0.9rem', color: 'var(--color-mute)' }}>
                         아래 양식을 작성하여 채팅을 시작해 주세요. 접수 즉시 관리자에게 전달됩니다.
@@ -597,6 +603,18 @@ ${inquiryPurpose.trim()}`;
                   <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                     <div style={{ padding: '20px 24px', borderBottom: '1px solid var(--color-hairline)', background: 'var(--color-canvas)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <div>
+                        <button
+                          type="button"
+                          onClick={() => setSelectedInquiry(null)}
+                          className={styles.mobileBackButton}
+                          style={{
+                            background: 'none', border: 'none', color: 'var(--color-primary)',
+                            cursor: 'pointer', padding: '0 0 8px 0', display: 'flex', alignItems: 'center',
+                            gap: '4px', fontWeight: 600, fontSize: '0.9rem'
+                          }}
+                        >
+                          ← {t('목록으로', 'Back to List')}
+                        </button>
                         <h4 style={{ margin: 0, fontWeight: 700, color: 'var(--color-ink)' }}>
                           티켓 코드: {selectedInquiry.inquiry_code}
                         </h4>

@@ -112,6 +112,48 @@
   margin: 0;
 }
 
+.dashboardGrid {
+  display: grid;
+  align-items: stretch;
+  min-height: 650px;
+}
+.supportGrid {
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+}
+.taskboardGrid {
+  grid-template-columns: 350px 1fr;
+  gap: 32px;
+}
+
+.listPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  height: 100%;
+}
+.listPanelBox {
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-sm);
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100%;
+}
+.chatPanel {
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-sm);
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100%;
+}
+.mobileBackButton {
+  display: none !important;
+}
+
 .timelineGrid {
   display: grid;
   gap: 24px;
@@ -206,6 +248,32 @@
   .buttonOutline {
     width: 100%;
     text-align: center;
+  }
+
+  .supportGrid, .taskboardGrid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Mobile chat layout: show either list or chat, not both stacked */
+  .listPanel, .listPanelBox {
+    display: flex !important;
+  }
+  .chatPanel {
+    display: none !important;
+  }
+
+  .activeChat .listPanel,
+  .activeChat .listPanelBox {
+    display: none !important;
+  }
+  .activeChat .chatPanel {
+    display: flex !important;
+    min-height: 500px;
+    height: calc(100vh - 200px);
+  }
+
+  .mobileBackButton {
+    display: flex !important;
   }
 }
 
