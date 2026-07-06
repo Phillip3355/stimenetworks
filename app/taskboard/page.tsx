@@ -22,6 +22,14 @@ export default function TaskboardPage() {
   const [isSubmittingReply, setIsSubmittingReply] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
+  // 탭 및 보고서 관리 상태
+  const [activeTab, setActiveTab] = useState<'support' | 'report'>('support');
+  const [reports, setReports] = useState<any[]>([]);
+  const [reportSlug, setReportSlug] = useState('');
+  const [reportContent, setReportContent] = useState('');
+  const [isPublishingReport, setIsPublishingReport] = useState(false);
+  const [reportFeedback, setReportFeedback] = useState('');
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // 자동 스크롤
@@ -91,6 +99,33 @@ export default function TaskboardPage() {
 
     return () => {
       supabase.removeChannel(inquiriesChannel);
+    };
+  }, [user, isAdmin]);
+
+  // 2.5. 어드민 인증이 완료되었을 때 보고서 목록 동기화
+  useEffect(() => {
+    if (!user || !isAdmin) return;
+
+    async function loadReports() {
+      const { data, error } = await supabase
+        .from('reports')
+        .select('*')
+        .order('created_at', { ascending: false });
+      if (!error && data) {
+        setReports(data);
+      }
+    }
+    loadReports();
+
+    const reportsChannel = supabase
+      .channel('reports_admin_feed')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'reports' }, () => {
+        loadReports();
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(reportsChannel);
     };
   }, [user, isAdmin]);
 
@@ -224,6 +259,61 @@ export default function TaskboardPage() {
       alert(t('삭제에 실패했습니다.', 'Failed to delete.'));
     } finally {
       setIsDeleting(false);
+    }
+  };
+
+  // 보고서 발행 처리
+  const handlePublishReport = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!reportSlug.trim() || !reportContent.trim()) {
+      setReportFeedback(t('URL 경로와 내용을 모두 입력해주세요.', 'Please enter both URL path and content.'));
+      return;
+    }
+    setIsPublishingReport(true);
+    setReportFeedback('');
+
+    const formattedSlug = reportSlug.trim().replace(/^\/+/, '');
+
+    try {
+      const { error } = await supabase.from('reports').insert([
+        {
+          slug: formattedSlug,
+          content: reportContent,
+        }
+      ]);
+
+      if (error) {
+        if (error.code === '23505') {
+          throw new Error(t('이미 존재하는 URL 경로입니다.', 'This URL path already exists.'));
+        }
+        throw error;
+      }
+
+      setReportSlug('');
+      setReportContent('');
+      setReportFeedback(t('보고서가 성공적으로 발행되었습니다!', 'Report published successfully!'));
+      
+      setTimeout(() => setReportFeedback(''), 3000);
+    } catch (err: any) {
+      console.error(err);
+      setReportFeedback(err.message || t('보고서 발행 중 오류가 발생했습니다.', 'Error occurred while publishing.'));
+    } finally {
+      setIsPublishingReport(false);
+    }
+  };
+
+  // 보고서 삭제 처리
+  const handleDeleteReport = async (id: string) => {
+    const confirmDelete = window.confirm(t('정말로 이 보고서를 삭제하시겠습니까?', 'Are you sure you want to delete this report?'));
+    if (!confirmDelete) return;
+
+    try {
+      const { error } = await supabase.from('reports').delete().eq('id', id);
+      if (error) throw error;
+      setReports((prev) => prev.filter((r) => r.id !== id));
+    } catch (err) {
+      console.error('Failed to delete report:', err);
+      alert(t('삭제에 실패했습니다.', 'Failed to delete.'));
     }
   };
 
@@ -419,9 +509,28 @@ export default function TaskboardPage() {
               }}>
                 <div>
                   <p className={styles.eyebrow}>Stime Networks Admin Platform</p>
-                  <h2 className={styles.sectionHeading} style={{ margin: 0 }}>
-                    {t('문의 관리 콘솔', 'Support Control Console')}
-                  </h2>
+                  <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginTop: '12px' }}>
+                    <button
+                      onClick={() => setActiveTab('support')}
+                      style={{
+                        padding: '10px 20px', border: 'none', background: activeTab === 'support' ? 'var(--color-primary)' : 'transparent',
+                        color: activeTab === 'support' ? '#fff' : 'var(--color-mute)', borderRadius: '30px', fontWeight: 800, cursor: 'pointer',
+                        fontSize: '1.05rem', transition: 'all 0.2s ease'
+                      }}
+                    >
+                      {t('문의 관리', 'Support Console')}
+                    </button>
+                    <button
+                      onClick={() => setActiveTab('report')}
+                      style={{
+                        padding: '10px 20px', border: 'none', background: activeTab === 'report' ? 'var(--color-primary)' : 'transparent',
+                        color: activeTab === 'report' ? '#fff' : 'var(--color-mute)', borderRadius: '30px', fontWeight: 800, cursor: 'pointer',
+                        fontSize: '1.05rem', transition: 'all 0.2s ease'
+                      }}
+                    >
+                      {t('보고서 발행', 'Publish Report')}
+                    </button>
+                  </div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                   <span style={{ fontSize: '0.85rem', color: 'var(--color-mute)' }}>
@@ -445,9 +554,10 @@ export default function TaskboardPage() {
               </div>
 
               {/* 2열 스플릿 레이아웃 (좌: 문의 리스트 / 우: 상세 채팅) */}
-              <div className={`${styles.dashboardGrid} ${styles.taskboardGrid} ${
-                selectedInquiry ? styles.activeChat : ''
-              }`}>
+              {activeTab === 'support' && (
+                <div className={`${styles.dashboardGrid} ${styles.taskboardGrid} ${
+                  selectedInquiry ? styles.activeChat : ''
+                }`}>
                 {/* 2-1. 좌측: 유저 문의 리스트 */}
                 <div className={styles.listPanelBox}>
                   <div style={{
@@ -673,6 +783,116 @@ export default function TaskboardPage() {
                   )}
                 </div>
               </div>
+            )}
+
+              {activeTab === 'report' && (
+                <div className={styles.dashboardGrid} style={{ gridTemplateColumns: '1fr', gap: '32px' }}>
+                  <div style={{
+                    border: '1px solid var(--color-hairline)', borderRadius: 'var(--radius-sm)', background: '#ffffff',
+                    padding: '32px', display: 'flex', flexDirection: 'column', gap: '24px'
+                  }}>
+                    <h3 style={{ margin: 0, fontWeight: 800 }}>{t('새 보고서 발행', 'Publish New Report')}</h3>
+                    <form onSubmit={handlePublishReport} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                      <div>
+                        <label style={{ display: 'block', fontWeight: 700, marginBottom: '8px', color: 'var(--color-ink)' }}>
+                          {t('게시될 URL 경로 (Slug)', 'URL Path (Slug)')}
+                        </label>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span style={{ color: 'var(--color-mute)', fontWeight: 600 }}>stimemc.xyz/</span>
+                          <input
+                            type="text"
+                            placeholder="예: report/june-update 또는 notice"
+                            value={reportSlug}
+                            onChange={(e) => setReportSlug(e.target.value)}
+                            required
+                            style={{
+                              flexGrow: 1, padding: '12px 16px', borderRadius: 'var(--radius-sm)',
+                              border: '1px solid var(--color-hairline)', fontSize: '0.95rem', background: '#fff'
+                            }}
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontWeight: 700, marginBottom: '8px', color: 'var(--color-ink)' }}>
+                          {t('보고서 본문 (Markdown 지원)', 'Report Content (Markdown)')}
+                        </label>
+                        <textarea
+                          placeholder={t('여기에 보고서 내용을 입력하세요. 마크다운 문법을 지원합니다.', 'Enter your report content here. Markdown is supported.')}
+                          value={reportContent}
+                          onChange={(e) => setReportContent(e.target.value)}
+                          required
+                          rows={12}
+                          style={{
+                            width: '100%', padding: '16px', borderRadius: 'var(--radius-sm)',
+                            border: '1px solid var(--color-hairline)', fontSize: '0.95rem', resize: 'vertical'
+                          }}
+                        />
+                      </div>
+                      {reportFeedback && (
+                        <div style={{
+                          padding: '12px', borderRadius: 'var(--radius-sm)', fontWeight: 600,
+                          background: reportFeedback.includes('오류') || reportFeedback.includes('실패') || reportFeedback.includes('입력') || reportFeedback.includes('존재') ? '#fef2f2' : '#ecfdf5',
+                          color: reportFeedback.includes('오류') || reportFeedback.includes('실패') || reportFeedback.includes('입력') || reportFeedback.includes('존재') ? '#ef4444' : '#10b981'
+                        }}>
+                          {reportFeedback}
+                        </div>
+                      )}
+                      <button
+                        type="submit"
+                        disabled={isPublishingReport}
+                        style={{
+                          padding: '16px', background: 'var(--color-primary)', color: '#ffffff',
+                          border: 'none', borderRadius: 'var(--radius-sm)', fontWeight: 800, fontSize: '1.05rem', cursor: 'pointer'
+                        }}
+                      >
+                        {isPublishingReport ? t('발행 중...', 'Publishing...') : t('즉시 발행하기', 'Publish Now')}
+                      </button>
+                    </form>
+                  </div>
+
+                  {/* 기발행된 보고서 목록 */}
+                  <div style={{
+                    border: '1px solid var(--color-hairline)', borderRadius: 'var(--radius-sm)', background: '#ffffff',
+                    display: 'flex', flexDirection: 'column', overflow: 'hidden'
+                  }}>
+                    <div style={{ padding: '20px', borderBottom: '1px solid var(--color-hairline)', background: 'var(--color-canvas)', fontWeight: 700 }}>
+                      {t('기발행된 보고서 목록', 'Published Reports')} ({reports.length})
+                    </div>
+                    <div style={{ flexGrow: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+                      {reports.length === 0 ? (
+                        <p style={{ padding: '24px', color: 'var(--color-mute)', textAlign: 'center', fontSize: '0.9rem' }}>
+                          {t('발행된 보고서가 없습니다.', 'No published reports.')}
+                        </p>
+                      ) : (
+                        reports.map((item) => (
+                          <div key={item.id} style={{ padding: '20px', borderBottom: '1px solid var(--color-hairline)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <div>
+                              <strong style={{ display: 'block', color: 'var(--color-ink)', fontSize: '1.05rem', marginBottom: '4px' }}>
+                                /{item.slug}
+                              </strong>
+                              <span style={{ fontSize: '0.85rem', color: 'var(--color-mute)' }}>
+                                {new Date(item.created_at).toLocaleString()}
+                              </span>
+                            </div>
+                            <div style={{ display: 'flex', gap: '8px' }}>
+                              <a href={`/${item.slug}`} target="_blank" rel="noreferrer" style={{
+                                padding: '6px 12px', background: '#f1f5f9', color: '#475569', borderRadius: 'var(--radius-sm)', textDecoration: 'none', fontWeight: 600, fontSize: '0.85rem'
+                              }}>
+                                {t('보기', 'View')}
+                              </a>
+                              <button onClick={() => handleDeleteReport(item.id)} style={{
+                                padding: '6px 12px', background: '#fef2f2', color: '#ef4444', border: 'none', borderRadius: 'var(--radius-sm)', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem'
+                              }}>
+                                {t('삭제', 'Delete')}
+                              </button>
+                            </div>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </motion.div>
         )}

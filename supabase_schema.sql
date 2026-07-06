@@ -32,3 +32,15 @@ BEGIN;
   CREATE PUBLICATION supabase_realtime;
 COMMIT;
 ALTER PUBLICATION supabase_realtime ADD TABLE public.inquiry_messages;
+
+-- 5. Create reports table for custom dynamic routes (e.g. notices, updates)
+CREATE TABLE IF NOT EXISTS public.reports (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  slug TEXT UNIQUE NOT NULL, -- The custom URL path e.g. "report/update-1"
+  content TEXT NOT NULL, -- Markdown content
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())
+);
+
+-- Disable RLS for reports (as previously agreed for this project)
+ALTER TABLE public.reports DISABLE ROW LEVEL SECURITY;
