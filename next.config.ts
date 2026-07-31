@@ -1,7 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async rewrites() {
+    return [
+      {
+        source: '/voice-:roomCode',
+        destination: '/voice/:roomCode',
+      },
+    ];
+  },
 };
 
 export default nextConfig;
