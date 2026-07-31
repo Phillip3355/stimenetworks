@@ -21,6 +21,14 @@ export default function Navbar() {
 
   const categories = [
     {
+      id: 'features',
+      labelKo: '기능 (Features)',
+      labelEn: 'Features',
+      links: [
+        { href: '/voice', labelKo: '보이스룸', labelEn: 'Voice Rooms' },
+      ],
+    },
+    {
       id: 'about',
       labelKo: '소개 (About)',
       labelEn: 'About Server',
@@ -39,6 +47,7 @@ export default function Navbar() {
       ],
     },
   ];
+
 
   return (
     <>

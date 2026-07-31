@@ -44,3 +44,19 @@ CREATE TABLE IF NOT EXISTS public.reports (
 
 -- Disable RLS for reports (as previously agreed for this project)
 ALTER TABLE public.reports DISABLE ROW LEVEL SECURITY;
+
+-- 6. Create voice_rooms table for persistent admin-managed voice channels
+CREATE TABLE IF NOT EXISTS public.voice_rooms (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  code TEXT UNIQUE NOT NULL, -- e.g. "room-1", "voice-alpha"
+  title TEXT NOT NULL,
+  is_public BOOLEAN DEFAULT true,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())
+);
+
+ALTER TABLE public.voice_rooms DISABLE ROW LEVEL SECURITY;
+
+-- Add voice_rooms and reports to realtime publication
+ALTER PUBLICATION supabase_realtime ADD TABLE public.voice_rooms;
+

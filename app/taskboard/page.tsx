@@ -22,13 +22,22 @@ export default function TaskboardPage() {
   const [isSubmittingReply, setIsSubmittingReply] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  // 탭 및 보고서 관리 상태
-  const [activeTab, setActiveTab] = useState<'support' | 'report'>('support');
+  // 탭 및 보고서/보이스룸 관리 상태
+  const [activeTab, setActiveTab] = useState<'support' | 'report' | 'voice'>('support');
   const [reports, setReports] = useState<any[]>([]);
   const [reportSlug, setReportSlug] = useState('');
   const [reportContent, setReportContent] = useState('');
   const [isPublishingReport, setIsPublishingReport] = useState(false);
   const [reportFeedback, setReportFeedback] = useState('');
+
+  // 보이스룸 관리 상태
+  const [voiceRooms, setVoiceRooms] = useState<any[]>([]);
+  const [newRoomCode, setNewRoomCode] = useState('');
+  const [newRoomTitle, setNewRoomTitle] = useState('');
+  const [newRoomIsPublic, setNewRoomIsPublic] = useState(true);
+  const [isCreatingRoom, setIsCreatingRoom] = useState(false);
+  const [voiceFeedback, setVoiceFeedback] = useState('');
+
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -128,6 +137,34 @@ export default function TaskboardPage() {
       supabase.removeChannel(reportsChannel);
     };
   }, [user, isAdmin]);
+
+  // 2.7. 어드민 인증이 완료되었을 때 보이스룸 목록 동기화
+  useEffect(() => {
+    if (!user || !isAdmin) return;
+
+    async function loadVoiceRooms() {
+      const { data, error } = await supabase
+        .from('voice_rooms')
+        .select('*')
+        .order('created_at', { ascending: false });
+      if (!error && data) {
+        setVoiceRooms(data);
+      }
+    }
+    loadVoiceRooms();
+
+    const voiceChannel = supabase
+      .channel('voice_rooms_admin_feed')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'voice_rooms' }, () => {
+        loadVoiceRooms();
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(voiceChannel);
+    };
+  }, [user, isAdmin]);
+
 
   // 3. 선택한 특정 문의의 대화 내역 실시간 동기화
   useEffect(() => {
@@ -316,6 +353,87 @@ export default function TaskboardPage() {
       alert(t('삭제에 실패했습니다.', 'Failed to delete.'));
     }
   };
+
+  // 보이스룸 생성 처리
+  const handleCreateVoiceRoom = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newRoomCode.trim() || !newRoomTitle.trim()) {
+      setVoiceFeedback(t('방 코드와 방 제목을 모두 입력해주세요.', 'Please enter both room code and title.'));
+      return;
+    }
+    setIsCreatingRoom(true);
+    setVoiceFeedback('');
+
+    const formattedCode = newRoomCode.trim().toLowerCase().replace(/[^a-z0-9-_]/g, '-');
+
+    try {
+      const { error } = await supabase.from('voice_rooms').insert([
+        {
+          code: formattedCode,
+          title: newRoomTitle.trim(),
+          is_public: newRoomIsPublic,
+        }
+      ]);
+
+      if (error) {
+        if (error.code === '23505') {
+          throw new Error(t('이미 존재하는 방 코드입니다.', 'Room code already exists.'));
+        }
+        throw error;
+      }
+
+      setNewRoomCode('');
+      setNewRoomTitle('');
+      setNewRoomIsPublic(true);
+      setVoiceFeedback(t('보이스룸이 성공적으로 생성되었습니다!', 'Voice room created successfully!'));
+
+      setTimeout(() => setVoiceFeedback(''), 3000);
+    } catch (err: any) {
+      console.error(err);
+      setVoiceFeedback(err.message || t('보이스룸 생성 중 오류가 발생했습니다.', 'Error creating voice room.'));
+    } finally {
+      setIsCreatingRoom(false);
+    }
+  };
+
+  // 보이스룸 공개/비공개 토글
+  const handleToggleVoiceRoomPublic = async (id: string, currentPublic: boolean) => {
+    try {
+      const { error } = await supabase
+        .from('voice_rooms')
+        .update({ is_public: !currentPublic })
+        .eq('id', id);
+      if (error) throw error;
+
+      setVoiceRooms((prev) =>
+        prev.map((r) => (r.id === id ? { ...r, is_public: !currentPublic } : r))
+      );
+    } catch (err) {
+      console.error('Failed to toggle public state:', err);
+      alert(t('공개 상태 변경에 실패했습니다.', 'Failed to change public status.'));
+    }
+  };
+
+  // 보이스룸 수동 삭제 (삭제 시 해당 방 모든 유저 튕김)
+  const handleDeleteVoiceRoom = async (id: string, title: string) => {
+    const confirmDelete = window.confirm(
+      t(
+        `정말로 보이스룸 [${title}]을 삭제하시겠습니까?\n삭제 즉시 해당 방에 있던 모든 유저가 강제 퇴장(튕김)됩니다.`,
+        `Are you sure you want to delete voice room [${title}]?\nAll users currently in this room will be kicked immediately.`
+      )
+    );
+    if (!confirmDelete) return;
+
+    try {
+      const { error } = await supabase.from('voice_rooms').delete().eq('id', id);
+      if (error) throw error;
+      setVoiceRooms((prev) => prev.filter((r) => r.id !== id));
+    } catch (err) {
+      console.error('Failed to delete voice room:', err);
+      alert(t('삭제에 실패했습니다.', 'Failed to delete.'));
+    }
+  };
+
 
   return (
     <main className={styles.main}>
@@ -530,7 +648,18 @@ export default function TaskboardPage() {
                     >
                       {t('보고서 발행', 'Publish Report')}
                     </button>
+                    <button
+                      onClick={() => setActiveTab('voice')}
+                      style={{
+                        padding: '10px 20px', border: 'none', background: activeTab === 'voice' ? 'var(--color-primary)' : 'transparent',
+                        color: activeTab === 'voice' ? '#fff' : 'var(--color-mute)', borderRadius: '30px', fontWeight: 800, cursor: 'pointer',
+                        fontSize: '1.05rem', transition: 'all 0.2s ease'
+                      }}
+                    >
+                      🎙️ {t('보이스룸 관리', 'Voice Rooms')}
+                    </button>
                   </div>
+
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                   <span style={{ fontSize: '0.85rem', color: 'var(--color-mute)' }}>
@@ -893,9 +1022,174 @@ export default function TaskboardPage() {
                   </div>
                 </div>
               )}
+
+              {/* 3. 보이스룸 관리 탭 */}
+              {activeTab === 'voice' && (
+                <div className={styles.dashboardGrid} style={{ gridTemplateColumns: '1fr', gap: '32px' }}>
+                  {/* 방 생성 폼 */}
+                  <div style={{
+                    border: '1px solid var(--color-hairline)', borderRadius: 'var(--radius-sm)', background: '#ffffff',
+                    padding: '32px', display: 'flex', flexDirection: 'column', gap: '24px'
+                  }}>
+                    <h3 style={{ margin: 0, fontWeight: 800 }}>🎙️ {t('새 보이스룸 생성', 'Create New Voice Room')}</h3>
+                    <form onSubmit={handleCreateVoiceRoom} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                        <div>
+                          <label style={{ display: 'block', fontWeight: 700, marginBottom: '8px', color: 'var(--color-ink)' }}>
+                            {t('방 제목', 'Room Title')}
+                          </label>
+                          <input
+                            type="text"
+                            placeholder={t('예: 자유 수다방', 'e.g. Lounge 1')}
+                            value={newRoomTitle}
+                            onChange={(e) => setNewRoomTitle(e.target.value)}
+                            required
+                            style={{
+                              width: '100%', padding: '12px 16px', border: '1px solid var(--color-hairline)',
+                              borderRadius: 'var(--radius-sm)', fontSize: '0.95rem'
+                            }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontWeight: 700, marginBottom: '8px', color: 'var(--color-ink)' }}>
+                            {t('방 코드 (URL 경로)', 'Room Code (URL Path)')}
+                          </label>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span style={{ fontSize: '0.9rem', color: 'var(--color-mute)', fontWeight: 600 }}>stimemc.xyz/voice-</span>
+                            <input
+                              type="text"
+                              placeholder={t('예: lobby-1', 'e.g. lobby-1')}
+                              value={newRoomCode}
+                              onChange={(e) => setNewRoomCode(e.target.value)}
+                              required
+                              style={{
+                                flexGrow: 1, padding: '12px 16px', border: '1px solid var(--color-hairline)',
+                                borderRadius: 'var(--radius-sm)', fontSize: '0.95rem'
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* 공개/비공개 선택 */}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '12px 0' }}>
+                        <span style={{ fontWeight: 700, fontSize: '0.95rem' }}>{t('공개 여부:', 'Visibility:')}</span>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '0.95rem' }}>
+                          <input
+                            type="radio"
+                            name="is_public"
+                            checked={newRoomIsPublic === true}
+                            onChange={() => setNewRoomIsPublic(true)}
+                          />
+                          🟢 {t('공개 (목록에 노출)', 'Public (Listed)')}
+                        </label>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '0.95rem' }}>
+                          <input
+                            type="radio"
+                            name="is_public"
+                            checked={newRoomIsPublic === false}
+                            onChange={() => setNewRoomIsPublic(false)}
+                          />
+                          🔒 {t('비공개 (링크로만 입장 가능)', 'Private (Link Only)')}
+                        </label>
+                      </div>
+
+                      {voiceFeedback && (
+                        <div style={{
+                          padding: '12px 16px', borderRadius: 'var(--radius-sm)', fontSize: '0.9rem', fontWeight: 600,
+                          background: voiceFeedback.includes('성공') || voiceFeedback.includes('successfully') ? '#f0fdf4' : '#fef2f2',
+                          color: voiceFeedback.includes('성공') || voiceFeedback.includes('successfully') ? '#16a34a' : '#dc2626'
+                        }}>
+                          {voiceFeedback}
+                        </div>
+                      )}
+
+                      <button
+                        type="submit"
+                        disabled={isCreatingRoom}
+                        style={{
+                          alignSelf: 'flex-start', padding: '12px 28px', background: 'var(--color-primary)', color: '#ffffff',
+                          border: 'none', borderRadius: 'var(--radius-sm)', fontWeight: 700, cursor: 'pointer'
+                        }}
+                      >
+                        {isCreatingRoom ? t('생성 중...', 'Creating...') : t('보이스룸 생성하기', 'Create Voice Room')}
+                      </button>
+                    </form>
+                  </div>
+
+                  {/* 활성화된 보이스룸 전체 목록 및 삭제 제어 */}
+                  <div style={{
+                    border: '1px solid var(--color-hairline)', borderRadius: 'var(--radius-sm)', background: '#ffffff',
+                    padding: '32px', display: 'flex', flexDirection: 'column', gap: '20px'
+                  }}>
+                    <h3 style={{ margin: 0, fontWeight: 800 }}>{t('활성화된 보이스룸 목록', 'Active Voice Rooms')} ({voiceRooms.length})</h3>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                      {voiceRooms.length === 0 ? (
+                        <p style={{ color: 'var(--color-mute)', fontSize: '0.9rem' }}>{t('생성된 보이스룸이 없습니다.', 'No active voice rooms found.')}</p>
+                      ) : (
+                        voiceRooms.map((room) => (
+                          <div key={room.id} style={{
+                            padding: '16px 20px', border: '1px solid var(--color-hairline)', borderRadius: 'var(--radius-sm)',
+                            display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#faf9f6'
+                          }}>
+                            <div>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                <strong style={{ fontSize: '1.05rem', color: 'var(--color-ink)' }}>{room.title}</strong>
+                                <span style={{
+                                  fontSize: '0.75rem', padding: '3px 8px', borderRadius: '12px', fontWeight: 700,
+                                  background: room.is_public ? '#dcfce7' : '#f3f4f6',
+                                  color: room.is_public ? '#166534' : '#4b5563'
+                                }}>
+                                  {room.is_public ? t('🟢 공개', '🟢 Public') : t('🔒 비공개', '🔒 Private')}
+                                </span>
+                              </div>
+                              <p style={{ margin: '4px 0 0', fontSize: '0.85rem', color: 'var(--color-mute)' }}>
+                                URL: <code>stimemc.xyz/voice-{room.code}</code>
+                              </p>
+                            </div>
+                            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                              <button
+                                onClick={() => handleToggleVoiceRoomPublic(room.id, room.is_public)}
+                                style={{
+                                  padding: '6px 12px', background: '#ffffff', color: 'var(--color-ink)',
+                                  border: '1px solid var(--color-hairline)', borderRadius: 'var(--radius-sm)', cursor: 'pointer',
+                                  fontWeight: 600, fontSize: '0.85rem'
+                                }}
+                              >
+                                {room.is_public ? t('🔒 비공개로 변경', 'Switch to Private') : t('🟢 공개로 변경', 'Switch to Public')}
+                              </button>
+                              <a
+                                href={`/voice-${room.code}`}
+                                target="_blank"
+                                rel="noreferrer"
+                                style={{
+                                  padding: '6px 12px', background: '#f1f5f9', color: '#475569',
+                                  borderRadius: 'var(--radius-sm)', textDecoration: 'none', fontWeight: 600, fontSize: '0.85rem'
+                                }}
+                              >
+                                {t('입장', 'Enter')}
+                              </a>
+                              <button
+                                onClick={() => handleDeleteVoiceRoom(room.id, room.title)}
+                                style={{
+                                  padding: '6px 12px', background: '#fef2f2', color: '#ef4444', border: 'none',
+                                  borderRadius: 'var(--radius-sm)', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem'
+                                }}
+                              >
+                                {t('삭제 (전원 튕김)', 'Delete (Kick All)')}
+                              </button>
+                            </div>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </motion.div>
         )}
+
       </AnimatePresence>
     </main>
   );
