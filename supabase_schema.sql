@@ -57,6 +57,21 @@ CREATE TABLE IF NOT EXISTS public.voice_rooms (
 
 ALTER TABLE public.voice_rooms DISABLE ROW LEVEL SECURITY;
 
--- Add voice_rooms and reports to realtime publication
+-- Add voice_rooms to realtime publication
 ALTER PUBLICATION supabase_realtime ADD TABLE public.voice_rooms;
+
+-- 7. Create voice_room_members table for real-time multiplayer participant tracking
+CREATE TABLE IF NOT EXISTS public.voice_room_members (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  room_code TEXT NOT NULL,
+  client_id TEXT NOT NULL UNIQUE,
+  nickname TEXT NOT NULL,
+  is_muted BOOLEAN DEFAULT false,
+  is_speaking BOOLEAN DEFAULT false,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())
+);
+
+ALTER TABLE public.voice_room_members DISABLE ROW LEVEL SECURITY;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.voice_room_members;
+
 
