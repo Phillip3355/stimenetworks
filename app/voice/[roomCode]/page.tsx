@@ -156,13 +156,12 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
     setHasJoined(true);
     startAudio();
 
-    // 더미 참가자 예시 및 사용자 본인 등록
+    // 실제 본인 접속 등록
     setParticipants([
       { id: 'self', name: nickname.trim(), isSelf: true },
-      { id: 'user-2', name: '스티미', avatar: '🎮', isSelf: false },
-      { id: 'user-3', name: '마인크래프터', avatar: '⛏️', isSelf: false }
     ]);
   };
+
 
   // 마이크 토글
   const toggleMute = () => {
