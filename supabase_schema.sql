@@ -68,10 +68,12 @@ CREATE TABLE IF NOT EXISTS public.voice_room_members (
   nickname TEXT NOT NULL,
   is_muted BOOLEAN DEFAULT false,
   is_speaking BOOLEAN DEFAULT false,
+  is_screen_sharing BOOLEAN DEFAULT false,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())
 );
 
 ALTER TABLE public.voice_room_members DISABLE ROW LEVEL SECURITY;
 ALTER PUBLICATION supabase_realtime ADD TABLE public.voice_room_members;
+
 
 

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, use } from 'react';
 import { useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../components/LanguageProvider';
 import { supabase } from '../../lib/supabase';
 import styles from '../../styles/server-mechanism.module.css';
@@ -37,21 +37,33 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
   const [isMuted, setIsMuted] = useState(false);
   const [isDeafened, setIsDeafened] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [isScreenSharing, setIsScreenSharing] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
   const [audioBlocked, setAudioBlocked] = useState(false);
+
+  // 현재 포커스된(시청 중인) 화면 공유 정보
+  const [focusedStreamer, setFocusedStreamer] = useState<{
+    id: string;
+    name: string;
+    stream: MediaStream | null;
+    isSelf: boolean;
+  } | null>(null);
 
   // 실시간 접속자 목록 (DB & Realtime Sync)
   const [participants, setParticipants] = useState<any[]>([]);
 
-  // 오디오, 믹서 & WebRTC 연결 관리 Refs
+  // 오디오, 비디오 & WebRTC 연결 관리 Refs
   const audioContextRef = useRef<AudioContext | null>(null);
   const mediaStreamRef = useRef<MediaStream | null>(null);
+  const screenStreamRef = useRef<MediaStream | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const animFrameRef = useRef<number | null>(null);
   const heartbeatTimerRef = useRef<any>(null);
   const peerConnectionsRef = useRef<{ [peerId: string]: RTCPeerConnection }>({});
   const remoteAudioElementsRef = useRef<{ [peerId: string]: HTMLAudioElement }>({});
+  const remoteVideoStreamsRef = useRef<{ [peerId: string]: MediaStream }>({});
   const broadcastChannelRef = useRef<any>(null);
+  const videoPlayerRef = useRef<HTMLVideoElement | null>(null);
 
   // 1. 방 유효성 검사 및 실시간 삭제(Auto-Kick) 감지
   useEffect(() => {
@@ -105,6 +117,7 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
 
   // 자원 해제 및 DB에서 본인 제거
   const cleanUpConnections = async () => {
+    stopScreenShare();
     if (heartbeatTimerRef.current) {
       clearInterval(heartbeatTimerRef.current);
     }
@@ -123,6 +136,7 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
     peerConnectionsRef.current = {};
     Object.values(remoteAudioElementsRef.current).forEach((el) => el.remove());
     remoteAudioElementsRef.current = {};
+    remoteVideoStreamsRef.current = {};
 
     if (myClientIdRef.current && roomCode) {
       try {
@@ -208,7 +222,99 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
     }
   };
 
-  // WebRTC P2P 피어 연결 생성 및 음성 트랙 연결
+  // 3. 1080p 30fps 화면 공유 시작 핸들러
+  const startScreenShare = async () => {
+    try {
+      unlockAudioPlayback();
+      const screenStream = await navigator.mediaDevices.getDisplayMedia({
+        video: {
+          width: { ideal: 1920, max: 1920 },
+          height: { ideal: 1080, max: 1080 },
+          frameRate: { ideal: 30, max: 30 },
+        },
+        audio: true, // 시스템 오디오 캡처 옵션
+      });
+
+      screenStreamRef.current = screenStream;
+      setIsScreenSharing(true);
+
+      // DB 상태 업뎃 (화면 공유 시작 알림)
+      if (myClientIdRef.current) {
+        await supabase
+          .from('voice_room_members')
+          .update({
+            is_screen_sharing: true,
+            updated_at: new Date().toISOString(),
+          })
+          .eq('client_id', myClientIdRef.current);
+      }
+
+      // 연결된 모든 WebRTC 피어들에 비디오 트랙 추가 및 재연결 요청
+      const videoTrack = screenStream.getVideoTracks()[0];
+      if (videoTrack) {
+        Object.keys(peerConnectionsRef.current).forEach((targetClientId) => {
+          const pc = peerConnectionsRef.current[targetClientId];
+          pc.addTrack(videoTrack, screenStream);
+          // Offer 다시 생성하여 보냄
+          pc.createOffer().then((offer) => {
+            pc.setLocalDescription(offer);
+            if (broadcastChannelRef.current) {
+              broadcastChannelRef.current.send({
+                type: 'broadcast',
+                event: 'webrtc-offer',
+                payload: {
+                  from: myClientIdRef.current,
+                  to: targetClientId,
+                  offer: offer,
+                },
+              });
+            }
+          });
+        });
+
+        // 브라우저의 기본 "공유 중단" 상단바 누를 시 종료 감지
+        videoTrack.onended = () => {
+          stopScreenShare();
+        };
+      }
+
+      // 본인 화면 자동 포커싱
+      setFocusedStreamer({
+        id: myClientIdRef.current,
+        name: nickname.trim(),
+        stream: screenStream,
+        isSelf: true,
+      });
+
+    } catch (err) {
+      console.warn('화면 공유 취소 또는 실패:', err);
+    }
+  };
+
+  // 화면 공유 중단
+  const stopScreenShare = async () => {
+    if (screenStreamRef.current) {
+      screenStreamRef.current.getTracks().forEach((track) => track.stop());
+      screenStreamRef.current = null;
+    }
+    setIsScreenSharing(false);
+
+    if (focusedStreamer?.isSelf) {
+      setFocusedStreamer(null);
+    }
+
+    if (myClientIdRef.current) {
+      await supabase
+        .from('voice_room_members')
+        .update({
+          is_screen_sharing: false,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('client_id', myClientIdRef.current);
+    }
+  };
+
+  // WebRTC P2P 피어 연결 생성 및 오디오/비디오 트랙 수신
   const createPeerConnection = (targetClientId: string, stream: MediaStream | null) => {
     if (peerConnectionsRef.current[targetClientId]) {
       return peerConnectionsRef.current[targetClientId];
@@ -225,27 +331,34 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
     if (stream) {
       stream.getTracks().forEach((track) => pc.addTrack(track, stream));
     }
+    if (screenStreamRef.current) {
+      screenStreamRef.current.getTracks().forEach((track) => pc.addTrack(track, screenStreamRef.current!));
+    }
 
-    // 원격 음성 트랙 수신 핸들러 (상대방 목소리 재생)
+    // 원격 음성 및 비디오 트랙 수신
     pc.ontrack = (event) => {
-      let audioEl = remoteAudioElementsRef.current[targetClientId];
-      if (!audioEl) {
-        audioEl = document.createElement('audio');
-        audioEl.autoplay = true;
-        audioEl.setAttribute('playsinline', 'true');
-        audioEl.style.display = 'none';
+      const track = event.track;
 
-        remoteAudioElementsRef.current[targetClientId] = audioEl;
-        document.body.appendChild(audioEl);
-      }
-      audioEl.srcObject = event.streams[0];
-      
-      const playPromise = audioEl.play();
-      if (playPromise !== undefined) {
-        playPromise.then(() => setAudioBlocked(false)).catch((err) => {
-          console.warn('Browser autoplay blocked audio:', err);
-          setAudioBlocked(true);
-        });
+      if (track.kind === 'audio') {
+        let audioEl = remoteAudioElementsRef.current[targetClientId];
+        if (!audioEl) {
+          audioEl = document.createElement('audio');
+          audioEl.autoplay = true;
+          audioEl.setAttribute('playsinline', 'true');
+          audioEl.style.display = 'none';
+          remoteAudioElementsRef.current[targetClientId] = audioEl;
+          document.body.appendChild(audioEl);
+        }
+        audioEl.srcObject = event.streams[0];
+        audioEl.play().then(() => setAudioBlocked(false)).catch(() => setAudioBlocked(true));
+      } else if (track.kind === 'video') {
+        // 비디오(화면 공유) 트랙 저장
+        remoteVideoStreamsRef.current[targetClientId] = event.streams[0];
+
+        // 만약 현재 시청 중인 사용자의 화면이라면 비디오 요소 업데이트
+        if (focusedStreamer?.id === targetClientId && videoPlayerRef.current) {
+          videoPlayerRef.current.srcObject = event.streams[0];
+        }
       }
     };
 
@@ -268,7 +381,7 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
     return pc;
   };
 
-  // 3. 참가자 목록 불러오기 & WebRTC Offer 전송
+  // 4. 참가자 목록 불러오기 & WebRTC Offer 전송
   const loadRoomParticipants = async () => {
     const activeCutoff = new Date(Date.now() - 15000).toISOString();
     const { data, error } = await supabase
@@ -284,6 +397,7 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
         name: m.nickname,
         isMuted: m.is_muted,
         isSpeaking: m.is_speaking,
+        isScreenSharing: m.is_screen_sharing,
         isSelf: m.client_id === myClientIdRef.current,
       }));
       setParticipants(formatted);
@@ -310,6 +424,37 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
       });
     }
   };
+
+  // 프로필 카드 클릭 시 해당 사용자의 공유 화면 시청 뷰어 열기
+  const handleSelectParticipant = (p: any) => {
+    unlockAudioPlayback();
+    if (p.isSelf && isScreenSharing && screenStreamRef.current) {
+      setFocusedStreamer({
+        id: myClientIdRef.current,
+        name: p.name,
+        stream: screenStreamRef.current,
+        isSelf: true,
+      });
+    } else if (p.isScreenSharing) {
+      const remoteStream = remoteVideoStreamsRef.current[p.id] || null;
+      setFocusedStreamer({
+        id: p.id,
+        name: p.name,
+        stream: remoteStream,
+        isSelf: false,
+      });
+    } else {
+      alert(t(`${p.name}님은 현재 화면을 공유하고 있지 않습니다.`, `${p.name} is not sharing screen right now.`));
+    }
+  };
+
+  // 포커스된 비디오 뷰어 바인딩
+  useEffect(() => {
+    if (focusedStreamer && videoPlayerRef.current) {
+      videoPlayerRef.current.srcObject = focusedStreamer.stream;
+      videoPlayerRef.current.play().catch(console.warn);
+    }
+  }, [focusedStreamer]);
 
   // 방 입장 처리
   const handleJoin = async (e: React.FormEvent) => {
@@ -377,7 +522,6 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
     // 2) 채널 구독 시작 후 DB 등록 및 참가자 불러오기
     membersChannel.subscribe(async (status) => {
       if (status === 'SUBSCRIBED') {
-        // DB에 본인 정보 등록 (Upsert)
         await supabase.from('voice_room_members').upsert(
           [
             {
@@ -386,13 +530,13 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
               nickname: nickname.trim(),
               is_muted: false,
               is_speaking: false,
+              is_screen_sharing: false,
               updated_at: new Date().toISOString(),
             },
           ],
           { onConflict: 'client_id' }
         );
 
-        // 초기 참가자 로드 및 Offer 전송
         await loadRoomParticipants();
       }
     });
@@ -465,7 +609,7 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
       onClick={unlockAudioPlayback}
       style={{ minHeight: '90vh', padding: '40px 20px 120px' }}
     >
-      <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         {/* 브라우저 사운드 자동재생 차단 해제 배너 */}
         {audioBlocked && (
           <div style={{
@@ -473,7 +617,7 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
             padding: '12px 20px', borderRadius: 'var(--radius-sm)', marginBottom: '24px',
             display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontWeight: 700
           }}>
-            <span>🔊 브라우저 보안으로 인해 음성 재생이 일시 차단되었습니다. 화면 아무 곳이나 클릭해 주세요!</span>
+            <span>🔊 브라우저 보안으로 인해 오디오/화면 재생이 일시 차단되었습니다. 화면 클릭 시 재생됩니다!</span>
             <button
               onClick={unlockAudioPlayback}
               style={{
@@ -481,7 +625,7 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
                 borderRadius: 'var(--radius-sm)', cursor: 'pointer', fontWeight: 800
               }}
             >
-              음성 재생 켜기
+              음성 및 미디어 재생 켜기
             </button>
           </div>
         )}
@@ -489,7 +633,7 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
         {/* 상단 헤더 영역 */}
         <div style={{
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          marginBottom: '32px', paddingBottom: '20px', borderBottom: '1px solid var(--color-hairline)'
+          marginBottom: '28px', paddingBottom: '20px', borderBottom: '1px solid var(--color-hairline)'
         }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -534,6 +678,91 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
             </button>
           </div>
         </div>
+
+        {/* 📺 프로필 클릭 시 시청하는 1080p 메인 화면 공유 스테이지 / 플레이어 */}
+        <AnimatePresence>
+          {focusedStreamer && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              style={{
+                background: '#09090b',
+                borderRadius: '16px',
+                padding: '20px',
+                marginBottom: '32px',
+                boxShadow: '0 10px 40px rgba(0,0,0,0.3)',
+                color: '#ffffff',
+                position: 'relative'
+              }}
+            >
+              <div style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                marginBottom: '16px', borderBottom: '1px solid #27272a', paddingBottom: '12px'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <span style={{
+                    fontSize: '0.8rem', padding: '4px 10px', borderRadius: '12px', fontWeight: 800,
+                    background: '#ef4444', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '6px'
+                  }}>
+                    🔴 1080p 30fps LIVE
+                  </span>
+                  <h3 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 800 }}>
+                    {focusedStreamer.name} {t('님의 화면 라이브', "'s Live Screen")}
+                  </h3>
+                </div>
+
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  <button
+                    onClick={() => {
+                      if (videoPlayerRef.current) {
+                        if (videoPlayerRef.current.requestFullscreen) {
+                          videoPlayerRef.current.requestFullscreen();
+                        }
+                      }
+                    }}
+                    style={{
+                      padding: '8px 16px', background: '#27272a', border: 'none', color: '#fff',
+                      borderRadius: 'var(--radius-sm)', fontWeight: 700, cursor: 'pointer', fontSize: '0.85rem'
+                    }}
+                  >
+                    ⛶ {t('전체화면', 'Fullscreen')}
+                  </button>
+                  <button
+                    onClick={() => setFocusedStreamer(null)}
+                    style={{
+                      padding: '8px 16px', background: '#3f3f46', border: 'none', color: '#fff',
+                      borderRadius: 'var(--radius-sm)', fontWeight: 700, cursor: 'pointer', fontSize: '0.85rem'
+                    }}
+                  >
+                    ✕ {t('닫기', 'Close Viewer')}
+                  </button>
+                </div>
+              </div>
+
+              {/* 1080p 30fps 비디오 렌더러 */}
+              <div style={{
+                width: '100%',
+                maxHeight: '620px',
+                aspectRatio: '16/9',
+                background: '#000000',
+                borderRadius: '12px',
+                overflow: 'hidden',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <video
+                  ref={videoPlayerRef}
+                  autoPlay
+                  playsInline
+                  controls
+                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* 미입장 상태: 닉네임 설정 게이트 */}
         {!hasJoined ? (
@@ -584,7 +813,7 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
             {/* 10인 그리드 카드 */}
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
               gap: '20px',
               marginBottom: '120px'
             }}>
@@ -592,12 +821,14 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
                 const isSelf = p.isSelf;
                 const activeSpeaking = p.isSpeaking;
                 const activeMuted = p.isMuted;
+                const isSharingScreen = isSelf ? isScreenSharing : p.isScreenSharing;
 
                 return (
                   <motion.div
                     key={p.id}
+                    onClick={() => handleSelectParticipant(p)}
+                    whileHover={{ scale: 1.02 }}
                     animate={{
-                      scale: activeSpeaking ? 1.04 : 1,
                       boxShadow: activeSpeaking
                         ? '0 0 25px rgba(34, 197, 94, 0.45)'
                         : '0 4px 15px rgba(0,0,0,0.02)'
@@ -605,27 +836,43 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
                     transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                     style={{
                       background: '#ffffff',
-                      border: activeSpeaking
+                      border: isSharingScreen
+                        ? '2px solid #ef4444'
+                        : activeSpeaking
                         ? '2px solid #22c55e'
                         : '1px solid var(--color-hairline)',
                       borderRadius: 'var(--radius-sm)',
-                      padding: '28px 20px',
+                      padding: '24px 18px',
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
                       position: 'relative',
-                      textAlign: 'center'
+                      textAlign: 'center',
+                      cursor: isSharingScreen ? 'pointer' : 'default'
                     }}
                   >
+                    {/* 화면 공유 중 뱃지 */}
+                    {isSharingScreen && (
+                      <span style={{
+                        position: 'absolute', top: '10px', right: '10px',
+                        background: '#ef4444', color: '#ffffff', fontSize: '0.7rem',
+                        fontWeight: 800, padding: '3px 8px', borderRadius: '10px',
+                        boxShadow: '0 2px 8px rgba(239, 68, 68, 0.4)',
+                        animation: 'pulse 1.2s infinite'
+                      }}>
+                        🔴 LIVE
+                      </span>
+                    )}
+
                     {/* 발화자 녹색 아우라 링 */}
                     <div style={{
                       width: '72px', height: '72px', borderRadius: '50%',
-                      background: activeSpeaking ? '#dcfce7' : '#f1f5f9',
+                      background: isSharingScreen ? '#fee2e2' : activeSpeaking ? '#dcfce7' : '#f1f5f9',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      fontSize: '2rem', marginBottom: '16px', position: 'relative',
+                      fontSize: '2rem', marginBottom: '14px', position: 'relative',
                       transition: 'all 0.2s ease'
                     }}>
-                      🎧
+                      {isSharingScreen ? '🖥️' : '🎧'}
                       {activeSpeaking && (
                         <span style={{
                           position: 'absolute', inset: -4, borderRadius: '50%',
@@ -638,14 +885,25 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
                       {p.name} {isSelf && `(${t('나', 'Me')})`}
                     </strong>
 
-                    <span style={{
-                      fontSize: '0.75rem', marginTop: '6px', padding: '2px 8px', borderRadius: '10px',
-                      fontWeight: 700,
-                      background: activeMuted ? '#fee2e2' : activeSpeaking ? '#dcfce7' : '#f3f4f6',
-                      color: activeMuted ? '#ef4444' : activeSpeaking ? '#15803d' : '#6b7280'
-                    }}>
-                      {activeMuted ? '🔇 음소거됨' : activeSpeaking ? '🎙️ 대화 중...' : '대기 중'}
-                    </span>
+                    <div style={{ display: 'flex', gap: '6px', marginTop: '6px', flexWrap: 'wrap', justifyContent: 'center' }}>
+                      <span style={{
+                        fontSize: '0.75rem', padding: '2px 8px', borderRadius: '10px',
+                        fontWeight: 700,
+                        background: activeMuted ? '#fee2e2' : activeSpeaking ? '#dcfce7' : '#f3f4f6',
+                        color: activeMuted ? '#ef4444' : activeSpeaking ? '#15803d' : '#6b7280'
+                      }}>
+                        {activeMuted ? '🔇 음소거' : activeSpeaking ? '🎙️ 대화 중' : '대기 중'}
+                      </span>
+
+                      {isSharingScreen && (
+                        <span style={{
+                          fontSize: '0.75rem', padding: '2px 8px', borderRadius: '10px',
+                          fontWeight: 700, background: '#fef2f2', color: '#ef4444'
+                        }}>
+                          🖥️ 클릭 시 시청
+                        </span>
+                      )}
+                    </div>
                   </motion.div>
                 );
               })}
@@ -658,7 +916,7 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
                     background: 'rgba(255,255,255,0.4)',
                     border: '1px dashed var(--color-hairline)',
                     borderRadius: 'var(--radius-sm)',
-                    padding: '28px 20px',
+                    padding: '24px 18px',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
@@ -673,7 +931,7 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
               ))}
             </div>
 
-            {/* 하단 고정 음성 컨트롤 툴바 */}
+            {/* 하단 고정 음성 및 미디어 컨트롤 툴바 */}
             <div style={{
               position: 'fixed',
               bottom: '24px',
@@ -686,7 +944,7 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
               boxShadow: '0 8px 30px rgba(0,0,0,0.12)',
               display: 'flex',
               alignItems: 'center',
-              gap: '16px',
+              gap: '14px',
               zIndex: 100
             }}>
               {/* 마이크 토글 */}
@@ -730,9 +988,30 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
                 {isDeafened ? '🔇 헤드셋 켜기' : '🎧 헤드셋 끄기'}
               </button>
 
+              {/* 🖥️ 1080p 30fps 화면 공유 토글 버튼 */}
+              <button
+                onClick={isScreenSharing ? stopScreenShare : startScreenShare}
+                style={{
+                  padding: '10px 20px',
+                  borderRadius: '30px',
+                  border: 'none',
+                  background: isScreenSharing ? '#dc2626' : 'var(--color-primary)',
+                  color: '#ffffff',
+                  fontWeight: 800,
+                  fontSize: '0.95rem',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                {isScreenSharing ? '🔴 화면 공유 중단' : '🖥️ 화면 공유 (1080p)'}
+              </button>
+
               {/* 연결 상태 */}
               <span style={{ fontSize: '0.85rem', color: '#166534', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
-                🟢 {t('실시간 음성 연결됨', 'Realtime Voice Connected')}
+                🟢 {t('실시간 연결됨', 'Realtime Connected')}
               </span>
             </div>
           </div>
