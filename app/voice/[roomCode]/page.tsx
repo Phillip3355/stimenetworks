@@ -38,6 +38,7 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
   const [isDeafened, setIsDeafened] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
+  const [audioBlocked, setAudioBlocked] = useState(false);
 
   // 실시간 접속자 목록 (DB & Realtime Sync)
   const [participants, setParticipants] = useState<any[]>([]);
@@ -135,10 +136,27 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
     }
   };
 
+  // 브라우저 자동재생 잠금 해제 (Autoplay Unlock)
+  const unlockAudioPlayback = () => {
+    if (audioContextRef.current && audioContextRef.current.state === 'suspended') {
+      audioContextRef.current.resume();
+    }
+    Object.values(remoteAudioElementsRef.current).forEach((audio) => {
+      audio.play().then(() => setAudioBlocked(false)).catch(() => setAudioBlocked(true));
+    });
+  };
+
   // 2. 마이크 캡처 및 Voice Activity Detection (음성 크기 감지)
   const startAudio = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true,
+        },
+        video: false,
+      });
       mediaStreamRef.current = stream;
 
       const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
@@ -162,7 +180,7 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
           sum += dataArray[i];
         }
         const average = sum / bufferLength;
-        const speakingNow = average > 15 && !isMuted;
+        const speakingNow = average > 12 && !isMuted;
         setIsSpeaking(speakingNow);
 
         // 발화 상태 변경 시 DB 상태 업데이트
@@ -190,30 +208,48 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
     }
   };
 
-  // WebRTC P2P 피어 연결 (음성 송수신)
+  // WebRTC P2P 피어 연결 생성 및 음성 트랙 연결
   const createPeerConnection = (targetClientId: string, stream: MediaStream | null) => {
     if (peerConnectionsRef.current[targetClientId]) {
       return peerConnectionsRef.current[targetClientId];
     }
 
     const pc = new RTCPeerConnection({
-      iceServers: [{ urls: 'stun:stun.l.google.com:19302' }],
+      iceServers: [
+        { urls: 'stun:stun.l.google.com:19302' },
+        { urls: 'stun:stun1.l.google.com:19302' },
+        { urls: 'stun:stun2.l.google.com:19302' },
+      ],
     });
 
     if (stream) {
       stream.getTracks().forEach((track) => pc.addTrack(track, stream));
     }
 
+    // 원격 음성 트랙 수신 핸들러 (상대방 목소리 재생)
     pc.ontrack = (event) => {
-      if (!remoteAudioElementsRef.current[targetClientId]) {
-        const audioEl = document.createElement('audio');
+      let audioEl = remoteAudioElementsRef.current[targetClientId];
+      if (!audioEl) {
+        audioEl = document.createElement('audio');
         audioEl.autoplay = true;
-        audioEl.srcObject = event.streams[0];
+        audioEl.setAttribute('playsinline', 'true');
+        audioEl.style.display = 'none';
+
         remoteAudioElementsRef.current[targetClientId] = audioEl;
         document.body.appendChild(audioEl);
       }
+      audioEl.srcObject = event.streams[0];
+      
+      const playPromise = audioEl.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => setAudioBlocked(false)).catch((err) => {
+          console.warn('Browser autoplay blocked audio:', err);
+          setAudioBlocked(true);
+        });
+      }
     };
 
+    // ICE Candidate 시그널 전송
     pc.onicecandidate = (event) => {
       if (event.candidate && broadcastChannelRef.current) {
         broadcastChannelRef.current.send({
@@ -232,9 +268,8 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
     return pc;
   };
 
-  // 3. 실시간 참가자 목록 동기화 (Postgres Changes + WebRTC Broadcast)
+  // 3. 참가자 목록 불러오기 & WebRTC Offer 전송
   const loadRoomParticipants = async () => {
-    // 15초 이상 갱신 없는 이탈된 유저 제외
     const activeCutoff = new Date(Date.now() - 15000).toISOString();
     const { data, error } = await supabase
       .from('voice_room_members')
@@ -253,7 +288,7 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
       }));
       setParticipants(formatted);
 
-      // 본인 이외의 접속자들에게 WebRTC 연결 시도
+      // 본인 이외의 유저에게 WebRTC SDP Offer 생성 및 발송
       data.forEach((member) => {
         if (member.client_id !== myClientIdRef.current && !peerConnectionsRef.current[member.client_id]) {
           const pc = createPeerConnection(member.client_id, mediaStreamRef.current);
@@ -276,7 +311,7 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
     }
   };
 
-  // 방 입장 클릭 핸들러
+  // 방 입장 처리
   const handleJoin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!nickname.trim()) return;
@@ -284,51 +319,8 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
     setHasJoined(true);
     const stream = await startAudio();
 
-    // 1) DB에 본인 정보 등록 (Upsert)
-    await supabase.from('voice_room_members').upsert(
-      [
-        {
-          room_code: roomCode,
-          client_id: myClientIdRef.current,
-          nickname: nickname.trim(),
-          is_muted: false,
-          is_speaking: false,
-          updated_at: new Date().toISOString(),
-        },
-      ],
-      { onConflict: 'client_id' }
-    );
-
-    // 2) 초기 참가자 불러오기
-    await loadRoomParticipants();
-
-    // 3) 하트비트 주기적 갱신 (5초마다 updated_at 갱신하여 살아있음 증명)
-    heartbeatTimerRef.current = setInterval(async () => {
-      if (myClientIdRef.current) {
-        await supabase
-          .from('voice_room_members')
-          .update({ updated_at: new Date().toISOString() })
-          .eq('client_id', myClientIdRef.current);
-      }
-    }, 5000);
-
-    // 4) Supabase Realtime Postgres Changes 구독 (다른 유저가 들어오거나 나갈 때 즉시 동기화)
-    const membersChannel = supabase
-      .channel(`members_${roomCode}`)
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'voice_room_members',
-          filter: `room_code=eq.${roomCode}`,
-        },
-        () => {
-          loadRoomParticipants();
-        }
-      );
-
-    // 5) WebRTC 시그널링 채널 구독
+    // 1) Broadcast 시그널링 채널 먼저 생성 및 대기
+    const membersChannel = supabase.channel(`members_channel_${roomCode}`);
     broadcastChannelRef.current = membersChannel;
 
     membersChannel.on('broadcast', { event: 'webrtc-offer' }, async ({ payload }) => {
@@ -362,17 +354,63 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
     membersChannel.on('broadcast', { event: 'webrtc-candidate' }, async ({ payload }) => {
       if (payload.to === myClientIdRef.current) {
         const pc = peerConnectionsRef.current[payload.from];
-        if (pc) {
+        if (pc && payload.candidate) {
           await pc.addIceCandidate(new RTCIceCandidate(payload.candidate));
         }
       }
     });
 
-    membersChannel.subscribe();
+    // Postgres Changes 실시간 참가자 이벤트 바인딩
+    membersChannel.on(
+      'postgres_changes',
+      {
+        event: '*',
+        schema: 'public',
+        table: 'voice_room_members',
+        filter: `room_code=eq.${roomCode}`,
+      },
+      () => {
+        loadRoomParticipants();
+      }
+    );
+
+    // 2) 채널 구독 시작 후 DB 등록 및 참가자 불러오기
+    membersChannel.subscribe(async (status) => {
+      if (status === 'SUBSCRIBED') {
+        // DB에 본인 정보 등록 (Upsert)
+        await supabase.from('voice_room_members').upsert(
+          [
+            {
+              room_code: roomCode,
+              client_id: myClientIdRef.current,
+              nickname: nickname.trim(),
+              is_muted: false,
+              is_speaking: false,
+              updated_at: new Date().toISOString(),
+            },
+          ],
+          { onConflict: 'client_id' }
+        );
+
+        // 초기 참가자 로드 및 Offer 전송
+        await loadRoomParticipants();
+      }
+    });
+
+    // 3) 5초 간격 하트비트
+    heartbeatTimerRef.current = setInterval(async () => {
+      if (myClientIdRef.current) {
+        await supabase
+          .from('voice_room_members')
+          .update({ updated_at: new Date().toISOString() })
+          .eq('client_id', myClientIdRef.current);
+      }
+    }, 5000);
   };
 
   // 마이크 음소거 토글
   const toggleMute = async () => {
+    unlockAudioPlayback();
     const nextMute = !isMuted;
     setIsMuted(nextMute);
 
@@ -397,6 +435,7 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
 
   // 스피커 헤드셋 토글
   const toggleDeafen = () => {
+    unlockAudioPlayback();
     const nextDeafen = !isDeafened;
     setIsDeafened(nextDeafen);
     Object.values(remoteAudioElementsRef.current).forEach((audio) => {
@@ -421,8 +460,32 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
   }
 
   return (
-    <main className={styles.main} style={{ minHeight: '90vh', padding: '40px 20px 120px' }}>
+    <main
+      className={styles.main}
+      onClick={unlockAudioPlayback}
+      style={{ minHeight: '90vh', padding: '40px 20px 120px' }}
+    >
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+        {/* 브라우저 사운드 자동재생 차단 해제 배너 */}
+        {audioBlocked && (
+          <div style={{
+            background: '#fef3c7', border: '1px solid #fde047', color: '#854d0e',
+            padding: '12px 20px', borderRadius: 'var(--radius-sm)', marginBottom: '24px',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontWeight: 700
+          }}>
+            <span>🔊 브라우저 보안으로 인해 음성 재생이 일시 차단되었습니다. 화면 아무 곳이나 클릭해 주세요!</span>
+            <button
+              onClick={unlockAudioPlayback}
+              style={{
+                padding: '6px 14px', background: '#b45309', color: '#fff', border: 'none',
+                borderRadius: 'var(--radius-sm)', cursor: 'pointer', fontWeight: 800
+              }}
+            >
+              음성 재생 켜기
+            </button>
+          </div>
+        )}
+
         {/* 상단 헤더 영역 */}
         <div style={{
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
@@ -669,7 +732,7 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
 
               {/* 연결 상태 */}
               <span style={{ fontSize: '0.85rem', color: '#166534', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
-                🟢 {t('실시간 동기화 연결됨', 'Realtime Synced')}
+                🟢 {t('실시간 음성 연결됨', 'Realtime Voice Connected')}
               </span>
             </div>
           </div>
