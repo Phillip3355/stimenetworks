@@ -35,8 +35,10 @@ export default function TaskboardPage() {
   const [newRoomCode, setNewRoomCode] = useState('');
   const [newRoomTitle, setNewRoomTitle] = useState('');
   const [newRoomIsPublic, setNewRoomIsPublic] = useState(true);
+  const [newRoomType, setNewRoomType] = useState<'general' | 'stage'>('general');
   const [isCreatingRoom, setIsCreatingRoom] = useState(false);
   const [voiceFeedback, setVoiceFeedback] = useState('');
+
 
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -367,13 +369,17 @@ export default function TaskboardPage() {
     const formattedCode = newRoomCode.trim().toLowerCase().replace(/[^a-z0-9-_]/g, '-');
 
     try {
+      const finalIsPublic = newRoomType === 'stage' ? true : newRoomIsPublic;
       const { error } = await supabase.from('voice_rooms').insert([
         {
           code: formattedCode,
           title: newRoomTitle.trim(),
-          is_public: newRoomIsPublic,
+          is_public: finalIsPublic,
+          room_type: newRoomType,
         }
       ]);
+
+
 
       if (error) {
         if (error.code === '23505') {
@@ -1071,28 +1077,61 @@ export default function TaskboardPage() {
                         </div>
                       </div>
 
-                      {/* 공개/비공개 선택 */}
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '12px 0' }}>
-                        <span style={{ fontWeight: 700, fontSize: '0.95rem' }}>{t('공개 여부:', 'Visibility:')}</span>
+                      {/* 채널 종류 선택 */}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '8px 0' }}>
+                        <span style={{ fontWeight: 700, fontSize: '0.95rem' }}>{t('채널 유형:', 'Channel Type:')}</span>
                         <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '0.95rem' }}>
                           <input
                             type="radio"
-                            name="is_public"
-                            checked={newRoomIsPublic === true}
-                            onChange={() => setNewRoomIsPublic(true)}
+                            name="room_type"
+                            checked={newRoomType === 'general'}
+                            onChange={() => setNewRoomType('general')}
                           />
-                          🟢 {t('공개 (목록에 노출)', 'Public (Listed)')}
+                          🟢 {t('일반 보이스룸 (0명 시 자동 삭제)', 'General (Auto-deletes at 0)')}
                         </label>
                         <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '0.95rem' }}>
                           <input
                             type="radio"
-                            name="is_public"
-                            checked={newRoomIsPublic === false}
-                            onChange={() => setNewRoomIsPublic(false)}
+                            name="room_type"
+                            checked={newRoomType === 'stage'}
+                            onChange={() => setNewRoomType('stage')}
                           />
-                          🔒 {t('비공개 (링크로만 입장 가능)', 'Private (Link Only)')}
+                          🎙️ {t('STAGE 무대 (어드민 방송/어드민 수동 삭제)', 'STAGE (Admin Broadcast & Manual Delete Only)')}
                         </label>
                       </div>
+
+                      {/* 공개/비공개 선택 */}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '8px 0' }}>
+                        <span style={{ fontWeight: 700, fontSize: '0.95rem' }}>{t('공개 여부:', 'Visibility:')}</span>
+                        {newRoomType === 'stage' ? (
+                          <span style={{ color: '#2563eb', fontWeight: 700, fontSize: '0.9rem' }}>
+                            🟢 {t('공개 고정 (STAGE 무대는 무조건 공개 채널로 지정됩니다)', 'Always Public (STAGE channel is always public)')}
+                          </span>
+                        ) : (
+                          <>
+                            <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '0.95rem' }}>
+                              <input
+                                type="radio"
+                                name="is_public"
+                                checked={newRoomIsPublic === true}
+                                onChange={() => setNewRoomIsPublic(true)}
+                              />
+                              🟢 {t('공개 (목록에 노출)', 'Public (Listed)')}
+                            </label>
+                            <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '0.95rem' }}>
+                              <input
+                                type="radio"
+                                name="is_public"
+                                checked={newRoomIsPublic === false}
+                                onChange={() => setNewRoomIsPublic(false)}
+                              />
+                              🔒 {t('비공개 (링크로만 입장 가능)', 'Private (Link Only)')}
+                            </label>
+                          </>
+                        )}
+                      </div>
+
+
 
                       {voiceFeedback && (
                         <div style={{

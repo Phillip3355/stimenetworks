@@ -27,6 +27,10 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
     myClientIdRef.current = 'client_' + Math.random().toString(36).substring(2, 9);
   }
 
+  // 어드민 & 유저 상태
+  const [currentUser, setCurrentUser] = useState<any | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+
   // 방 상태 및 룸 정보
   const [roomData, setRoomData] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
@@ -38,16 +42,20 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
   const [isDeafened, setIsDeafened] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isScreenSharing, setIsScreenSharing] = useState(false);
+  const [isSpeaker, setIsSpeaker] = useState(false); // 스테이지 채널 발언권 여부
   const [copiedLink, setCopiedLink] = useState(false);
   const [audioBlocked, setAudioBlocked] = useState(false);
 
-  // 현재 포커스된(시청 중인) 화면 공유 정보
+  // 선택된/포커스된 화면 공유 정보
   const [focusedStreamer, setFocusedStreamer] = useState<{
     id: string;
     name: string;
     stream: MediaStream | null;
     isSelf: boolean;
   } | null>(null);
+
+  // 어드민용 선택 참가자 팝업 메뉴
+  const [selectedAdminTarget, setSelectedAdminTarget] = useState<any | null>(null);
 
   // 실시간 접속자 목록 (DB & Realtime Sync)
   const [participants, setParticipants] = useState<any[]>([]);
@@ -64,6 +72,20 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
   const remoteVideoStreamsRef = useRef<{ [peerId: string]: MediaStream }>({});
   const broadcastChannelRef = useRef<any>(null);
   const videoPlayerRef = useRef<HTMLVideoElement | null>(null);
+
+  // 0. 구글 로그인 어드민 상태 체크
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      const activeUser = session?.user ?? null;
+      setCurrentUser(activeUser);
+      if (activeUser?.email) {
+        const adminEmails = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '')
+          .split(',')
+          .map((e) => e.trim().toLowerCase());
+        setIsAdmin(adminEmails.includes(activeUser.email.toLowerCase()));
+      }
+    });
+  }, []);
 
   // 1. 방 유효성 검사 및 실시간 삭제(Auto-Kick) 감지
   useEffect(() => {
@@ -115,7 +137,7 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
     };
   }, [roomCode, router, t]);
 
-  // 자원 해제 및 DB에서 본인 제거
+  // 자원 해제 및 DB에서 본인 제거 (일반 보이스룸은 0명 시 자동 삭제)
   const cleanUpConnections = async () => {
     stopScreenShare();
     if (heartbeatTimerRef.current) {
@@ -144,6 +166,18 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
           .from('voice_room_members')
           .delete()
           .eq('client_id', myClientIdRef.current);
+
+        // 일반 보이스룸(room_type !== 'stage')이고 접속자 0명이 되면 방 자동 삭제!
+        if (roomData && roomData.room_type !== 'stage') {
+          const { data: remaining } = await supabase
+            .from('voice_room_members')
+            .select('id')
+            .eq('room_code', roomCode);
+
+          if (!remaining || remaining.length === 0) {
+            await supabase.from('voice_rooms').delete().eq('code', roomCode);
+          }
+        }
       } catch (err) {
         console.error(err);
       }
@@ -224,6 +258,15 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
 
   // 3. 1080p 30fps 화면 공유 시작 핸들러
   const startScreenShare = async () => {
+    // 스테이지 채널에서는 관리자이거나 지정된 발언자만 화면 공유 가능
+    const isStage = roomData?.room_type === 'stage';
+    const canShare = !isStage || isAdmin || isSpeaker;
+
+    if (!canShare) {
+      alert(t('STAGE 채널에서는 호스트(관리자) 및 승인된 발언자만 화면을 공유할 수 있습니다.', 'Only host or speakers can share screen in STAGE channel.'));
+      return;
+    }
+
     try {
       unlockAudioPlayback();
       const screenStream = await navigator.mediaDevices.getDisplayMedia({
@@ -232,7 +275,7 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
           height: { ideal: 1080, max: 1080 },
           frameRate: { ideal: 30, max: 30 },
         },
-        audio: true, // 시스템 오디오 캡처 옵션
+        audio: true,
       });
 
       screenStreamRef.current = screenStream;
@@ -255,7 +298,6 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
         Object.keys(peerConnectionsRef.current).forEach((targetClientId) => {
           const pc = peerConnectionsRef.current[targetClientId];
           pc.addTrack(videoTrack, screenStream);
-          // Offer 다시 생성하여 보냄
           pc.createOffer().then((offer) => {
             pc.setLocalDescription(offer);
             if (broadcastChannelRef.current) {
@@ -272,13 +314,11 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
           });
         });
 
-        // 브라우저의 기본 "공유 중단" 상단바 누를 시 종료 감지
         videoTrack.onended = () => {
           stopScreenShare();
         };
       }
 
-      // 본인 화면 자동 포커싱
       setFocusedStreamer({
         id: myClientIdRef.current,
         name: nickname.trim(),
@@ -352,10 +392,8 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
         audioEl.srcObject = event.streams[0];
         audioEl.play().then(() => setAudioBlocked(false)).catch(() => setAudioBlocked(true));
       } else if (track.kind === 'video') {
-        // 비디오(화면 공유) 트랙 저장
         remoteVideoStreamsRef.current[targetClientId] = event.streams[0];
 
-        // 만약 현재 시청 중인 사용자의 화면이라면 비디오 요소 업데이트
         if (focusedStreamer?.id === targetClientId && videoPlayerRef.current) {
           videoPlayerRef.current.srcObject = event.streams[0];
         }
@@ -381,7 +419,7 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
     return pc;
   };
 
-  // 4. 참가자 목록 불러오기 & WebRTC Offer 전송
+  // 4. 참가자 목록 불러오기 & WebRTC Offer 전송 (0명 시 일반방 자동 삭제)
   const loadRoomParticipants = async () => {
     const activeCutoff = new Date(Date.now() - 15000).toISOString();
     const { data, error } = await supabase
@@ -392,14 +430,29 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
       .order('updated_at', { ascending: true });
 
     if (!error && data) {
-      const formatted = data.map((m) => ({
-        id: m.client_id,
-        name: m.nickname,
-        isMuted: m.is_muted,
-        isSpeaking: m.is_speaking,
-        isScreenSharing: m.is_screen_sharing,
-        isSelf: m.client_id === myClientIdRef.current,
-      }));
+      // 만약 일반 보이스룸인데 활성 사용자가 0명이면 방 자동 삭제!
+      if (data.length === 0 && roomData && roomData.room_type !== 'stage') {
+        await supabase.from('voice_rooms').delete().eq('code', roomCode);
+        router.push('/voice');
+        return;
+      }
+
+      const formatted = data.map((m) => {
+        const isSelf = m.client_id === myClientIdRef.current;
+        if (isSelf) {
+          setIsSpeaker(m.is_speaker || false);
+        }
+        return {
+          id: m.client_id,
+          name: m.nickname,
+          isMuted: m.is_muted,
+          isSpeaking: m.is_speaking,
+          isScreenSharing: m.is_screen_sharing,
+          isSpeaker: m.is_speaker,
+          isSelf: isSelf,
+        };
+      });
+
       setParticipants(formatted);
 
       // 본인 이외의 유저에게 WebRTC SDP Offer 생성 및 발송
@@ -425,9 +478,58 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
     }
   };
 
-  // 프로필 카드 클릭 시 해당 사용자의 공유 화면 시청 뷰어 열기
+  // 어드민 전용: 특정 사용자를 발언자로 승격(초대)
+  const handlePromoteSpeaker = async (targetClientId: string) => {
+    try {
+      await supabase
+        .from('voice_room_members')
+        .update({
+          is_speaker: true,
+          is_muted: false,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('client_id', targetClientId);
+
+      setSelectedAdminTarget(null);
+      await loadRoomParticipants();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // 어드민 전용: 특정 발언자를 시청자로 강등 (내려버리기)
+  const handleDemoteSpeaker = async (targetClientId: string) => {
+    try {
+      await supabase
+        .from('voice_room_members')
+        .update({
+          is_speaker: false,
+          is_muted: true,
+          is_speaking: false,
+          is_screen_sharing: false,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('client_id', targetClientId);
+
+      setSelectedAdminTarget(null);
+      await loadRoomParticipants();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // 프로필 카드 클릭 시 처리 (어드민 제어 또는 화면 시청)
   const handleSelectParticipant = (p: any) => {
     unlockAudioPlayback();
+
+    const isStage = roomData?.room_type === 'stage';
+
+    // 어드민이고 타겟 유저가 본인이 아닌 경우 어드민 관리 팝업 켬
+    if (isAdmin && isStage && !p.isSelf) {
+      setSelectedAdminTarget(p);
+      return;
+    }
+
     if (p.isSelf && isScreenSharing && screenStreamRef.current) {
       setFocusedStreamer({
         id: myClientIdRef.current,
@@ -444,7 +546,11 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
         isSelf: false,
       });
     } else {
-      alert(t(`${p.name}님은 현재 화면을 공유하고 있지 않습니다.`, `${p.name} is not sharing screen right now.`));
+      if (isStage) {
+        alert(t(`${p.name}님은 현재 화면을 공유하고 있지 않거나 시청자 상태입니다.`, `${p.name} is not sharing screen right now.`));
+      } else {
+        alert(t(`${p.name}님은 현재 화면을 공유하고 있지 않습니다.`, `${p.name} is not sharing screen right now.`));
+      }
     }
   };
 
@@ -461,7 +567,15 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
     e.preventDefault();
     if (!nickname.trim()) return;
 
+    const isStage = roomData?.room_type === 'stage';
+    // 스테이지 채널 입장 시: 관리자는 기본 발언자(Speaker), 일반 유저는 시청자(Muted Listener)
+    const initialSpeaker = isStage ? isAdmin : true;
+    const initialMute = isStage ? !isAdmin : false;
+
     setHasJoined(true);
+    setIsSpeaker(initialSpeaker);
+    setIsMuted(initialMute);
+
     const stream = await startAudio();
 
     // 1) Broadcast 시그널링 채널 먼저 생성 및 대기
@@ -505,7 +619,7 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
       }
     });
 
-    // Postgres Changes 실시간 참가자 이벤트 바인딩
+    // Postgres Changes 실시간 참가자 및 발언권 이벤트 바인딩
     membersChannel.on(
       'postgres_changes',
       {
@@ -528,9 +642,10 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
               room_code: roomCode,
               client_id: myClientIdRef.current,
               nickname: nickname.trim(),
-              is_muted: false,
+              is_muted: initialMute,
               is_speaking: false,
               is_screen_sharing: false,
+              is_speaker: initialSpeaker,
               updated_at: new Date().toISOString(),
             },
           ],
@@ -552,9 +667,17 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
     }, 5000);
   };
 
-  // 마이크 음소거 토글
+  // 마이크 음소거 토글 (스테이지 채널 발언권 제약)
   const toggleMute = async () => {
     unlockAudioPlayback();
+    const isStage = roomData?.room_type === 'stage';
+    const canSpeak = !isStage || isAdmin || isSpeaker;
+
+    if (!canSpeak) {
+      alert(t('STAGE 채널에서는 호스트(관리자) 및 초대된 발언자만 마이크를 펼 수 있습니다.', 'Only host or invited speakers can turn on mic in STAGE.'));
+      return;
+    }
+
     const nextMute = !isMuted;
     setIsMuted(nextMute);
 
@@ -603,6 +726,9 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
     );
   }
 
+  const isStage = roomData?.room_type === 'stage';
+  const canSpeak = !isStage || isAdmin || isSpeaker;
+
   return (
     <main
       className={styles.main}
@@ -638,14 +764,14 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <h1 style={{ margin: 0, fontSize: '1.8rem', fontWeight: 900, color: 'var(--color-ink)' }}>
-                🎙️ {roomData?.title || roomCode}
+                {isStage ? '🎙️ [STAGE 무대]' : '🟢'} {roomData?.title || roomCode}
               </h1>
               <span style={{
                 fontSize: '0.8rem', padding: '4px 12px', borderRadius: '14px', fontWeight: 800,
-                background: roomData?.is_public ? '#dcfce7' : '#fef3c7',
-                color: roomData?.is_public ? '#166534' : '#b45309'
+                background: isStage ? '#dbeafe' : roomData?.is_public ? '#dcfce7' : '#fef3c7',
+                color: isStage ? '#1e40af' : roomData?.is_public ? '#166534' : '#b45309'
               }}>
-                {roomData?.is_public ? t('공개 채널', 'Public Channel') : t('🔒 비공개 링크 채널', '🔒 Secret Channel')}
+                {isStage ? t('🎙️ STAGE 방송 채널', '🎙️ STAGE Broadcast Channel') : roomData?.is_public ? t('공개 채널', 'Public Channel') : t('🔒 비공개 링크 채널', '🔒 Secret Channel')}
               </span>
             </div>
             <p style={{ margin: '6px 0 0', fontSize: '0.9rem', color: 'var(--color-mute)' }}>
@@ -740,7 +866,6 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
                 </div>
               </div>
 
-              {/* 1080p 30fps 비디오 렌더러 */}
               <div style={{
                 width: '100%',
                 maxHeight: '620px',
@@ -764,6 +889,70 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
           )}
         </AnimatePresence>
 
+        {/* 👑 어드민 전용: 시청자 발언권 승격/강등 오버레이 팝업 모달 */}
+        <AnimatePresence>
+          {selectedAdminTarget && (
+            <div style={{
+              position: 'fixed', inset: 0, zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px'
+            }}>
+              <motion.div
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                onClick={() => setSelectedAdminTarget(null)}
+                style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(4px)' }}
+              />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }}
+                style={{
+                  position: 'relative', background: '#ffffff', borderRadius: 'var(--radius-sm)',
+                  padding: '32px', width: '100%', maxWidth: '400px', boxShadow: '0 10px 40px rgba(0,0,0,0.2)',
+                  textAlign: 'center'
+                }}
+              >
+                <h3 style={{ margin: '0 0 12px', fontSize: '1.3rem', fontWeight: 800 }}>
+                  👑 어드민 시청자 제어
+                </h3>
+                <p style={{ margin: '0 0 24px', fontSize: '0.95rem', color: 'var(--color-ink)', fontWeight: 700 }}>
+                  [{selectedAdminTarget.name}] 님 권한 설정
+                </p>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  {!selectedAdminTarget.isSpeaker ? (
+                    <button
+                      onClick={() => handlePromoteSpeaker(selectedAdminTarget.id)}
+                      style={{
+                        padding: '14px', background: '#16a34a', color: '#ffffff', border: 'none',
+                        borderRadius: 'var(--radius-sm)', fontWeight: 800, fontSize: '1rem', cursor: 'pointer'
+                      }}
+                    >
+                      👑 발언자로 초대 (발언권 부여)
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => handleDemoteSpeaker(selectedAdminTarget.id)}
+                      style={{
+                        padding: '14px', background: '#dc2626', color: '#ffffff', border: 'none',
+                        borderRadius: 'var(--radius-sm)', fontWeight: 800, fontSize: '1rem', cursor: 'pointer'
+                      }}
+                    >
+                      ⬇️ 시청자로 강등 (내려버리기)
+                    </button>
+                  )}
+
+                  <button
+                    onClick={() => setSelectedAdminTarget(null)}
+                    style={{
+                      padding: '12px', background: '#f3f4f6', color: '#4b5563', border: 'none',
+                      borderRadius: 'var(--radius-sm)', fontWeight: 700, cursor: 'pointer'
+                    }}
+                  >
+                    취소
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
+
         {/* 미입장 상태: 닉네임 설정 게이트 */}
         {!hasJoined ? (
           <motion.div
@@ -777,10 +966,12 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
           >
             <span style={{ fontSize: '3rem', display: 'block', marginBottom: '12px' }}>🎧</span>
             <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0, color: 'var(--color-ink)' }}>
-              {t('보이스룸 접속 설정', 'Voice Channel Setup')}
+              {isStage ? '🎙️ STAGE 방송 무대 입장' : t('보이스룸 접속 설정', 'Voice Channel Setup')}
             </h2>
             <p style={{ margin: '8px 0 24px', fontSize: '0.9rem', color: 'var(--color-mute)' }}>
-              {t('사용하실 닉네임을 입력하고 마이크를 허용하여 입장하세요.', 'Enter your nickname to join the voice room.')}
+              {isStage
+                ? 'STAGE 무대에 시청자로 연결됩니다. (호스트가 발언자로 지정 시 대화 가능)'
+                : t('사용하실 닉네임을 입력하고 마이크를 허용하여 입장하세요.', 'Enter your nickname to join the voice room.')}
             </p>
 
             <form onSubmit={handleJoin} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -798,18 +989,30 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
               <button
                 type="submit"
                 style={{
-                  padding: '14px', background: 'var(--color-primary)', color: '#ffffff',
+                  padding: '14px', background: isStage ? '#2563eb' : 'var(--color-primary)', color: '#ffffff',
                   border: 'none', borderRadius: 'var(--radius-sm)', fontWeight: 800,
                   fontSize: '1rem', cursor: 'pointer'
                 }}
               >
-                🎙️ {t('음성 연결 및 입장하기', 'Connect Mic & Join')}
+                {isStage ? '🎙️ STAGE 무대 연결' : '🎙️ 음성 연결 및 입장하기'}
               </button>
             </form>
           </motion.div>
         ) : (
-          /* 입장 완료: 실시간 동기화 10인 그리드 아바타 & 제어 툴바 */
+          /* 입장 완료: 10인 그리드 아바타 & 제어 툴바 */
           <div>
+            {/* STAGE 설명 안내 띠 */}
+            {isStage && (
+              <div style={{
+                background: '#eff6ff', border: '1px solid #bfdbfe', color: '#1e40af',
+                padding: '14px 20px', borderRadius: 'var(--radius-sm)', marginBottom: '24px',
+                fontWeight: 700, fontSize: '0.9rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between'
+              }}>
+                <span>🎙️ <strong>STAGE 무대 채널</strong> : 호스트(관리자) 및 초대된 발언자만 마이크 및 화면 공유가 가능합니다.</span>
+                {isAdmin && <span style={{ color: '#2563eb' }}>👑 관리자 권한 활성화 (프로필 클릭하여 발언자 지명 가능)</span>}
+              </div>
+            )}
+
             {/* 10인 그리드 카드 */}
             <div style={{
               display: 'grid',
@@ -822,6 +1025,7 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
                 const activeSpeaking = p.isSpeaking;
                 const activeMuted = p.isMuted;
                 const isSharingScreen = isSelf ? isScreenSharing : p.isScreenSharing;
+                const isSpeakerRole = isSelf ? isSpeaker : p.isSpeaker;
 
                 return (
                   <motion.div
@@ -838,6 +1042,8 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
                       background: '#ffffff',
                       border: isSharingScreen
                         ? '2px solid #ef4444'
+                        : isSpeakerRole
+                        ? '2px solid #3b82f6'
                         : activeSpeaking
                         ? '2px solid #22c55e'
                         : '1px solid var(--color-hairline)',
@@ -848,7 +1054,7 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
                       alignItems: 'center',
                       position: 'relative',
                       textAlign: 'center',
-                      cursor: isSharingScreen ? 'pointer' : 'default'
+                      cursor: (isAdmin && isStage && !isSelf) || isSharingScreen ? 'pointer' : 'default'
                     }}
                   >
                     {/* 화면 공유 중 뱃지 */}
@@ -864,15 +1070,15 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
                       </span>
                     )}
 
-                    {/* 발화자 녹색 아우라 링 */}
+                    {/* 발화자 / 발언자 아우라 링 */}
                     <div style={{
                       width: '72px', height: '72px', borderRadius: '50%',
-                      background: isSharingScreen ? '#fee2e2' : activeSpeaking ? '#dcfce7' : '#f1f5f9',
+                      background: isSharingScreen ? '#fee2e2' : isSpeakerRole ? '#dbeafe' : activeSpeaking ? '#dcfce7' : '#f1f5f9',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       fontSize: '2rem', marginBottom: '14px', position: 'relative',
                       transition: 'all 0.2s ease'
                     }}>
-                      {isSharingScreen ? '🖥️' : '🎧'}
+                      {isSharingScreen ? '🖥️' : isSpeakerRole ? '🎙️' : '🎧'}
                       {activeSpeaking && (
                         <span style={{
                           position: 'absolute', inset: -4, borderRadius: '50%',
@@ -886,6 +1092,16 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
                     </strong>
 
                     <div style={{ display: 'flex', gap: '6px', marginTop: '6px', flexWrap: 'wrap', justifyContent: 'center' }}>
+                      {isStage && (
+                        <span style={{
+                          fontSize: '0.75rem', padding: '2px 8px', borderRadius: '10px', fontWeight: 800,
+                          background: isSpeakerRole ? '#dbeafe' : '#f3f4f6',
+                          color: isSpeakerRole ? '#1e40af' : '#6b7280'
+                        }}>
+                          {isSpeakerRole ? '👑 발언자' : '👁️ 시청자'}
+                        </span>
+                      )}
+
                       <span style={{
                         fontSize: '0.75rem', padding: '2px 8px', borderRadius: '10px',
                         fontWeight: 700,
@@ -950,22 +1166,24 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
               {/* 마이크 토글 */}
               <button
                 onClick={toggleMute}
+                disabled={!canSpeak}
                 style={{
                   padding: '10px 20px',
                   borderRadius: '30px',
                   border: 'none',
-                  background: isMuted ? '#ef4444' : '#22c55e',
+                  background: !canSpeak ? '#9ca3af' : isMuted ? '#ef4444' : '#22c55e',
                   color: '#ffffff',
                   fontWeight: 800,
                   fontSize: '0.95rem',
-                  cursor: 'pointer',
+                  cursor: !canSpeak ? 'not-allowed' : 'pointer',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '8px',
-                  transition: 'all 0.2s ease'
+                  transition: 'all 0.2s ease',
+                  opacity: !canSpeak ? 0.7 : 1
                 }}
               >
-                {isMuted ? '🔇 마이크 켜기' : '🎙️ 마이크 끄기 (Mute)'}
+                {!canSpeak ? '🔒 마이크 차단됨 (시청 전용)' : isMuted ? '🔇 마이크 켜기' : '🎙️ 마이크 끄기 (Mute)'}
               </button>
 
               {/* 스피커/헤드셋 토글 */}
@@ -991,19 +1209,21 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
               {/* 🖥️ 1080p 30fps 화면 공유 토글 버튼 */}
               <button
                 onClick={isScreenSharing ? stopScreenShare : startScreenShare}
+                disabled={!canSpeak}
                 style={{
                   padding: '10px 20px',
                   borderRadius: '30px',
                   border: 'none',
-                  background: isScreenSharing ? '#dc2626' : 'var(--color-primary)',
+                  background: !canSpeak ? '#9ca3af' : isScreenSharing ? '#dc2626' : 'var(--color-primary)',
                   color: '#ffffff',
                   fontWeight: 800,
                   fontSize: '0.95rem',
-                  cursor: 'pointer',
+                  cursor: !canSpeak ? 'not-allowed' : 'pointer',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '8px',
-                  transition: 'all 0.2s ease'
+                  transition: 'all 0.2s ease',
+                  opacity: !canSpeak ? 0.7 : 1
                 }}
               >
                 {isScreenSharing ? '🔴 화면 공유 중단' : '🖥️ 화면 공유 (1080p)'}
