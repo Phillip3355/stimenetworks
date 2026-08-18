@@ -20,9 +20,18 @@ Target Next.js App Router, React, Tailwind CSS, and Framer Motion by default. Re
 6. Apply purposeful motion: entrance sequencing, viewport reveals, hover and focus feedback, state transitions, and only context-appropriate scroll effects.
 7. Validate behavior at desktop and mobile widths, keyboard navigation, color contrast, reduced-motion support, image/layout stability, and build/lint checks.
 
-## Responsive and Mobile Fidelity
+## Device-Specific Design Fidelity
 
-Treat mobile as a distinct composition, not a shrunken desktop canvas. For every reference and implemented page, inspect and document the behavior at the project's desktop width plus 768px, 430px, and 360px viewports unless product requirements define different targets.
+Treat desktop and mobile as distinct compositions, not scaled versions of one another. For every reference and implemented page, inspect and document the behavior at the project's desktop width plus 768px, 430px, and 360px viewports unless product requirements define different targets.
+
+### Desktop
+
+- Use wide-screen space intentionally: establish an immersive visual focal point, purposeful horizontal rhythm, readable line lengths, and information density appropriate to a pointer-driven environment.
+- Design navigation, hover affordances, comparison layouts, data or feature exploration, and motion staging specifically for desktop rather than inheriting mobile constraints.
+- Keep primary content within an intentional reading measure even when the composition uses full-bleed imagery or expansive background effects.
+- Validate the page at the project's primary desktop width and at a narrower laptop width so large compositions do not break between common desktop sizes.
+
+### Mobile
 
 - Capture a responsive inventory: header/navigation transformation, content ordering, typography scale, grid collapse, image crop or replacement, fixed controls, and section spacing.
 - Recreate the reference's responsive *intent* and interaction hierarchy with the new product's content; do not depend on desktop-only absolute positioning or visual tricks that fail at narrow widths.
@@ -58,7 +67,7 @@ Create the package at `C:\\Users\\hhajj\\.codex\\skills\\immersive-web-design`.
 - `agents/openai.yaml`: generated UI metadata matching the skill.
 - `references/design-analysis.md`: reference-analysis template and `DESIGN.md` outline.
 - `references/motion-and-quality.md`: Framer Motion patterns, reduced-motion rules, performance limits, and final verification checklist.
-- `references/responsive-fidelity.md`: viewport analysis template, mobile composition rules, touch interaction checks, and responsive validation matrix.
+- `references/device-fidelity.md`: desktop and mobile analysis templates, pointer/touch interaction checks, and viewport validation matrix.
 
 No fixed page template is included: the design system must be derived for each project.
 
@@ -67,5 +76,5 @@ No fixed page template is included: the design system must be derived for each p
 - The skill triggers for homepage, landing page, marketing site, or React website work that needs reference-driven visual design, motion, or a `DESIGN.md`.
 - A URL can be used as an input to generate a distinct project-local `DESIGN.md` and implementation plan.
 - The implementation workflow includes code, responsive behavior, animation, and quality checks rather than stopping at a design document.
-- The `DESIGN.md` documents desktop and mobile behavior separately, and the completed page is visually and functionally checked at 360px, 430px, 768px, and desktop widths.
+- The `DESIGN.md` documents desktop and mobile behavior separately, and the completed page is visually and functionally checked at 360px, 430px, 768px, laptop, and primary desktop widths.
 - The skill is discoverable in Codex, passes structural validation, and makes no assumptions about proprietary reference assets.
