@@ -36,9 +36,7 @@ export default function RootLayout({
 
         <LanguageProvider>
           <Navbar />
-          <div style={{ paddingTop: "70px" }}>
-            {children}
-          </div>
+          <div className="siteContent">{children}</div>
           <Footer />
           <SpeedInsights />
           <Analytics />

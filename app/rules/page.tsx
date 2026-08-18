@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../components/LanguageProvider';
 import styles from '../styles/server-mechanism.module.css';

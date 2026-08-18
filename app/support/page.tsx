@@ -1,10 +1,27 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
+import type { User } from '@supabase/supabase-js';
+import { motion } from 'framer-motion';
 import { useLanguage } from '../components/LanguageProvider';
 import { supabase } from '../lib/supabase';
 import styles from '../styles/server-mechanism.module.css';
+
+interface Inquiry {
+  id: string;
+  inquiry_code: string;
+  status: 'open' | 'replied' | string;
+  created_at: string;
+  nickname?: string;
+}
+
+interface InquiryMessage {
+  id: string;
+  sender: 'user' | 'admin' | string;
+  message: string;
+  created_at: string;
+}
 
 // 6자리 랜덤 대문자/숫자 문의 코드 생성 함수
 function generateInquiryCode() {
@@ -20,15 +37,15 @@ export default function SupportPage() {
   const { t } = useLanguage();
 
   // 상태 관리
-  const [user, setUser] = useState<any | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [errorText, setErrorText] = useState('');
 
   // 유저 대시보드 상태
-  const [inquiries, setInquiries] = useState<any[]>([]);
-  const [selectedInquiry, setSelectedInquiry] = useState<any | null>(null);
-  const [messages, setMessages] = useState<any[]>([]);
+  const [inquiries, setInquiries] = useState<Inquiry[]>([]);
+  const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
+  const [messages, setMessages] = useState<InquiryMessage[]>([]);
   const [newMessage, setNewMessage] = useState('');
 
   // 새 문의 작성 폼 상태
@@ -94,6 +111,7 @@ export default function SupportPage() {
       setMessages([]);
       return;
     }
+    const userId = user.id;
 
     async function loadUserInquiries() {
       setIsLoading(true);
@@ -101,12 +119,12 @@ export default function SupportPage() {
         const { data, error } = await supabase
           .from('inquiries')
           .select('*')
-          .eq('user_id', user.id)
+          .eq('user_id', userId)
           .order('created_at', { ascending: false });
 
         if (error) throw error;
         setInquiries(data || []);
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error('Failed to load inquiries:', err);
         setErrorText(t('문의 내역을 불러오지 못했습니다.', 'Failed to load inquiries.'));
       } finally {
@@ -118,10 +136,10 @@ export default function SupportPage() {
 
     // 실시간 방 감지
     const inquiriesChannel = supabase
-      .channel(`inquiries_user_${user.id}`)
+      .channel(`inquiries_user_${userId}`)
       .on(
         'postgres_changes',
-        { event: '*', schema: 'public', table: 'inquiries', filter: `user_id=eq.${user.id}` },
+        { event: '*', schema: 'public', table: 'inquiries', filter: `user_id=eq.${userId}` },
         () => {
           loadUserInquiries();
         }
@@ -131,18 +149,19 @@ export default function SupportPage() {
     return () => {
       supabase.removeChannel(inquiriesChannel);
     };
-  }, [user, isAdmin]);
+  }, [user, isAdmin, t]);
 
   // 3. 선택한 문의방의 메시지 로드 & 실시간 구독 설정
   useEffect(() => {
     if (!selectedInquiry) return;
+    const inquiryId = selectedInquiry.id;
 
     // 초기 메시지 로드
     async function loadMessages() {
       const { data, error } = await supabase
         .from('inquiry_messages')
         .select('*')
-        .eq('inquiry_id', selectedInquiry.id)
+        .eq('inquiry_id', inquiryId)
         .order('created_at', { ascending: true });
       if (!error && data) {
         setMessages(data);
@@ -152,19 +171,19 @@ export default function SupportPage() {
 
     // 실시간 구독 설정
     const channel = supabase
-      .channel(`user_chat_${selectedInquiry.id}`)
+      .channel(`user_chat_${inquiryId}`)
       .on(
         'postgres_changes',
         {
           event: 'INSERT',
           schema: 'public',
           table: 'inquiry_messages',
-          filter: `inquiry_id=eq.${selectedInquiry.id}`,
+          filter: `inquiry_id=eq.${inquiryId}`,
         },
         (payload) => {
           setMessages((prev) => {
             if (prev.find(m => m.id === payload.new.id)) return prev;
-            return [...prev, payload.new];
+            return [...prev, payload.new as InquiryMessage];
           });
         }
       )
@@ -192,7 +211,7 @@ export default function SupportPage() {
           },
         },
       });
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
       setErrorText(t('구글 로그인 시도 중 오류가 발생했습니다.', 'Error occurred during Google sign in.'));
     }
@@ -279,7 +298,7 @@ ${inquiryPurpose.trim()}`;
         setSelectedInquiry(newInquiry);
         setInquiries(prev => [newInquiry, ...prev]);
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
       setErrorText(t('문의방 생성에 실패했습니다. 관리자에게 문의하세요.', 'Failed to create inquiry.'));
     } finally {
@@ -314,7 +333,7 @@ ${inquiryPurpose.trim()}`;
         .update({ status: 'open' })
         .eq('id', selectedInquiry.id);
 
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
       setErrorText(t('메시지 전송 실패', 'Failed to send message'));
     }
@@ -394,13 +413,13 @@ ${inquiryPurpose.trim()}`;
                     'You are logged in with an administrator account. Please proceed to the Admin Console.'
                   )}
                 </p>
-                <a
+                <Link
                   href="/taskboard"
                   className={styles.buttonOutline}
                   style={{ display: 'inline-block', padding: '12px 24px', fontWeight: 700, textDecoration: 'none', color: '#ffffff', background: 'var(--color-primary)', border: 'none', borderRadius: 'var(--radius-sm)' }}
                 >
                   {t('어드민 콘솔로 이동', 'Go to Admin Console')}
-                </a>
+                </Link>
               </article>
             </div>
           ) : (

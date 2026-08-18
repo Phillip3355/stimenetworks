@@ -3,9 +3,12 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '../../lib/supabase';
+import { useLanguage } from '../../components/LanguageProvider';
+import styles from './auth.module.css';
 
 export default function AuthCallback() {
   const router = useRouter();
+  const { t } = useLanguage();
 
   useEffect(() => {
     // Supabase Auth 상태 변화를 감지하여 세션이 성공적으로 처리되면 리다이렉트합니다.
@@ -38,33 +41,17 @@ export default function AuthCallback() {
   }, [router]);
 
   return (
-    <div style={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      minHeight: '80vh',
-      flexDirection: 'column',
-      gap: '20px',
-      color: 'var(--color-ink)',
-      fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-    }}>
-      <div style={{
-        width: '40px',
-        height: '40px',
-        border: '3px solid var(--color-hairline)',
-        borderTopColor: 'var(--color-primary)',
-        borderRadius: '50%',
-        animation: 'spin 1s linear infinite'
-      }} />
-      <style>{`
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-      `}</style>
-      <p style={{ fontSize: '0.95rem', fontWeight: 500, color: 'var(--color-mute)' }}>
-        구글 로그인 세션을 처리하는 중입니다. 잠시만 기다려 주세요...
-      </p>
-    </div>
+    <main className={styles.main}>
+      <section className={styles.status} aria-live="polite" aria-busy="true">
+        <p className={styles.brand}>Stime Networks · Authentication</p>
+        <div className={styles.spinner} aria-hidden="true" />
+        <p className={styles.message}>
+          {t(
+            'Google 로그인 세션을 처리하고 있습니다. 잠시만 기다려 주세요.',
+            'We are processing your Google sign-in session. Please wait a moment.',
+          )}
+        </p>
+      </section>
+    </main>
   );
 }

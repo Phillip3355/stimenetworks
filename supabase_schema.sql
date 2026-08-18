@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS public.voice_rooms (
   code TEXT UNIQUE NOT NULL, -- e.g. "room-1", "voice-alpha"
   title TEXT NOT NULL,
   is_public BOOLEAN DEFAULT true,
-  room_type TEXT DEFAULT 'general', -- 'general' (user created, auto-deletes at 0 members) or 'stage' (admin created & admin deleted)
+  room_type TEXT DEFAULT 'stage', -- 'stage' (admin created & admin deleted)
   created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())
 );
@@ -76,7 +76,6 @@ CREATE TABLE IF NOT EXISTS public.voice_room_members (
 
 ALTER TABLE public.voice_room_members DISABLE ROW LEVEL SECURITY;
 ALTER PUBLICATION supabase_realtime ADD TABLE public.voice_room_members;
-
 
 
 

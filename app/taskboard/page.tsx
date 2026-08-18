@@ -1,41 +1,71 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
+import type { User } from '@supabase/supabase-js';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../components/LanguageProvider';
 import { supabase } from '../lib/supabase';
+import { buildStageRoomPayload, filterStageRooms } from '../lib/voiceRoomPolicy.mjs';
 import styles from '../styles/server-mechanism.module.css';
+
+interface Inquiry {
+  id: string;
+  inquiry_code: string;
+  nickname: string;
+  status: 'open' | 'replied' | string;
+  created_at: string;
+}
+
+interface InquiryMessage {
+  id: string;
+  sender: 'user' | 'admin' | string;
+  message: string;
+  created_at: string;
+}
+
+interface ReportRecord {
+  id: string;
+  slug: string;
+  created_at: string;
+}
+
+interface StageRoom {
+  id: string;
+  code: string;
+  title: string;
+  room_type?: string;
+  is_public?: boolean;
+}
 
 export default function TaskboardPage() {
   const { t } = useLanguage();
 
   // 상태 관리
-  const [user, setUser] = useState<any | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   // 어드민 데이터 상태
-  const [inquiries, setInquiries] = useState<any[]>([]);
-  const [selectedInquiry, setSelectedInquiry] = useState<any | null>(null);
-  const [messages, setMessages] = useState<any[]>([]);
+  const [inquiries, setInquiries] = useState<Inquiry[]>([]);
+  const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
+  const [messages, setMessages] = useState<InquiryMessage[]>([]);
   const [replyText, setReplyText] = useState('');
   const [isSubmittingReply, setIsSubmittingReply] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  // 탭 및 보고서/보이스룸 관리 상태
+  // 탭 및 보고서/STAGE 채널 관리 상태
   const [activeTab, setActiveTab] = useState<'support' | 'report' | 'voice'>('support');
-  const [reports, setReports] = useState<any[]>([]);
+  const [reports, setReports] = useState<ReportRecord[]>([]);
   const [reportSlug, setReportSlug] = useState('');
   const [reportContent, setReportContent] = useState('');
   const [isPublishingReport, setIsPublishingReport] = useState(false);
   const [reportFeedback, setReportFeedback] = useState('');
 
-  // 보이스룸 관리 상태
-  const [voiceRooms, setVoiceRooms] = useState<any[]>([]);
+  // STAGE 채널 관리 상태
+  const [voiceRooms, setVoiceRooms] = useState<StageRoom[]>([]);
   const [newRoomCode, setNewRoomCode] = useState('');
   const [newRoomTitle, setNewRoomTitle] = useState('');
-  const [newRoomIsPublic, setNewRoomIsPublic] = useState(true);
-  const [newRoomType, setNewRoomType] = useState<'general' | 'stage'>('general');
   const [isCreatingRoom, setIsCreatingRoom] = useState(false);
   const [voiceFeedback, setVoiceFeedback] = useState('');
 
@@ -140,7 +170,7 @@ export default function TaskboardPage() {
     };
   }, [user, isAdmin]);
 
-  // 2.7. 어드민 인증이 완료되었을 때 보이스룸 목록 동기화
+  // 2.7. 어드민 인증이 완료되었을 때 STAGE 채널 목록 동기화
   useEffect(() => {
     if (!user || !isAdmin) return;
 
@@ -148,9 +178,11 @@ export default function TaskboardPage() {
       const { data, error } = await supabase
         .from('voice_rooms')
         .select('*')
+        .eq('room_type', 'stage')
+        .eq('is_public', true)
         .order('created_at', { ascending: false });
       if (!error && data) {
-        setVoiceRooms(data);
+        setVoiceRooms(filterStageRooms(data));
       }
     }
     loadVoiceRooms();
@@ -171,13 +203,14 @@ export default function TaskboardPage() {
   // 3. 선택한 특정 문의의 대화 내역 실시간 동기화
   useEffect(() => {
     if (!selectedInquiry) return;
+    const inquiryId = selectedInquiry.id;
 
     // 초기 메시지 로드
     async function loadMessages() {
       const { data, error } = await supabase
         .from('inquiry_messages')
         .select('*')
-        .eq('inquiry_id', selectedInquiry.id)
+        .eq('inquiry_id', inquiryId)
         .order('created_at', { ascending: true });
       if (!error && data) {
         setMessages(data);
@@ -187,19 +220,19 @@ export default function TaskboardPage() {
 
     // 실시간 메시지 유입 감지
     const messagesChannel = supabase
-      .channel(`admin_chat_${selectedInquiry.id}`)
+      .channel(`admin_chat_${inquiryId}`)
       .on(
         'postgres_changes',
         {
           event: 'INSERT',
           schema: 'public',
           table: 'inquiry_messages',
-          filter: `inquiry_id=eq.${selectedInquiry.id}`,
+          filter: `inquiry_id=eq.${inquiryId}`,
         },
         (payload) => {
           setMessages((prev) => {
             if (prev.find(m => m.id === payload.new.id)) return prev;
-            return [...prev, payload.new];
+            return [...prev, payload.new as InquiryMessage];
           });
         }
       )
@@ -333,9 +366,9 @@ export default function TaskboardPage() {
       setReportFeedback(t('보고서가 성공적으로 발행되었습니다!', 'Report published successfully!'));
       
       setTimeout(() => setReportFeedback(''), 3000);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
-      setReportFeedback(err.message || t('보고서 발행 중 오류가 발생했습니다.', 'Error occurred while publishing.'));
+      setReportFeedback(err instanceof Error ? err.message : t('보고서 발행 중 오류가 발생했습니다.', 'Error occurred while publishing.'));
     } finally {
       setIsPublishingReport(false);
     }
@@ -356,7 +389,7 @@ export default function TaskboardPage() {
     }
   };
 
-  // 보이스룸 생성 처리
+  // STAGE 채널 생성 처리
   const handleCreateVoiceRoom = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newRoomCode.trim() || !newRoomTitle.trim()) {
@@ -369,14 +402,8 @@ export default function TaskboardPage() {
     const formattedCode = newRoomCode.trim().toLowerCase().replace(/[^a-z0-9-_]/g, '-');
 
     try {
-      const finalIsPublic = newRoomType === 'stage' ? true : newRoomIsPublic;
       const { error } = await supabase.from('voice_rooms').insert([
-        {
-          code: formattedCode,
-          title: newRoomTitle.trim(),
-          is_public: finalIsPublic,
-          room_type: newRoomType,
-        }
+        buildStageRoomPayload({ code: formattedCode, title: newRoomTitle.trim() })
       ]);
 
 
@@ -390,42 +417,23 @@ export default function TaskboardPage() {
 
       setNewRoomCode('');
       setNewRoomTitle('');
-      setNewRoomIsPublic(true);
-      setVoiceFeedback(t('보이스룸이 성공적으로 생성되었습니다!', 'Voice room created successfully!'));
+      setVoiceFeedback(t('STAGE 채널이 성공적으로 생성되었습니다!', 'STAGE channel created successfully!'));
 
       setTimeout(() => setVoiceFeedback(''), 3000);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
-      setVoiceFeedback(err.message || t('보이스룸 생성 중 오류가 발생했습니다.', 'Error creating voice room.'));
+      setVoiceFeedback(err instanceof Error ? err.message : t('STAGE 채널 생성 중 오류가 발생했습니다.', 'Error creating STAGE channel.'));
     } finally {
       setIsCreatingRoom(false);
     }
   };
 
-  // 보이스룸 공개/비공개 토글
-  const handleToggleVoiceRoomPublic = async (id: string, currentPublic: boolean) => {
-    try {
-      const { error } = await supabase
-        .from('voice_rooms')
-        .update({ is_public: !currentPublic })
-        .eq('id', id);
-      if (error) throw error;
-
-      setVoiceRooms((prev) =>
-        prev.map((r) => (r.id === id ? { ...r, is_public: !currentPublic } : r))
-      );
-    } catch (err) {
-      console.error('Failed to toggle public state:', err);
-      alert(t('공개 상태 변경에 실패했습니다.', 'Failed to change public status.'));
-    }
-  };
-
-  // 보이스룸 수동 삭제 (삭제 시 해당 방 모든 유저 튕김)
+  // STAGE 채널 수동 삭제 (삭제 시 해당 방 모든 유저 튕김)
   const handleDeleteVoiceRoom = async (id: string, title: string) => {
     const confirmDelete = window.confirm(
       t(
-        `정말로 보이스룸 [${title}]을 삭제하시겠습니까?\n삭제 즉시 해당 방에 있던 모든 유저가 강제 퇴장(튕김)됩니다.`,
-        `Are you sure you want to delete voice room [${title}]?\nAll users currently in this room will be kicked immediately.`
+        `정말로 STAGE 채널 [${title}]을 삭제하시겠습니까?\n삭제 즉시 해당 채널에 있던 모든 유저가 강제 퇴장(튕김)됩니다.`,
+        `Are you sure you want to delete STAGE channel [${title}]?\nAll users currently in this channel will be kicked immediately.`
       )
     );
     if (!confirmDelete) return;
@@ -435,7 +443,7 @@ export default function TaskboardPage() {
       if (error) throw error;
       setVoiceRooms((prev) => prev.filter((r) => r.id !== id));
     } catch (err) {
-      console.error('Failed to delete voice room:', err);
+      console.error('Failed to delete STAGE channel:', err);
       alert(t('삭제에 실패했습니다.', 'Failed to delete.'));
     }
   };
@@ -598,7 +606,7 @@ export default function TaskboardPage() {
                 >
                   {t('다른 계정으로 로그인', 'Switch Account')}
                 </button>
-                <a
+                <Link
                   href="/"
                   style={{
                     fontSize: '0.85rem',
@@ -607,7 +615,7 @@ export default function TaskboardPage() {
                   }}
                 >
                   {t('메인 페이지로 돌아가기', 'Return to Main')}
-                </a>
+                </Link>
               </div>
             </div>
           </motion.div>
@@ -662,7 +670,7 @@ export default function TaskboardPage() {
                         fontSize: '1.05rem', transition: 'all 0.2s ease'
                       }}
                     >
-                      🎙️ {t('보이스룸 관리', 'Voice Rooms')}
+                      🎙️ {t('STAGE 채널 관리', 'STAGE Channels')}
                     </button>
                   </div>
 
@@ -1029,7 +1037,7 @@ export default function TaskboardPage() {
                 </div>
               )}
 
-              {/* 3. 보이스룸 관리 탭 */}
+              {/* 3. STAGE 채널 관리 탭 */}
               {activeTab === 'voice' && (
                 <div className={styles.dashboardGrid} style={{ gridTemplateColumns: '1fr', gap: '32px' }}>
                   {/* 방 생성 폼 */}
@@ -1037,7 +1045,7 @@ export default function TaskboardPage() {
                     border: '1px solid var(--color-hairline)', borderRadius: 'var(--radius-sm)', background: '#ffffff',
                     padding: '32px', display: 'flex', flexDirection: 'column', gap: '24px'
                   }}>
-                    <h3 style={{ margin: 0, fontWeight: 800 }}>🎙️ {t('새 보이스룸 생성', 'Create New Voice Room')}</h3>
+                    <h3 style={{ margin: 0, fontWeight: 800 }}>🎙️ {t('새 STAGE 채널 생성', 'Create New STAGE Channel')}</h3>
                     <form onSubmit={handleCreateVoiceRoom} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                         <div>
@@ -1077,61 +1085,9 @@ export default function TaskboardPage() {
                         </div>
                       </div>
 
-                      {/* 채널 종류 선택 */}
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '8px 0' }}>
-                        <span style={{ fontWeight: 700, fontSize: '0.95rem' }}>{t('채널 유형:', 'Channel Type:')}</span>
-                        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '0.95rem' }}>
-                          <input
-                            type="radio"
-                            name="room_type"
-                            checked={newRoomType === 'general'}
-                            onChange={() => setNewRoomType('general')}
-                          />
-                          🟢 {t('일반 보이스룸 (0명 시 자동 삭제)', 'General (Auto-deletes at 0)')}
-                        </label>
-                        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '0.95rem' }}>
-                          <input
-                            type="radio"
-                            name="room_type"
-                            checked={newRoomType === 'stage'}
-                            onChange={() => setNewRoomType('stage')}
-                          />
-                          🎙️ {t('STAGE 무대 (어드민 방송/어드민 수동 삭제)', 'STAGE (Admin Broadcast & Manual Delete Only)')}
-                        </label>
+                      <div style={{ padding: '12px 16px', borderRadius: 'var(--radius-sm)', background: '#eff6ff', color: '#1e40af', fontSize: '0.9rem', fontWeight: 700 }}>
+                        🎙️ {t('STAGE 채널은 항상 공개되며 관리자만 생성·삭제할 수 있습니다.', 'STAGE channels are always public and can only be created or deleted by administrators.')}
                       </div>
-
-                      {/* 공개/비공개 선택 */}
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '8px 0' }}>
-                        <span style={{ fontWeight: 700, fontSize: '0.95rem' }}>{t('공개 여부:', 'Visibility:')}</span>
-                        {newRoomType === 'stage' ? (
-                          <span style={{ color: '#2563eb', fontWeight: 700, fontSize: '0.9rem' }}>
-                            🟢 {t('공개 고정 (STAGE 무대는 무조건 공개 채널로 지정됩니다)', 'Always Public (STAGE channel is always public)')}
-                          </span>
-                        ) : (
-                          <>
-                            <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '0.95rem' }}>
-                              <input
-                                type="radio"
-                                name="is_public"
-                                checked={newRoomIsPublic === true}
-                                onChange={() => setNewRoomIsPublic(true)}
-                              />
-                              🟢 {t('공개 (목록에 노출)', 'Public (Listed)')}
-                            </label>
-                            <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '0.95rem' }}>
-                              <input
-                                type="radio"
-                                name="is_public"
-                                checked={newRoomIsPublic === false}
-                                onChange={() => setNewRoomIsPublic(false)}
-                              />
-                              🔒 {t('비공개 (링크로만 입장 가능)', 'Private (Link Only)')}
-                            </label>
-                          </>
-                        )}
-                      </div>
-
-
 
                       {voiceFeedback && (
                         <div style={{
@@ -1151,20 +1107,20 @@ export default function TaskboardPage() {
                           border: 'none', borderRadius: 'var(--radius-sm)', fontWeight: 700, cursor: 'pointer'
                         }}
                       >
-                        {isCreatingRoom ? t('생성 중...', 'Creating...') : t('보이스룸 생성하기', 'Create Voice Room')}
+                        {isCreatingRoom ? t('생성 중...', 'Creating...') : t('STAGE 채널 생성하기', 'Create STAGE Channel')}
                       </button>
                     </form>
                   </div>
 
-                  {/* 활성화된 보이스룸 전체 목록 및 삭제 제어 */}
+                  {/* 활성화된 STAGE 채널 목록 및 삭제 제어 */}
                   <div style={{
                     border: '1px solid var(--color-hairline)', borderRadius: 'var(--radius-sm)', background: '#ffffff',
                     padding: '32px', display: 'flex', flexDirection: 'column', gap: '20px'
                   }}>
-                    <h3 style={{ margin: 0, fontWeight: 800 }}>{t('활성화된 보이스룸 목록', 'Active Voice Rooms')} ({voiceRooms.length})</h3>
+                    <h3 style={{ margin: 0, fontWeight: 800 }}>{t('활성화된 STAGE 채널 목록', 'Active STAGE Channels')} ({voiceRooms.length})</h3>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                       {voiceRooms.length === 0 ? (
-                        <p style={{ color: 'var(--color-mute)', fontSize: '0.9rem' }}>{t('생성된 보이스룸이 없습니다.', 'No active voice rooms found.')}</p>
+                        <p style={{ color: 'var(--color-mute)', fontSize: '0.9rem' }}>{t('활성화된 STAGE 채널이 없습니다.', 'No active STAGE channels found.')}</p>
                       ) : (
                         voiceRooms.map((room) => (
                           <div key={room.id} style={{
@@ -1176,10 +1132,9 @@ export default function TaskboardPage() {
                                 <strong style={{ fontSize: '1.05rem', color: 'var(--color-ink)' }}>{room.title}</strong>
                                 <span style={{
                                   fontSize: '0.75rem', padding: '3px 8px', borderRadius: '12px', fontWeight: 700,
-                                  background: room.is_public ? '#dcfce7' : '#f3f4f6',
-                                  color: room.is_public ? '#166534' : '#4b5563'
+                                  background: '#dbeafe', color: '#1e40af'
                                 }}>
-                                  {room.is_public ? t('🟢 공개', '🟢 Public') : t('🔒 비공개', '🔒 Private')}
+                                  🎙️ STAGE · {t('공개', 'Public')}
                                 </span>
                               </div>
                               <p style={{ margin: '4px 0 0', fontSize: '0.85rem', color: 'var(--color-mute)' }}>
@@ -1187,16 +1142,6 @@ export default function TaskboardPage() {
                               </p>
                             </div>
                             <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                              <button
-                                onClick={() => handleToggleVoiceRoomPublic(room.id, room.is_public)}
-                                style={{
-                                  padding: '6px 12px', background: '#ffffff', color: 'var(--color-ink)',
-                                  border: '1px solid var(--color-hairline)', borderRadius: 'var(--radius-sm)', cursor: 'pointer',
-                                  fontWeight: 600, fontSize: '0.85rem'
-                                }}
-                              >
-                                {room.is_public ? t('🔒 비공개로 변경', 'Switch to Private') : t('🟢 공개로 변경', 'Switch to Public')}
-                              </button>
                               <a
                                 href={`/voice-${room.code}`}
                                 target="_blank"

@@ -1,73 +1,69 @@
 .main {
-  min-height: 100vh;
+  min-height: 100svh;
+  padding: calc(var(--nav-height) + 72px) 0 clamp(74px, 10vw, 132px);
   background: var(--color-canvas);
   color: var(--color-body);
-  padding: 60px 0 100px 0;
 }
 
 .container {
-  max-width: 800px;
+  width: min(calc(100% - 40px), var(--container-reading));
   margin: 0 auto;
-  padding: 0 24px;
-  width: 100%;
 }
 
 .backButton {
+  min-height: 44px;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  color: var(--color-mute);
+  color: var(--color-text-soft);
   text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 32px;
-  transition: all 0.2s ease;
+  font-size: 12px;
+  transition: color 180ms ease, transform 180ms ease;
 }
 
 .backButton:hover {
-  color: var(--color-primary);
-  transform: translateX(-2px);
+  color: var(--color-ink);
+  transform: translateX(-3px);
 }
 
 .header {
-  margin-bottom: 36px;
+  margin: clamp(48px, 8vw, 90px) 0 38px;
 }
 
 .badge {
   display: inline-block;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  margin-bottom: 15px;
+  color: var(--color-mute);
+  font-size: 10px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--color-primary);
-  background: rgba(30, 58, 138, 0.06);
-  padding: 4px 12px;
-  border-radius: 4px;
-  margin-bottom: 16px;
 }
 
 .title {
-  font-size: clamp(2rem, 5vw, 2.75rem);
-  line-height: 1.25;
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  margin: 0 0 22px;
   color: var(--color-ink);
-  margin-bottom: 16px;
+  font-size: clamp(38px, 7vw, 72px);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.06em;
+  word-break: keep-all;
+  overflow-wrap: normal;
+  text-wrap: balance;
 }
 
 .metadata {
+  padding: 16px 0;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 16px;
-  font-size: 0.9rem;
-  color: var(--color-mute);
+  gap: 10px 14px;
+  border-top: 1px solid var(--color-hairline);
   border-bottom: 1px solid var(--color-hairline);
-  padding-bottom: 24px;
+  color: var(--color-mute);
+  font-size: 11px;
 }
 
 .author {
-  font-weight: 700;
-  color: var(--color-body);
+  color: var(--color-ink);
 }
 
 .separator {
@@ -75,159 +71,116 @@
 }
 
 .card {
-  background: var(--color-surface-soft);
-  border: 1px solid var(--color-hairline);
-  border-radius: var(--radius-sm);
-  padding: 48px;
-  box-shadow: 0 4px 20px -2px rgba(17, 24, 39, 0.03), 0 2px 6px -1px rgba(17, 24, 39, 0.01);
-  line-height: 1.85;
-  font-size: 1.05rem;
+  padding: clamp(26px, 5vw, 52px) 0 0;
   color: var(--color-body);
+  font-size: 16px;
+  line-height: 1.85;
 }
 
-/* Markdown Styling */
 .markdown h1,
 .markdown h2,
 .markdown h3,
 .markdown h4 {
   color: var(--color-ink);
-  font-weight: 700;
-  margin-top: 1.75em;
-  margin-bottom: 0.5em;
-  line-height: 1.35;
+  font-weight: 460;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+  word-break: keep-all;
 }
 
-.markdown h1 {
-  font-size: 1.8rem;
-  border-bottom: 1px solid var(--color-hairline);
-  padding-bottom: 8px;
-  margin-top: 1em;
-}
-
-.markdown h2 {
-  font-size: 1.45rem;
-  border-bottom: 1px solid var(--color-hairline);
-  padding-bottom: 6px;
-}
-
-.markdown h3 {
-  font-size: 1.25rem;
-}
-
-.markdown p {
-  margin-top: 0;
-  margin-bottom: 1.25em;
-}
-
+.markdown h1 { margin: 2em 0 0.7em; font-size: 2rem; }
+.markdown h2 { margin: 2em 0 0.7em; font-size: 1.65rem; }
+.markdown h3 { margin: 1.8em 0 0.6em; font-size: 1.3rem; }
+.markdown p { margin: 0 0 1.35em; }
 .markdown ul,
-.markdown ol {
-  margin-top: 0;
-  margin-bottom: 1.25em;
-  padding-left: 1.5em;
-}
-
-.markdown li {
-  margin-bottom: 0.5em;
-}
-
-.markdown li::marker {
-  color: var(--color-primary);
-  font-weight: 700;
-}
+.markdown ol { margin: 0 0 1.4em; padding-left: 1.4em; }
+.markdown li { margin-bottom: 0.55em; }
+.markdown li::marker { color: var(--color-ink); }
 
 .markdown a {
-  color: var(--color-primary);
-  text-decoration: none;
-  font-weight: 600;
-  border-bottom: 1px solid rgba(30, 58, 138, 0.2);
-  transition: all 0.2s ease;
-}
-
-.markdown a:hover {
-  border-bottom-color: var(--color-primary);
+  color: var(--color-ink);
+  text-decoration-color: var(--color-hairline-strong);
+  text-underline-offset: 4px;
 }
 
 .markdown blockquote {
-  margin: 1.5em 0;
-  padding: 16px 20px;
-  background: var(--color-surface-dark);
-  border-left: 4px solid var(--color-primary);
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-  color: var(--color-mute);
-}
-
-.markdown blockquote p {
-  margin: 0;
+  margin: 1.8em 0;
+  padding: 18px 22px;
+  border-left: 2px solid var(--color-ink);
+  background: var(--color-surface);
+  color: var(--color-text-soft);
 }
 
 .markdown code {
-  font-family: var(--font-mono), monospace;
-  font-size: 0.9em;
-  background: var(--color-surface-dark);
   padding: 2px 6px;
-  border-radius: 4px;
-  color: #b91c1c; /* premium contrasting code color */
-  word-break: break-all;
+  background: var(--color-surface-raised);
+  color: var(--color-ink);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.9em;
+  word-break: break-word;
 }
 
 .markdown pre {
-  margin: 1.5em 0;
-  overflow-x: auto;
-  border-radius: var(--radius-sm);
-  background: #1f2937;
+  max-width: 100%;
+  margin: 1.8em 0;
   padding: 20px;
+  overflow-x: auto;
+  border: 1px solid var(--color-hairline);
+  background: #090909;
 }
 
 .markdown pre code {
-  background: transparent;
   padding: 0;
-  border-radius: 0;
-  color: #f3f4f6;
-  display: block;
+  background: transparent;
   word-break: normal;
 }
 
 .markdown table {
   width: 100%;
+  margin: 1.8em 0;
   border-collapse: collapse;
-  margin: 1.5em 0;
-  font-size: 0.95rem;
+  display: block;
+  overflow-x: auto;
+  font-size: 13px;
 }
 
 .markdown th,
 .markdown td {
-  padding: 12px 16px;
+  min-width: 130px;
+  padding: 12px 14px;
   border-bottom: 1px solid var(--color-hairline);
   text-align: left;
 }
 
 .markdown th {
-  background: var(--color-surface-dark);
-  font-weight: 700;
   color: var(--color-ink);
+  background: var(--color-surface);
 }
 
 .markdown hr {
+  margin: 2.6em 0;
   border: 0;
   border-top: 1px solid var(--color-hairline);
-  margin: 2em 0;
 }
 
-/* Mobile responsive padding */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .main {
-    padding: 40px 0 60px 0;
+    padding-top: calc(var(--nav-height) + 42px);
   }
-  .card {
-    padding: 28px 20px;
-    font-size: 1rem;
+
+  .container {
+    width: calc(100% - 28px);
   }
+
+  .header {
+    margin-top: 38px;
+  }
+
   .title {
-    font-size: 1.85rem;
+    font-size: clamp(34px, 10vw, 46px);
   }
-  .metadata {
-    flex-wrap: wrap;
-    gap: 8px 12px;
+
+  .card {
+    font-size: 15px;
   }
 }
