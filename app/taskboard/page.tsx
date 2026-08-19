@@ -642,6 +642,7 @@ export default function TaskboardPage() {
                   <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginTop: '12px' }}>
                     <button
                       onClick={() => setActiveTab('support')}
+                      className={`${styles.adminTab} ${activeTab === 'support' ? styles.adminTabActive : ''}`}
                       style={{
                         padding: '10px 20px', border: 'none', background: activeTab === 'support' ? 'var(--color-primary)' : 'transparent',
                         color: activeTab === 'support' ? '#fff' : 'var(--color-mute)', borderRadius: '30px', fontWeight: 800, cursor: 'pointer',
@@ -652,6 +653,7 @@ export default function TaskboardPage() {
                     </button>
                     <button
                       onClick={() => setActiveTab('report')}
+                      className={`${styles.adminTab} ${activeTab === 'report' ? styles.adminTabActive : ''}`}
                       style={{
                         padding: '10px 20px', border: 'none', background: activeTab === 'report' ? 'var(--color-primary)' : 'transparent',
                         color: activeTab === 'report' ? '#fff' : 'var(--color-mute)', borderRadius: '30px', fontWeight: 800, cursor: 'pointer',
@@ -662,6 +664,7 @@ export default function TaskboardPage() {
                     </button>
                     <button
                       onClick={() => setActiveTab('voice')}
+                      className={`${styles.adminTab} ${activeTab === 'voice' ? styles.adminTabActive : ''}`}
                       style={{
                         padding: '10px 20px', border: 'none', background: activeTab === 'voice' ? 'var(--color-primary)' : 'transparent',
                         color: activeTab === 'voice' ? '#fff' : 'var(--color-mute)', borderRadius: '30px', fontWeight: 800, cursor: 'pointer',
@@ -769,7 +772,7 @@ export default function TaskboardPage() {
                   {selectedInquiry ? (
                     <>
                       {/* 상세 창 헤더 */}
-                      <div style={{
+                      <div className={styles.chatFeed} style={{
                         padding: '20px 24px',
                         borderBottom: '1px solid var(--color-hairline)',
                         background: 'var(--color-canvas)',
@@ -831,7 +834,7 @@ export default function TaskboardPage() {
                                 width: '100%'
                               }}
                             >
-                              <div style={{
+                              <div className={isMsgAdmin ? styles.chatBubbleAdmin : styles.chatBubbleUser} style={{
                                 maxWidth: '70%',
                                 padding: '12px 18px',
                                 borderRadius: '16px',
@@ -864,13 +867,14 @@ export default function TaskboardPage() {
 
                       {/* 관리자 답장 입력란 */}
                       <form
+                        className={styles.chatComposer}
                         onSubmit={handleSendReply}
                         style={{
                           padding: '16px 24px',
                           borderTop: '1px solid var(--color-hairline)',
                           display: 'flex',
                           gap: '12px',
-                          background: '#ffffff'
+                          background: 'var(--color-surface)'
                         }}
                       >
                         <input
@@ -894,9 +898,9 @@ export default function TaskboardPage() {
                           type="submit"
                           disabled={isSubmittingReply}
                           style={{
-                            background: 'var(--color-primary)',
+                            background: 'var(--color-ink)',
                             border: 'none',
-                            color: '#ffffff',
+                            color: 'var(--color-canvas)',
                             padding: '0 24px',
                             borderRadius: '30px',
                             fontWeight: 700,

@@ -385,7 +385,7 @@ ${inquiryPurpose.trim()}`;
                   className={styles.buttonOutline}
                   style={{
                     display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
-                    padding: '14px 28px', fontSize: '1rem', fontWeight: 700, color: '#ffffff',
+                    padding: '14px 28px', fontSize: '1rem', fontWeight: 700, color: 'var(--color-canvas)',
                     background: 'var(--color-primary)', border: 'none', borderRadius: 'var(--radius-sm)', cursor: 'pointer'
                   }}
                 >
@@ -414,7 +414,7 @@ ${inquiryPurpose.trim()}`;
                 <Link
                   href="/taskboard"
                   className={styles.buttonOutline}
-                  style={{ display: 'inline-block', padding: '12px 24px', fontWeight: 700, textDecoration: 'none', color: '#ffffff', background: 'var(--color-primary)', border: 'none', borderRadius: 'var(--radius-sm)' }}
+                  style={{ display: 'inline-block', padding: '12px 24px', fontWeight: 700, textDecoration: 'none', color: 'var(--color-canvas)', background: 'var(--color-primary)', border: 'none', borderRadius: 'var(--radius-sm)' }}
                 >
                   {t('어드민 콘솔로 이동', 'Go to Admin Console')}
                 </Link>
@@ -432,7 +432,7 @@ ${inquiryPurpose.trim()}`;
               <div className={styles.listPanel}>
                 {/* 사용자 정보 카드 */}
                 <div style={{
-                  border: '1px solid var(--color-hairline)', borderRadius: 'var(--radius-sm)', background: '#ffffff', padding: '20px'
+                  border: '1px solid var(--color-hairline)', borderRadius: 'var(--radius-sm)', background: 'var(--color-surface)', padding: '20px'
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
                     <strong style={{ fontSize: '1.1rem', color: 'var(--color-ink)' }}>{nickname}</strong>
@@ -445,7 +445,7 @@ ${inquiryPurpose.trim()}`;
 
                 {/* 내 문의 목록 */}
                 <div style={{
-                  border: '1px solid var(--color-hairline)', borderRadius: 'var(--radius-sm)', background: '#ffffff', display: 'flex', flexDirection: 'column', overflow: 'hidden', flexGrow: 1
+                  border: '1px solid var(--color-hairline)', borderRadius: 'var(--radius-sm)', background: 'var(--color-surface)', display: 'flex', flexDirection: 'column', overflow: 'hidden', flexGrow: 1
                 }}>
                   <div style={{
                     padding: '16px', borderBottom: '1px solid var(--color-hairline)', background: 'var(--color-canvas)',
@@ -455,7 +455,7 @@ ${inquiryPurpose.trim()}`;
                     <button
                       onClick={() => { setIsCreatingNew(true); setSelectedInquiry(null); }}
                       style={{
-                        background: 'var(--color-primary)', color: '#fff', border: 'none', borderRadius: '4px',
+                        background: 'var(--color-ink)', color: 'var(--color-canvas)', border: 'none', borderRadius: '4px',
                         padding: '6px 12px', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer'
                       }}
                     >
@@ -478,7 +478,7 @@ ${inquiryPurpose.trim()}`;
                             onClick={() => { setSelectedInquiry(item); setIsCreatingNew(false); }}
                             style={{
                               padding: '16px', borderBottom: '1px solid var(--color-hairline)', cursor: 'pointer',
-                              background: isSelected ? 'rgba(30, 58, 138, 0.04)' : '#ffffff',
+                              background: isSelected ? 'var(--color-surface-raised)' : 'var(--color-surface)',
                               borderLeft: isSelected ? '4px solid var(--color-primary)' : '4px solid transparent',
                             }}
                           >
@@ -607,7 +607,7 @@ ${inquiryPurpose.trim()}`;
                         type="submit"
                         disabled={isSubmitting}
                         style={{
-                          marginTop: '16px', padding: '16px', background: 'var(--color-primary)', color: '#ffffff',
+                          marginTop: '16px', padding: '16px', background: 'var(--color-ink)', color: 'var(--color-canvas)',
                           border: 'none', borderRadius: 'var(--radius-sm)', fontWeight: 800, fontSize: '1.05rem', cursor: 'pointer'
                         }}
                       >
@@ -641,12 +641,12 @@ ${inquiryPurpose.trim()}`;
                       </div>
                     </div>
 
-                    <div style={{ flexGrow: 1, padding: '24px', overflowY: 'auto', background: '#faf9f6', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                    <div className={styles.chatFeed} style={{ flexGrow: 1, padding: '24px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                       {messages.map((msg) => {
                         const isMsgAdmin = msg.sender === 'admin';
                         return (
                           <div key={msg.id} style={{ display: 'flex', flexDirection: 'column', alignItems: isMsgAdmin ? 'flex-start' : 'flex-end', width: '100%' }}>
-                            <div style={{
+                            <div className={isMsgAdmin ? styles.chatBubbleAdmin : styles.chatBubbleUser} style={{
                               maxWidth: '70%', padding: '12px 18px', borderRadius: '16px',
                               borderTopLeftRadius: isMsgAdmin ? '2px' : '16px', borderTopRightRadius: isMsgAdmin ? '16px' : '2px',
                               background: isMsgAdmin ? 'var(--color-primary)' : '#ffffff',
@@ -665,13 +665,13 @@ ${inquiryPurpose.trim()}`;
                       <div ref={messagesEndRef} />
                     </div>
 
-                    <form onSubmit={handleSendMessage} style={{ padding: '16px 24px', borderTop: '1px solid var(--color-hairline)', display: 'flex', gap: '12px', background: '#ffffff' }}>
+                    <form className={styles.chatComposer} onSubmit={handleSendMessage} style={{ padding: '16px 24px', borderTop: '1px solid var(--color-hairline)', display: 'flex', gap: '12px' }}>
                       <input
                         type="text" placeholder={t('추가 메시지를 입력해 주세요...', 'Type your message...')}
                         value={newMessage} onChange={(e) => setNewMessage(e.target.value)} required
                         style={{ flexGrow: 1, padding: '12px 18px', border: '1px solid var(--color-hairline)', borderRadius: '30px', fontSize: '0.95rem', outline: 'none' }}
                       />
-                      <button type="submit" style={{ background: 'var(--color-primary)', border: 'none', color: '#ffffff', padding: '0 24px', borderRadius: '30px', fontWeight: 700, cursor: 'pointer', fontSize: '0.95rem' }}>
+                      <button type="submit" style={{ background: 'var(--color-ink)', border: 'none', color: 'var(--color-canvas)', padding: '0 24px', borderRadius: '30px', fontWeight: 700, cursor: 'pointer', fontSize: '0.95rem' }}>
                         {t('전송', 'Send')}
                       </button>
                     </form>

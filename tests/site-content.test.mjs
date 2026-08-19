@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import * as siteContent from '../app/lib/siteContent.mjs';
 
 import {
   getRuleDetail,
@@ -87,6 +88,18 @@ test('home differentiators use every newly supplied server screenshot', () => {
     ).id,
     'evolving-world',
   );
+});
+
+test('launch gallery presents copy 7, 8, and 9 in exhibition order', () => {
+  assert.deepEqual(
+    siteContent.launchGallery?.map(({ src }) => src),
+    ['/image copy 7.png', '/image copy 8.png', '/image copy 9.png'],
+  );
+
+  for (const artwork of siteContent.launchGallery ?? []) {
+    assert.ok(artwork.altKo.length >= 10);
+    assert.ok(artwork.altEn.length >= 10);
+  }
 });
 
 test('rule mind map exposes clickable branches with detailed examples', () => {

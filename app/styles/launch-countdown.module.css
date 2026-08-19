@@ -1,0 +1,226 @@
+.section {
+  position: relative;
+  min-height: min(900px, 92svh);
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  isolation: isolate;
+  border-top: 1px solid var(--color-hairline-strong);
+  background: #020202;
+  color: var(--color-ink);
+}
+
+.backdrop {
+  z-index: -4;
+  object-fit: cover;
+  object-position: center 42%;
+  filter: saturate(0.72) contrast(1.08) brightness(0.72);
+  transform: scale(1.015);
+}
+
+.veil {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.16) 34%, rgba(0, 0, 0, 0.78) 100%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.74) 0%, rgba(0, 0, 0, 0.08) 62%, rgba(0, 0, 0, 0.34) 100%);
+}
+
+.scanline {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  opacity: 0.12;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.16) 1px, transparent 1px);
+  background-size: 100% 5px;
+  pointer-events: none;
+}
+
+.content {
+  width: min(calc(100% - 48px), var(--container-wide));
+  min-height: inherit;
+  margin: 0 auto;
+  padding: clamp(38px, 5vw, 68px) 0 clamp(34px, 4vw, 56px);
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  gap: clamp(28px, 5vw, 64px);
+}
+
+.topline,
+.footerLine {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  color: rgba(242, 241, 236, 0.72);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.topline {
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.34);
+}
+
+.headlineBlock {
+  align-self: end;
+  max-width: 980px;
+}
+
+.preTitle {
+  margin: 0 0 14px;
+  color: rgba(242, 241, 236, 0.78);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+}
+
+.title {
+  max-width: 11ch;
+  margin: 0;
+  color: #fff;
+  font-size: clamp(52px, 8vw, 122px);
+  font-weight: 460;
+  line-height: 0.9;
+  letter-spacing: -0.065em;
+  word-break: keep-all;
+  text-wrap: balance;
+  text-shadow: 0 8px 36px rgba(0, 0, 0, 0.42);
+}
+
+.timer {
+  scroll-margin-top: calc(var(--nav-height) + 18px);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid rgba(255, 255, 255, 0.46);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.46);
+  background: rgba(3, 3, 3, 0.34);
+  backdrop-filter: blur(9px);
+}
+
+.unit {
+  position: relative;
+  min-width: 0;
+  padding: clamp(18px, 2.6vw, 34px) clamp(8px, 1.8vw, 24px);
+  display: grid;
+  gap: 8px;
+  border-right: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+.unit:not(:last-child)::after {
+  content: ':';
+  position: absolute;
+  top: 43%;
+  right: 0;
+  z-index: 1;
+  color: rgba(242, 241, 236, 0.76);
+  font-family: var(--font-mono);
+  font-size: clamp(18px, 2.2vw, 34px);
+  line-height: 1;
+  transform: translate(50%, -50%);
+}
+
+.unit:last-child {
+  border-right: 0;
+}
+
+.value {
+  font-family: var(--font-mono);
+  font-size: clamp(44px, 8.2vw, 118px);
+  font-variant-numeric: tabular-nums;
+  font-weight: 430;
+  line-height: 0.86;
+  letter-spacing: -0.085em;
+  white-space: nowrap;
+}
+
+.unitLabel {
+  color: rgba(242, 241, 236, 0.68);
+  font-size: 9px;
+  font-weight: 680;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.footerLine {
+  align-items: center;
+}
+
+@media (max-width: 760px) {
+  .section {
+    min-height: 760px;
+  }
+
+  .content {
+    width: calc(100% - 28px);
+    padding: 28px 0 30px;
+    grid-template-rows: auto 1fr auto auto;
+    gap: 26px;
+  }
+
+  .topline {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .headlineBlock {
+    align-self: end;
+  }
+
+  .title {
+    max-width: 9ch;
+    font-size: clamp(43px, 14.2vw, 68px);
+    line-height: 0.94;
+  }
+
+  .timer {
+    backdrop-filter: blur(7px);
+  }
+
+  .unit {
+    padding: 18px 5px 16px;
+    gap: 7px;
+  }
+
+  .value {
+    font-size: clamp(30px, 10.4vw, 48px);
+    letter-spacing: -0.09em;
+  }
+
+  .unitLabel {
+    font-size: 8px;
+    letter-spacing: 0.08em;
+  }
+
+  .footerLine {
+    line-height: 1.5;
+  }
+
+  .footerLine span:last-child {
+    display: none;
+  }
+
+  .backdrop {
+    object-position: 44% center;
+  }
+}
+
+@media (max-width: 380px) {
+  .value {
+    font-size: 28px;
+  }
+
+  .unitLabel {
+    letter-spacing: 0.02em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop {
+    transform: none;
+  }
+}

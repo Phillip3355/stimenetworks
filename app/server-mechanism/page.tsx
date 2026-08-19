@@ -55,10 +55,18 @@ export default function ServerMechanism() {
               <h2 className={styles.timelineTitle}>{t('에디션별 차이가 보일 때', 'When Editions Behave Differently')}</h2>
               <p className={styles.timelineText}>
                 {t(
-                  '전투, 레드스톤, 리소스팩은 에디션에 따라 조금 다르게 보이거나 작동할 수 있습니다. 플레이 중 차이를 발견하면 1:1 문의로 알려주세요.',
-                  'Combat, redstone, and resource packs can look or behave slightly differently between editions. Let us know through private support if something feels off.',
+                  '전투, 레드스톤, 리소스팩은 에디션에 따라 조금 다르게 보이거나 작동할 수 있습니다. 자세한 차이와 제한 사항은 Geyser 공식 매뉴얼을 참고하세요.',
+                  'Combat, redstone, and resource packs can look or behave slightly differently between editions. Refer to the official Geyser manual for known differences and limitations.',
                 )}
               </p>
+              <a
+                className={styles.manualLink}
+                href="https://geysermc.org/wiki/geyser/current-limitations/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                {t('Geyser 공식 매뉴얼 보기 ↗', 'Open the official Geyser manual ↗')}
+              </a>
             </article>
           </div>
         </div>

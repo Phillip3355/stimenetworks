@@ -136,6 +136,36 @@ export const homeFeatures = [
   },
 ];
 
+export const launchGallery = [
+  {
+    id: 'monument',
+    index: '01',
+    src: '/image copy 7.png',
+    titleKo: '붉은빛의 성채',
+    titleEn: 'The Ember Citadel',
+    altKo: '노을과 별빛 아래 붉게 빛나는 StimeMC의 거대한 성채',
+    altEn: 'A monumental StimeMC citadel glowing red beneath the dusk sky',
+  },
+  {
+    id: 'settlement',
+    index: '02',
+    src: '/image copy 8.png',
+    titleKo: '숲 위의 정착지',
+    titleEn: 'Settlement Above the Forest',
+    altKo: '숲 위에 세워진 청록색 지붕의 StimeMC 대형 목조 건축물',
+    altEn: 'A large StimeMC timber settlement with teal roofs above the forest',
+  },
+  {
+    id: 'sky-realm',
+    index: '03',
+    src: '/image copy 9.png',
+    titleKo: '공중에 열린 미지의 영역',
+    titleEn: 'A Realm Suspended in the Sky',
+    altKo: '부유섬 사이에서 빛나는 StimeMC의 거대한 공중 구조물',
+    altEn: 'A luminous StimeMC structure suspended among shadowy floating islands',
+  },
+];
+
 export const ruleMindMap = {
   root: {
     titleKo: 'StimeMC 서버 규칙',

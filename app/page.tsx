@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import CardsGrid from './components/CardsGrid';
 import Hero from './components/Hero';
+import LaunchCountdown from './components/LaunchCountdown';
+import LaunchGallery from './components/LaunchGallery';
 import { useLanguage } from './components/LanguageProvider';
 import { homeFeatures } from './lib/siteContent.mjs';
 
@@ -61,6 +63,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <LaunchCountdown />
+      <LaunchGallery />
     </main>
   );
 }
