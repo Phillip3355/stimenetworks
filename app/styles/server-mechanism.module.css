@@ -159,6 +159,12 @@
   background: var(--color-surface-soft);
 }
 
+@media (min-width: 761px) {
+  .timelineCard {
+    justify-content: flex-start;
+  }
+}
+
 .cornerSquare {
   position: absolute;
   top: 18px;

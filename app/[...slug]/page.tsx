@@ -76,7 +76,7 @@ export default async function ReportPage({ params }: ReportPageProps) {
           <span className={styles.badge}>Stime Report</span>
           <h1 className={styles.title}>{title}</h1>
           <div className={styles.metadata}>
-            <span className={styles.author}>Stime Networks</span>
+            <span className={styles.author}>StimeMC</span>
             <span className={styles.separator}>|</span>
             <time dateTime={report.created_at}>{formattedDate}</time>
           </div>

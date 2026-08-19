@@ -8,14 +8,14 @@ const updateCards = [
   {
     title: '2026.05.30',
     titleEn: 'May 30, 2026',
-    descriptionKo: '• globals.css 컬러 변수 상속 충돌 해결 (대리석 미색 배경 및 차콜 글씨 렌더링 정상화)\n• 공통 Footer 컴포넌트 추출 및 layout.tsx 전역 마운트로 모든 서브페이지 하단 푸터 연동 완성\n• LanguageSwitch, ScrollSection, 구형 스크립트 등 불필요한 미사용 코드(Dead Code) 350여 라인 일괄 소거 정리',
-    descriptionEn: '• Fixed globals.css color inheritance to fully restore the soft warm white and eye-care charcoal theme\n• Extracted global Footer component and mounted inside RootLayout for seamless footer coverage across all subpages\n• Cleaned up and deleted over 350 lines of unused dead code (LanguageSwitch, ScrollSection, old python tools)',
+    descriptionKo: '• 모든 페이지에서 글자와 배경을 더 편하게 읽을 수 있도록 개선\n• 어디에서든 가입, 규칙, 문의 페이지로 빠르게 이동할 수 있는 하단 메뉴 추가\n• 화면 전환과 스크롤을 더 가볍고 안정적으로 정리',
+    descriptionEn: '• Improved text and background readability across every page\n• Added footer navigation for quick access to joining, rules, and support\n• Made page transitions and scrolling lighter and more stable',
   },
   {
     title: '2026.05.28',
     titleEn: 'May 28, 2026',
-    descriptionKo: '• 전체 디자인 미니멀 라이트 테마 전면 적용\n• 상단 고정형 블러 글래스모피즘 네비게이션 헤더 구축\n• 위에서 스윽 내려오는 3열 오프캔버스 전체 메뉴 패널 탑재\n• 마이크로 레이아웃 쉬프트(화면 튕김) 결함 해결\n• 신규 서버 가입 가이드(/join) 및 플레이 전 규칙 권장 CTA 추가\n• 카카오톡 커뮤니티(필수) 및 디스코드(선택) 가입 요건 명시\n• Vercel Analytics 및 Speed Insights 성능 분석 이식',
-    descriptionEn: '• Applied premium minimalist light theme across all pages\n• Added sticky frosted-glass navigation header\n• Integrated elegant top-down offcanvas full menu panel\n• Resolved scrollbar layout shift jumping glitches\n• Created Join Server guide page (/join) with View Rules CTA\n• Specified KakaoTalk (mandatory) and Discord (optional) community guides\n• Integrated Vercel Analytics and Speed Insights tracking',
+    descriptionKo: '• 필요한 메뉴를 스크롤 중에도 바로 열 수 있도록 내비게이션 개선\n• 작은 화면에서 버튼과 내용이 튀거나 잘리는 현상 수정\n• Java·Bedrock 접속 방법과 플레이 전 규칙을 한곳에서 확인할 수 있는 가입 가이드 추가\n• 커뮤니티 참여 방법을 더 명확하게 안내',
+    descriptionEn: '• Improved navigation so key pages remain easy to reach while scrolling\n• Fixed shifting and clipped controls on smaller screens\n• Added one join guide for Java, Bedrock, and pre-play rules\n• Made community participation steps clearer',
   },
   {
     title: '2026.05.21',
@@ -66,8 +66,8 @@ export default function UpdatesPage() {
             transition={{ duration: 0.6, delay: 0.1 }}
           >
             {t(
-              'Stime Networks의 배포 이력과 최신 개선 사항을 기술 문서 형식으로 제공합니다.',
-              'Provides deployment history and recent improvements in a concise update log.'
+              '새로 추가된 콘텐츠와 달라진 기능을 확인하고, 다음 접속에서 무엇을 경험할 수 있는지 한눈에 살펴보세요.',
+              'See what is new, what has changed, and what you can experience the next time you join.'
             )}
           </motion.p>
         </div>

@@ -54,8 +54,8 @@ export default function RecoveryGuidelines() {
             transition={{ duration: 0.6, delay: 0.1 }}
           >
             {t(
-              '아이템 분실 및 월드 복구에 대한 명확한 절차와 가이드라인입니다.',
-              'Clear procedures and guidelines for item loss and world recovery.'
+              '아이템을 잃거나 건축물이 손상되었을 때 준비할 내용과 도움을 요청하는 방법을 확인할 수 있습니다.',
+              'Find out what to prepare and how to ask for help when items are lost or a build is damaged.'
             )}
           </motion.p>
         </div>
@@ -91,8 +91,8 @@ export default function RecoveryGuidelines() {
 
           <p className={styles.sectionLead}>
             {t(
-              '복구 요청은 카카오톡 ID "stimemc", 채널 "Stime 161", 또는 @Phillip_0211로 진행합니다. 요청 시 가능한 많은 정보를 제공해 주시기 바랍니다.',
-              'Recovery requests can be made via KakaoTalk ID "stimemc", channel "Stime 161", or @Phillip_0211. Please provide as much information as possible.'
+              '카카오톡 ID "stimemc", 채널 "Stime 161", 또는 @Phillip_0211로 연락하고 발생 시간과 장소, 잃어버린 내용, 영상이나 스크린샷을 함께 보내주세요.',
+              'Contact KakaoTalk ID "stimemc", channel "Stime 161", or @Phillip_0211 with the time, location, lost items, and any video or screenshots you have.'
             )}
           </p>
 
@@ -111,11 +111,11 @@ export default function RecoveryGuidelines() {
             <article className={styles.timelineCard}>
               <span className={styles.cornerSquare} />
               <p className={styles.timelineDate}>{t('요청 접수', 'Request Submission')}</p>
-              <h3 className={styles.timelineTitle}>{t('운영진에게 연락', 'Contact Staff')}</h3>
+              <h3 className={styles.timelineTitle}>{t('복구 요청 보내기', 'Send Your Recovery Request')}</h3>
               <p className={styles.timelineText}>
                 {t(
-                  '준비된 정보를 운영진에게 전달합니다.',
-                  'Send prepared information to staff.'
+                  '발생 시간과 장소, 상황 설명, 준비한 자료를 한 번에 보내주세요.',
+                  'Send the time, location, a short explanation, and your evidence together.'
                 )}
               </p>
             </article>
@@ -125,8 +125,8 @@ export default function RecoveryGuidelines() {
               <h3 className={styles.timelineTitle}>{t('복구 가능성 평가', 'Recovery Feasibility Assessment')}</h3>
               <p className={styles.timelineText}>
                 {t(
-                  '서버 과실 여부및 여려가지 상황을 검토하여 복구 여부를 평가합니다.',
-                  'Evaluate recovery feasibility by reviewing server fault and various circumstances.'
+                  '접수 후 복구 가능 여부와 다음 단계를 안내받을 수 있습니다.',
+                  'After submitting, you will receive an update on recovery availability and the next steps.'
                 )}
               </p>
             </article>

@@ -12,7 +12,8 @@ interface CardProps {
   eyebrow: string;
   title: string;
   description: string;
-  image: string;
+  images: string[];
+  imageAlts: string[];
   href: string;
   direction: number;
 }
@@ -41,19 +42,51 @@ function FeatureCard({
         ease: [0.22, 0.75, 0.2, 1],
       }}
     >
-      <div className={styles.imageFrame}>
-        <Image
-          src={card.image}
-          alt={card.title}
-          fill
-          sizes="(max-width: 760px) 100vw, 50vw"
-          className={styles.image}
-        />
+      <div className={styles.imageFrame} data-image-count={card.images.length}>
+        <div className={styles.primaryImage}>
+          <Image
+            src={card.images[0]}
+            alt={card.imageAlts[0]}
+            fill
+            sizes="(max-width: 820px) 100vw, 58vw"
+            className={styles.image}
+          />
+        </div>
+        {card.images[1] ? (
+          <div className={styles.secondaryImage}>
+            <Image
+              src={card.images[1]}
+              alt={card.imageAlts[1]}
+              fill
+              sizes="(max-width: 820px) 48vw, 26vw"
+              className={styles.image}
+            />
+          </div>
+        ) : null}
+        <span className={styles.captureLabel} aria-hidden="true">
+          WORLD CAPTURE · {card.index}
+        </span>
       </div>
       <div className={styles.copy}>
+        <span className={styles.displayIndex} aria-hidden="true">{card.index}</span>
         <p className={styles.eyebrow}>{card.index} · {card.eyebrow}</p>
         <h3>{card.title}</h3>
         <p className={styles.description}>{card.description}</p>
+        {card.images[2] ? (
+          <figure className={styles.modScene}>
+            <div className={styles.modSceneImage}>
+              <Image
+                src={card.images[2]}
+                alt={card.imageAlts[2]}
+                fill
+                loading="eager"
+                sizes="(max-width: 820px) 100vw, 34vw"
+                className={styles.image}
+              />
+            </div>
+            <figcaption>SERVER-SIDE MOD SCENE</figcaption>
+          </figure>
+        ) : null}
         <Link href={card.href} className={styles.learnMore}>
           <span>{learnMoreLabel}</span>
           <span aria-hidden="true">↗</span>

@@ -6,6 +6,7 @@ import type { User } from '@supabase/supabase-js';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../components/LanguageProvider';
 import { supabase } from '../lib/supabase';
+import { isAdminEmail } from '../lib/adminPolicy.mjs';
 import styles from '../styles/server-mechanism.module.css';
 
 interface Inquiry {
@@ -97,10 +98,7 @@ export default function SupportPage() {
       setIsAdmin(false);
       return;
     }
-    const adminEmails = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '')
-      .split(',')
-      .map((e) => e.trim().toLowerCase());
-    setIsAdmin(adminEmails.includes(email.toLowerCase()));
+    setIsAdmin(isAdminEmail(email, process.env.NEXT_PUBLIC_ADMIN_EMAILS));
   };
 
   // 2. 로그인 완료 시 사용자의 모든 문의 목록 실시간 동기화
@@ -300,7 +298,7 @@ ${inquiryPurpose.trim()}`;
       }
     } catch (err: unknown) {
       console.error(err);
-      setErrorText(t('문의방 생성에 실패했습니다. 관리자에게 문의하세요.', 'Failed to create inquiry.'));
+      setErrorText(t('문의를 만들지 못했습니다. 잠시 후 다시 시도해 주세요.', 'We could not start your inquiry. Please try again shortly.'));
     } finally {
       setIsSubmitting(false);
     }
@@ -344,12 +342,12 @@ ${inquiryPurpose.trim()}`;
       <section className={styles.heroSection}>
         <div className={styles.heroContent}>
           <motion.h1 className={styles.heroTitle} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            {t('고객 지원 대시보드', 'Support Dashboard')}
+            {t('도움이 필요하신가요?', 'Need a hand?')}
           </motion.h1>
           <motion.p className={styles.heroSubtitle} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}>
             {t(
-              '언제든 관리자에게 문의를 남기고 실시간으로 답변을 받을 수 있습니다. 복수의 문의를 체계적으로 관리하세요.',
-              'Submit your inquiries and get real-time answers from admins. Manage multiple support tickets easily.'
+              '궁금한 점이나 플레이 중 생긴 문제를 남겨주세요. 답변을 확인하고 같은 화면에서 대화를 이어갈 수 있습니다.',
+              'Tell us what you are curious about or what went wrong in game, then check the reply and continue the conversation here.'
             )}
           </motion.p>
         </div>
@@ -377,8 +375,8 @@ ${inquiryPurpose.trim()}`;
                 <h3 className={styles.timelineTitle}>{t('구글 로그인 연동 필요', 'Google Auth Required')}</h3>
                 <p className={styles.timelineText} style={{ marginBottom: '32px', lineHeight: 1.6 }}>
                   {t(
-                    '1:1 실시간 대화를 시작하거나 기존의 채팅 기록을 관리하기 위해 안전하게 구글 계정으로 연결해 주세요. 문의 내역은 해당 계정에 귀속됩니다.',
-                    'Connect with your Google account to start or resume live chat. Your chat logs are linked to your account.'
+                    '구글 계정으로 연결하면 1:1 문의를 시작하고, 나중에 돌아와도 이전 대화를 그대로 이어볼 수 있습니다.',
+                    'Connect your Google account to start a private conversation and pick up where you left off whenever you return.'
                   )}
                 </p>
 
@@ -525,7 +523,7 @@ ${inquiryPurpose.trim()}`;
                       </button>
                       <h3 style={{ margin: 0, fontWeight: 800 }}>{t('새로운 1:1 문의 접수', 'Submit a New Ticket')}</h3>
                       <p style={{ margin: '8px 0 0', fontSize: '0.9rem', color: 'var(--color-mute)' }}>
-                        아래 양식을 작성하여 채팅을 시작해 주세요. 접수 즉시 관리자에게 전달됩니다.
+                        아래 양식을 작성하면 바로 1:1 대화를 시작할 수 있습니다.
                       </p>
                     </div>
                     

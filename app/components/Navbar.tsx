@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { navigationGroups } from '../lib/siteContent.mjs';
+import { navigationGroups, serverProfile } from '../lib/siteContent.mjs';
 import styles from '../styles/navbar.module.css';
 import { useLanguage } from './LanguageProvider';
 
@@ -75,9 +75,9 @@ export default function Navbar() {
     <>
       <header className={styles.header}>
         <div className={styles.headerInner}>
-          <Link href="/" className={styles.brand} aria-label="Stime Networks home">
+          <Link href="/" className={styles.brand} aria-label="StimeMC home">
             <span className={styles.brandMark} aria-hidden="true" />
-            <span className={styles.brandName}>Stime Networks</span>
+            <span className={styles.brandName}>StimeMC</span>
           </Link>
 
           <div className={styles.desktopActions}>
@@ -141,7 +141,7 @@ export default function Navbar() {
               transition={{ duration: reduceMotion ? 0 : 0.42, ease: [0.22, 0.75, 0.2, 1] }}
             >
               <div className={styles.menuTopline}>
-                <span>Stime Networks</span>
+                <span>StimeMC</span>
                 <button type="button" onClick={closeMenu} className={styles.closeButton}>
                   {labelFor({ labelKo: '닫기', labelEn: 'Close' })}
                 </button>
@@ -169,8 +169,8 @@ export default function Navbar() {
 
               <p className={styles.menuFootnote}>
                 {labelFor({
-                  labelKo: 'Java와 Bedrock이 함께하는 평화로운 생존 서버',
-                  labelEn: 'A peaceful survival server for Java and Bedrock players',
+                  labelKo: serverProfile.playerPromiseKo,
+                  labelEn: serverProfile.playerPromiseEn,
                 })}
               </p>
             </motion.div>

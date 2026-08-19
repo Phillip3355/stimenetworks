@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../components/LanguageProvider';
 import { supabase } from '../lib/supabase';
 import { buildStageRoomPayload, filterStageRooms } from '../lib/voiceRoomPolicy.mjs';
+import { isAdminEmail } from '../lib/adminPolicy.mjs';
 import styles from '../styles/server-mechanism.module.css';
 
 interface Inquiry {
@@ -104,10 +105,7 @@ export default function TaskboardPage() {
       setIsAdmin(false);
       return;
     }
-    const adminEmails = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '')
-      .split(',')
-      .map((e) => e.trim().toLowerCase());
-    setIsAdmin(adminEmails.includes(email.toLowerCase()));
+    setIsAdmin(isAdminEmail(email, process.env.NEXT_PUBLIC_ADMIN_EMAILS));
   };
 
   // 2. 어드민 인증이 완료되었을 때 모든 문의 목록 실시간 동기화
@@ -509,7 +507,7 @@ export default function TaskboardPage() {
                   textTransform: 'uppercase',
                   color: 'var(--color-primary)'
                 }}>
-                  Stime Networks Admin Platform
+                  StimeMC Admin Platform
                 </span>
                 <h2 style={{ fontSize: '1.8rem', fontWeight: 800, margin: '8px 0 0', color: 'var(--color-ink)' }}>
                   Taskboard Auth
@@ -640,7 +638,7 @@ export default function TaskboardPage() {
                 paddingBottom: '20px'
               }}>
                 <div>
-                  <p className={styles.eyebrow}>Stime Networks Admin Platform</p>
+                  <p className={styles.eyebrow}>StimeMC Admin Platform</p>
                   <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginTop: '12px' }}>
                     <button
                       onClick={() => setActiveTab('support')}

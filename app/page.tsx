@@ -15,6 +15,8 @@ export default function Home() {
     title: language === 'ko' ? feature.titleKo : feature.titleEn,
     description:
       language === 'ko' ? feature.descriptionKo : feature.descriptionEn,
+    imageAlts:
+      language === 'ko' ? feature.imageAltsKo : feature.imageAltsEn,
   }));
 
   return (
@@ -23,17 +25,17 @@ export default function Home() {
 
       <section className="sectionCanvas" aria-labelledby="home-story-title">
         <div className="sectionContent">
-          <p className="eyebrow">Stime Networks · {t('서버 아카이브', 'Server Archive')}</p>
+          <p className="eyebrow">StimeMC · {t('세 가지 차이', 'Three Differences')}</p>
           <h2 id="home-story-title" className="sectionHeading">
             {t(
-              '아래로 스크롤할수록 우리 서버의 모습이 이어집니다.',
-              'Scroll down and the world of our server unfolds.',
+              '같이 접속하고, 계속 발견하고, 안심하고 플레이합니다.',
+              'Connect together, keep discovering, and play with confidence.',
             )}
           </h2>
           <p className="sectionLead">
             {t(
-              '실제 월드의 풍경과 플레이 방식, 그리고 운영진과 연결되는 서비스를 한 장면씩 살펴보세요.',
-              'Explore the real world, the way we play, and the services that connect you with the team—one scene at a time.',
+              '에디션의 경계를 없애고, 새로운 건축물과 모드로 월드를 넓히며, 명확한 규칙으로 여러분의 시간과 창작물을 지킵니다.',
+              'We remove edition barriers, expand the world with new builds and mods, and protect your time and creations with clear rules.',
             )}
           </p>
         </div>

@@ -29,8 +29,8 @@ export default function JoinServerPage() {
             transition={{ duration: 0.6, delay: 0.1 }}
           >
             {t(
-              'Stime Networks 마인크래프트 서버에 Java 및 Bedrock 플랫폼으로 접속하는 가장 쉽고 세부적인 방법입니다.',
-              'The easiest and most detailed instructions to connect to Stime Networks Minecraft server on both Java and Bedrock editions.'
+              'Java와 Bedrock 중 익숙한 에디션으로 접속하세요. 클라이언트 모드를 따로 설치하지 않아도 확장된 콘텐츠를 바로 즐길 수 있습니다.',
+              'Connect with the Java or Bedrock edition you already use. No client mods are required to enjoy the expanded content.'
             )}
           </motion.p>
         </div>
@@ -78,8 +78,8 @@ export default function JoinServerPage() {
               <h3 className={styles.timelineTitle}>{t('커뮤니티 가입 안내', 'Community Join Guide')}</h3>
               <p className={styles.timelineText}>
                 {t(
-                  '• 카카오톡 오픈채팅방 (필수 가입)\n  : Stime Networks (서버 전체 긴급 공지 및 주요 소통을 위해 필수로 참여해야 합니다. 입장 전 닉네임을 마인크래프트 계정과 일치시켜 주세요.)',
-                  '• KakaoTalk Open Chat (Mandatory)\n  : Stime Networks (Required to join for server announcements and official communication. Please align your nickname with your Minecraft account.)'
+                  '• 카카오톡 오픈채팅방 (필수 가입)\n  : StimeMC (서버 전체 긴급 공지 및 주요 소통을 위해 필수로 참여해야 합니다. 입장 전 닉네임을 마인크래프트 계정과 일치시켜 주세요.)',
+                  '• KakaoTalk Open Chat (Mandatory)\n  : StimeMC (Required to join for server announcements and official communication. Please align your nickname with your Minecraft account.)'
                 )}
               </p>
             </article>
@@ -95,8 +95,8 @@ export default function JoinServerPage() {
           </h2>
           <p className={styles.sectionLead} style={{ maxWidth: '600px', margin: '0 auto' }}>
             {t(
-              'Stime Networks는 모두가 평화롭고 공정하게 즐기는 서바이벌 서버를 지향합니다. 불이익을 받지 않도록 접속 전 서버 이용 규칙을 반드시 숙지해 주시기 바랍니다.',
-              'Stime Networks aims to provide a peaceful and fair survival environment. Please review our server guidelines carefully before connecting to avoid any penalties.'
+              '누구나 편하게 참여하고 원하는 방식으로 플레이할 수 있도록 몇 가지 기본 규칙만 함께 지켜주세요. 접속 전에 한 번 읽어두면 바로 시작할 수 있습니다.',
+              'A few shared rules keep the server open and comfortable for everyone. Read them once before joining, then jump straight into play.'
             )}
           </p>
           <Link href="/rules" className={styles.buttonOutline} style={{ marginTop: '8px' }}>

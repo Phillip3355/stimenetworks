@@ -1,0 +1,389 @@
+.mindMap {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(300px, 0.62fr);
+  gap: clamp(16px, 2vw, 28px);
+  align-items: stretch;
+}
+
+.graph,
+.desktopDetail {
+  border: 1px solid var(--color-hairline);
+  background: var(--color-surface);
+}
+
+.graph {
+  position: relative;
+  min-width: 0;
+  min-height: 620px;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    var(--color-surface);
+  background-size: 38px 38px;
+}
+
+.connectors {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.connectorBase,
+.connectorActive {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.connectorBase {
+  stroke: rgba(255, 255, 255, 0.18);
+  stroke-width: 1;
+}
+
+.connectorActive {
+  stroke: var(--color-ink);
+  stroke-width: 2;
+}
+
+.rootNode {
+  position: absolute;
+  left: 3%;
+  top: 50%;
+  width: 21%;
+  min-width: 150px;
+  padding: 22px 20px;
+  display: grid;
+  gap: 10px;
+  transform: translateY(-50%);
+  border: 1px solid var(--color-ink);
+  background: var(--color-ink);
+  color: var(--color-canvas);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.34);
+}
+
+.rootNode span,
+.detailIndex {
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 650;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.mindMap .rootNode strong {
+  color: var(--color-canvas);
+  font-size: clamp(19px, 2vw, 27px);
+  font-weight: 610;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+  word-break: keep-all;
+}
+
+.rootNode p {
+  margin: 0;
+  color: #3c3c39;
+  font-size: 11px;
+  line-height: 1.55;
+  word-break: keep-all;
+}
+
+.branchGrid {
+  position: absolute;
+  top: 5%;
+  right: 2%;
+  bottom: 5%;
+  left: 38%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  gap: 12px 20px;
+}
+
+.branchSlot {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
+.ruleNode {
+  position: relative;
+  width: 100%;
+  min-height: 94px;
+  padding: 15px 44px 15px 16px;
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--color-hairline-strong);
+  border-radius: 0;
+  background: rgba(10, 10, 10, 0.94);
+  color: var(--color-ink);
+  text-align: left;
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.ruleNode:hover,
+.ruleNode[data-active='true'] {
+  border-color: var(--color-ink);
+  background: var(--color-ink);
+  color: var(--color-canvas);
+  transform: translateY(-2px);
+}
+
+.ruleNode > span {
+  color: var(--color-mute);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.ruleNode[data-active='true'] > span,
+.ruleNode:hover > span {
+  color: #55554f;
+}
+
+.mindMap .ruleNode[data-active='true'] strong,
+.mindMap .ruleNode:hover strong {
+  color: var(--color-canvas);
+}
+
+.ruleNode strong {
+  color: inherit;
+  font-size: clamp(12px, 1.05vw, 15px);
+  font-weight: 560;
+  line-height: 1.38;
+  word-break: keep-all;
+}
+
+.ruleNode i {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 300;
+}
+
+.desktopDetail {
+  min-height: 620px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.detailInner {
+  width: 100%;
+  padding: clamp(28px, 3.5vw, 48px);
+}
+
+.detailIndex {
+  margin: 0 0 16px;
+  color: var(--color-mute);
+}
+
+.detailInner h3,
+.mobileDetailInner h3 {
+  margin: 0;
+  color: var(--color-ink);
+  font-weight: 470;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+  word-break: keep-all;
+  text-wrap: balance;
+}
+
+.detailInner h3 {
+  font-size: clamp(28px, 3.4vw, 47px);
+}
+
+.detailDescription {
+  margin: 20px 0 0;
+  color: var(--color-body);
+  font-size: 14px;
+  line-height: 1.78;
+  word-break: keep-all;
+}
+
+.exampleBlock {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-hairline);
+}
+
+.exampleBlock > p {
+  margin: 0 0 14px;
+  color: var(--color-mute);
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.exampleBlock ul {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+  list-style: none;
+}
+
+.exampleBlock li {
+  position: relative;
+  padding-left: 17px;
+  color: var(--color-ink);
+  font-size: 13px;
+  line-height: 1.55;
+  word-break: keep-all;
+}
+
+.exampleBlock li::before {
+  content: '';
+  position: absolute;
+  top: 0.62em;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  background: var(--color-ink);
+}
+
+.mobileDetail {
+  display: none;
+}
+
+@media (max-width: 1160px) {
+  .mindMap {
+    grid-template-columns: 1fr;
+  }
+
+  .desktopDetail {
+    min-height: 0;
+  }
+
+  .detailInner {
+    max-width: 820px;
+  }
+}
+
+@media (max-width: 760px) {
+  .mindMap {
+    display: block;
+  }
+
+  .graph {
+    min-height: 0;
+    padding: 0;
+    overflow: visible;
+    background-size: 28px 28px;
+  }
+
+  .connectors,
+  .desktopDetail {
+    display: none;
+  }
+
+  .rootNode {
+    position: relative;
+    inset: auto;
+    width: auto;
+    min-width: 0;
+    margin: 14px;
+    transform: none;
+  }
+
+  .rootNode::after {
+    content: '';
+    position: absolute;
+    left: 26px;
+    top: 100%;
+    width: 1px;
+    height: 30px;
+    background: var(--color-hairline-strong);
+  }
+
+  .branchGrid {
+    position: relative;
+    inset: auto;
+    padding: 16px 14px 14px 42px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    gap: 10px;
+  }
+
+  .branchGrid::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 42px;
+    left: 26px;
+    width: 1px;
+    background: var(--color-hairline-strong);
+  }
+
+  .branchSlot {
+    position: relative;
+    display: block;
+  }
+
+  .branchSlot::before {
+    content: '';
+    position: absolute;
+    top: 25px;
+    right: 100%;
+    width: 16px;
+    height: 1px;
+    background: var(--color-hairline-strong);
+  }
+
+  .ruleNode {
+    min-height: 58px;
+    grid-template-columns: 24px minmax(0, 1fr);
+    padding: 13px 44px 13px 14px;
+  }
+
+  .ruleNode strong {
+    font-size: 14px;
+  }
+
+  .ruleNode:hover,
+  .ruleNode[data-active='true'] {
+    transform: none;
+  }
+
+  .mobileDetail {
+    display: block;
+    border: 1px solid var(--color-hairline);
+    border-top: 0;
+    background: #070707;
+  }
+
+  .mobileDetailInner {
+    padding: 24px 18px 26px;
+  }
+
+  .mobileDetailInner h3 {
+    font-size: clamp(22px, 7vw, 30px);
+  }
+
+  .detailDescription {
+    margin-top: 15px;
+    font-size: 13px;
+  }
+
+  .exampleBlock {
+    margin-top: 22px;
+    padding-top: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ruleNode {
+    transition: none;
+  }
+}

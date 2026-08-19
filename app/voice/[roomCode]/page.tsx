@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import type { RealtimeChannel } from '@supabase/supabase-js';
 import { useLanguage } from '../../components/LanguageProvider';
 import { supabase } from '../../lib/supabase';
+import { isAdminEmail } from '../../lib/adminPolicy.mjs';
 import styles from '../../styles/server-mechanism.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -104,10 +105,7 @@ export default function DynamicVoiceRoomPage({ params }: RoomPageProps) {
     supabase.auth.getSession().then(({ data: { session } }) => {
       const activeUser = session?.user ?? null;
       if (activeUser?.email) {
-        const adminEmails = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '')
-          .split(',')
-          .map((e) => e.trim().toLowerCase());
-        setIsAdmin(adminEmails.includes(activeUser.email.toLowerCase()));
+        setIsAdmin(isAdminEmail(activeUser.email, process.env.NEXT_PUBLIC_ADMIN_EMAILS));
       }
     });
   }, []);

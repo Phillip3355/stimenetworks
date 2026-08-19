@@ -2,46 +2,8 @@
 
 import { motion } from 'framer-motion';
 import { useLanguage } from '../components/LanguageProvider';
+import RuleMindMap from '../components/RuleMindMap';
 import styles from '../styles/server-mechanism.module.css';
-
-const ruleCards = [
-  {
-    title: '플레이 방해 금지',
-    titleEn: 'No Griefing',
-    descriptionKo: '살인, 불토깨기, 가두기 등 다른 플레이어를 방해하는 행위는 금지됩니다. 상대방이 정당한 이유로 하지 말라고 하면 반드시 멈춰야 합니다.',
-    descriptionEn: 'Killing, breaking blocks, and imprisoning are prohibited. Stop immediately if a player asks you to.',
-  },
-  {
-    title: '소유물 보호',
-    titleEn: 'Property Protection',
-    descriptionKo: '건축물 파괴, 도둑질, 공장 기믹 파괴 등 타인의 소유물을 건드리는 행위는 금지됩니다. 타인의 엔티티나 주민, 가축을 건드리는 것 또한 재산 피해로 취급됩니다.',
-    descriptionEn: 'Destroying buildings, stealing, and sabotaging factories are prohibited. Mob and mechanism damage is also treated as property damage.',
-  },
-  {
-    title: '불쾌한 언행 금지',
-    titleEn: 'Respectful Communication',
-    descriptionKo: '욕설, 비방, 저격, 싸움, 정치, 도배 등은 금지됩니다. 존댓말 사용 및 실명 언급 금지.',
-    descriptionEn: 'Profanity, insults, targeting, politics, and spam are prohibited. Use polite language and avoid mentioning real names.',
-  },
-  {
-    title: '부정행위 금지',
-    titleEn: 'Anti-Cheat Policy',
-    descriptionKo: '핵, 엑스레이, 복제, 버그 악용, 과도한 엔티티 소환 금지. 핵 사용 언행도 테러 위협으로 간주됩니다.',
-    descriptionEn: 'Hacks, X-ray, duplication, exploits, and entity spam are prohibited. Threatening to use hacks is also punishable.',
-  },
-  {
-    title: '타게임·타서버 권유 금지',
-    titleEn: 'No External Solicitation',
-    descriptionKo: '다른 게임이나 다른 서버로의 플레이 권유는 금지됩니다.',
-    descriptionEn: 'Soliciting players to other games or servers is prohibited.',
-  },
-  {
-    title: '신고 및 처벌',
-    titleEn: 'Reporting & Consequences',
-    descriptionKo: '신고는 카카오톡 ID "stimemc", 채널 Stime 161, @Phillip_0211로 진행합니다. 규칙 위반 시 경고 후 임시/영구 차단될 수 있습니다.',
-    descriptionEn: 'Report violations via KakaoTalk ID "stimemc", channel Stime 161, or @Phillip_0211. Violations may result in warnings or temporary/permanent bans.',
-  },
-];
 
 export default function RulesPage() {
   const { t, language } = useLanguage();
@@ -56,7 +18,7 @@ export default function RulesPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            {t('규칙 보기', 'Rules')}
+            {t('서버 규칙을 한눈에', 'Server Rules at a Glance')}
           </motion.h1>
 
           <motion.p
@@ -66,8 +28,8 @@ export default function RulesPage() {
             transition={{ duration: 0.6, delay: 0.1 }}
           >
             {t(
-              'Stime Networks의 플레이 규칙을 명확한 기술 문서처럼 정리합니다.',
-              'A precise technical summary of Stime Networks play policies.'
+              '함께 플레이할 때 필요한 기준을 빠르게 확인하고, 서로의 건축물과 경험을 존중하며 자유롭게 즐겨보세요.',
+              'Quickly check the shared expectations, respect other players and their builds, and enjoy the server freely.'
             )}
           </motion.p>
         </div>
@@ -76,21 +38,11 @@ export default function RulesPage() {
       <section className={styles.sectionCanvas}>
         <div className={styles.sectionContent}>
           <div className={styles.sectionHeader}>
-            <p className={styles.eyebrow}>{t('규칙 체계', 'Policy Framework')}</p>
-            <h2 className={styles.sectionHeading}>{t('서버 규칙 구조', 'Server Rule Structure')}</h2>
+            <p className={styles.eyebrow}>{t('함께 플레이하기', 'Playing Together')}</p>
+            <h2 className={styles.sectionHeading}>{t('규칙을 선택해 자세히 살펴보세요', 'Choose a Rule to Explore')}</h2>
           </div>
 
-          <div className={styles.timelineGrid}>
-            {ruleCards.map((card, index) => (
-              <article key={index} className={styles.timelineCard}>
-                <span className={styles.cornerSquare} />
-                <h3 className={styles.timelineTitle}>{t(card.title, card.titleEn)}</h3>
-                <p className={styles.timelineText}>
-                  {language === 'ko' ? card.descriptionKo : card.descriptionEn}
-                </p>
-              </article>
-            ))}
-          </div>
+          <RuleMindMap language={language} />
         </div>
       </section>
 
@@ -126,8 +78,8 @@ export default function RulesPage() {
               <h3 className={styles.timelineTitle}>{t('중대 위반', 'Serious Violation')}</h3>
               <p className={styles.timelineText}>
                 {t(
-                  '고의적 비매너, 버그 악용, 반복 위반 시 일단 추방되며, 이후 관리진 회의를 통해 처벌 기간을 결정합니다.',
-                  'Intentional misconduct, exploits, or repeated violations result in immediate removal; punishment duration is decided by staff meeting.'
+                  '고의적 비매너, 버그 악용, 반복 위반 시 즉시 퇴장되고 일정 기간 접속이 제한될 수 있으며, 적용 기간을 별도로 안내받게 됩니다.',
+                  'Intentional misconduct, exploits, or repeated violations can lead to immediate removal and a timed suspension, with the duration shared directly with you.'
                 )}
               </p>
             </article>

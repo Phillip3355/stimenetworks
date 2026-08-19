@@ -1,4 +1,4 @@
-# Stime Networks Living Archive Redesign Implementation Plan
+# StimeMC Living Archive Redesign Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -14,7 +14,7 @@
 
 - Preserve `/`, `/join`, `/support`, `/taskboard`, `/voice`, `/voice-[roomCode]`, `/server-mechanism`, `/rules`, `/recovery-guidelines`, `/updates`, `/auth/callback`, and dynamic report routes.
 - Preserve Supabase tables `inquiries`, `inquiry_messages`, `reports`, `voice_rooms`, and `voice_room_members` and their realtime subscriptions.
-- Preserve Google OAuth, `NEXT_PUBLIC_ADMIN_EMAILS`, inquiry throttling, STAGE authorization, WebRTC, and the `/voice-[roomCode]` rewrite.
+- Preserve Google OAuth, the shared admin-email policy plus `NEXT_PUBLIC_ADMIN_EMAILS`, inquiry throttling, STAGE authorization, WebRTC, and the `/voice-[roomCode]` rewrite.
 - Display exactly one selected language at a time through the existing `t(ko, en)` function.
 - Use actual server images before generated artwork; do not copy reference branding, assets, copy, or exact composition.
 - Support 360px, 430px, 768px, 1024px, and 1440px without horizontal overflow.
@@ -103,7 +103,7 @@ Use the exact foundation values from `DESIGN.md`. Add `body { overflow-x: clip; 
 
 - [ ] **Step 2: Rebuild Navbar with width-aware states**
 
-Render `Stime Networks` as a text brand. Above 1000px show complete links; at 1000px and below show the menu button while retaining the equal-width KO/EN locale control. Keep route-close behavior and add `aria-expanded`, `aria-controls`, Escape close, and background scroll locking.
+Render `StimeMC` as a text brand. Above 1000px show complete links; at 1000px and below show the menu button while retaining the equal-width KO/EN locale control. Keep route-close behavior and add `aria-expanded`, `aria-controls`, Escape close, and background scroll locking.
 
 - [ ] **Step 3: Rebuild the menu overlay and footer**
 
@@ -130,7 +130,7 @@ Expected: no new lint errors in shared layout components.
 
 **Interfaces:**
 - Consumes: `homeFeatures` from Task 1 and `useLanguage()`.
-- Produces: image-led hero, `Stime Networks` title, and three alternating feature cards with bilingual Learn more links.
+- Produces: image-led hero, `StimeMC` title, and three alternating feature cards with bilingual Learn more links.
 
 - [ ] **Step 1: Rebuild the hero narrative**
 
@@ -171,7 +171,7 @@ Use a 760px reading measure, accessible table overflow, dark code surfaces, visi
 
 - [ ] **Step 3: Redesign auth callback without changing redirect logic**
 
-Replace inline light presentation with semantic status classes and localized Stime Networks loading/error text.
+Replace inline light presentation with semantic status classes and localized StimeMC loading/error text.
 
 - [ ] **Step 4: Run lint**
 
@@ -240,4 +240,3 @@ Confirm slow one-time feature reveals, no layout shift, keyboard menu access, vi
 Run: `git diff --check` and `git status --short`.
 
 Expected: no whitespace errors; pre-existing STAGE changes remain present and no Supabase schema or route contract is accidentally altered.
-

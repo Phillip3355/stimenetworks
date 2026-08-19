@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useLanguage } from './LanguageProvider';
+import { serverProfile } from '../lib/siteContent.mjs';
 import styles from '../styles/hero.module.css';
 
 export default function Hero() {
@@ -31,7 +32,7 @@ export default function Hero() {
         <Image
           className={styles.heroImage}
           src="/NEW2.webp"
-          alt={t('구름 위에서 바라본 Stime Networks 서버 월드', 'The Stime Networks server world viewed above the clouds')}
+          alt={t('구름 위에서 바라본 StimeMC 서버 월드', 'The StimeMC server world viewed above the clouds')}
           fill
           priority
           sizes="100vw"
@@ -41,15 +42,15 @@ export default function Hero() {
 
       <div className={styles.content}>
         <motion.p className={styles.kicker} {...reveal(0.08)}>
-          {t('실제 서버 월드 · 운영 중', 'Live server world · Online')}
+          {t(serverProfile.kickerKo, serverProfile.kickerEn)}
         </motion.p>
         <motion.h1 id="home-title" className={styles.title} {...reveal(0.16)}>
-          Stime Networks
+          StimeMC
         </motion.h1>
         <motion.p className={styles.description} {...reveal(0.24)}>
           {t(
-            'Java와 Bedrock 플레이어가 함께 쌓아가는 평화로운 생존 서버입니다.',
-            'A peaceful survival server built together by Java and Bedrock players.',
+            serverProfile.playerPromiseKo,
+            serverProfile.playerPromiseEn,
           )}
         </motion.p>
         <motion.div className={styles.actions} {...reveal(0.32)}>

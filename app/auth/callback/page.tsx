@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '../../lib/supabase';
+import { isAdminEmail } from '../../lib/adminPolicy.mjs';
 import { useLanguage } from '../../components/LanguageProvider';
 import styles from './auth.module.css';
 
@@ -15,11 +16,7 @@ export default function AuthCallback() {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (session) {
         const email = session.user?.email;
-        const adminEmails = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '')
-          .split(',')
-          .map((e) => e.trim().toLowerCase());
-
-        if (email && adminEmails.includes(email.toLowerCase())) {
+        if (isAdminEmail(email, process.env.NEXT_PUBLIC_ADMIN_EMAILS)) {
           // 관리자 리다이렉트
           router.replace('/taskboard');
         } else {
@@ -43,7 +40,7 @@ export default function AuthCallback() {
   return (
     <main className={styles.main}>
       <section className={styles.status} aria-live="polite" aria-busy="true">
-        <p className={styles.brand}>Stime Networks · Authentication</p>
+        <p className={styles.brand}>StimeMC · Authentication</p>
         <div className={styles.spinner} aria-hidden="true" />
         <p className={styles.message}>
           {t(

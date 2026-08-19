@@ -85,14 +85,14 @@ export default function VoiceRoomsListPage() {
       >
         <div className={styles.sectionContent}>
           <header className={styles.voiceIntro}>
-            <span className={styles.eyebrow}>STIME NETWORKS · LIVE</span>
+            <span className={styles.eyebrow}>StimeMC · Live</span>
             <h1 className={styles.title}>
               {t('실시간 STAGE 채널', 'Live STAGE channels')}
             </h1>
             <p className={styles.lead}>
               {t(
-                '관리자가 개설한 STAGE 채널에서 서버 공지와 커뮤니티 방송을 실시간으로 청취할 수 있습니다.',
-                'Listen to live server announcements and community broadcasts in administrator-managed STAGE channels.'
+                '열려 있는 STAGE에 입장해 새 소식과 커뮤니티 방송을 바로 듣고, 함께하는 순간을 놓치지 마세요.',
+                'Join an open STAGE to hear server news and community broadcasts live as they happen.'
               )}
             </p>
           </header>
@@ -145,7 +145,7 @@ export default function VoiceRoomsListPage() {
                   {t('현재 활성화된 STAGE 채널이 없습니다.', 'No active STAGE channels currently available.')}
                 </p>
                 <small>
-                  {t('관리자가 채널을 개설하면 이곳에 표시됩니다.', 'Channels will appear here when an administrator opens one.')}
+                  {t('새 STAGE가 열리면 이곳에서 바로 입장할 수 있습니다.', 'When a new STAGE opens, you can join it right here.')}
                 </small>
               </div>
             ) : (

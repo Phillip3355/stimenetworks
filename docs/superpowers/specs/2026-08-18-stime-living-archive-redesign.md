@@ -1,4 +1,4 @@
-# Stime Networks Living Archive Redesign Specification
+# StimeMC Living Archive Redesign Specification
 
 ## Goal
 
@@ -34,7 +34,7 @@ The Learn more label is bilingual via the existing `t(ko, en)` function. It must
 
 ### Home
 
-- Display `Stime Networks` in the navbar and hero.
+- Display `StimeMC` in the navbar and hero.
 - Use `NEW2.webp` as the primary desktop hero and a deliberate crop of `minecraft2.webp` or `NEW2.webp` on mobile.
 - Present three feature cards with actual server images, descriptive text, and Learn more links.
 - Cards reveal one at a time from alternating horizontal directions over 0.9–1.15 seconds.
@@ -88,4 +88,3 @@ The Learn more label is bilingual via the existing `t(ko, en)` function. It must
 ## Preservation Constraints
 
 All constraints in `REDESIGN_NOTES.md` are normative. Existing uncommitted STAGE changes in `app/taskboard/page.tsx`, `app/voice/page.tsx`, `app/voice/[roomCode]/page.tsx`, `app/components/Navbar.tsx`, `package.json`, and `supabase_schema.sql` must be preserved.
-
