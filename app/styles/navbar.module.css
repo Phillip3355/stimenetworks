@@ -112,7 +112,7 @@
   width: 52px;
   height: 52px;
   padding: 0;
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -230,10 +230,6 @@
 @media (max-width: 1000px) {
   .desktopLinks {
     display: none;
-  }
-
-  .menuButton {
-    display: flex;
   }
 }
 

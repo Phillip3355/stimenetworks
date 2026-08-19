@@ -1,12 +1,28 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import JoinRequestForm from '../components/JoinRequestForm';
 import { useLanguage } from '../components/LanguageProvider';
 import styles from '../styles/server-mechanism.module.css';
 
 export default function JoinServerPage() {
   const { t } = useLanguage();
+  const reduceMotion = useReducedMotion();
+  const [showRequestForm, setShowRequestForm] = useState(false);
+
+  const toggleRequestForm = () => {
+    setShowRequestForm((current) => !current);
+  };
+
+  useEffect(() => {
+    if (!showRequestForm) return;
+    document.getElementById('join-request-form')?.scrollIntoView({
+      behavior: reduceMotion ? 'auto' : 'smooth',
+      block: 'start',
+    });
+  }, [reduceMotion, showRequestForm]);
 
   return (
     <main className={styles.main}>
@@ -33,8 +49,45 @@ export default function JoinServerPage() {
               'Connect with the Java or Bedrock edition you already use. No client mods are required to enjoy the expanded content.'
             )}
           </motion.p>
+
+          <motion.div
+            className={styles.heroActions}
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.2 }}
+          >
+            <button
+              type="button"
+              className={styles.buttonOutline}
+              onClick={toggleRequestForm}
+              aria-expanded={showRequestForm}
+              aria-controls="join-request-form"
+            >
+              {showRequestForm
+                ? t('가입 요청 닫기', 'Close join request')
+                : t('서버 가입 요청하기', 'Request to join')}
+            </button>
+          </motion.div>
         </div>
       </section>
+
+      <AnimatePresence initial={false}>
+        {showRequestForm && (
+          <motion.section
+            id="join-request-form"
+            key="join-request-form"
+            initial={reduceMotion ? false : { opacity: 0, y: -16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -10 }}
+            transition={{ duration: reduceMotion ? 0 : 0.42, ease: [0.22, 0.75, 0.2, 1] }}
+            className={styles.sectionCanvas}
+            style={{ scrollMarginTop: 'var(--nav-height)' }}
+            aria-label={t('서버 가입 요청 양식', 'Server join request form')}
+          >
+            <JoinRequestForm />
+          </motion.section>
+        )}
+      </AnimatePresence>
 
       {/* 접속 스펙 및 가이드 카드 */}
       <section className={styles.sectionCanvas}>

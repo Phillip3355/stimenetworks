@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import type { User } from '@supabase/supabase-js';
 import { motion, AnimatePresence } from 'framer-motion';
+import AdminJoinRequests from '../components/AdminJoinRequests';
 import { useLanguage } from '../components/LanguageProvider';
 import { supabase } from '../lib/supabase';
 import { buildStageRoomPayload, filterStageRooms } from '../lib/voiceRoomPolicy.mjs';
@@ -56,7 +57,7 @@ export default function TaskboardPage() {
   const [isDeleting, setIsDeleting] = useState(false);
 
   // 탭 및 보고서/STAGE 채널 관리 상태
-  const [activeTab, setActiveTab] = useState<'support' | 'report' | 'voice'>('support');
+  const [activeTab, setActiveTab] = useState<'support' | 'join' | 'report' | 'voice'>('support');
   const [reports, setReports] = useState<ReportRecord[]>([]);
   const [reportSlug, setReportSlug] = useState('');
   const [reportContent, setReportContent] = useState('');
@@ -639,7 +640,7 @@ export default function TaskboardPage() {
               }}>
                 <div>
                   <p className={styles.eyebrow}>StimeMC Admin Platform</p>
-                  <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginTop: '12px' }}>
+                  <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap', marginTop: '12px' }}>
                     <button
                       onClick={() => setActiveTab('support')}
                       className={`${styles.adminTab} ${activeTab === 'support' ? styles.adminTabActive : ''}`}
@@ -650,6 +651,12 @@ export default function TaskboardPage() {
                       }}
                     >
                       {t('문의 관리', 'Support Console')}
+                    </button>
+                    <button
+                      onClick={() => setActiveTab('join')}
+                      className={`${styles.adminTab} ${activeTab === 'join' ? styles.adminTabActive : ''}`}
+                    >
+                      {t('가입 요청', 'Join Requests')}
                     </button>
                     <button
                       onClick={() => setActiveTab('report')}
@@ -929,6 +936,8 @@ export default function TaskboardPage() {
                 </div>
               </div>
             )}
+
+              {activeTab === 'join' && <AdminJoinRequests />}
 
               {activeTab === 'report' && (
                 <div className={styles.dashboardGrid} style={{ gridTemplateColumns: '1fr', gap: '32px' }}>
