@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useLanguage } from './LanguageProvider';
 import { supabase } from '../lib/supabase';
+import { completeAdminJoinRequest, loadAdminJoinRequests } from '../lib/joinRequestAdmin.mjs';
 import { buildWhitelistCommand } from '../lib/joinRequestPolicy.mjs';
 import styles from '../styles/join-admin.module.css';
 
@@ -27,48 +28,63 @@ export default function AdminJoinRequests() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [feedback, setFeedback] = useState('');
 
+  const describeLoadError = useCallback((error: unknown) => {
+    const code = typeof error === 'object' && error !== null && 'code' in error
+      ? String(error.code)
+      : '';
+
+    if (code === 'AUTH_REQUIRED') {
+      return t('관리자 로그인 세션이 만료되었습니다. 다시 로그인해주세요.', 'Your administrator session expired. Please sign in again.');
+    }
+    if (code === 'ADMIN_REQUIRED') {
+      return t('현재 계정에는 가입 요청 조회 권한이 없습니다.', 'This account cannot view join requests.');
+    }
+    if (code === '42501') {
+      return t('DB 권한 오류(42501): 최신 join request 보정 SQL을 실행해주세요.', 'Database permission error (42501): run the latest join request repair SQL.');
+    }
+    if (code === 'PGRST202' || code === '42883') {
+      return t(`관리자 조회 함수가 없습니다(${code}). 최신 join request 보정 SQL을 실행해주세요.`, `The administrator query function is missing (${code}). Run the latest join request repair SQL.`);
+    }
+    return t(`가입 요청을 불러오지 못했습니다. 오류 코드: ${code || 'UNKNOWN'}`, `Could not load join requests. Error code: ${code || 'UNKNOWN'}`);
+  }, [t]);
+
   const loadRequests = useCallback(async () => {
     setIsLoading(true);
     setFeedback('');
 
-    const { data, error } = await supabase
-      .from('join_requests')
-      .select('*')
-      .order('created_at', { ascending: false });
-
-    if (error) {
+    try {
+      const data = await loadAdminJoinRequests(supabase, process.env.NEXT_PUBLIC_ADMIN_EMAILS);
+      setRequests(data as JoinRequestRecord[]);
+    } catch (error) {
       console.error('Failed to load join requests:', error);
-      setFeedback(t('가입 요청을 불러오지 못했습니다. SQL 설정을 확인해주세요.', 'Could not load join requests. Check the SQL setup.'));
-    } else {
-      setRequests((data ?? []) as JoinRequestRecord[]);
+      setFeedback(describeLoadError(error));
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
-  }, [t]);
+  }, [describeLoadError]);
 
   useEffect(() => {
     let cancelled = false;
 
-    void supabase
-      .from('join_requests')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .then(({ data, error }) => {
+    void loadAdminJoinRequests(supabase, process.env.NEXT_PUBLIC_ADMIN_EMAILS)
+      .then((data) => {
         if (cancelled) return;
-
-        if (error) {
-          console.error('Failed to load join requests:', error);
-          setFeedback(t('가입 요청을 불러오지 못했습니다. SQL 설정을 확인해주세요.', 'Could not load join requests. Check the SQL setup.'));
-        } else {
-          setRequests((data ?? []) as JoinRequestRecord[]);
-        }
+        setRequests(data as JoinRequestRecord[]);
+      })
+      .catch((error: unknown) => {
+        if (cancelled) return;
+        console.error('Failed to load join requests:', error);
+        setFeedback(describeLoadError(error));
+      })
+      .finally(() => {
+        if (cancelled) return;
         setIsLoading(false);
       });
 
     return () => {
       cancelled = true;
     };
-  }, [t]);
+  }, [describeLoadError]);
 
   const copyCommand = async (request: JoinRequestRecord) => {
     const command = buildWhitelistCommand(request.edition, request.minecraft_nickname);
@@ -95,13 +111,14 @@ export default function AdminJoinRequests() {
     setDeletingId(request.id);
     setFeedback('');
 
-    const { error } = await supabase.from('join_requests').delete().eq('id', request.id);
+    try {
+      const completed = await completeAdminJoinRequest(supabase, request.id);
+      if (!completed) throw new Error('The request was not found or the administrator was rejected.');
 
-    if (error) {
+      setRequests((current) => current.filter((item) => item.id !== request.id));
+    } catch (error) {
       console.error('Failed to delete join request:', error);
       setFeedback(t('요청을 삭제하지 못했습니다.', 'Could not delete the request.'));
-    } else {
-      setRequests((current) => current.filter((item) => item.id !== request.id));
     }
 
     setDeletingId(null);

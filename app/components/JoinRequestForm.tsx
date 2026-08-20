@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useLanguage } from './LanguageProvider';
 import { supabase } from '../lib/supabase';
-import { normalizeJoinRequest, validateJoinRequest } from '../lib/joinRequestPolicy.mjs';
+import { classifyJoinRequestSubmitError, getJoinRequestSubmitErrorCode, normalizeJoinRequest, validateJoinRequest } from '../lib/joinRequestPolicy.mjs';
 import styles from '../styles/join-request.module.css';
 
 type Edition = 'java' | 'bedrock';
@@ -60,10 +60,18 @@ export default function JoinRequestForm() {
     try {
       const { error } = await supabase.from('join_requests').insert([normalizeJoinRequest(draft)]);
       if (error) {
-        if (error.code === '23505') {
+        const issue = classifyJoinRequestSubmitError(error);
+        if (issue === 'duplicate') {
           throw new Error(t('같은 에디션과 닉네임으로 접수된 요청이 이미 있습니다.', 'A request for this edition and nickname is already pending.'));
         }
-        throw error;
+        if (issue === 'constraint') {
+          throw new Error(t('입력값이 허용 범위를 벗어났습니다. 각 항목을 다시 확인해주세요.', 'One or more values are outside the allowed range. Check each field.'));
+        }
+        if (issue === 'permission') {
+          throw new Error(t('현재 가입 요청을 접수할 수 없습니다. 관리자에게 알려주세요.', 'Join requests are currently unavailable. Please notify an administrator.'));
+        }
+        const code = getJoinRequestSubmitErrorCode(error);
+        throw new Error(t(`요청을 전송하지 못했습니다. 오류 코드: ${code}`, `Could not send the request. Error code: ${code}`));
       }
 
       setIsSubmitted(true);
@@ -181,11 +189,12 @@ export default function JoinRequestForm() {
             value={draft.contact}
             onChange={(event) => updateDraft('contact', event.target.value)}
             placeholder={t('예: 010-0000-0000 / 카카오톡 StimePlayer', 'e.g. 010-0000-0000 / KakaoTalk StimePlayer')}
+            minLength={2}
             maxLength={120}
             aria-invalid={hasError('contact')}
             required
           />
-          <small>{t('가입 요청 확인이 필요할 때만 사용합니다.', 'Used only when we need to confirm your request.')}</small>
+          <small>{t('2자 이상 입력해주세요. 가입 요청 확인이 필요할 때만 사용합니다.', 'Enter at least 2 characters. Used only when we need to confirm your request.')}</small>
         </label>
       </div>
 

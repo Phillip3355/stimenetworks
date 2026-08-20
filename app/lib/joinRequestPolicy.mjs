@@ -9,6 +9,7 @@ export function validateJoinRequest(request) {
   const errors = [];
   const edition = clean(request.edition).toLowerCase();
   const minecraftNickname = clean(request.minecraftNickname);
+  const contact = clean(request.contact);
 
   if (!['java', 'bedrock'].includes(edition)) errors.push('edition');
 
@@ -18,11 +19,26 @@ export function validateJoinRequest(request) {
   if (!nicknameIsValid) errors.push('minecraftNickname');
 
   if (!clean(request.inviterName)) errors.push('inviterName');
-  if (!clean(request.contact)) errors.push('contact');
+  if (contact.length < 2 || contact.length > 120) errors.push('contact');
   if (request.rulesAgreed !== true) errors.push('rulesAgreed');
   if (request.privacyAgreed !== true) errors.push('privacyAgreed');
 
   return errors;
+}
+
+export function classifyJoinRequestSubmitError(error) {
+  const code = getJoinRequestSubmitErrorCode(error);
+
+  if (code === '23505') return 'duplicate';
+  if (code === '23514') return 'constraint';
+  if (code === '42501') return 'permission';
+  return 'unknown';
+}
+
+export function getJoinRequestSubmitErrorCode(error) {
+  if (!error || typeof error !== 'object' || !('code' in error)) return 'UNKNOWN';
+  const code = String(error.code).trim();
+  return code || 'UNKNOWN';
 }
 
 export function normalizeJoinRequest(request) {

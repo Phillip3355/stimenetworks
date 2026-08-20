@@ -1,27 +1,7 @@
 BEGIN;
 
-CREATE TABLE IF NOT EXISTS public.join_requests (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  edition TEXT NOT NULL CHECK (edition IN ('java', 'bedrock')),
-  minecraft_nickname TEXT NOT NULL CHECK (char_length(btrim(minecraft_nickname)) BETWEEN 1 AND 32),
-  inviter_name TEXT NOT NULL CHECK (char_length(btrim(inviter_name)) BETWEEN 1 AND 80),
-  contact TEXT NOT NULL CHECK (char_length(btrim(contact)) BETWEEN 2 AND 120),
-  rules_agreed BOOLEAN NOT NULL CHECK (rules_agreed = TRUE),
-  privacy_agreed BOOLEAN NOT NULL CHECK (privacy_agreed = TRUE),
-  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-
-CREATE UNIQUE INDEX IF NOT EXISTS join_requests_pending_player_unique
-  ON public.join_requests (edition, lower(btrim(minecraft_nickname)));
-
-ALTER TABLE public.join_requests ENABLE ROW LEVEL SECURITY;
-
-REVOKE ALL ON TABLE public.join_requests FROM PUBLIC, anon, authenticated;
-GRANT INSERT ON TABLE public.join_requests TO anon, authenticated;
-GRANT SELECT, DELETE ON TABLE public.join_requests TO authenticated;
-
--- Verify administrators against auth.users instead of trusting a JWT email claim.
--- The function lives outside the exposed public API and is only used by RLS.
+-- Run this once in the Supabase SQL Editor for an existing installation.
+-- It replaces only the administrator read/delete checks; submitted rows remain intact.
 CREATE SCHEMA IF NOT EXISTS private;
 GRANT USAGE ON SCHEMA private TO authenticated;
 
@@ -46,8 +26,6 @@ $$;
 REVOKE ALL ON FUNCTION private.is_stimemc_admin() FROM PUBLIC, anon;
 GRANT EXECUTE ON FUNCTION private.is_stimemc_admin() TO authenticated;
 
--- Admin reads and completion use narrow RPCs so PostgREST never depends on
--- exposing the private table through a client-side SELECT/DELETE policy.
 CREATE OR REPLACE FUNCTION public.get_stimemc_join_requests()
 RETURNS SETOF public.join_requests
 LANGUAGE SQL
@@ -82,19 +60,7 @@ REVOKE ALL ON FUNCTION public.complete_stimemc_join_request(UUID) FROM PUBLIC, a
 GRANT EXECUTE ON FUNCTION public.get_stimemc_join_requests() TO authenticated;
 GRANT EXECUTE ON FUNCTION public.complete_stimemc_join_request(UUID) TO authenticated;
 
-DROP POLICY IF EXISTS "Anyone can submit a valid join request" ON public.join_requests;
-CREATE POLICY "Anyone can submit a valid join request"
-  ON public.join_requests
-  FOR INSERT
-  TO anon, authenticated
-  WITH CHECK (
-    edition IN ('java', 'bedrock')
-    AND char_length(btrim(minecraft_nickname)) BETWEEN 1 AND 32
-    AND char_length(btrim(inviter_name)) BETWEEN 1 AND 80
-    AND char_length(btrim(contact)) BETWEEN 2 AND 120
-    AND rules_agreed = TRUE
-    AND privacy_agreed = TRUE
-  );
+GRANT SELECT, DELETE ON TABLE public.join_requests TO authenticated;
 
 DROP POLICY IF EXISTS "StimeMC admins can read join requests" ON public.join_requests;
 CREATE POLICY "StimeMC admins can read join requests"

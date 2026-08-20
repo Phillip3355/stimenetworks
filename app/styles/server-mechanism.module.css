@@ -534,7 +534,49 @@
 }
 
 .chatComposer {
+  width: 100%;
+  min-width: 0;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px !important;
   background: var(--color-surface) !important;
+}
+
+.chatComposer > input {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.chatComposer > button {
+  min-width: 72px;
+  min-height: 44px;
+  flex: 0 0 auto;
+}
+
+.reportSurface {
+  border-color: var(--color-hairline) !important;
+  background: var(--color-surface) !important;
+  color: var(--color-body) !important;
+  box-shadow: none !important;
+}
+
+.reportPublishButton {
+  min-height: 52px !important;
+  border: 1px solid var(--color-hairline-strong) !important;
+  background: var(--color-surface-raised) !important;
+  color: var(--color-ink) !important;
+  box-shadow: none !important;
+  transition: background 180ms ease, border-color 180ms ease, opacity 180ms ease;
+}
+
+.reportPublishButton:hover:not(:disabled) {
+  border-color: var(--color-ink) !important;
+  background: #20201f !important;
+}
+
+.reportPublishButton:disabled {
+  cursor: wait !important;
+  opacity: 0.52;
 }
 
 .chatBubbleAdmin,
@@ -660,8 +702,16 @@
 
   .activeChat .chatPanel {
     display: flex !important;
+    width: 100%;
+    max-width: 100%;
     min-height: min(640px, calc(100svh - var(--nav-height) - 90px));
     height: calc(100svh - var(--nav-height) - 28px);
+  }
+
+  .activeChat .chatPanel > div,
+  .chatFeed {
+    min-width: 0;
+    min-height: 0;
   }
 
   .mobileBackButton {
@@ -710,6 +760,18 @@
 
   .roomCard {
     min-height: 250px;
+  }
+
+  .chatComposer {
+    grid-template-columns: minmax(0, 1fr) !important;
+    padding: 12px 14px calc(12px + env(safe-area-inset-bottom)) !important;
+    gap: 8px !important;
+  }
+
+  .chatComposer > button {
+    width: 100%;
+    min-height: 46px;
+    padding: 0 16px !important;
   }
 }
 

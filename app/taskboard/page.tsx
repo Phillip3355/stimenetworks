@@ -941,7 +941,7 @@ export default function TaskboardPage() {
 
               {activeTab === 'report' && (
                 <div className={styles.dashboardGrid} style={{ gridTemplateColumns: '1fr', gap: '32px' }}>
-                  <div style={{
+                  <div className={styles.reportSurface} style={{
                     border: '1px solid var(--color-hairline)', borderRadius: 'var(--radius-sm)', background: '#ffffff',
                     padding: '32px', display: 'flex', flexDirection: 'column', gap: '24px'
                   }}>
@@ -994,8 +994,9 @@ export default function TaskboardPage() {
                       <button
                         type="submit"
                         disabled={isPublishingReport}
+                        className={styles.reportPublishButton}
                         style={{
-                          padding: '16px', background: 'var(--color-primary)', color: '#ffffff',
+                          padding: '16px',
                           border: 'none', borderRadius: 'var(--radius-sm)', fontWeight: 800, fontSize: '1.05rem', cursor: 'pointer'
                         }}
                       >
@@ -1005,7 +1006,7 @@ export default function TaskboardPage() {
                   </div>
 
                   {/* 기발행된 보고서 목록 */}
-                  <div style={{
+                  <div className={styles.reportSurface} style={{
                     border: '1px solid var(--color-hairline)', borderRadius: 'var(--radius-sm)', background: '#ffffff',
                     display: 'flex', flexDirection: 'column', overflow: 'hidden'
                   }}>

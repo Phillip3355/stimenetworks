@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 
 import {
   buildWhitelistCommand,
+  classifyJoinRequestSubmitError,
+  getJoinRequestSubmitErrorCode,
   normalizeJoinRequest,
   validateJoinRequest,
 } from '../app/lib/joinRequestPolicy.mjs';
@@ -32,6 +34,26 @@ test('rejects a request when required consent or contact information is missing'
     validateJoinRequest({ ...validRequest, contact: ' ', privacyAgreed: false }),
     ['contact', 'privacyAgreed'],
   );
+});
+
+test('rejects a one-character contact before the database constraint is reached', () => {
+  assert.deepEqual(
+    validateJoinRequest({ ...validRequest, contact: '1' }),
+    ['contact'],
+  );
+});
+
+test('classifies plain Supabase error objects instead of hiding their cause', () => {
+  assert.equal(classifyJoinRequestSubmitError({ code: '23505' }), 'duplicate');
+  assert.equal(classifyJoinRequestSubmitError({ code: '23514' }), 'constraint');
+  assert.equal(classifyJoinRequestSubmitError({ code: '42501' }), 'permission');
+  assert.equal(classifyJoinRequestSubmitError({ code: 'PGRST301' }), 'unknown');
+});
+
+test('preserves a safe Supabase error code for actionable submission feedback', () => {
+  assert.equal(getJoinRequestSubmitErrorCode({ code: 'PGRST301' }), 'PGRST301');
+  assert.equal(getJoinRequestSubmitErrorCode({ code: 42501 }), '42501');
+  assert.equal(getJoinRequestSubmitErrorCode({ message: 'network failed' }), 'UNKNOWN');
 });
 
 test('rejects malformed Java nicknames while allowing Bedrock gamertags with spaces', () => {
