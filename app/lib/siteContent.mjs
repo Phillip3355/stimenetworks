@@ -8,6 +8,7 @@ export const requiredNavigationPaths = [
   '/rules',
   '/recovery-guidelines',
   '/updates',
+  '/news',
 ];
 
 export const serverProfile = {
@@ -60,6 +61,7 @@ export const navigationGroups = [
         labelEn: 'Recovery Guide',
       },
       { href: '/updates', labelKo: '업데이트', labelEn: 'Updates' },
+      { href: '/news', labelKo: '뉴스 보기', labelEn: 'News' },
     ],
   },
 ];

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { supabase } from '../lib/supabase';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { extractReportTitleAndContent } from '../lib/reportPresentation.mjs';
 import styles from '../styles/report.module.css';
 
 export const revalidate = 0; // SSR to fetch reports instantly
@@ -11,21 +12,6 @@ interface ReportPageProps {
   params: Promise<{
     slug: string[];
   }>;
-}
-
-function extractTitleAndContent(markdown: string, fallbackTitle: string) {
-  const match = markdown.match(/^\s*#\s+(.+)$/m);
-  if (match) {
-    const title = match[1].trim();
-    const cleanedContent = markdown.replace(match[0], '').trim();
-    return { title, content: cleanedContent };
-  }
-  // Formatted fallback title
-  const formattedFallback = fallbackTitle
-    .split('/')
-    .map(part => part.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()))
-    .join(' / ');
-  return { title: formattedFallback, content: markdown };
 }
 
 export default async function ReportPage({ params }: ReportPageProps) {
@@ -53,7 +39,7 @@ export default async function ReportPage({ params }: ReportPageProps) {
     notFound();
   }
 
-  const { title, content } = extractTitleAndContent(report.content, slugPath);
+  const { title, content } = extractReportTitleAndContent(report.content, slugPath);
 
   const formattedDate = new Date(report.created_at).toLocaleDateString('ko-KR', {
     year: 'numeric',
@@ -67,9 +53,9 @@ export default async function ReportPage({ params }: ReportPageProps) {
     <main className={styles.main}>
       <div className={styles.container}>
         {/* Navigation back button */}
-        <Link href="/support" className={styles.backButton}>
+        <Link href="/news" className={styles.backButton}>
           <span>←</span>
-          <span>지원 페이지로 돌아가기</span>
+          <span>뉴스 목록으로 돌아가기</span>
         </Link>
 
         <header className={styles.header}>

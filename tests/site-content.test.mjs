@@ -31,6 +31,7 @@ test('navigation preserves every documented public and operational route', () =>
     '/rules',
     '/recovery-guidelines',
     '/updates',
+    '/news',
   ]);
 
   const renderedPaths = navigationGroups.flatMap((group) =>
