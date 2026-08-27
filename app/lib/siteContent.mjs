@@ -2,13 +2,80 @@ export const requiredNavigationPaths = [
   '/',
   '/join',
   '/support',
-  '/taskboard',
-  '/voice',
   '/server-mechanism',
   '/rules',
   '/recovery-guidelines',
   '/updates',
   '/news',
+  '/history',
+];
+
+export const historyEntries = [
+  {
+    year: '2023.04',
+    labelKo: '첫 번째 서버',
+    labelEn: 'The first server',
+    titleKo: '작은 Bedrock 서버로 시작했습니다',
+    titleEn: 'It began as a small Bedrock server',
+    descriptionKo:
+      'Synology DS718+에서 네 명이 처음으로 함께한 소규모 Bedrock 서버였습니다. 연말에 서버는 사실상 문을 닫았지만, 직접 호스팅하고 운영하며 쌓은 경험은 다음 서버를 만들 출발점이 되었습니다.',
+    descriptionEn:
+      'Four players shared a small Bedrock server running on a Synology DS718+. The server effectively closed at the end of the year, but the hands-on hosting experience became the foundation for everything that followed.',
+    pointsKo: ['Synology DS718+', '4명의 초기 멤버', '서버 호스팅을 배우기 시작한 시기'],
+    pointsEn: ['Synology DS718+', 'Four founding players', 'The beginning of our hosting experience'],
+  },
+  {
+    year: '2024.03',
+    labelKo: '새로운 시작',
+    labelEn: 'A new beginning',
+    titleKo: 'Java 서버로 다음 장을 열었습니다',
+    titleEn: 'The next chapter opened with Java',
+    descriptionKo:
+      '새로운 다섯 명과 Java 서버를 시작했습니다. 이때의 멤버들이 훗날 Stime 161에 합류했고, 초기에는 지인만 초대하는 폐쇄적인 운영 방식을 택했습니다.',
+    descriptionEn:
+      'A new Java server started with five players. Many of those early members later joined Stime 161, while the server itself remained deliberately closed to friends and invited guests.',
+    pointsKo: ['새로운 5인 구성', '초기 멤버 다수 합류', '지인 중심의 폐쇄적 운영'],
+    pointsEn: ['A new group of five', 'Many early members joined later', 'A private, invite-only community'],
+  },
+  {
+    year: '2024.08',
+    labelKo: 'Stime 161',
+    labelEn: 'Stime 161',
+    titleKo: '첫 번째 이름을 얻었습니다',
+    titleEn: 'The project found its first name',
+    descriptionKo:
+      '당시 운영하던 스튜디오 이름 Stime과 2023년 서버 IP의 일부였던 161을 합쳐 Stime 161이 출범했습니다. Fabric과 DS718+를 유지한 Java 전용 서버였고, 처음으로 면접을 통해 새로운 플레이어를 받기 시작했습니다.',
+    descriptionEn:
+      'Stime 161 combined the name of the studio we were running with “161”, part of the 2024 server address. It remained a Java-only Fabric server on the DS718+, but introduced interviews for new players.',
+    pointsKo: ['Stime + IP 일부 161', 'Fabric 기반 Java 서버', '면접을 통한 멤버 합류'],
+    pointsEn: ['Stime + “161” from the old address', 'Fabric-based Java server', 'Interviews for new members'],
+  },
+  {
+    year: '2026.03',
+    labelKo: 'Stime Networks',
+    labelEn: 'Stime Networks',
+    titleKo: '닫힌 서버에서 열린 네트워크로',
+    titleEn: 'From a closed server to an open network',
+    descriptionKo:
+      '더 개방적인 운영을 위해 Stime Networks로 이름을 바꾸고, Paper 서버에 Geyser를 더해 Bedrock 동시접속을 처음 지원했습니다. DS718+에서 HP i7 시스템으로 이전해 성능도 높였지만, 초기 Geyser 연결은 자주 끊겨 안정성이라는 과제를 남겼습니다.',
+    descriptionEn:
+      'The name became Stime Networks to mark a more open way of operating. Paper and Geyser enabled our first Java–Bedrock crossplay, while a move from the DS718+ to an HP i7 system improved performance. Early Geyser connections, however, still challenged stability.',
+    pointsKo: ['Paper + Geyser 도입', '최초의 Java·Bedrock 동시접속', 'HP i7 시스템으로 이전'],
+    pointsEn: ['Paper + Geyser introduced', 'First Java–Bedrock crossplay', 'Upgraded to an HP i7 system'],
+  },
+  {
+    year: '2026.08',
+    labelKo: 'StimeMC',
+    labelEn: 'StimeMC',
+    titleKo: '더 오래, 더 많은 플레이를 위해',
+    titleEn: 'Built for longer, richer play',
+    descriptionKo:
+      '오리지널 Stime과 Minecraft의 MC를 합쳐 StimeMC가 출범했습니다. Fabric 서버에 ViaProxy를 연결하고 다양한 서버사이드 모드를 도입해 콘텐츠가 쉽게 고갈되지 않도록 했습니다. ViaProxy 전환으로 Java·Bedrock 동시접속의 안정성을 높이고, 더 개방적인 커뮤니티를 만들어가고 있습니다.',
+    descriptionEn:
+      'StimeMC combines the original Stime identity with Minecraft’s “MC”. ViaProxy now fronts a Fabric server filled with server-side mods, creating a world with more room to keep discovering. The new connection layer brings a much more stable crossplay experience as the community opens further.',
+    pointsKo: ['Fabric + ViaProxy 구조', '확장되는 서버사이드 콘텐츠', '안정적인 Java·Bedrock 접속'],
+    pointsEn: ['Fabric + ViaProxy architecture', 'Growing server-side content', 'Stable Java–Bedrock access'],
+  },
 ];
 
 export const serverProfile = {
@@ -24,44 +91,133 @@ export const serverProfile = {
     'Join from Java or Bedrock without installing client mods, then explore expanded content your way.',
 };
 
+export const homeIntro = {
+  headingKo: '같이 접속하고, 즐길 수 있습니다.',
+  headingEn: 'Connect and enjoy it together.',
+};
+
+export const serverMechanismFlow = {
+  root: {
+    eyebrowKo: 'VIAPROXY + GEYSER',
+    eyebrowEn: 'VIAPROXY + GEYSER',
+    titleKo: '한 번의 접속, 하나의 월드',
+    titleEn: 'One connection, one shared world',
+    descriptionKo:
+      'StimeMC는 ViaProxy 위에서 Geyser를 실행해 Java와 Bedrock 접속을 하나의 Java 서버로 이어줍니다.',
+    descriptionEn:
+      'StimeMC runs Geyser on ViaProxy to connect Java and Bedrock players to one Java server.',
+  },
+  nodes: [
+    {
+      id: 'java',
+      index: '01',
+      eyebrowKo: 'JAVA EDITION',
+      eyebrowEn: 'JAVA EDITION',
+      titleKo: 'Java 플레이어는 평소처럼 접속합니다',
+      titleEn: 'Java players connect as usual',
+      descriptionKo:
+        'PC Java 클라이언트의 연결은 ViaProxy를 거쳐 StimeMC의 Java 1.21.1 서버로 전달됩니다.',
+      descriptionEn:
+        'A PC Java client passes through ViaProxy and reaches StimeMC’s Java 1.21.1 server.',
+      pointsKo: ['PC 멀티플레이에서 서버 추가', '접속 버전 1.21.1', '관리자에게 받은 서버 주소 사용'],
+      pointsEn: ['Add a server from PC Multiplayer', 'Use version 1.21.1', 'Use the server address provided by an admin'],
+    },
+    {
+      id: 'bedrock',
+      index: '02',
+      eyebrowKo: 'BEDROCK EDITION',
+      eyebrowEn: 'BEDROCK EDITION',
+      titleKo: 'Bedrock 접속은 Geyser로 들어옵니다',
+      titleEn: 'Bedrock connections enter through Geyser',
+      descriptionKo:
+        '모바일·Windows·콘솔의 Bedrock 연결은 UDP로 ViaProxy에 도착하고, Geyser가 Java 서버가 이해할 수 있는 흐름으로 바꿉니다.',
+      descriptionEn:
+        'Bedrock connections from mobile, Windows, or consoles arrive at ViaProxy over UDP, then Geyser translates the flow for the Java server.',
+      pointsKo: ['Bedrock 서버 추가 화면에서 주소와 포트 입력', '클라이언트에 별도 모드 설치 불필요', 'Java 플레이어와 같은 월드에서 플레이'],
+      pointsEn: ['Enter the address and port in Add Server', 'No client-side mod installation', 'Play in the same world as Java players'],
+    },
+    {
+      id: 'viaproxy',
+      index: '03',
+      eyebrowKo: 'THE PROXY LAYER',
+      eyebrowEn: 'THE PROXY LAYER',
+      titleKo: 'ViaProxy가 앞단에서 연결을 정리합니다',
+      titleEn: 'ViaProxy organizes the connection at the edge',
+      descriptionKo:
+        'ViaProxy는 플레이어와 실제 서버 사이에 서서 서로 다른 연결 버전을 중계합니다. 덕분에 StimeMC의 서버사이드 모드와 Java 1.21.1 월드는 그대로 유지됩니다.',
+      descriptionEn:
+        'ViaProxy sits between players and the backend to relay different connection versions, while StimeMC keeps its server-side mods and Java 1.21.1 world intact.',
+      pointsKo: ['플레이어 → ViaProxy → Java 서버', '서버사이드 모드는 서버에서만 작동', '접속 경로를 한 곳에서 관리'],
+      pointsEn: ['Player → ViaProxy → Java server', 'Server-side mods run on the server', 'One managed connection path'],
+    },
+    {
+      id: 'geyser',
+      index: '04',
+      eyebrowKo: 'THE TRANSLATOR',
+      eyebrowEn: 'THE TRANSLATOR',
+      titleKo: 'Geyser가 두 언어를 실시간으로 번역합니다',
+      titleEn: 'Geyser translates both game languages in real time',
+      descriptionKo:
+        'Geyser는 Bedrock의 데이터를 Java 서버가 이해하는 형식으로 번역하고, 서버에서 돌아오는 데이터를 다시 Bedrock에 맞춰 전달하는 브리지입니다.',
+      descriptionEn:
+        'Geyser is the bridge that translates Bedrock data into a format the Java server understands, then sends the server response back to Bedrock.',
+      pointsKo: ['이동·블록·엔티티 데이터를 양방향 변환', 'Java 서버 기능을 Bedrock 플레이어에게 전달', '두 에디션의 연결 차이를 흡수'],
+      pointsEn: ['Translate movement, blocks, and entities both ways', 'Deliver Java server features to Bedrock players', 'Absorb protocol differences between editions'],
+    },
+    {
+      id: 'notes',
+      index: '05',
+      eyebrowKo: 'KEEP IN MIND',
+      eyebrowEn: 'KEEP IN MIND',
+      titleKo: '같아도, 아주 조금 다를 수 있습니다',
+      titleEn: 'The world is shared, but a few details can differ',
+      descriptionKo:
+        '전투·레드스톤·리소스팩처럼 에디션 고유 동작은 다르게 보일 수 있습니다. Bedrock 접속은 UDP 포트를 사용하므로 안내받은 포트 정보를 정확히 입력해 주세요.',
+      descriptionEn:
+        'Edition-specific behavior such as combat, redstone, and resource packs can look different. Bedrock uses a UDP port, so enter the port supplied with your connection details.',
+      pointsKo: ['문제가 보이면 먼저 공식 제한 사항 확인', 'Bedrock 주소와 포트는 한 쌍으로 입력', '필요할 때 관리자에게 문의'],
+      pointsEn: ['Check the official limitations first', 'Enter the Bedrock address and port together', 'Contact an admin when you still need help'],
+      href: 'https://geysermc.org/wiki/geyser/current-limitations/',
+    },
+  ],
+};
+
+export const joinConnectionGuide = {
+  javaKo:
+    '• 접속 버전: 1.21.1 버전\n\nPC 마인크래프트를 실행한 뒤 [멀티플레이] -> [서버 추가] 메뉴로 이동하여 부여받은 서버 주소를 등록하고 접속해 주세요.',
+  javaEn:
+    '• Connection Version: 1.21.1\n\nLaunch your Java Minecraft client, go to [Multiplayer] -> [Add Server], input the server address provided by an admin, and connect.',
+};
+
 export const navigationGroups = [
   {
-    id: 'start',
-    labelKo: '시작하기',
-    labelEn: 'Start',
+    id: 'guide',
+    labelKo: '안내',
+    labelEn: 'Guide',
     links: [
       { href: '/', labelKo: '홈', labelEn: 'Home' },
-      { href: '/join', labelKo: '서버 가입', labelEn: 'Join Server' },
-      { href: '/support', labelKo: '1:1 문의', labelEn: 'Support' },
-      { href: '/taskboard', labelKo: '관리자', labelEn: 'Admin' },
-    ],
-  },
-  {
-    id: 'live',
-    labelKo: '라이브',
-    labelEn: 'Live',
-    links: [
-      { href: '/voice', labelKo: 'STAGE 채널', labelEn: 'STAGE Channels' },
-    ],
-  },
-  {
-    id: 'discover',
-    labelKo: '서버 안내',
-    labelEn: 'Discover',
-    links: [
-      {
-        href: '/server-mechanism',
-        labelKo: '서버 메커니즘',
-        labelEn: 'Server Mechanism',
-      },
       { href: '/rules', labelKo: '서버 규칙', labelEn: 'Rules' },
-      {
-        href: '/recovery-guidelines',
-        labelKo: '복구 가이드',
-        labelEn: 'Recovery Guide',
-      },
+      { href: '/recovery-guidelines', labelKo: '복구 가이드', labelEn: 'Recovery Guide' },
       { href: '/updates', labelKo: '업데이트', labelEn: 'Updates' },
       { href: '/news', labelKo: '뉴스 보기', labelEn: 'News' },
+    ],
+  },
+  {
+    id: 'player',
+    labelKo: '유저',
+    labelEn: 'Players',
+    links: [
+      { href: '/join', labelKo: '서버 가입', labelEn: 'Join Server' },
+      { href: '/support', labelKo: '1:1 문의', labelEn: 'Support' },
+    ],
+  },
+  {
+    id: 'technology',
+    labelKo: '기술',
+    labelEn: 'Technology',
+    links: [
+      { href: '/server-mechanism', labelKo: '서버 메커니즘', labelEn: 'Server Mechanism' },
+      { href: '/history', labelKo: '서버의 역사', labelEn: 'History' },
     ],
   },
 ];
@@ -138,13 +294,18 @@ export const homeFeatures = [
   },
 ];
 
-export const launchGallery = [
+export const homeWorldShowcase = [
+  {
+    id: 'world-gateway',
+    index: '00',
+    src: '/image copy 6.png',
+    altKo: 'StimeMC 월드의 분위기와 건축물을 넓게 담은 서버 전경',
+    altEn: 'A wide server view showing the atmosphere and builds of the StimeMC world',
+  },
   {
     id: 'monument',
     index: '01',
     src: '/image copy 7.png',
-    titleKo: '붉은빛의 성채',
-    titleEn: 'The Ember Citadel',
     altKo: '노을과 별빛 아래 붉게 빛나는 StimeMC의 거대한 성채',
     altEn: 'A monumental StimeMC citadel glowing red beneath the dusk sky',
   },
@@ -152,8 +313,6 @@ export const launchGallery = [
     id: 'settlement',
     index: '02',
     src: '/image copy 8.png',
-    titleKo: '숲 위의 정착지',
-    titleEn: 'Settlement Above the Forest',
     altKo: '숲 위에 세워진 청록색 지붕의 StimeMC 대형 목조 건축물',
     altEn: 'A large StimeMC timber settlement with teal roofs above the forest',
   },
@@ -161,8 +320,6 @@ export const launchGallery = [
     id: 'sky-realm',
     index: '03',
     src: '/image copy 9.png',
-    titleKo: '공중에 열린 미지의 영역',
-    titleEn: 'A Realm Suspended in the Sky',
     altKo: '부유섬 사이에서 빛나는 StimeMC의 거대한 공중 구조물',
     altEn: 'A luminous StimeMC structure suspended among shadowy floating islands',
   },

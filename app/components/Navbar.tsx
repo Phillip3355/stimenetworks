@@ -8,7 +8,7 @@ import { navigationGroups, serverProfile } from '../lib/siteContent.mjs';
 import styles from '../styles/navbar.module.css';
 import { useLanguage } from './LanguageProvider';
 
-const desktopPaths = new Set(['/join', '/voice', '/server-mechanism', '/support']);
+const desktopPaths = new Set(['/join', '/server-mechanism', '/support']);
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -135,6 +135,7 @@ export default function Navbar() {
               role="dialog"
               aria-modal="true"
               aria-label={labelFor({ labelKo: '전체 메뉴', labelEn: 'Site menu' })}
+              onPointerDown={(event) => event.stopPropagation()}
               initial={reduceMotion ? false : { y: -24, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -16, opacity: 0 }}
@@ -156,7 +157,10 @@ export default function Navbar() {
                         <Link
                           key={link.href}
                           href={link.href}
-                          onClick={closeMenu}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            closeMenu();
+                          }}
                           className={pathname === link.href ? styles.menuLinkActive : undefined}
                         >
                           {labelFor(link)}

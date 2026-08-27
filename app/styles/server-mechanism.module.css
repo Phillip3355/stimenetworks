@@ -133,6 +133,100 @@
   word-break: keep-all;
 }
 
+.mechanismHeader {
+  display: grid;
+  gap: 14px;
+  max-width: 880px;
+}
+
+.mechanismTree {
+  position: relative;
+  list-style: none;
+  margin: clamp(52px, 8vw, 104px) 0 0;
+  padding: 0 0 0 clamp(14px, 4vw, 62px);
+}
+
+.mechanismTree::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 28px;
+  width: 1px;
+  background: var(--color-hairline-strong);
+  content: '';
+}
+
+.mechanismNode {
+  position: relative;
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: clamp(22px, 4vw, 60px);
+  min-width: 0;
+}
+
+.mechanismNode:not(:last-child) { padding-bottom: 1px; }
+
+.nodeMarker {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  padding-top: 4px;
+}
+
+.nodeMarker::after {
+  position: absolute;
+  top: 25px;
+  left: 28px;
+  width: clamp(22px, 4vw, 60px);
+  height: 1px;
+  background: var(--color-hairline-strong);
+  content: '';
+}
+
+.nodeMarker span {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid var(--color-hairline-strong);
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .08em;
+}
+
+.nodeBody {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, .82fr) minmax(240px, 1.18fr);
+  gap: clamp(26px, 5vw, 78px);
+  min-width: 0;
+  padding: 0 0 clamp(40px, 6vw, 74px);
+  border-bottom: 1px solid var(--color-hairline);
+}
+
+.nodeCopy { min-width: 0; }
+.nodeEyebrow { margin: 0 0 12px; color: var(--color-mute); font-size: 10px; font-weight: 560; letter-spacing: .14em; }
+.nodeTitle { margin: 0; color: var(--color-ink); font-size: clamp(25px, 3.6vw, 48px); font-weight: 420; line-height: 1.06; letter-spacing: -.045em; word-break: keep-all; overflow-wrap: normal; text-wrap: balance; }
+.nodeDescription { margin: 20px 0 0; color: var(--color-body); font-size: clamp(14px, 1.25vw, 16px); line-height: 1.75; word-break: keep-all; }
+.nodePoints { min-width: 0; margin: 0; padding: 0; list-style: none; align-self: end; border-top: 1px solid var(--color-hairline); }
+.nodePoints li { padding: 13px 0; border-bottom: 1px solid var(--color-hairline); color: var(--color-text-soft); font-size: 13px; line-height: 1.5; word-break: keep-all; }
+.nodePoints li::before { margin-right: 10px; color: var(--color-mute); content: '↳'; }
+.nodePoints .manualLink { display: inline-block; margin-top: 0; }
+
+@media (max-width: 760px) {
+  .mechanismTree { margin-top: 48px; padding-left: 0; }
+  .mechanismTree::before { left: 20px; }
+  .mechanismNode { grid-template-columns: 40px minmax(0, 1fr); gap: 16px; }
+  .nodeMarker::after { left: 20px; width: 16px; }
+  .nodeMarker span { width: 36px; height: 36px; font-size: 9px; }
+  .nodeBody { grid-template-columns: 1fr; gap: 26px; padding-bottom: 38px; }
+  .nodeDescription { margin-top: 16px; }
+  .nodePoints { align-self: auto; }
+}
+
 .timelineGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

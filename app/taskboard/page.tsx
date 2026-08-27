@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import AdminJoinRequests from '../components/AdminJoinRequests';
 import { useLanguage } from '../components/LanguageProvider';
 import { supabase } from '../lib/supabase';
-import { buildStageRoomPayload, filterStageRooms } from '../lib/voiceRoomPolicy.mjs';
+import { buildStageRoomPayload } from '../lib/voiceRoomPolicy.mjs';
 import { isAdminEmail } from '../lib/adminPolicy.mjs';
 import styles from '../styles/server-mechanism.module.css';
 
@@ -56,20 +56,20 @@ export default function TaskboardPage() {
   const [isSubmittingReply, setIsSubmittingReply] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  // 탭 및 보고서/STAGE 채널 관리 상태
-  const [activeTab, setActiveTab] = useState<'support' | 'join' | 'report' | 'voice'>('support');
+  // 탭 및 보고서 관리 상태
+  const [activeTab, setActiveTab] = useState<'support' | 'join' | 'report'>('support');
   const [reports, setReports] = useState<ReportRecord[]>([]);
   const [reportSlug, setReportSlug] = useState('');
   const [reportContent, setReportContent] = useState('');
   const [isPublishingReport, setIsPublishingReport] = useState(false);
   const [reportFeedback, setReportFeedback] = useState('');
 
-  // STAGE 채널 관리 상태
   const [voiceRooms, setVoiceRooms] = useState<StageRoom[]>([]);
   const [newRoomCode, setNewRoomCode] = useState('');
   const [newRoomTitle, setNewRoomTitle] = useState('');
   const [isCreatingRoom, setIsCreatingRoom] = useState(false);
   const [voiceFeedback, setVoiceFeedback] = useState('');
+
 
 
 
@@ -168,36 +168,6 @@ export default function TaskboardPage() {
       supabase.removeChannel(reportsChannel);
     };
   }, [user, isAdmin]);
-
-  // 2.7. 어드민 인증이 완료되었을 때 STAGE 채널 목록 동기화
-  useEffect(() => {
-    if (!user || !isAdmin) return;
-
-    async function loadVoiceRooms() {
-      const { data, error } = await supabase
-        .from('voice_rooms')
-        .select('*')
-        .eq('room_type', 'stage')
-        .eq('is_public', true)
-        .order('created_at', { ascending: false });
-      if (!error && data) {
-        setVoiceRooms(filterStageRooms(data));
-      }
-    }
-    loadVoiceRooms();
-
-    const voiceChannel = supabase
-      .channel('voice_rooms_admin_feed')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'voice_rooms' }, () => {
-        loadVoiceRooms();
-      })
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(voiceChannel);
-    };
-  }, [user, isAdmin]);
-
 
   // 3. 선택한 특정 문의의 대화 내역 실시간 동기화
   useEffect(() => {
@@ -446,8 +416,6 @@ export default function TaskboardPage() {
       alert(t('삭제에 실패했습니다.', 'Failed to delete.'));
     }
   };
-
-
   return (
     <main className={styles.main}>
       <AnimatePresence mode="wait">
@@ -668,17 +636,6 @@ export default function TaskboardPage() {
                       }}
                     >
                       {t('보고서 발행', 'Publish Report')}
-                    </button>
-                    <button
-                      onClick={() => setActiveTab('voice')}
-                      className={`${styles.adminTab} ${activeTab === 'voice' ? styles.adminTabActive : ''}`}
-                      style={{
-                        padding: '10px 20px', border: 'none', background: activeTab === 'voice' ? 'var(--color-primary)' : 'transparent',
-                        color: activeTab === 'voice' ? '#fff' : 'var(--color-mute)', borderRadius: '30px', fontWeight: 800, cursor: 'pointer',
-                        fontSize: '1.05rem', transition: 'all 0.2s ease'
-                      }}
-                    >
-                      🎙️ {t('STAGE 채널 관리', 'STAGE Channels')}
                     </button>
                   </div>
 
@@ -1050,7 +1007,7 @@ export default function TaskboardPage() {
               )}
 
               {/* 3. STAGE 채널 관리 탭 */}
-              {activeTab === 'voice' && (
+              {false && (
                 <div className={styles.dashboardGrid} style={{ gridTemplateColumns: '1fr', gap: '32px' }}>
                   {/* 방 생성 폼 */}
                   <div style={{

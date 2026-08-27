@@ -4,11 +4,14 @@ import * as siteContent from '../app/lib/siteContent.mjs';
 
 import {
   getRuleDetail,
+  homeIntro,
   homeFeatures,
   navigationGroups,
   requiredNavigationPaths,
   ruleMindMap,
+  serverMechanismFlow,
   serverProfile,
+  joinConnectionGuide,
 } from '../app/lib/siteContent.mjs';
 
 test('server profile exposes the player-facing crossplay mod experience', () => {
@@ -20,18 +23,37 @@ test('server profile exposes the player-facing crossplay mod experience', () => 
   assert.ok(serverProfile.playerPromiseEn.includes('without installing client mods'));
 });
 
+test('server mechanism flow explains ViaProxy and Geyser as the connection bridge', () => {
+  assert.deepEqual(
+    serverMechanismFlow.nodes.map(({ id }) => id),
+    ['java', 'bedrock', 'viaproxy', 'geyser', 'notes'],
+  );
+  assert.match(serverMechanismFlow.root.descriptionKo, /ViaProxy/);
+  assert.match(serverMechanismFlow.nodes.find(({ id }) => id === 'geyser').descriptionKo, /번역/);
+  assert.match(serverMechanismFlow.nodes.find(({ id }) => id === 'notes').descriptionKo, /UDP/);
+});
+
+test('join connection guide points Java players to version 1.21.1 and a server address', () => {
+  assert.match(joinConnectionGuide.javaKo, /접속 버전: 1\.21\.1 버전/);
+  assert.match(joinConnectionGuide.javaKo, /서버 주소/);
+  assert.doesNotMatch(joinConnectionGuide.javaKo, /부여받은 서버 정보/);
+});
+
 test('navigation preserves every documented public and operational route', () => {
+  assert.deepEqual(navigationGroups.map(({ labelKo }) => labelKo), ['안내', '유저', '기술']);
+  assert.equal(navigationGroups.flatMap((group) => group.links).some(({ href }) => href === '/taskboard'), false);
+  assert.deepEqual(navigationGroups[1].links.map(({ href }) => href), ['/join', '/support']);
+  assert.deepEqual(navigationGroups[2].links.map(({ href }) => href), ['/server-mechanism', '/history']);
   assert.deepEqual(requiredNavigationPaths, [
     '/',
     '/join',
     '/support',
-    '/taskboard',
-    '/voice',
     '/server-mechanism',
     '/rules',
     '/recovery-guidelines',
     '/updates',
     '/news',
+    '/history',
   ]);
 
   const renderedPaths = navigationGroups.flatMap((group) =>
@@ -48,6 +70,11 @@ test('home feature learn-more links target the documented services', () => {
     homeFeatures.map(({ href }) => href),
     ['/server-mechanism', '/server-mechanism', '/rules'],
   );
+});
+
+test('home introduction uses concise player-facing copy', () => {
+  assert.equal(homeIntro.headingKo, '같이 접속하고, 즐길 수 있습니다.');
+  assert.equal(homeIntro.headingEn, 'Connect and enjoy it together.');
 });
 
 test('home differentiators use every newly supplied server screenshot', () => {
@@ -91,13 +118,18 @@ test('home differentiators use every newly supplied server screenshot', () => {
   );
 });
 
-test('launch gallery presents copy 7, 8, and 9 in exhibition order', () => {
+test('home introduction presents copy 6 through 9 in world order', () => {
   assert.deepEqual(
-    siteContent.launchGallery?.map(({ src }) => src),
-    ['/image copy 7.png', '/image copy 8.png', '/image copy 9.png'],
+    siteContent.homeWorldShowcase?.map(({ src }) => src),
+    [
+      '/image copy 6.png',
+      '/image copy 7.png',
+      '/image copy 8.png',
+      '/image copy 9.png',
+    ],
   );
 
-  for (const artwork of siteContent.launchGallery ?? []) {
+  for (const artwork of siteContent.homeWorldShowcase ?? []) {
     assert.ok(artwork.altKo.length >= 10);
     assert.ok(artwork.altEn.length >= 10);
   }

@@ -57,17 +57,9 @@ export default function Hero() {
           <Link href="/join" className={styles.primaryAction}>
             {t('서버에 가입하기', 'Join the server')}
           </Link>
-          <Link href="/voice" className={styles.secondaryAction}>
-            {t('STAGE 입장', 'Enter STAGE')}
-          </Link>
         </motion.div>
       </div>
 
-      <div className={styles.archiveIndex} aria-hidden="true">
-        <span>01</span>
-        <span>Living Server Archive</span>
-        <span>2026</span>
-      </div>
     </section>
   );
 }

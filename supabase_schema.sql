@@ -45,37 +45,5 @@ CREATE TABLE IF NOT EXISTS public.reports (
 -- Disable RLS for reports (as previously agreed for this project)
 ALTER TABLE public.reports DISABLE ROW LEVEL SECURITY;
 
--- 6. Create voice_rooms table for voice channels and stage channels
-CREATE TABLE IF NOT EXISTS public.voice_rooms (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  code TEXT UNIQUE NOT NULL, -- e.g. "room-1", "voice-alpha"
-  title TEXT NOT NULL,
-  is_public BOOLEAN DEFAULT true,
-  room_type TEXT DEFAULT 'stage', -- 'stage' (admin created & admin deleted)
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())
-);
-
-ALTER TABLE public.voice_rooms DISABLE ROW LEVEL SECURITY;
-
--- Add voice_rooms to realtime publication
-ALTER PUBLICATION supabase_realtime ADD TABLE public.voice_rooms;
-
--- 7. Create voice_room_members table for real-time multiplayer participant tracking
-CREATE TABLE IF NOT EXISTS public.voice_room_members (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  room_code TEXT NOT NULL,
-  client_id TEXT NOT NULL UNIQUE,
-  nickname TEXT NOT NULL,
-  is_muted BOOLEAN DEFAULT false,
-  is_speaking BOOLEAN DEFAULT false,
-  is_screen_sharing BOOLEAN DEFAULT false,
-  is_speaker BOOLEAN DEFAULT false, -- Speaker permission in Stage channels
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())
-);
-
-ALTER TABLE public.voice_room_members DISABLE ROW LEVEL SECURITY;
-ALTER PUBLICATION supabase_realtime ADD TABLE public.voice_room_members;
-
 
 

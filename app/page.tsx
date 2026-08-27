@@ -3,10 +3,9 @@
 import Link from 'next/link';
 import CardsGrid from './components/CardsGrid';
 import Hero from './components/Hero';
-import LaunchCountdown from './components/LaunchCountdown';
-import LaunchGallery from './components/LaunchGallery';
 import { useLanguage } from './components/LanguageProvider';
-import { homeFeatures } from './lib/siteContent.mjs';
+import WorldShowcase from './components/WorldShowcase';
+import { homeFeatures, homeIntro } from './lib/siteContent.mjs';
 
 export default function Home() {
   const { language, t } = useLanguage();
@@ -27,19 +26,10 @@ export default function Home() {
 
       <section className="sectionCanvas" aria-labelledby="home-story-title">
         <div className="sectionContent">
-          <p className="eyebrow">StimeMC · {t('세 가지 차이', 'Three Differences')}</p>
           <h2 id="home-story-title" className="sectionHeading">
-            {t(
-              '같이 접속하고, 계속 발견하고, 안심하고 플레이합니다.',
-              'Connect together, keep discovering, and play with confidence.',
-            )}
+            {t(homeIntro.headingKo, homeIntro.headingEn)}
           </h2>
-          <p className="sectionLead">
-            {t(
-              '에디션의 경계를 없애고, 새로운 건축물과 모드로 월드를 넓히며, 명확한 규칙으로 여러분의 시간과 창작물을 지킵니다.',
-              'We remove edition barriers, expand the world with new builds and mods, and protect your time and creations with clear rules.',
-            )}
-          </p>
+          <WorldShowcase />
         </div>
       </section>
 
@@ -48,7 +38,6 @@ export default function Home() {
       <section className="sectionCanvas" aria-labelledby="home-next-title">
         <div className="sectionContent">
           <div className="sectionHeader">
-            <p className="eyebrow">{t('다음 장면', 'Next Scene')}</p>
             <h2 id="home-next-title" className="sectionTitle">
               {t('서버 안으로 들어올 준비가 되셨나요?', 'Ready to step into the server?')}
             </h2>
@@ -57,15 +46,9 @@ export default function Home() {
             <Link href="/join" className="homeActionPrimary">
               {t('서버 가입', 'Join Server')}
             </Link>
-            <Link href="/voice" className="homeActionSecondary">
-              {t('STAGE 채널 보기', 'View STAGE Channels')}
-            </Link>
           </div>
         </div>
       </section>
-
-      <LaunchCountdown />
-      <LaunchGallery />
     </main>
   );
 }

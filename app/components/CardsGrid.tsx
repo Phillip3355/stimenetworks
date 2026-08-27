@@ -63,12 +63,8 @@ function FeatureCard({
             />
           </div>
         ) : null}
-        <span className={styles.captureLabel} aria-hidden="true">
-          WORLD CAPTURE · {card.index}
-        </span>
       </div>
       <div className={styles.copy}>
-        <span className={styles.displayIndex} aria-hidden="true">{card.index}</span>
         <p className={styles.eyebrow}>{card.index} · {card.eyebrow}</p>
         <h3>{card.title}</h3>
         <p className={styles.description}>{card.description}</p>

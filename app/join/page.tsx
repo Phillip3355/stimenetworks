@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import JoinRequestForm from '../components/JoinRequestForm';
 import { useLanguage } from '../components/LanguageProvider';
+import { joinConnectionGuide } from '../lib/siteContent.mjs';
 import styles from '../styles/server-mechanism.module.css';
 
 export default function JoinServerPage() {
@@ -105,8 +106,8 @@ export default function JoinServerPage() {
               <h3 className={styles.timelineTitle}>{t('자바 에디션 접속 방법', 'Java Connection')}</h3>
               <p className={styles.timelineText}>
                 {t(
-                  '• 접속 버전: 26.1.2 버전\n\nPC 마인크래프트를 실행한 뒤 [멀티플레이] -> [서버 추가] 메뉴로 이동하여 부여받은 서버 정보를 등록하고 접속해 주세요.',
-                  '• Connection Version: 26.1.2\n\nLaunch your Java Minecraft client, go to [Multiplayer] -> [Add Server], input your assigned server details, and connect.'
+                  joinConnectionGuide.javaKo,
+                  joinConnectionGuide.javaEn
                 )}
               </p>
             </article>
