@@ -3,14 +3,15 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import type { User } from '@supabase/supabase-js';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useLanguage } from '../components/LanguageProvider';
 import { supabase } from '../lib/supabase';
-import { isAdminEmail } from '../lib/adminPolicy.mjs';
+import { canAccessGuestInquiry, normalizeInquiryCode } from '../lib/guestInquiry.mjs';
 import styles from '../styles/server-mechanism.module.css';
 
 interface Inquiry {
   id: string;
+  user_id?: string | null;
   inquiry_code: string;
   status: 'open' | 'replied' | string;
   created_at: string;
@@ -22,6 +23,76 @@ interface InquiryMessage {
   sender: 'user' | 'admin' | string;
   message: string;
   created_at: string;
+}
+
+interface InquiryChatProps {
+  inquiry: Inquiry;
+  messages: InquiryMessage[];
+  newMessage: string;
+  onMessageChange: (value: string) => void;
+  onSubmit: (event: React.FormEvent) => void;
+  onBack: () => void;
+  messagesEndRef: React.RefObject<HTMLDivElement | null>;
+  translate: (ko: string, en: string) => string;
+}
+
+function InquiryChat({ inquiry, messages, newMessage, onMessageChange, onSubmit, onBack, messagesEndRef, translate }: InquiryChatProps) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <div style={{ padding: '20px 24px', borderBottom: '1px solid var(--color-hairline)', background: 'var(--color-canvas)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div>
+          <button
+            type="button"
+            onClick={onBack}
+            className={styles.mobileBackButton}
+            style={{ background: 'none', border: 'none', color: 'var(--color-primary)', cursor: 'pointer', padding: '0 0 8px 0', display: 'flex', alignItems: 'center', gap: '4px', fontWeight: 600, fontSize: '0.9rem' }}
+          >
+            ← {translate('목록으로', 'Back to List')}
+          </button>
+          <h4 style={{ margin: 0, fontWeight: 700, color: 'var(--color-ink)' }}>
+            {translate('티켓 코드:', 'Ticket code:')} {inquiry.inquiry_code}
+          </h4>
+          <p style={{ margin: '4px 0 0', fontSize: '0.85rem', color: 'var(--color-mute)' }}>
+            {translate('접수 일시:', 'Created:')} {new Date(inquiry.created_at).toLocaleString()}
+          </p>
+        </div>
+      </div>
+
+      <div className={styles.chatFeed} style={{ flexGrow: 1, padding: '24px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        {messages.map((msg) => {
+          const isMsgAdmin = msg.sender === 'admin';
+          return (
+            <div key={msg.id} style={{ display: 'flex', flexDirection: 'column', alignItems: isMsgAdmin ? 'flex-start' : 'flex-end', width: '100%' }}>
+              <div className={isMsgAdmin ? styles.chatBubbleAdmin : styles.chatBubbleUser} style={{
+                maxWidth: '70%', padding: '12px 18px', borderRadius: '16px',
+                borderTopLeftRadius: isMsgAdmin ? '2px' : '16px', borderTopRightRadius: isMsgAdmin ? '16px' : '2px',
+                background: isMsgAdmin ? 'var(--color-primary)' : '#ffffff', color: isMsgAdmin ? '#ffffff' : 'var(--color-ink)',
+                border: isMsgAdmin ? 'none' : '1px solid var(--color-hairline)', fontSize: '0.95rem', lineHeight: 1.5,
+                boxShadow: '0 2px 6px rgba(0,0,0,0.02)', whiteSpace: 'pre-wrap', wordBreak: 'break-all'
+              }}>
+                {msg.message}
+              </div>
+              <span style={{ fontSize: '0.75rem', color: 'var(--color-mute)', marginTop: '4px', padding: '0 4px' }}>
+                {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              </span>
+            </div>
+          );
+        })}
+        <div ref={messagesEndRef} />
+      </div>
+
+      <form className={styles.chatComposer} onSubmit={onSubmit} style={{ padding: '16px 24px', borderTop: '1px solid var(--color-hairline)', display: 'flex', gap: '12px' }}>
+        <input
+          type="text" placeholder={translate('추가 메시지를 입력해 주세요...', 'Type your message...')}
+          value={newMessage} onChange={(event) => onMessageChange(event.target.value)} required
+          style={{ flexGrow: 1, padding: '12px 18px', border: '1px solid var(--color-hairline)', borderRadius: '30px', fontSize: '0.95rem', outline: 'none' }}
+        />
+        <button type="submit" style={{ background: 'var(--color-ink)', border: 'none', color: 'var(--color-canvas)', padding: '0 24px', borderRadius: '30px', fontWeight: 700, cursor: 'pointer', fontSize: '0.95rem' }}>
+          {translate('전송', 'Send')}
+        </button>
+      </form>
+    </div>
+  );
 }
 
 // 6자리 랜덤 대문자/숫자 문의 코드 생성 함수
@@ -36,6 +107,7 @@ function generateInquiryCode() {
 
 export default function SupportPage() {
   const { t } = useLanguage();
+  const reduceMotion = useReducedMotion();
 
   // 상태 관리
   const [user, setUser] = useState<User | null>(null);
@@ -56,8 +128,33 @@ export default function SupportPage() {
   const [inquiryContent, setInquiryContent] = useState('');
   const [inquiryPurpose, setInquiryPurpose] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [guestDialog, setGuestDialog] = useState<'menu' | 'create' | 'lookup' | null>(null);
+  const [guestLookupCode, setGuestLookupCode] = useState('');
+  const [guestCodeNotice, setGuestCodeNotice] = useState<string | null>(null);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const drawerTransition = reduceMotion
+    ? { duration: 0 }
+    : { type: 'spring' as const, stiffness: 320, damping: 30, mass: 0.9 };
+
+  useEffect(() => {
+    if (!guestDialog && !guestCodeNotice) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape' || isSubmitting) return;
+      setGuestDialog(null);
+      setGuestCodeNotice(null);
+    };
+
+    window.addEventListener('keydown', handleEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleEscape);
+    };
+  }, [guestDialog, guestCodeNotice, isSubmitting]);
 
   // 채팅방 자동 스크롤
   useEffect(() => {
@@ -93,12 +190,13 @@ export default function SupportPage() {
     };
   }, []);
 
-  const checkAdminStatus = (email: string | undefined) => {
+  const checkAdminStatus = async (email: string | undefined) => {
     if (!email) {
       setIsAdmin(false);
       return;
     }
-    setIsAdmin(isAdminEmail(email, process.env.NEXT_PUBLIC_ADMIN_EMAILS));
+    const { data, error } = await supabase.rpc('is_support_admin');
+    setIsAdmin(!error && data === true);
   };
 
   // 2. 로그인 완료 시 사용자의 모든 문의 목록 실시간 동기화
@@ -153,19 +251,28 @@ export default function SupportPage() {
   useEffect(() => {
     if (!selectedInquiry) return;
     const inquiryId = selectedInquiry.id;
+    const inquiryCode = selectedInquiry.inquiry_code;
+    const isGuestInquiry = selectedInquiry.user_id === null;
 
     // 초기 메시지 로드
     async function loadMessages() {
-      const { data, error } = await supabase
-        .from('inquiry_messages')
-        .select('*')
-        .eq('inquiry_id', inquiryId)
-        .order('created_at', { ascending: true });
+      const { data, error } = isGuestInquiry
+        ? await supabase.rpc('get_guest_inquiry_messages', { p_inquiry_code: inquiryCode })
+        : await supabase
+          .from('inquiry_messages')
+          .select('*')
+          .eq('inquiry_id', inquiryId)
+          .order('created_at', { ascending: true });
       if (!error && data) {
         setMessages(data);
       }
     }
     loadMessages();
+
+    if (isGuestInquiry) {
+      const poll = window.setInterval(loadMessages, 5000);
+      return () => window.clearInterval(poll);
+    }
 
     // 실시간 구독 설정
     const channel = supabase
@@ -304,6 +411,68 @@ ${inquiryPurpose.trim()}`;
     }
   };
 
+  const handleGuestCreateInquiry = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!nickname.trim() || !inquiryContent.trim() || !inquiryPurpose.trim()) return;
+
+    setIsSubmitting(true);
+    setErrorText('');
+
+    try {
+      const { data: newInquiry, error: inquiryError } = await supabase.rpc('create_guest_inquiry', {
+        p_nickname: nickname.trim(),
+        p_inquiry_type: inquiryType,
+        p_content: inquiryContent.trim(),
+        p_purpose: inquiryPurpose.trim(),
+      });
+
+      if (inquiryError) throw inquiryError;
+      if (!newInquiry) throw new Error('Guest inquiry was not returned.');
+
+      setInquiryContent('');
+      setInquiryPurpose('');
+      setSelectedInquiry(newInquiry);
+      setGuestDialog(null);
+      setGuestCodeNotice(newInquiry.inquiry_code);
+    } catch (err: unknown) {
+      console.error(err);
+      setErrorText(t('비회원 문의를 시작하지 못했습니다. 잠시 후 다시 시도해 주세요.', 'We could not start your guest inquiry. Please try again shortly.'));
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleGuestLookup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const code = normalizeInquiryCode(guestLookupCode);
+    if (!code) {
+      setErrorText(t('STM-으로 시작하는 6~18자리 문의번호를 입력해 주세요.', 'Enter the 6 to 18 character inquiry code beginning with STM-.'));
+      return;
+    }
+
+    setIsSubmitting(true);
+    setErrorText('');
+    try {
+      const { data, error } = await supabase.rpc('get_guest_inquiry', { p_inquiry_code: code });
+      const inquiry = Array.isArray(data) ? data[0] : data;
+
+      if (error) throw error;
+      if (!canAccessGuestInquiry(inquiry)) {
+        setErrorText(t('일치하는 문의를 찾을 수 없습니다. 문의번호를 다시 확인해 주세요.', 'We could not find that inquiry. Please check the code and try again.'));
+        return;
+      }
+
+      setSelectedInquiry(inquiry);
+      setGuestLookupCode('');
+      setGuestDialog(null);
+    } catch (err: unknown) {
+      console.error(err);
+      setErrorText(t('문의 조회 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.', 'We could not look up your inquiry. Please try again shortly.'));
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   // 사용자 일반 메시지 전송
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -313,23 +482,30 @@ ${inquiryPurpose.trim()}`;
     setNewMessage(''); // 즉시 청소
 
     try {
-      const { error } = await supabase
-        .from('inquiry_messages')
-        .insert([
-          {
-            inquiry_id: selectedInquiry.id,
-            sender: 'user',
-            message: msgContent,
-          },
-        ]);
-      
+      const { error } = !user && selectedInquiry.user_id === null
+        ? await supabase.rpc('send_guest_inquiry_message', {
+          p_inquiry_code: selectedInquiry.inquiry_code,
+          p_message: msgContent,
+        })
+        : await supabase
+          .from('inquiry_messages')
+          .insert([
+            {
+              inquiry_id: selectedInquiry.id,
+              sender: 'user',
+              message: msgContent,
+            },
+          ]);
+
       if (error) throw error;
 
-      // 일반 유저가 메시지를 보냈으므로 문의방 상태를 open(대기중)으로 변경
-      await supabase
-        .from('inquiries')
-        .update({ status: 'open' })
-        .eq('id', selectedInquiry.id);
+      if (user || selectedInquiry.user_id !== null) {
+        // 일반 유저가 메시지를 보냈으므로 문의방 상태를 open(대기중)으로 변경
+        await supabase
+          .from('inquiries')
+          .update({ status: 'open' })
+          .eq('id', selectedInquiry.id);
+      }
 
     } catch (err: unknown) {
       console.error(err);
@@ -364,38 +540,67 @@ ${inquiryPurpose.trim()}`;
               <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
               <p>{t('데이터 불러오는 중...', 'Loading data...')}</p>
             </div>
+          ) : !user && selectedInquiry ? (
+            <motion.div
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+              className={`${styles.dashboardGrid} ${styles.supportGrid} ${styles.guestSupportGrid} ${styles.activeChat}`}
+            >
+              <div className={styles.chatPanel}>
+                <InquiryChat
+                  inquiry={selectedInquiry}
+                  messages={messages}
+                  newMessage={newMessage}
+                  onMessageChange={setNewMessage}
+                  onSubmit={handleSendMessage}
+                  onBack={() => { setSelectedInquiry(null); setMessages([]); setGuestDialog('menu'); }}
+                  messagesEndRef={messagesEndRef}
+                  translate={t}
+                />
+              </div>
+            </motion.div>
           ) : !user ? (
             // ================= [구글 비로그인 상태 UI] =================
             <motion.div
               initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
-              style={{ maxWidth: '600px', margin: '0 auto' }}
+              className={styles.authChoiceGrid}
             >
-              <article className={styles.timelineCard} style={{ padding: '48px 36px', textAlign: 'center' }}>
+              <article className={`${styles.timelineCard} ${styles.authChoiceCard} ${styles.authChoiceCardPrimary}`}>
                 <span className={styles.cornerSquare} />
-                <h3 className={styles.timelineTitle}>{t('구글 로그인 연동 필요', 'Google Auth Required')}</h3>
-                <p className={styles.timelineText} style={{ marginBottom: '32px', lineHeight: 1.6 }}>
+                <div className={styles.authChoiceCopy}>
+                  <p className={styles.authChoiceEyebrow}>{t('로그인 문의', 'SIGNED-IN SUPPORT')}</p>
+                  <h3 className={styles.timelineTitle}>{t('구글 로그인으로 시작하기', 'Start with Google')}</h3>
+                </div>
+                <p className={styles.timelineText}>
                   {t(
                     '구글 계정으로 연결하면 1:1 문의를 시작하고, 나중에 돌아와도 이전 대화를 그대로 이어볼 수 있습니다.',
                     'Connect your Google account to start a private conversation and pick up where you left off whenever you return.'
                   )}
                 </p>
-
-                <button
-                  onClick={handleGoogleSignIn}
-                  className={styles.buttonOutline}
-                  style={{
-                    display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
-                    padding: '14px 28px', fontSize: '1rem', fontWeight: 700, color: 'var(--color-canvas)',
-                    background: 'var(--color-primary)', border: 'none', borderRadius: 'var(--radius-sm)', cursor: 'pointer'
-                  }}
-                >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <button onClick={handleGoogleSignIn} className={`${styles.authChoiceButton} ${styles.authChoiceButtonPrimary}`}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                     <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
                     <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
                     <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
                   </svg>
                   {t('구글 로그인으로 시작하기', 'Google Sign In to Start')}
+                </button>
+              </article>
+
+              <article className={`${styles.timelineCard} ${styles.authChoiceCard} ${styles.authChoiceCardSecondary}`}>
+                <span className={styles.cornerSquare} />
+                <div className={styles.authChoiceCopy}>
+                  <p className={styles.authChoiceEyebrow}>{t('로그인 없이 문의', 'NO ACCOUNT NEEDED')}</p>
+                  <h3 className={styles.timelineTitle}>{t('비회원으로 문의하기', 'Continue as a guest')}</h3>
+                </div>
+                <p className={styles.timelineText}>
+                  {t(
+                    '로그인 없이 문의를 남기고, 발급받은 고유번호로 나중에 대화를 다시 확인할 수 있습니다.',
+                    'Leave a message without signing in and return later with the inquiry code you receive.'
+                  )}
+                </p>
+                <button type="button" onClick={() => setGuestDialog('menu')} className={`${styles.authChoiceButton} ${styles.authChoiceButtonSecondary}`}>
+                  {t('비회원 문의하기', 'Guest Inquiry')}
                 </button>
               </article>
             </motion.div>
@@ -616,66 +821,16 @@ ${inquiryPurpose.trim()}`;
                     </form>
                   </div>
                 ) : selectedInquiry ? (
-                  // ================= [선택된 채팅방 화면] =================
-                  <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-                    <div style={{ padding: '20px 24px', borderBottom: '1px solid var(--color-hairline)', background: 'var(--color-canvas)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <div>
-                        <button
-                          type="button"
-                          onClick={() => setSelectedInquiry(null)}
-                          className={styles.mobileBackButton}
-                          style={{
-                            background: 'none', border: 'none', color: 'var(--color-primary)',
-                            cursor: 'pointer', padding: '0 0 8px 0', display: 'flex', alignItems: 'center',
-                            gap: '4px', fontWeight: 600, fontSize: '0.9rem'
-                          }}
-                        >
-                          ← {t('목록으로', 'Back to List')}
-                        </button>
-                        <h4 style={{ margin: 0, fontWeight: 700, color: 'var(--color-ink)' }}>
-                          티켓 코드: {selectedInquiry.inquiry_code}
-                        </h4>
-                        <p style={{ margin: '4px 0 0', fontSize: '0.85rem', color: 'var(--color-mute)' }}>
-                          접수 일시: {new Date(selectedInquiry.created_at).toLocaleString()}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className={styles.chatFeed} style={{ flexGrow: 1, padding: '24px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                      {messages.map((msg) => {
-                        const isMsgAdmin = msg.sender === 'admin';
-                        return (
-                          <div key={msg.id} style={{ display: 'flex', flexDirection: 'column', alignItems: isMsgAdmin ? 'flex-start' : 'flex-end', width: '100%' }}>
-                            <div className={isMsgAdmin ? styles.chatBubbleAdmin : styles.chatBubbleUser} style={{
-                              maxWidth: '70%', padding: '12px 18px', borderRadius: '16px',
-                              borderTopLeftRadius: isMsgAdmin ? '2px' : '16px', borderTopRightRadius: isMsgAdmin ? '16px' : '2px',
-                              background: isMsgAdmin ? 'var(--color-primary)' : '#ffffff',
-                              color: isMsgAdmin ? '#ffffff' : 'var(--color-ink)',
-                              border: isMsgAdmin ? 'none' : '1px solid var(--color-hairline)',
-                              fontSize: '0.95rem', lineHeight: 1.5, boxShadow: '0 2px 6px rgba(0,0,0,0.02)', whiteSpace: 'pre-wrap', wordBreak: 'break-all'
-                            }}>
-                              {msg.message}
-                            </div>
-                            <span style={{ fontSize: '0.75rem', color: 'var(--color-mute)', marginTop: '4px', padding: '0 4px' }}>
-                              {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                            </span>
-                          </div>
-                        );
-                      })}
-                      <div ref={messagesEndRef} />
-                    </div>
-
-                    <form className={styles.chatComposer} onSubmit={handleSendMessage} style={{ padding: '16px 24px', borderTop: '1px solid var(--color-hairline)', display: 'flex', gap: '12px' }}>
-                      <input
-                        type="text" placeholder={t('추가 메시지를 입력해 주세요...', 'Type your message...')}
-                        value={newMessage} onChange={(e) => setNewMessage(e.target.value)} required
-                        style={{ flexGrow: 1, padding: '12px 18px', border: '1px solid var(--color-hairline)', borderRadius: '30px', fontSize: '0.95rem', outline: 'none' }}
-                      />
-                      <button type="submit" style={{ background: 'var(--color-ink)', border: 'none', color: 'var(--color-canvas)', padding: '0 24px', borderRadius: '30px', fontWeight: 700, cursor: 'pointer', fontSize: '0.95rem' }}>
-                        {t('전송', 'Send')}
-                      </button>
-                    </form>
-                  </div>
+                  <InquiryChat
+                    inquiry={selectedInquiry}
+                    messages={messages}
+                    newMessage={newMessage}
+                    onMessageChange={setNewMessage}
+                    onSubmit={handleSendMessage}
+                    onBack={() => setSelectedInquiry(null)}
+                    messagesEndRef={messagesEndRef}
+                    translate={t}
+                  />
                 ) : (
                   // ================= [빈 화면 (선택 안됨)] =================
                   <div style={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-mute)', flexDirection: 'column', gap: '12px' }}>
@@ -686,6 +841,161 @@ ${inquiryPurpose.trim()}`;
               </div>
             </motion.div>
           )}
+
+          <AnimatePresence>
+            {guestDialog && (
+              <motion.div
+                className={styles.modalBackdrop}
+                role="presentation"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: reduceMotion ? 0 : 0.22, ease: 'easeOut' }}
+                onMouseDown={() => !isSubmitting && setGuestDialog(null)}
+              >
+                <motion.section
+                  className={styles.modalCard}
+                  role="dialog"
+                  aria-modal="true"
+                  aria-labelledby="guest-inquiry-title"
+                  initial={{ y: reduceMotion ? 0 : '100%', opacity: reduceMotion ? 1 : 0.7 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: reduceMotion ? 0 : '100%', opacity: reduceMotion ? 1 : 0.7 }}
+                  transition={drawerTransition}
+                  onMouseDown={(event) => event.stopPropagation()}
+                >
+                  <div className={styles.modalGrip} aria-hidden="true" />
+                  <div className={`${styles.modalHeader} ${guestDialog === 'menu' ? styles.modalHeaderMenu : ''}`}>
+                    <div>
+                      <p className={styles.eyebrow}>{t('비회원 문의', 'Guest inquiry')}</p>
+                      <h2 id="guest-inquiry-title" className={styles.modalTitle}>
+                        {guestDialog === 'menu' && t('무엇을 도와드릴까요?', 'How can we help?')}
+                        {guestDialog === 'create' && t('문의 시작하기', 'Start an inquiry')}
+                        {guestDialog === 'lookup' && t('문의 조회하기', 'Find an inquiry')}
+                      </h2>
+                    </div>
+                    <button type="button" onClick={() => setGuestDialog(null)} className={styles.modalClose} aria-label={t('닫기', 'Close')}>×</button>
+                  </div>
+
+                  <AnimatePresence mode="wait" initial={false}>
+                    {guestDialog === 'menu' && (
+                      <motion.div
+                        key="guest-menu"
+                        className={styles.modalBody}
+                        initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: reduceMotion ? 0 : -10 }}
+                        transition={{ duration: reduceMotion ? 0 : 0.18 }}
+                      >
+                        <p className={styles.timelineText}>{t('로그인 없이 문의를 남기거나, 캡처해 둔 문의번호로 이전 대화에 다시 들어갈 수 있습니다.', 'Start without signing in, or use your saved inquiry code to return to an earlier conversation.')}</p>
+                        <div className={styles.guestChoiceGrid}>
+                          <button type="button" className={styles.guestChoice} onClick={() => setGuestDialog('create')}>
+                            <strong>{t('문의 시작하기', 'Start an inquiry')}</strong>
+                            <span>{t('새 문의를 작성하고 상담을 시작합니다.', 'Write a new message and begin chatting.')}</span>
+                          </button>
+                          <button type="button" className={styles.guestChoice} onClick={() => setGuestDialog('lookup')}>
+                            <strong>{t('문의 조회하기', 'Find an inquiry')}</strong>
+                            <span>{t('캡처한 고유번호로 대화를 다시 엽니다.', 'Use your saved code to reopen a conversation.')}</span>
+                          </button>
+                        </div>
+                      </motion.div>
+                    )}
+
+                    {guestDialog === 'create' && (
+                      <motion.form
+                        key="guest-create"
+                        className={styles.modalForm}
+                        onSubmit={handleGuestCreateInquiry}
+                        initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: reduceMotion ? 0 : -10 }}
+                        transition={{ duration: reduceMotion ? 0 : 0.18 }}
+                      >
+                        <div>
+                          <label>{t('마인크래프트 닉네임', 'Minecraft Nickname')} <span aria-hidden="true">*</span></label>
+                          <input type="text" value={nickname} onChange={(event) => setNickname(event.target.value)} placeholder={t('마인크래프트 닉네임을 입력해 주세요', 'Enter your Minecraft nickname')} required />
+                        </div>
+                        <div>
+                          <label>{t('문의 유형', 'Inquiry Type')} <span aria-hidden="true">*</span></label>
+                          <select value={inquiryType} onChange={(event) => setInquiryType(event.target.value)} required>
+                            <option value="복구">복구 (Recovery)</option>
+                            <option value="신고">신고 (Report)</option>
+                            <option value="서버">서버 (Server Issues)</option>
+                            <option value="기타">기타 (Others)</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label>{t('문의 내용', 'Inquiry Content')} <span aria-hidden="true">*</span></label>
+                          <textarea value={inquiryContent} onChange={(event) => setInquiryContent(event.target.value)} placeholder={t('//문의 내용을 입력해주세요!', '// Please enter the details of your inquiry!')} rows={5} required />
+                        </div>
+                        <div>
+                          <label>{t('문의 목적', 'Expected Resolution')} <span aria-hidden="true">*</span></label>
+                          <textarea value={inquiryPurpose} onChange={(event) => setInquiryPurpose(event.target.value)} placeholder={t('//어떤 대응이나 답변을 원하시나요?', '// What kind of resolution or response are you expecting?')} rows={3} required />
+                        </div>
+                        <button type="submit" className={styles.modalSubmit} disabled={isSubmitting}>
+                          {isSubmitting ? t('처리 중...', 'Processing...') : t('문의 전송하기', 'Send inquiry')}
+                        </button>
+                      </motion.form>
+                    )}
+
+                    {guestDialog === 'lookup' && (
+                      <motion.form
+                        key="guest-lookup"
+                        className={styles.modalForm}
+                        onSubmit={handleGuestLookup}
+                        initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: reduceMotion ? 0 : -10 }}
+                        transition={{ duration: reduceMotion ? 0 : 0.18 }}
+                      >
+                        <p className={styles.timelineText}>{t('문의 접수 후 캡처해 둔 고유번호를 입력해 주세요.', 'Enter the unique code you captured after submitting your inquiry.')}</p>
+                        <div>
+                          <label>{t('문의 고유번호', 'Inquiry code')}</label>
+                          <input type="text" value={guestLookupCode} onChange={(event) => setGuestLookupCode(event.target.value.toUpperCase())} placeholder="STM-ABC123" autoCapitalize="characters" autoCorrect="off" required />
+                        </div>
+                        <button type="submit" className={styles.modalSubmit} disabled={isSubmitting}>
+                          {isSubmitting ? t('조회 중...', 'Looking up...') : t('문의 채팅창 열기', 'Open inquiry chat')}
+                        </button>
+                      </motion.form>
+                    )}
+                  </AnimatePresence>
+                </motion.section>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <AnimatePresence>
+            {guestCodeNotice && (
+              <motion.div
+                className={styles.modalBackdrop}
+                role="presentation"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: reduceMotion ? 0 : 0.22, ease: 'easeOut' }}
+              >
+                <motion.section
+                  className={styles.codeNotice}
+                  role="dialog"
+                  aria-modal="true"
+                  aria-labelledby="guest-code-title"
+                  initial={{ y: reduceMotion ? 0 : '100%', opacity: reduceMotion ? 1 : 0.7 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: reduceMotion ? 0 : '100%', opacity: reduceMotion ? 1 : 0.7 }}
+                  transition={drawerTransition}
+                >
+                  <div className={styles.modalGrip} aria-hidden="true" />
+                  <p className={styles.eyebrow}>{t('문의가 접수되었습니다', 'Inquiry received')}</p>
+                  <h2 id="guest-code-title" className={styles.modalTitle}>{t('문의 고유번호', 'Your inquiry code')}</h2>
+                  <strong className={styles.guestInquiryCode}>{guestCodeNotice}</strong>
+                  <p className={styles.timelineText}>{t('이 번호를 반드시 캡처해 주세요. 로그인하지 않은 상태에서는 이 번호로만 나중에 문의 채팅창에 다시 접속할 수 있습니다.', 'Please capture this code. Without signing in, it is the only way to return to this inquiry chat later.')}</p>
+                  <button type="button" className={styles.modalSubmit} onClick={() => setGuestCodeNotice(null)}>
+                    {t('확인하고 채팅으로 이동', 'Continue to chat')}
+                  </button>
+                </motion.section>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {errorText && (
             <div style={{ maxWidth: '600px', margin: '24px auto 0', padding: '16px', background: '#fef2f2', border: '1px solid #fee2e2', borderRadius: 'var(--radius-sm)', color: '#ef4444', textAlign: 'center', fontSize: '0.9rem', fontWeight: 500 }}>

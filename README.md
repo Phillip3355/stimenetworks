@@ -16,6 +16,16 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Supabase support setup
+
+Run [`supabase_schema.sql`](./supabase_schema.sql) in the Supabase SQL editor before using support. It enables row-level security and creates the code-scoped RPCs used by guest inquiries. The two required administrators are seeded automatically. The database table is the authoritative admin list; if `NEXT_PUBLIC_ADMIN_EMAILS` contains additional addresses, add the same lower-case addresses to `public.support_admins` in Supabase:
+
+```sql
+insert into public.support_admins (email)
+values ('extra-admin@example.com')
+on conflict (email) do nothing;
+```
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

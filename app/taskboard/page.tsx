@@ -8,7 +8,6 @@ import AdminJoinRequests from '../components/AdminJoinRequests';
 import { useLanguage } from '../components/LanguageProvider';
 import { supabase } from '../lib/supabase';
 import { buildStageRoomPayload } from '../lib/voiceRoomPolicy.mjs';
-import { isAdminEmail } from '../lib/adminPolicy.mjs';
 import styles from '../styles/server-mechanism.module.css';
 
 interface Inquiry {
@@ -101,12 +100,13 @@ export default function TaskboardPage() {
     };
   }, []);
 
-  const checkAdminStatus = (email: string | undefined) => {
+  const checkAdminStatus = async (email: string | undefined) => {
     if (!email) {
       setIsAdmin(false);
       return;
     }
-    setIsAdmin(isAdminEmail(email, process.env.NEXT_PUBLIC_ADMIN_EMAILS));
+    const { data, error } = await supabase.rpc('is_support_admin');
+    setIsAdmin(!error && data === true);
   };
 
   // 2. 어드민 인증이 완료되었을 때 모든 문의 목록 실시간 동기화
