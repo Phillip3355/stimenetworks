@@ -890,6 +890,249 @@
   color: var(--color-ink);
 }
 
+.adminGateCard,
+.adminAccessCard {
+  border-color: var(--color-hairline) !important;
+  border-radius: var(--radius-sm) !important;
+  background: var(--color-surface) !important;
+  color: var(--color-body) !important;
+  box-shadow: none !important;
+}
+
+.adminGateButton {
+  min-height: 48px !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid var(--color-ink) !important;
+  border-radius: var(--radius-sm) !important;
+  background: var(--color-surface-raised) !important;
+  color: var(--color-ink) !important;
+}
+
+.adminGateButton:hover {
+  background: var(--color-surface-soft) !important;
+  color: var(--color-ink) !important;
+}
+
+.adminPanelHeader {
+  min-width: 0;
+  padding: 0 0 20px;
+  border-bottom: 1px solid var(--color-hairline) !important;
+  background: var(--color-surface) !important;
+  color: var(--color-body);
+}
+
+.adminTabList {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.adminAccountBar {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.adminAccountEmail {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--color-mute) !important;
+}
+
+.adminAccountEmail strong {
+  color: var(--color-ink) !important;
+}
+
+.adminLogoutButton {
+  min-height: 42px !important;
+  padding: 10px 20px;
+  border: 1px solid color-mix(in srgb, var(--color-danger) 68%, transparent) !important;
+  border-radius: var(--radius-sm) !important;
+  background: transparent !important;
+  color: var(--color-danger) !important;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+
+.adminLogoutButton:hover {
+  border-color: var(--color-danger) !important;
+  background: var(--color-danger) !important;
+  color: var(--color-canvas) !important;
+}
+
+.panelSectionHeader {
+  background: var(--color-surface-raised) !important;
+  color: var(--color-ink) !important;
+}
+
+.inquiryListItem {
+  border-bottom: 1px solid var(--color-hairline) !important;
+  border-left: 4px solid transparent !important;
+  background: var(--color-surface) !important;
+  color: var(--color-body);
+  transition: background 180ms ease, border-color 180ms ease;
+}
+
+.inquiryListItem:hover {
+  background: var(--color-surface-soft) !important;
+}
+
+.inquiryListItemSelected {
+  border-left-color: var(--color-ink) !important;
+  background: var(--color-surface-soft) !important;
+}
+
+.adminChatHeader {
+  flex: 0 0 auto;
+  background: var(--color-surface-raised) !important;
+}
+
+.chatMessages {
+  min-width: 0;
+  min-height: 0;
+  flex-grow: 1;
+  padding: 24px;
+  overflow-y: auto;
+  background: var(--color-surface-soft) !important;
+  color: var(--color-body);
+  scrollbar-color: var(--color-hairline-strong) var(--color-surface-soft);
+}
+
+.chatMessageRow {
+  min-width: 0;
+  width: 100%;
+}
+
+.chatReplyInput {
+  min-height: 44px;
+  background: var(--color-surface-raised) !important;
+  color: var(--color-ink) !important;
+  border-color: var(--color-hairline-strong) !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+.chatSendButton {
+  min-width: 82px;
+  min-height: 44px !important;
+  padding: 0 22px;
+  border: 1px solid var(--color-ink) !important;
+  border-radius: var(--radius-sm) !important;
+  background: var(--color-surface-raised) !important;
+  color: var(--color-ink) !important;
+  font-weight: 750;
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease, opacity 180ms ease;
+}
+
+.chatSendButton:hover:not(:disabled) {
+  border-color: var(--color-ink) !important;
+  background: var(--color-surface-soft) !important;
+  color: var(--color-ink) !important;
+}
+
+.chatSendButton:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+
+.reportList {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.reportListItems {
+  min-width: 0;
+  overflow-y: auto;
+}
+
+.reportListItem {
+  min-width: 0;
+  border-bottom-color: var(--color-hairline) !important;
+  background: var(--color-surface) !important;
+  color: var(--color-body);
+  transition: background 180ms ease;
+}
+
+.reportListItem:hover {
+  background: var(--color-surface-soft) !important;
+}
+
+.reportActions {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.reportViewButton,
+.reportDeleteButton {
+  min-width: 72px;
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 14px !important;
+  border-radius: var(--radius-sm) !important;
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease, opacity 180ms ease;
+}
+
+.reportViewButton {
+  border: 1px solid var(--color-hairline-strong) !important;
+  background: var(--color-surface-raised) !important;
+  color: var(--color-ink) !important;
+  text-decoration: none;
+}
+
+.reportViewButton:hover {
+  border-color: var(--color-ink) !important;
+  background: var(--color-surface-soft) !important;
+  color: var(--color-ink) !important;
+}
+
+.reportDeleteButton {
+  border: 1px solid color-mix(in srgb, var(--color-danger) 62%, transparent) !important;
+  background: transparent !important;
+  color: var(--color-danger) !important;
+}
+
+.reportDeleteButton:hover {
+  border-color: var(--color-danger) !important;
+  background: var(--color-danger) !important;
+  color: var(--color-canvas) !important;
+}
+
+.adminConsoleButton {
+  min-height: 46px;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-ink) !important;
+  border-radius: var(--radius-sm) !important;
+  background: var(--color-surface-raised) !important;
+  color: var(--color-ink) !important;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+
+.adminConsoleButton:hover {
+  border-color: var(--color-ink) !important;
+  background: var(--color-surface-soft) !important;
+  color: var(--color-ink) !important;
+}
+
 .main button {
   min-height: 42px;
 }
@@ -974,13 +1217,13 @@
 
 .chatBubbleAdmin {
   border: 1px solid var(--color-hairline-strong) !important;
-  background: var(--color-ink) !important;
-  color: var(--color-canvas) !important;
+  background: var(--color-surface-raised) !important;
+  color: var(--color-ink) !important;
 }
 
 .chatBubbleUser {
   border: 1px solid var(--color-hairline) !important;
-  background: var(--color-surface-raised) !important;
+  background: var(--color-surface-soft) !important;
   color: var(--color-ink) !important;
 }
 
@@ -1012,6 +1255,81 @@
 }
 
 @media (max-width: 760px) {
+  .adminPanelHeader {
+    align-items: stretch !important;
+    gap: 18px;
+    margin-bottom: 24px !important;
+  }
+
+  .adminTabList {
+    width: 100%;
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+  }
+
+  .adminTab {
+    flex: 0 0 auto;
+  }
+
+  .adminAccountBar {
+    width: 100%;
+    align-items: stretch !important;
+    justify-content: stretch !important;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 2px;
+  }
+
+  .adminAccountEmail {
+    text-align: left;
+  }
+
+  .adminLogoutButton {
+    width: 100%;
+  }
+
+  .adminChatHeader {
+    align-items: flex-start !important;
+    gap: 12px;
+    padding: 16px !important;
+  }
+
+  .adminChatHeader > div:first-child {
+    min-width: 0;
+  }
+
+  .adminChatHeader h4 {
+    overflow-wrap: anywhere;
+  }
+
+  .chatMessages {
+    padding: 16px !important;
+  }
+
+  .chatBubbleAdmin,
+  .chatBubbleUser {
+    max-width: min(88%, 480px) !important;
+  }
+
+  .reportListItem {
+    align-items: stretch !important;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .reportActions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .reportViewButton,
+  .reportDeleteButton {
+    width: 100%;
+  }
+
   .heroContent,
   .sectionContent {
     width: calc(100% - 28px);
@@ -1202,6 +1520,16 @@
     width: 100%;
     min-height: 46px;
     padding: 0 16px !important;
+  }
+
+  .reportActions {
+    grid-template-columns: 1fr;
+  }
+
+  .adminTab {
+    min-width: max-content;
+    padding-inline: 16px !important;
+    font-size: 0.92rem !important;
   }
 }
 

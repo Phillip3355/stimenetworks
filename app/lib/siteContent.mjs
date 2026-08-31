@@ -257,15 +257,15 @@ export const homeFeatures = [
       '플레이어가 만든 건축물로 월드의 풍경이 계속 바뀌고, 서버사이드 모드가 새로운 기능과 발견을 더합니다. 별도 설치 없이 접속할 때마다 달라진 장면을 만나보세요.',
     descriptionEn:
       'Player-built landmarks keep reshaping the world while server-side mods add fresh discoveries, all without installing anything extra.',
-    images: ['/image copy 3.png', '/image copy 2.png', '/image copy 5.png'],
+    images: ['/image copy 8.png', '/image copy 9.png', '/image copy 5.png'],
     imageAltsKo: [
-      '분수와 농장, 주택이 모여 있는 StimeMC 생활 구역',
-      '네더 블록과 불길로 꾸며진 StimeMC의 새로운 체험 구역',
+      '숲 위에 세워진 청록색 지붕의 StimeMC 대형 목조 건축물',
+      '부유섬 사이에서 빛나는 StimeMC의 거대한 공중 구조물',
       '밤하늘 아래 빛나는 서버사이드 모드 건축물과 연결 구조',
     ],
     imageAltsEn: [
-      'A StimeMC neighborhood filled with a fountain, farms, and player homes',
-      'A new StimeMC discovery area built with Nether blocks and fire',
+      'A large StimeMC timber settlement with teal roofs above the forest',
+      'A luminous StimeMC structure suspended among shadowy floating islands',
       'Illuminated server-side mod structures and connections beneath the night sky',
     ],
     href: '/server-mechanism',
@@ -296,29 +296,15 @@ export const homeFeatures = [
 
 export const homeWorldShowcase = [
   {
-    id: 'world-gateway',
+    id: 'new-builds',
     index: '00',
-    src: '/image copy 6.png',
-    altKo: 'StimeMC 월드의 분위기와 건축물을 넓게 담은 서버 전경',
-    altEn: 'A wide server view showing the atmosphere and builds of the StimeMC world',
-  },
-  {
-    id: 'monument',
-    index: '01',
-    src: '/image copy 7.png',
-    altKo: '노을과 별빛 아래 붉게 빛나는 StimeMC의 거대한 성채',
-    altEn: 'A monumental StimeMC citadel glowing red beneath the dusk sky',
-  },
-  {
-    id: 'settlement',
-    index: '02',
     src: '/image copy 8.png',
     altKo: '숲 위에 세워진 청록색 지붕의 StimeMC 대형 목조 건축물',
     altEn: 'A large StimeMC timber settlement with teal roofs above the forest',
   },
   {
-    id: 'sky-realm',
-    index: '03',
+    id: 'server-side-mods',
+    index: '01',
     src: '/image copy 9.png',
     altKo: '부유섬 사이에서 빛나는 StimeMC의 거대한 공중 구조물',
     altEn: 'A luminous StimeMC structure suspended among shadowy floating islands',
@@ -399,18 +385,22 @@ export const ruleMindMap = {
       titleKo: '도둑질·소유물 침해 금지',
       titleEn: 'Respect Player Property',
       descriptionKo:
-        '상자 속 아이템뿐 아니라 주민, 가축, 엔티티와 생산 시설도 플레이어의 소유물로 보호됩니다.',
+        '상자 속 아이템뿐 아니라 주민, 가축, 엔티티와 생산 시설도 플레이어의 소유물로 보호됩니다. 소유물은 소유자가 본인의 닉네임을 표지판으로 세워서 표시하는 것을 권장합니다. 다른 플레이어는 소유자의 허락 없이 소유 주민과 거래할 수 없습니다. 주민교배기, 주민 등에 대해서는 소유권을 주장할 수 있으나, 주민마을 전체에 대해서는 소유권을 주장할 수 없습니다.',
       descriptionEn:
-        'Player property includes stored items as well as villagers, animals, entities, and production facilities.',
+        'Player property includes stored items as well as villagers, animals, entities, and production facilities. Owners are encouraged to mark their property with a sign bearing their nickname. Other players may not trade with owned villagers without the owner’s permission. Ownership may be claimed over villager breeders and individual villagers, but not over an entire villager village.',
       examplesKo: [
         '상자·배럴·셜커 상자에서 물건 가져가기',
         '주민이나 가축을 허락 없이 이동·처치하기',
         '농장과 공장의 생산물을 무단으로 가져가기',
+        '소유자의 허락 없이 소유 주민과 거래하기',
+        '주민교배기·주민과 주민마을 전체의 소유권을 혼동하기',
       ],
       examplesEn: [
         'Taking items from chests, barrels, or shulker boxes',
         'Moving or killing villagers and animals without permission',
         'Taking farm or factory output without consent',
+        'Trading with an owned villager without the owner’s permission',
+        'Claiming ownership over an entire villager village instead of specific breeders or villagers',
       ],
     },
     {

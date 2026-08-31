@@ -1,6 +1,11 @@
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import * as siteContent from '../app/lib/siteContent.mjs';
+
+const heroSource = await readFile(new URL('../app/components/Hero.tsx', import.meta.url), 'utf8');
+const homeSource = await readFile(new URL('../app/page.tsx', import.meta.url), 'utf8');
+const rulesPageSource = await readFile(new URL('../app/rules/page.tsx', import.meta.url), 'utf8');
 
 import {
   getRuleDetail,
@@ -77,14 +82,19 @@ test('home introduction uses concise player-facing copy', () => {
   assert.equal(homeIntro.headingEn, 'Connect and enjoy it together.');
 });
 
+test('home introduction flows directly into the Java and Bedrock feature card', () => {
+  assert.doesNotMatch(homeSource, /WorldShowcase/);
+  assert.match(homeSource, /<CardsGrid\s+cards=\{features\}/);
+});
+
 test('home differentiators use every newly supplied server screenshot', () => {
   const usedImages = homeFeatures.flatMap((feature) => feature.images);
 
   assert.deepEqual(usedImages, [
     '/image.png',
     '/image copy.png',
-    '/image copy 3.png',
-    '/image copy 2.png',
+    '/image copy 8.png',
+    '/image copy 9.png',
     '/image copy 5.png',
     '/image copy 4.png',
   ]);
@@ -118,12 +128,14 @@ test('home differentiators use every newly supplied server screenshot', () => {
   );
 });
 
-test('home introduction presents copy 6 through 9 in world order', () => {
+test('home hero uses the newly supplied copy 10 image', () => {
+  assert.match(heroSource, /src="\/image copy 10\.png"/);
+});
+
+test('home introduction showcases the new builds and mod scenes', () => {
   assert.deepEqual(
     siteContent.homeWorldShowcase?.map(({ src }) => src),
     [
-      '/image copy 6.png',
-      '/image copy 7.png',
       '/image copy 8.png',
       '/image copy 9.png',
     ],
@@ -133,6 +145,19 @@ test('home introduction presents copy 6 through 9 in world order', () => {
     assert.ok(artwork.altKo.length >= 10);
     assert.ok(artwork.altEn.length >= 10);
   }
+});
+
+test('property theft rule explains ownership signs, villager trading, and village limits', () => {
+  const detail = getRuleDetail('property-theft', 'ko');
+
+  assert.match(detail.description, /닉네임.*표지판/);
+  assert.match(detail.description, /허락 없이.*주민과 거래/);
+  assert.match(detail.description, /주민마을 전체/);
+});
+
+test('severe violation appeals point players to the support page', () => {
+  assert.match(rulesPageSource, /이의신청은 문의 페이지/);
+  assert.doesNotMatch(rulesPageSource, /이의신청은 @Phillip_0211/);
 });
 
 test('rule mind map exposes clickable branches with detailed examples', () => {

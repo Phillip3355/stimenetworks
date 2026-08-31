@@ -454,6 +454,7 @@ export default function TaskboardPage() {
             }}
           >
             <div
+              className={styles.adminGateCard}
               style={{
                 width: '100%',
                 maxWidth: '440px',
@@ -492,7 +493,7 @@ export default function TaskboardPage() {
 
               <button
                 onClick={handleGoogleSignIn}
-                className={styles.buttonOutline}
+                className={`${styles.buttonOutline} ${styles.adminGateButton}`}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -533,6 +534,7 @@ export default function TaskboardPage() {
             }}
           >
             <div
+              className={styles.adminAccessCard}
               style={{
                 width: '100%',
                 maxWidth: '460px',
@@ -561,7 +563,7 @@ export default function TaskboardPage() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 <button
                   onClick={handleLogout}
-                  className={styles.buttonOutline}
+                  className={`${styles.buttonOutline} ${styles.adminGateButton}`}
                   style={{
                     cursor: 'pointer',
                     background: 'var(--color-primary)',
@@ -598,7 +600,7 @@ export default function TaskboardPage() {
           >
             <div className={styles.sectionContent}>
               {/* 대시보드 타이틀 헤더 */}
-              <div style={{
+              <div className={styles.adminPanelHeader} style={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
@@ -608,7 +610,7 @@ export default function TaskboardPage() {
               }}>
                 <div>
                   <p className={styles.eyebrow}>StimeMC Admin Platform</p>
-                  <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap', marginTop: '12px' }}>
+                  <div className={styles.adminTabList} style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap', marginTop: '12px' }}>
                     <button
                       onClick={() => setActiveTab('support')}
                       className={`${styles.adminTab} ${activeTab === 'support' ? styles.adminTabActive : ''}`}
@@ -640,12 +642,13 @@ export default function TaskboardPage() {
                   </div>
 
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                  <span style={{ fontSize: '0.85rem', color: 'var(--color-mute)' }}>
+                <div className={styles.adminAccountBar} style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                  <span className={styles.adminAccountEmail} style={{ fontSize: '0.85rem', color: 'var(--color-mute)' }}>
                     Admin: <strong>{user.email}</strong>
                   </span>
                   <button
                     onClick={handleLogout}
+                    className={styles.adminLogoutButton}
                     style={{
                       background: 'transparent',
                       border: '1px solid #ef4444',
@@ -668,7 +671,7 @@ export default function TaskboardPage() {
                 }`}>
                 {/* 2-1. 좌측: 유저 문의 리스트 */}
                 <div className={styles.listPanelBox}>
-                  <div style={{
+                  <div className={styles.panelSectionHeader} style={{
                     padding: '20px',
                     borderBottom: '1px solid var(--color-hairline)',
                     background: 'var(--color-canvas)',
@@ -695,6 +698,7 @@ export default function TaskboardPage() {
                           <div
                             key={item.id}
                             onClick={() => setSelectedInquiry(item)}
+                            className={`${styles.inquiryListItem} ${isSelected ? styles.inquiryListItemSelected : ''}`}
                             style={{
                               padding: '20px',
                               borderBottom: '1px solid var(--color-hairline)',
@@ -736,7 +740,7 @@ export default function TaskboardPage() {
                   {selectedInquiry ? (
                     <>
                       {/* 상세 창 헤더 */}
-                      <div className={styles.chatFeed} style={{
+                      <div className={`${styles.chatFeed} ${styles.adminChatHeader}`} style={{
                         padding: '20px 24px',
                         borderBottom: '1px solid var(--color-hairline)',
                         background: 'var(--color-canvas)',
@@ -777,7 +781,7 @@ export default function TaskboardPage() {
                       </div>
 
                       {/* 대화 피드 */}
-                      <div style={{
+                      <div className={styles.chatMessages} style={{
                         flexGrow: 1,
                         padding: '24px',
                         overflowY: 'auto',
@@ -791,6 +795,7 @@ export default function TaskboardPage() {
                           return (
                             <div
                               key={msg.id}
+                              className={styles.chatMessageRow}
                               style={{
                                 display: 'flex',
                                 flexDirection: 'column',
@@ -843,6 +848,7 @@ export default function TaskboardPage() {
                       >
                         <input
                           type="text"
+                          className={styles.chatReplyInput}
                           placeholder={t('답장을 작성해 주세요...', 'Type your reply...')}
                           value={replyText}
                           onChange={(e) => setReplyText(e.target.value)}
@@ -861,6 +867,7 @@ export default function TaskboardPage() {
                         <button
                           type="submit"
                           disabled={isSubmittingReply}
+                          className={styles.chatSendButton}
                           style={{
                             background: 'var(--color-ink)',
                             border: 'none',
@@ -963,21 +970,21 @@ export default function TaskboardPage() {
                   </div>
 
                   {/* 기발행된 보고서 목록 */}
-                  <div className={styles.reportSurface} style={{
+                  <div className={`${styles.reportSurface} ${styles.reportList}`} style={{
                     border: '1px solid var(--color-hairline)', borderRadius: 'var(--radius-sm)', background: '#ffffff',
                     display: 'flex', flexDirection: 'column', overflow: 'hidden'
                   }}>
                     <div style={{ padding: '20px', borderBottom: '1px solid var(--color-hairline)', background: 'var(--color-canvas)', fontWeight: 700 }}>
                       {t('기발행된 보고서 목록', 'Published Reports')} ({reports.length})
                     </div>
-                    <div style={{ flexGrow: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+                    <div className={styles.reportListItems} style={{ flexGrow: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
                       {reports.length === 0 ? (
                         <p style={{ padding: '24px', color: 'var(--color-mute)', textAlign: 'center', fontSize: '0.9rem' }}>
                           {t('발행된 보고서가 없습니다.', 'No published reports.')}
                         </p>
                       ) : (
                         reports.map((item) => (
-                          <div key={item.id} style={{ padding: '20px', borderBottom: '1px solid var(--color-hairline)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <div key={item.id} className={styles.reportListItem} style={{ padding: '20px', borderBottom: '1px solid var(--color-hairline)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <div>
                               <strong style={{ display: 'block', color: 'var(--color-ink)', fontSize: '1.05rem', marginBottom: '4px' }}>
                                 /{item.slug}
@@ -986,13 +993,13 @@ export default function TaskboardPage() {
                                 {new Date(item.created_at).toLocaleString()}
                               </span>
                             </div>
-                            <div style={{ display: 'flex', gap: '8px' }}>
-                              <a href={`/${item.slug}`} target="_blank" rel="noreferrer" style={{
+                            <div className={styles.reportActions} style={{ display: 'flex', gap: '8px' }}>
+                              <a href={`/${item.slug}`} target="_blank" rel="noreferrer" className={styles.reportViewButton} style={{
                                 padding: '6px 12px', background: '#f1f5f9', color: '#475569', borderRadius: 'var(--radius-sm)', textDecoration: 'none', fontWeight: 600, fontSize: '0.85rem'
                               }}>
                                 {t('보기', 'View')}
                               </a>
-                              <button onClick={() => handleDeleteReport(item.id)} style={{
+                              <button onClick={() => handleDeleteReport(item.id)} className={styles.reportDeleteButton} style={{
                                 padding: '6px 12px', background: '#fef2f2', color: '#ef4444', border: 'none', borderRadius: 'var(--radius-sm)', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem'
                               }}>
                                 {t('삭제', 'Delete')}

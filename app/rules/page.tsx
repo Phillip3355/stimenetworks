@@ -89,8 +89,8 @@ export default function RulesPage() {
               <h3 className={styles.timelineTitle}>{t('치명적 위반', 'Severe Violation')}</h3>
               <p className={styles.timelineText}>
                 {t(
-                  '중대한 핵 사용, 테러, 복구 불가능한 피해 발생 시 영구 차단됩니다. 이의신청은 @Phillip_0211로 가능하며, 부적절한 신청은 가중 처벌됩니다.',
-                  'Severe cheating, griefing, or irreversible damage results in permanent ban. Appeals can be submitted to @Phillip_0211, but frivolous appeals may result in harsher penalties.'
+                  '중대한 핵 사용, 테러, 복구 불가능한 피해 발생 시 영구 차단됩니다. 이의신청은 문의 페이지를 통해 부탁드립니다. 부적절한 신청은 가중 처벌됩니다.',
+                  'Severe cheating, griefing, or irreversible damage results in permanent ban. Please submit appeals through the Support page. Frivolous appeals may result in harsher penalties.'
                 )}
               </p>
             </article>

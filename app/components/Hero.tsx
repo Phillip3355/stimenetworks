@@ -31,8 +31,8 @@ export default function Hero() {
       >
         <Image
           className={styles.heroImage}
-          src="/NEW2.webp"
-          alt={t('구름 위에서 바라본 StimeMC 서버 월드', 'The StimeMC server world viewed above the clouds')}
+          src="/image copy 10.png"
+          alt={t('마을과 농장이 이어지는 StimeMC 서버 월드', 'The StimeMC server world with connected villages and farms')}
           fill
           priority
           sizes="100vw"

@@ -618,7 +618,7 @@ ${inquiryPurpose.trim()}`;
                 </p>
                 <Link
                   href="/taskboard"
-                  className={styles.buttonOutline}
+                  className={`${styles.buttonOutline} ${styles.adminConsoleButton}`}
                   style={{ display: 'inline-block', padding: '12px 24px', fontWeight: 700, textDecoration: 'none', color: 'var(--color-canvas)', background: 'var(--color-primary)', border: 'none', borderRadius: 'var(--radius-sm)' }}
                 >
                   {t('어드민 콘솔로 이동', 'Go to Admin Console')}

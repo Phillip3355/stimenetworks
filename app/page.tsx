@@ -4,7 +4,6 @@ import Link from 'next/link';
 import CardsGrid from './components/CardsGrid';
 import Hero from './components/Hero';
 import { useLanguage } from './components/LanguageProvider';
-import WorldShowcase from './components/WorldShowcase';
 import { homeFeatures, homeIntro } from './lib/siteContent.mjs';
 
 export default function Home() {
@@ -29,7 +28,6 @@ export default function Home() {
           <h2 id="home-story-title" className="sectionHeading">
             {t(homeIntro.headingKo, homeIntro.headingEn)}
           </h2>
-          <WorldShowcase />
         </div>
       </section>
 

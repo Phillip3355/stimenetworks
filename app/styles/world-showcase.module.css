@@ -24,6 +24,11 @@
   background: var(--color-hairline);
 }
 
+.gridCompact {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 0;
+}
+
 .artwork {
   aspect-ratio: 16 / 9;
 }

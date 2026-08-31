@@ -10,6 +10,8 @@ export default function WorldShowcase() {
   const { language, t } = useLanguage();
   const reduceMotion = useReducedMotion();
   const [leadImage, ...supportingImages] = homeWorldShowcase;
+  const compactGrid = homeWorldShowcase.length <= 2;
+  const gridImages = compactGrid ? homeWorldShowcase : supportingImages;
 
   const getAlt = (altKo: string, altEn: string) =>
     language === 'ko' ? altKo : altEn;
@@ -19,29 +21,31 @@ export default function WorldShowcase() {
       className={styles.showcase}
       aria-label={t('StimeMC 서버 전경', 'Views of the StimeMC server')}
         >
-      <motion.figure
-        className={styles.lead}
-        initial={reduceMotion ? false : { opacity: 0, y: 18 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{
-          duration: reduceMotion ? 0 : 0.85,
-          ease: [0.22, 1, 0.36, 1],
-        }}
-      >
-        <Image
-          src={leadImage.src}
-          alt={getAlt(leadImage.altKo, leadImage.altEn)}
-          fill
-          priority
-          unoptimized
-          sizes="(max-width: 820px) 100vw, 1360px"
-          className={styles.image}
-        />
-      </motion.figure>
+      {!compactGrid && leadImage ? (
+        <motion.figure
+          className={styles.lead}
+          initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{
+            duration: reduceMotion ? 0 : 0.85,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+        >
+          <Image
+            src={leadImage.src}
+            alt={getAlt(leadImage.altKo, leadImage.altEn)}
+            fill
+            priority
+            unoptimized
+            sizes="(max-width: 820px) 100vw, 1360px"
+            className={styles.image}
+          />
+        </motion.figure>
+      ) : null}
 
-      <div className={styles.grid}>
-        {supportingImages.map((artwork, index) => (
+      <div className={`${styles.grid} ${compactGrid ? styles.gridCompact : ''}`}>
+        {gridImages.map((artwork, index) => (
           <motion.figure
             className={styles.artwork}
             key={artwork.id}
