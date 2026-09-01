@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { Suspense, useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import type { User } from '@supabase/supabase-js';
 import { motion, AnimatePresence } from 'framer-motion';
 import AdminJoinRequests from '../components/AdminJoinRequests';
@@ -39,8 +40,21 @@ interface StageRoom {
   is_public?: boolean;
 }
 
+const inquiryIdPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
 export default function TaskboardPage() {
+  return (
+    <Suspense fallback={null}>
+      <TaskboardContent />
+    </Suspense>
+  );
+}
+
+function TaskboardContent() {
   const { t } = useLanguage();
+  const searchParams = useSearchParams();
+  const inquiryIdFromUrl = searchParams.get('inquiry');
+  const requestedInquiryId = inquiryIdPattern.test(inquiryIdFromUrl ?? '') ? inquiryIdFromUrl : null;
 
   // 상태 관리
   const [user, setUser] = useState<User | null>(null);
@@ -121,6 +135,8 @@ export default function TaskboardPage() {
         .order('created_at', { ascending: false });
       if (!error && data) {
         setInquiries(data);
+        const requestedInquiry = data.find((inquiry) => inquiry.id === requestedInquiryId);
+        if (requestedInquiry) setSelectedInquiry(requestedInquiry);
       }
     }
     loadInquiries();
@@ -140,7 +156,7 @@ export default function TaskboardPage() {
     return () => {
       supabase.removeChannel(inquiriesChannel);
     };
-  }, [user, isAdmin]);
+  }, [user, isAdmin, requestedInquiryId]);
 
   // 2.5. 어드민 인증이 완료되었을 때 보고서 목록 동기화
   useEffect(() => {
@@ -215,9 +231,10 @@ export default function TaskboardPage() {
   // 구글 로그인 트리거
   const handleGoogleSignIn = async () => {
     try {
-      const redirectUrl = process.env.NODE_ENV === 'development'
-        ? 'http://localhost:3000/auth/callback'
-        : 'https://stimemc.xyz/auth/callback';
+      const taskboardPath = requestedInquiryId
+        ? `/taskboard?inquiry=${encodeURIComponent(requestedInquiryId)}`
+        : '/taskboard';
+      const redirectUrl = `${window.location.origin}/auth/callback?next=${encodeURIComponent(taskboardPath)}`;
 
       await supabase.auth.signInWithOAuth({
         provider: 'google',

@@ -7,6 +7,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useLanguage } from '../components/LanguageProvider';
 import { supabase } from '../lib/supabase';
 import { canAccessGuestInquiry, normalizeInquiryCode } from '../lib/guestInquiry.mjs';
+import { notifyInquiryCreated } from '../lib/inquiryAlertClient.mjs';
 import styles from '../styles/server-mechanism.module.css';
 
 interface Inquiry {
@@ -396,6 +397,10 @@ ${inquiryPurpose.trim()}`;
 
         if (msgError) throw msgError;
 
+        void notifyInquiryCreated({
+          inquiryId: newInquiry.id,
+        });
+
         // 성공 시 상태 초기화 및 해당 방 열기
         setInquiryContent('');
         setInquiryPurpose('');
@@ -428,6 +433,10 @@ ${inquiryPurpose.trim()}`;
 
       if (inquiryError) throw inquiryError;
       if (!newInquiry) throw new Error('Guest inquiry was not returned.');
+
+      void notifyInquiryCreated({
+        inquiryId: newInquiry.id,
+      });
 
       setInquiryContent('');
       setInquiryPurpose('');
