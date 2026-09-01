@@ -9,8 +9,18 @@ CREATE TABLE IF NOT EXISTS public.inquiries (
   inquiry_code TEXT NOT NULL,
   status TEXT DEFAULT 'open',
   created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()),
+  telegram_alert_sent_at TIMESTAMP WITH TIME ZONE,
+  telegram_alert_claimed_at TIMESTAMP WITH TIME ZONE,
+  telegram_alert_claim_token UUID
 );
+
+ALTER TABLE public.inquiries
+  ADD COLUMN IF NOT EXISTS telegram_alert_sent_at TIMESTAMP WITH TIME ZONE;
+ALTER TABLE public.inquiries
+  ADD COLUMN IF NOT EXISTS telegram_alert_claimed_at TIMESTAMP WITH TIME ZONE;
+ALTER TABLE public.inquiries
+  ADD COLUMN IF NOT EXISTS telegram_alert_claim_token UUID;
 
 CREATE UNIQUE INDEX IF NOT EXISTS inquiries_inquiry_code_key
   ON public.inquiries (inquiry_code);
@@ -269,6 +279,96 @@ GRANT EXECUTE ON FUNCTION public.create_guest_inquiry(text, text, text, text) TO
 GRANT EXECUTE ON FUNCTION public.get_guest_inquiry(text) TO anon, authenticated;
 GRANT EXECUTE ON FUNCTION public.get_guest_inquiry_messages(text) TO anon, authenticated;
 GRANT EXECUTE ON FUNCTION public.send_guest_inquiry_message(text, text) TO anon, authenticated;
+
+-- 3.5 Claim a fully persisted inquiry for a server-only Telegram alert.
+CREATE OR REPLACE FUNCTION public.claim_inquiry_telegram_alert(p_inquiry_id uuid)
+RETURNS TABLE (
+  id uuid,
+  inquiry_type text,
+  created_at timestamp with time zone,
+  claim_token uuid
+)
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+DECLARE
+  new_claim_token uuid := gen_random_uuid();
+BEGIN
+  RETURN QUERY
+  WITH initial_message AS (
+    SELECT messages.inquiry_id, messages.message
+    FROM public.inquiry_messages AS messages
+    WHERE messages.inquiry_id = p_inquiry_id
+      AND messages.sender = 'user'
+    ORDER BY messages.created_at ASC
+    LIMIT 1
+  ),
+  claimed AS (
+    UPDATE public.inquiries AS inquiries
+    SET
+      telegram_alert_claimed_at = timezone('utc'::text, now()),
+      telegram_alert_claim_token = new_claim_token
+    FROM initial_message
+    WHERE inquiries.id = initial_message.inquiry_id
+      AND inquiries.telegram_alert_sent_at IS NULL
+      AND (
+        inquiries.telegram_alert_claimed_at IS NULL
+        OR inquiries.telegram_alert_claimed_at < timezone('utc'::text, now()) - interval '15 minutes'
+      )
+    RETURNING inquiries.id, inquiries.created_at, initial_message.message
+  )
+  SELECT
+    claimed.id,
+    COALESCE(NULLIF(trim((regexp_match(claimed.message, '^\[문의 유형\]\s*([^\r\n]+)', 'm'))[1]), ''), '기타'),
+    claimed.created_at,
+    new_claim_token;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION public.mark_inquiry_telegram_alert_sent(
+  p_inquiry_id uuid,
+  p_claim_token uuid
+)
+RETURNS void
+LANGUAGE sql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+  UPDATE public.inquiries
+  SET
+    telegram_alert_sent_at = timezone('utc'::text, now()),
+    telegram_alert_claimed_at = NULL,
+    telegram_alert_claim_token = NULL
+  WHERE id = p_inquiry_id
+    AND telegram_alert_sent_at IS NULL
+    AND telegram_alert_claim_token = p_claim_token;
+$$;
+
+CREATE OR REPLACE FUNCTION public.release_inquiry_telegram_alert(
+  p_inquiry_id uuid,
+  p_claim_token uuid
+)
+RETURNS void
+LANGUAGE sql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+  UPDATE public.inquiries
+  SET
+    telegram_alert_claimed_at = NULL,
+    telegram_alert_claim_token = NULL
+  WHERE id = p_inquiry_id
+    AND telegram_alert_sent_at IS NULL
+    AND telegram_alert_claim_token = p_claim_token;
+$$;
+
+REVOKE ALL ON FUNCTION public.claim_inquiry_telegram_alert(uuid) FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.mark_inquiry_telegram_alert_sent(uuid, uuid) FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.release_inquiry_telegram_alert(uuid, uuid) FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION public.claim_inquiry_telegram_alert(uuid) TO service_role;
+GRANT EXECUTE ON FUNCTION public.mark_inquiry_telegram_alert_sent(uuid, uuid) TO service_role;
+GRANT EXECUTE ON FUNCTION public.release_inquiry_telegram_alert(uuid, uuid) TO service_role;
 
 -- 4. Enable Realtime for inquiry_messages
 -- This allows the chat to update instantly when a new message is inserted
