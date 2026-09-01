@@ -322,7 +322,8 @@ BEGIN
     claimed.id,
     COALESCE(NULLIF(trim((regexp_match(claimed.message, '^\[문의 유형\]\s*([^\r\n]+)', 'm'))[1]), ''), '기타'),
     claimed.created_at,
-    new_claim_token;
+    new_claim_token
+  FROM claimed;
 END;
 $$;
 

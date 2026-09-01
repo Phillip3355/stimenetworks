@@ -55,9 +55,12 @@ export async function sendTelegramInquiryAlert({
     });
     const payload = await response.json().catch(() => null);
 
-    return response.ok && payload?.ok === true
-      ? { sent: true }
-      : { sent: false, reason: 'telegram_request_failed' };
+    if (response.ok && payload?.ok === true) return { sent: true };
+
+    const description = typeof payload?.description === 'string'
+      ? payload.description
+      : `HTTP ${response.status}`;
+    return { sent: false, reason: `telegram_request_failed: ${description}` };
   } catch {
     return { sent: false, reason: 'telegram_request_failed' };
   } finally {
