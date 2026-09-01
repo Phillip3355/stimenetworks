@@ -42,4 +42,5 @@ next-env.d.ts
 
 # local design companion
 /.superpowers/
+/.worktrees/
 /.codex-devserver.log
