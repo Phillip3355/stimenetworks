@@ -7,7 +7,10 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useLanguage } from '../components/LanguageProvider';
 import { supabase } from '../lib/supabase';
 import { canAccessGuestInquiry, normalizeInquiryCode } from '../lib/guestInquiry.mjs';
-import { notifyInquiryCreated } from '../lib/inquiryAlertClient.mjs';
+import {
+  notifyInquiryCreated,
+  notifyInquiryMessageCreated,
+} from '../lib/inquiryAlertClient.mjs';
 import styles from '../styles/server-mechanism.module.css';
 
 interface Inquiry {
@@ -491,7 +494,7 @@ ${inquiryPurpose.trim()}`;
     setNewMessage(''); // 즉시 청소
 
     try {
-      const { error } = !user && selectedInquiry.user_id === null
+      const { data: newInquiryMessage, error } = !user && selectedInquiry.user_id === null
         ? await supabase.rpc('send_guest_inquiry_message', {
           p_inquiry_code: selectedInquiry.inquiry_code,
           p_message: msgContent,
@@ -504,9 +507,15 @@ ${inquiryPurpose.trim()}`;
               sender: 'user',
               message: msgContent,
             },
-          ]);
+          ])
+          .select()
+          .single();
 
       if (error) throw error;
+
+      if (newInquiryMessage?.id) {
+        void notifyInquiryMessageCreated({ messageId: newInquiryMessage.id });
+      }
 
       if (user || selectedInquiry.user_id !== null) {
         // 일반 유저가 메시지를 보냈으므로 문의방 상태를 open(대기중)으로 변경
