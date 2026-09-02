@@ -9,3 +9,15 @@ export async function notifyInquiryCreated({ inquiryId, fetchImpl = fetch }) {
     // The inquiry has already been stored; notification delivery is best-effort.
   }
 }
+
+export async function notifyInquiryMessageCreated({ messageId, fetchImpl = fetch }) {
+  try {
+    await fetchImpl('/api/telegram/inquiry-alert', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ messageId }),
+    });
+  } catch {
+    // The message has already been stored; notification delivery is best-effort.
+  }
+}

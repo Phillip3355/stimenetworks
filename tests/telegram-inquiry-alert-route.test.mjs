@@ -1,11 +1,46 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
+  claimInquiryMessageForTelegramAlert,
   claimInquiryForTelegramAlert,
   handleInquiryAlert,
   markInquiryTelegramAlertSent,
   releaseInquiryTelegramAlert,
 } from '../app/lib/telegramInquiryAlertRoute.mjs';
+
+test('claims each stored user message once before it can produce an alert', async () => {
+  const requests = [];
+  const client = {
+    async rpc(name, args) {
+      requests.push({ name, args });
+      return {
+        data: [{
+          inquiry_id: 'a0f8ad5d-75f8-4c9d-8a65-1df54857274f',
+          inquiry_type: '버그 신고',
+          created_at: '2026-09-02T12:30:00.000Z',
+          claim_token: '2bd98e08-f2cd-4e56-a4ff-b7fecf01e2c5',
+        }],
+        error: null,
+      };
+    },
+  };
+
+  const inquiry = await claimInquiryMessageForTelegramAlert(
+    client,
+    'd362625a-8843-492b-88bc-3d62f88f24a3',
+  );
+
+  assert.deepEqual(inquiry, {
+    id: 'a0f8ad5d-75f8-4c9d-8a65-1df54857274f',
+    inquiryType: '버그 신고',
+    createdAt: '2026-09-02T12:30:00.000Z',
+    claimToken: '2bd98e08-f2cd-4e56-a4ff-b7fecf01e2c5',
+  });
+  assert.deepEqual(requests, [{
+    name: 'claim_inquiry_message_telegram_alert',
+    args: { p_message_id: 'd362625a-8843-492b-88bc-3d62f88f24a3' },
+  }]);
+});
 
 test('claims a stored inquiry once before it can produce an alert', async () => {
   const requests = [];
@@ -82,6 +117,49 @@ test('uses stored inquiry data instead of forged browser metadata', async () => 
   assert.deepEqual(completed, [[
     {},
     'a0f8ad5d-75f8-4c9d-8a65-1df54857274f',
+    '2bd98e08-f2cd-4e56-a4ff-b7fecf01e2c5',
+  ]]);
+});
+
+test('delivers an alert for a newly stored user message', async () => {
+  const sent = [];
+  const completed = [];
+  const response = await handleInquiryAlert(new Request('https://stimemc.xyz/api/telegram/inquiry-alert', {
+    method: 'POST',
+    body: JSON.stringify({ messageId: 'd362625a-8843-492b-88bc-3d62f88f24a3' }),
+  }), {
+    NEXT_PUBLIC_SUPABASE_URL: 'https://example.supabase.co',
+    SUPABASE_SERVICE_ROLE_KEY: 'server-only-key',
+    TELEGRAM_BOT_TOKEN: 'bot-token',
+    TELEGRAM_CHAT_ID: 'chat-id',
+    SITE_URL: 'https://stimemc.xyz',
+  }, {
+    createSupabaseClient: () => ({}),
+    claimInquiryMessage: async () => ({
+      id: 'a0f8ad5d-75f8-4c9d-8a65-1df54857274f',
+      inquiryType: '저장된 유형',
+      createdAt: '2026-09-02T12:30:00.000Z',
+      claimToken: '2bd98e08-f2cd-4e56-a4ff-b7fecf01e2c5',
+    }),
+    sendAlert: async (input) => {
+      sent.push(input);
+      return { sent: true };
+    },
+    markMessageAlertSent: async (...args) => completed.push(args),
+  });
+
+  assert.equal(response.status, 202);
+  assert.deepEqual(sent, [{
+    botToken: 'bot-token',
+    chatId: 'chat-id',
+    siteUrl: 'https://stimemc.xyz',
+    inquiryId: 'a0f8ad5d-75f8-4c9d-8a65-1df54857274f',
+    inquiryType: '저장된 유형',
+    createdAt: '2026-09-02T12:30:00.000Z',
+  }]);
+  assert.deepEqual(completed, [[
+    {},
+    'd362625a-8843-492b-88bc-3d62f88f24a3',
     '2bd98e08-f2cd-4e56-a4ff-b7fecf01e2c5',
   ]]);
 });

@@ -5,7 +5,10 @@ import {
   formatInquiryReceivedAt,
   sendTelegramInquiryAlert,
 } from '../app/lib/telegramInquiryAlert.mjs';
-import { notifyInquiryCreated } from '../app/lib/inquiryAlertClient.mjs';
+import {
+  notifyInquiryCreated,
+  notifyInquiryMessageCreated,
+} from '../app/lib/inquiryAlertClient.mjs';
 
 test('builds an admin deep link for the exact inquiry', () => {
   assert.equal(
@@ -62,7 +65,7 @@ test('contains a Telegram delivery failure without throwing', async () => {
     fetchImpl: async () => new Response(JSON.stringify({ ok: false }), { status: 500 }),
   });
 
-  assert.deepEqual(result, { sent: false, reason: 'telegram_request_failed' });
+  assert.deepEqual(result, { sent: false, reason: 'telegram_request_failed: HTTP 500' });
 });
 
 test('bounds the Telegram request with an abort signal', async () => {
@@ -99,6 +102,23 @@ test('notifies the server only after an inquiry has an identifier and creation t
   assert.equal(calls[0][0], '/api/telegram/inquiry-alert');
   assert.deepEqual(JSON.parse(calls[0][1].body), {
     inquiryId: 'a0f8ad5d-75f8-4c9d-8a65-1df54857274f',
+  });
+});
+
+test('notifies the server for a newly stored inquiry message', async () => {
+  const calls = [];
+
+  await notifyInquiryMessageCreated({
+    messageId: 'd362625a-8843-492b-88bc-3d62f88f24a3',
+    fetchImpl: async (...args) => {
+      calls.push(args);
+      return new Response(null, { status: 202 });
+    },
+  });
+
+  assert.equal(calls.length, 1);
+  assert.deepEqual(JSON.parse(calls[0][1].body), {
+    messageId: 'd362625a-8843-492b-88bc-3d62f88f24a3',
   });
 });
 

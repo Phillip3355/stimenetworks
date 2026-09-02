@@ -26,6 +26,8 @@ values ('extra-admin@example.com')
 on conflict (email) do nothing;
 ```
 
+For an **existing** deployed database, run [`supabase_message_telegram_alert.sql`](./supabase_message_telegram_alert.sql) once in the Supabase SQL editor before deploying the matching app code. It enables Telegram alerts for every new user message in an existing inquiry.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
