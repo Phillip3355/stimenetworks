@@ -19,6 +19,8 @@ test('claims each stored user message once before it can produce an alert', asyn
           inquiry_type: '버그 신고',
           created_at: '2026-09-02T12:30:00.000Z',
           claim_token: '2bd98e08-f2cd-4e56-a4ff-b7fecf01e2c5',
+          sender_name: 'Steve',
+          message_preview: '서버 접속이',
         }],
         error: null,
       };
@@ -35,6 +37,8 @@ test('claims each stored user message once before it can produce an alert', asyn
     inquiryType: '버그 신고',
     createdAt: '2026-09-02T12:30:00.000Z',
     claimToken: '2bd98e08-f2cd-4e56-a4ff-b7fecf01e2c5',
+    senderName: 'Steve',
+    messagePreview: '서버 접속이',
   });
   assert.deepEqual(requests, [{
     name: 'claim_inquiry_message_telegram_alert',
@@ -53,6 +57,8 @@ test('claims a stored inquiry once before it can produce an alert', async () => 
           inquiry_type: '버그 신고',
           created_at: '2026-09-01T12:30:00.000Z',
           claim_token: '2bd98e08-f2cd-4e56-a4ff-b7fecf01e2c5',
+          sender_name: 'Alex',
+          message_preview: '접속이 안돼',
         }],
         error: null,
       };
@@ -66,6 +72,8 @@ test('claims a stored inquiry once before it can produce an alert', async () => 
     inquiryType: '버그 신고',
     createdAt: '2026-09-01T12:30:00.000Z',
     claimToken: '2bd98e08-f2cd-4e56-a4ff-b7fecf01e2c5',
+    senderName: 'Alex',
+    messagePreview: '접속이 안돼',
   });
   assert.deepEqual(requests, [{
     name: 'claim_inquiry_telegram_alert',
@@ -96,6 +104,8 @@ test('uses stored inquiry data instead of forged browser metadata', async () => 
       inquiryType: '저장된 유형',
       createdAt: '2026-09-01T12:30:00.000Z',
       claimToken: '2bd98e08-f2cd-4e56-a4ff-b7fecf01e2c5',
+      senderName: 'Alex',
+      messagePreview: '도와주세요',
     }),
     sendAlert: async (input) => {
       sent.push(input);
@@ -113,6 +123,8 @@ test('uses stored inquiry data instead of forged browser metadata', async () => 
     inquiryId: 'a0f8ad5d-75f8-4c9d-8a65-1df54857274f',
     inquiryType: '저장된 유형',
     createdAt: '2026-09-01T12:30:00.000Z',
+    senderName: 'Alex',
+    messagePreview: '도와주세요',
   }]);
   assert.deepEqual(completed, [[
     {},
@@ -140,6 +152,8 @@ test('delivers an alert for a newly stored user message', async () => {
       inquiryType: '저장된 유형',
       createdAt: '2026-09-02T12:30:00.000Z',
       claimToken: '2bd98e08-f2cd-4e56-a4ff-b7fecf01e2c5',
+      senderName: '비로그인 유저',
+      messagePreview: '비회원 메세',
     }),
     sendAlert: async (input) => {
       sent.push(input);
@@ -156,6 +170,8 @@ test('delivers an alert for a newly stored user message', async () => {
     inquiryId: 'a0f8ad5d-75f8-4c9d-8a65-1df54857274f',
     inquiryType: '저장된 유형',
     createdAt: '2026-09-02T12:30:00.000Z',
+    senderName: '비로그인 유저',
+    messagePreview: '비회원 메세',
   }]);
   assert.deepEqual(completed, [[
     {},

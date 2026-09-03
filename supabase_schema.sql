@@ -291,12 +291,15 @@ GRANT EXECUTE ON FUNCTION public.get_guest_inquiry_messages(text) TO anon, authe
 GRANT EXECUTE ON FUNCTION public.send_guest_inquiry_message(text, text) TO anon, authenticated;
 
 -- 3.5 Claim a fully persisted inquiry for a server-only Telegram alert.
+DROP FUNCTION IF EXISTS public.claim_inquiry_telegram_alert(uuid);
 CREATE OR REPLACE FUNCTION public.claim_inquiry_telegram_alert(p_inquiry_id uuid)
 RETURNS TABLE (
   id uuid,
   inquiry_type text,
   created_at timestamp with time zone,
-  claim_token uuid
+  claim_token uuid,
+  sender_name text,
+  message_preview text
 )
 LANGUAGE plpgsql
 SECURITY DEFINER
@@ -326,13 +329,28 @@ BEGIN
         inquiries.telegram_alert_claimed_at IS NULL
         OR inquiries.telegram_alert_claimed_at < timezone('utc'::text, now()) - interval '15 minutes'
       )
-    RETURNING inquiries.id, inquiries.created_at, initial_message.message
+    RETURNING inquiries.id, inquiries.created_at, inquiries.user_id, inquiries.nickname, initial_message.message
   )
   SELECT
     claimed.id,
     COALESCE(NULLIF(trim((regexp_match(claimed.message, '^\[문의 유형\]\s*([^\r\n]+)', 'm'))[1]), ''), '기타'),
     claimed.created_at,
-    new_claim_token
+    new_claim_token,
+    CASE
+      WHEN claimed.user_id IS NULL THEN '비로그인 유저'
+      ELSE COALESCE(NULLIF(trim(claimed.nickname), ''), '로그인 유저')
+    END,
+    left(
+      regexp_replace(
+        COALESCE(
+          NULLIF(split_part(split_part(claimed.message, '[문의 내용]', 2), '[문의 목적]', 1), ''),
+          claimed.message
+        ),
+        '^[[:space:]]+',
+        ''
+      ),
+      5
+    )
   FROM claimed;
 END;
 $$;
@@ -381,12 +399,15 @@ GRANT EXECUTE ON FUNCTION public.claim_inquiry_telegram_alert(uuid) TO service_r
 GRANT EXECUTE ON FUNCTION public.mark_inquiry_telegram_alert_sent(uuid, uuid) TO service_role;
 GRANT EXECUTE ON FUNCTION public.release_inquiry_telegram_alert(uuid, uuid) TO service_role;
 
+DROP FUNCTION IF EXISTS public.claim_inquiry_message_telegram_alert(uuid);
 CREATE OR REPLACE FUNCTION public.claim_inquiry_message_telegram_alert(p_message_id uuid)
 RETURNS TABLE (
   inquiry_id uuid,
   inquiry_type text,
   created_at timestamp with time zone,
-  claim_token uuid
+  claim_token uuid,
+  sender_name text,
+  message_preview text
 )
 LANGUAGE plpgsql
 SECURITY DEFINER
@@ -408,7 +429,7 @@ BEGIN
         messages.telegram_alert_claimed_at IS NULL
         OR messages.telegram_alert_claimed_at < timezone('utc'::text, now()) - interval '15 minutes'
       )
-    RETURNING messages.inquiry_id, messages.created_at
+    RETURNING messages.inquiry_id, messages.created_at, messages.message
   ),
   initial_message AS (
     SELECT messages.inquiry_id, messages.message
@@ -422,9 +443,25 @@ BEGIN
     claimed.inquiry_id,
     COALESCE(NULLIF(trim((regexp_match(initial_message.message, '^\[문의 유형\]\s*([^\r\n]+)', 'm'))[1]), ''), '기타'),
     claimed.created_at,
-    new_claim_token
+    new_claim_token,
+    CASE
+      WHEN inquiries.user_id IS NULL THEN '비로그인 유저'
+      ELSE COALESCE(NULLIF(trim(inquiries.nickname), ''), '로그인 유저')
+    END,
+    left(
+      regexp_replace(
+        COALESCE(
+          NULLIF(split_part(split_part(claimed.message, '[문의 내용]', 2), '[문의 목적]', 1), ''),
+          claimed.message
+        ),
+        '^[[:space:]]+',
+        ''
+      ),
+      5
+    )
   FROM claimed
-  JOIN initial_message ON initial_message.inquiry_id = claimed.inquiry_id;
+  JOIN initial_message ON initial_message.inquiry_id = claimed.inquiry_id
+  JOIN public.inquiries AS inquiries ON inquiries.id = claimed.inquiry_id;
 END;
 $$;
 
