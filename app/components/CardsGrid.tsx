@@ -4,6 +4,7 @@ import { motion, useInView, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRef } from 'react';
+import { getFeatureMotion } from '../lib/homeMotion.mjs';
 import styles from '../styles/cards.module.css';
 
 interface CardProps {
@@ -28,21 +29,28 @@ function FeatureCard({
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.22 });
   const reduceMotion = useReducedMotion();
-  const fromX = reduceMotion ? 0 : card.direction * 32;
+  const featureMotion = getFeatureMotion(Number(card.index) - 1, Boolean(reduceMotion));
 
   return (
     <motion.article
       ref={ref}
       className={styles.card}
       data-direction={card.direction < 0 ? 'reverse' : 'forward'}
-      initial={reduceMotion ? false : { opacity: 0, x: fromX }}
-      animate={inView ? { opacity: 1, x: 0 } : undefined}
+      initial={reduceMotion ? false : { opacity: 0.92 }}
+      animate={inView ? { opacity: 1 } : undefined}
       transition={{
         duration: reduceMotion ? 0 : 1.1,
         ease: [0.22, 0.75, 0.2, 1],
       }}
     >
-      <div className={styles.imageFrame} data-image-count={card.images.length}>
+      <motion.div
+        className={styles.imageFrame}
+        data-image-count={card.images.length}
+        data-motion={featureMotion.kind}
+        initial={featureMotion.image}
+        animate={inView ? { opacity: 1, scale: 1, x: 0, y: 0, clipPath: 'inset(0 0 0% 0)' } : undefined}
+        transition={{ duration: reduceMotion ? 0 : 1.15, ease: [0.22, 0.75, 0.2, 1] }}
+      >
         <div className={styles.primaryImage}>
           <Image
             src={card.images[0]}
@@ -63,8 +71,13 @@ function FeatureCard({
             />
           </div>
         ) : null}
-      </div>
-      <div className={styles.copy}>
+      </motion.div>
+      <motion.div
+        className={styles.copy}
+        initial={featureMotion.copy}
+        animate={inView ? { opacity: 1, x: 0, y: 0 } : undefined}
+        transition={{ duration: reduceMotion ? 0 : 0.88, delay: reduceMotion ? 0 : 0.12, ease: [0.22, 0.75, 0.2, 1] }}
+      >
         <p className={styles.eyebrow}>{card.index} · {card.eyebrow}</p>
         <h3>{card.title}</h3>
         <p className={styles.description}>{card.description}</p>
@@ -87,7 +100,7 @@ function FeatureCard({
           <span>{learnMoreLabel}</span>
           <span aria-hidden="true">↗</span>
         </Link>
-      </div>
+      </motion.div>
     </motion.article>
   );
 }

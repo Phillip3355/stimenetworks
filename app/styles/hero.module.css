@@ -26,8 +26,8 @@
 .overlay {
   z-index: 1;
   background:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.03) 42%, rgba(0, 0, 0, 0.88)),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.38), transparent 62%);
+    linear-gradient(180deg, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.04) 38%, rgba(0, 0, 0, 0.94)),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.58), rgba(0, 0, 0, 0.08) 68%);
 }
 
 .content {
@@ -72,31 +72,35 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 28px;
+  margin-top: 34px;
 }
 
 .primaryAction,
 .secondaryAction {
-  min-height: 48px;
-  padding: 0 21px;
+  min-height: 62px;
+  padding: 0 32px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border: 1px solid rgba(255, 255, 255, 0.6);
   color: #fff;
   text-decoration: none;
-  font-size: 12px;
-  transition: color 180ms ease, background 180ms ease, transform 180ms ease;
+  font-size: 14px;
+  font-weight: 620;
+  letter-spacing: -0.01em;
+  transition: color 240ms ease, background 240ms ease, transform 240ms ease, box-shadow 240ms ease;
 }
 
 .primaryAction {
   background: #fff;
   color: #050505;
+  box-shadow: 0 16px 46px rgba(0, 0, 0, 0.36), 0 0 0 1px rgba(255, 255, 255, 0.24);
 }
 
-.primaryAction:hover,
-.secondaryAction:hover {
-  transform: translateY(-2px);
+.primaryAction:hover {
+  background: #f2f1ec;
+  transform: translateY(-2px) scale(1.025);
+  box-shadow: 0 20px 54px rgba(0, 0, 0, 0.44), 0 0 0 1px rgba(255, 255, 255, 0.4);
 }
 
 .secondaryAction:hover {
@@ -106,7 +110,7 @@
 
 @media (max-width: 680px) {
   .heroSection {
-    min-height: 720px;
+    min-height: max(700px, 100svh);
   }
 
   .heroImage {
@@ -115,7 +119,7 @@
 
   .content {
     width: calc(100% - 28px);
-    padding: calc(var(--nav-height) + 78px) 0 98px;
+    padding: calc(var(--nav-height) + 68px) 0 max(64px, env(safe-area-inset-bottom));
   }
 
   .title {
@@ -133,13 +137,14 @@
   .actions {
     display: grid;
     grid-template-columns: 1fr;
-    margin-top: 23px;
+    margin-top: 28px;
   }
 
   .primaryAction,
   .secondaryAction {
     width: 100%;
-    min-height: 50px;
+    min-height: 60px;
+    font-size: 14px;
   }
 
 }

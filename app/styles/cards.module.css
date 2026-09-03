@@ -31,6 +31,7 @@
   min-height: 100%;
   overflow: hidden;
   background: #111;
+  will-change: transform, opacity, clip-path;
 }
 
 .card[data-direction='reverse'] .imageFrame {
@@ -77,6 +78,7 @@
   align-items: flex-start;
   justify-content: center;
   overflow: hidden;
+  will-change: transform, opacity;
 }
 
 .eyebrow {
@@ -250,6 +252,13 @@
   .card {
     transform: none !important;
     opacity: 1 !important;
+  }
+
+  .imageFrame,
+  .copy {
+    transform: none !important;
+    opacity: 1 !important;
+    clip-path: none !important;
   }
 
   .image,

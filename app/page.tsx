@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import { motion, useReducedMotion } from 'framer-motion';
 import CardsGrid from './components/CardsGrid';
 import Hero from './components/Hero';
 import { useLanguage } from './components/LanguageProvider';
@@ -8,6 +8,7 @@ import { homeFeatures, homeIntro } from './lib/siteContent.mjs';
 
 export default function Home() {
   const { language, t } = useLanguage();
+  const reduceMotion = useReducedMotion();
 
   const features = homeFeatures.map((feature) => ({
     ...feature,
@@ -23,30 +24,22 @@ export default function Home() {
     <main className="mainContainer">
       <Hero />
 
-      <section className="sectionCanvas" aria-labelledby="home-story-title">
+      <motion.section
+        className="sectionCanvas"
+        aria-labelledby="home-story-title"
+        initial={reduceMotion ? false : { opacity: 0, y: 28 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.45 }}
+        transition={{ duration: reduceMotion ? 0 : 0.9, ease: [0.22, 0.75, 0.2, 1] }}
+      >
         <div className="sectionContent">
           <h2 id="home-story-title" className="sectionHeading">
             {t(homeIntro.headingKo, homeIntro.headingEn)}
           </h2>
         </div>
-      </section>
+      </motion.section>
 
       <CardsGrid cards={features} learnMoreLabel={t('더 알아보기', 'Learn more')} />
-
-      <section className="sectionCanvas" aria-labelledby="home-next-title">
-        <div className="sectionContent">
-          <div className="sectionHeader">
-            <h2 id="home-next-title" className="sectionTitle">
-              {t('서버 안으로 들어올 준비가 되셨나요?', 'Ready to step into the server?')}
-            </h2>
-          </div>
-          <div className="homeActionRow">
-            <Link href="/join" className="homeActionPrimary">
-              {t('서버 가입', 'Join Server')}
-            </Link>
-          </div>
-        </div>
-      </section>
     </main>
   );
 }
