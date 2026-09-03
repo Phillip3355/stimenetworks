@@ -21,6 +21,8 @@ export async function claimInquiryForTelegramAlert(client, inquiryId) {
     inquiryType: inquiry.inquiry_type,
     createdAt: inquiry.created_at,
     claimToken: inquiry.claim_token,
+    senderName: inquiry.sender_name,
+    messagePreview: inquiry.message_preview,
   };
 }
 
@@ -37,6 +39,8 @@ export async function claimInquiryMessageForTelegramAlert(client, messageId) {
     inquiryType: message.inquiry_type,
     createdAt: message.created_at,
     claimToken: message.claim_token,
+    senderName: message.sender_name,
+    messagePreview: message.message_preview,
   };
 }
 
@@ -137,6 +141,8 @@ export async function handleInquiryAlert(
       inquiryId: inquiry.id,
       inquiryType: inquiry.inquiryType,
       createdAt: inquiry.createdAt,
+      senderName: inquiry.senderName,
+      messagePreview: inquiry.messagePreview,
     });
 
     if (!result.sent) {

@@ -20,6 +20,14 @@ export function formatInquiryReceivedAt(createdAt) {
   return `${values.year}-${values.month}-${values.day} ${values.hour}:${values.minute} KST`;
 }
 
+function formatTelegramLine(value, maxLength = 80) {
+  return String(value ?? '')
+    .replace(/[\u0000-\u001F\u007F]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, maxLength);
+}
+
 export async function sendTelegramInquiryAlert({
   botToken,
   chatId,
@@ -27,6 +35,8 @@ export async function sendTelegramInquiryAlert({
   inquiryId,
   inquiryType,
   createdAt,
+  senderName,
+  messagePreview,
   fetchImpl = fetch,
   timeoutMs = 10_000,
 }) {
@@ -44,7 +54,7 @@ export async function sendTelegramInquiryAlert({
       signal: controller.signal,
       body: JSON.stringify({
         chat_id: chatId,
-        text: `🔔 문의 도착\n유형: ${inquiryType}\n시간: ${formatInquiryReceivedAt(createdAt)}`,
+        text: `🔔 문의 도착\n보낸 사람: ${formatTelegramLine(senderName)}\n내용: ${formatTelegramLine(messagePreview, 5)}\n유형: ${formatTelegramLine(inquiryType)}\n시간: ${formatInquiryReceivedAt(createdAt)}`,
         reply_markup: {
           inline_keyboard: [[{
             text: '문의 바로가기',

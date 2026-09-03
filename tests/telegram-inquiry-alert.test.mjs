@@ -33,6 +33,8 @@ test('sends the inquiry reminder with an inline detail button', async () => {
     inquiryId: 'a0f8ad5d-75f8-4c9d-8a65-1df54857274f',
     inquiryType: '버그 신고',
     createdAt: '2026-09-01T12:30:00.000Z',
+    senderName: 'Steve',
+    messagePreview: '서버 접속이',
     fetchImpl: async (...args) => {
       calls.push(args);
       return new Response(JSON.stringify({ ok: true, result: { message_id: 1 } }), { status: 200 });
@@ -44,7 +46,7 @@ test('sends the inquiry reminder with an inline detail button', async () => {
   assert.equal(calls[0][0], 'https://api.telegram.org/bottest-bot-token/sendMessage');
   assert.deepEqual(JSON.parse(calls[0][1].body), {
     chat_id: 'chat-123',
-    text: '🔔 문의 도착\n유형: 버그 신고\n시간: 2026-09-01 21:30 KST',
+    text: '🔔 문의 도착\n보낸 사람: Steve\n내용: 서버 접속\n유형: 버그 신고\n시간: 2026-09-01 21:30 KST',
     reply_markup: {
       inline_keyboard: [[{
         text: '문의 바로가기',
@@ -52,6 +54,30 @@ test('sends the inquiry reminder with an inline detail button', async () => {
       }]],
     },
   });
+});
+
+test('prevents sender and preview text from adding forged Telegram alert lines', async () => {
+  const calls = [];
+
+  await sendTelegramInquiryAlert({
+    botToken: 'test-bot-token',
+    chatId: 'chat-123',
+    siteUrl: 'https://stimemc.xyz',
+    inquiryId: 'a0f8ad5d-75f8-4c9d-8a65-1df54857274f',
+    inquiryType: '기타',
+    createdAt: '2026-09-01T12:30:00.000Z',
+    senderName: 'Steve\n유형: 위조',
+    messagePreview: '도움\r\n시간: 위조',
+    fetchImpl: async (...args) => {
+      calls.push(args);
+      return new Response(JSON.stringify({ ok: true }), { status: 200 });
+    },
+  });
+
+  assert.equal(
+    JSON.parse(calls[0][1].body).text,
+    '🔔 문의 도착\n보낸 사람: Steve 유형: 위조\n내용: 도움 시간\n유형: 기타\n시간: 2026-09-01 21:30 KST',
+  );
 });
 
 test('contains a Telegram delivery failure without throwing', async () => {
