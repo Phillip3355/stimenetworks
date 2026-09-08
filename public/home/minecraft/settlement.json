@@ -1,11 +1,11 @@
 {
-  "blocks": 8218,
-  "vertices": 71452,
-  "triangles": 35726,
+  "blocks": 11101,
+  "vertices": 55724,
+  "triangles": 27862,
   "stride": 14,
-  "bytes": 4430024,
-  "packedBytes": 357268,
-  "transferredBytes": 68675,
+  "bytes": 3454888,
+  "packedBytes": 334352,
+  "transferredBytes": 64782,
   "bounds": {
     "lighthouseHeight": 14.4,
     "groundWidth": 19.200000000000003

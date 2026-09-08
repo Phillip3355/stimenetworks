@@ -1,34 +1,26 @@
-# StimeMC — A world, underneath
+# StimeMC homepage design
 
-## Intent and observations
-The homepage is a cinematic identity piece for Minecraft players. The primary action is the existing `/join` flow. The current site uses black, warm white, bilingual Korean/English content, compact fixed navigation, and real server screenshots. Source facts come exclusively from `serverProfile`, `homeFeatures`, and `serverMechanismFlow` in `app/shared/siteContent.mjs`: Java and Bedrock share a Java server through ViaProxy/Geyser, server-side mods expand play without client mods, player builds evolve, and rules protect creations. Rendered geometry is an artistic interpretation, not a map or live monitoring dashboard.
+## Scope and identity
+Only `/`, on the isolated `codex/stimemc-cinematic` branch. Existing routes, navigation, APIs and authentication stay intact. Source claims come from the existing homepage and server mechanism content: Java/Bedrock crossplay through Geyser/ViaProxy, server-side modifications without client mods, player creations and community rules.
 
-## Direction
-### Reference revision — 2026-09-08
-The user supplied a Minecraft screenshot and explicitly prioritizes faithful Minecraft modeling, texture and color. Replace the abstract settlement with a brick/andesite lighthouse, dark stone balcony, warm lantern room, spruce stair roofs, gravel clearing, shoreline and birch/spruce woodland. Preserve original Java 1.21.1 block pixels in a padded nearest-filtered atlas; use biome tint for foliage/grass/water. The user identified Complementary Shaders: approximate its warm daylight with our offline lighting, without claiming to run its shader code. Reconstruct visible proportions, with inferred backs. Keep the existing cinematic homepage timeline and isolated branch; all non-home routes remain unchanged.
+## Current direction — September 8 refinement
+One native-scroll cinematic stage: STIME → ENTER THE WORLD → JAVA × BEDROCK → A WORLD. A SYSTEM. → BEYOND VANILLA → ONE WORLD → JOIN STIME. The lighthouse reconstruction follows the supplied Minecraft reference, using original Java 1.21.1 block textures. The latest explicit black/white request takes precedence over the earlier warm-color direction: preserve texture detail, render neutral grayscale. Complementary shader code is not executed in the browser.
 
-Build a visible-face voxel mesh with per-block morph attributes, repeated per-block UVs, baked directional occlusion and face shading. Keep one texture atlas and no real-time shadows or post-processing. The lighthouse replaces the physical central portal; data portals remain only in the technology transitions. Portrait framing must include the lantern room and roof; low quality retains identical architectural detail.
+## Visual foundations
+Black #090909 background, white #f5f5f5 lettering, gray borders and infrastructure. One Pretendard/Noto Sans KR/system sans family throughout. Readable dark #111111f5 cards behind all chapter explanations and titles. Large STIME remains a separate cinematic wordmark. Every homepage action uses the same dark fill, one-pixel border, 3px radius and clear white hover/focus treatment.
 
-A suspended voxel settlement becomes its own underlying network and then becomes a world again. One sticky stage and one native scroll timeline: STIME → ENTER THE WORLD → JAVA × BEDROCK → UNDER THE SURFACE → BEYOND VANILLA → ONE WORLD → JOIN STIME. Different moments use an approach, split, disassembly, network formation, axial rotation, reconstruction, and portal approach. Never a stack of feature cards.
+Remove tiny HUD annotations, scroll instructions, side chapter rail, quality/motion controls and the fifth-beat photograph. The persistent JOIN STIME action remains. Each description completely disappears before its successor appears; chapters have a deliberate blank interval. Hidden descriptions are inert, including when loading completes inside an interval.
 
-## Foundations
-- Canvas `#080e10`; ink `#edf4ea`; muted text `#a2b7b0`; mint `#b8f5cd`; orange `#ffad72`; hairlines at 18% mint.
-- Oversized tightly tracked Arial Black/system display type; existing Korean sans for short supporting copy; system monospace for the chapter rail and technical annotations. No downloaded fonts.
-- Square corner geometry, 1px technical rules, generous negative space, almost no panel surfaces. No glowing UI cards.
-- The physical world uses original brick, andesite, stone brick, spruce timber, birch bark, leaves and gravel pixels. Infrastructure uses mint lines and amber Bedrock packets.
-- Existing global navbar/footer remain intact. All redesign styles are scoped to the homepage.
+## Composition
+Desktop: large wordmark, world toward the right, explanation card left. Portrait mobile: title/world and readable card use separately positioned layers, technology cards above the network. Short landscape: compact left copy and right scene, with the join action clear of the card. Native touch scrolling is never intercepted. Use stable svh sizing, safe areas and at least 44px action targets.
 
-## Desktop composition
-At 1440×900 the huge STIME title fills the upper field. The suspended world dominates the center/right, and a compact bilingual statement occupies the lower left. A fine chapter rail sits right. Bottom transport includes scroll direction, progress and a continuously available join link. Later titles move left as the camera moves inside the same stage. Real server imagery appears through an architectural aperture during the ONE WORLD beat, explicitly labeled as a server view.
+## Geometry and animation
+Offline axis-aligned surface union removes both whole-block and partial slab/roof overlaps, retaining one owner per coplanar surface. Preserve UV offsets after clipping. Keep the physical Minecraft world intact while fading into 1,080 separate closed instanced cubes in three exact 6×10×6 racks. Never morph culled terrain fragments into disconnected cubes. Technology packets and waves animate continuously while visible; settled physical-world scenes sleep. Hidden tabs/offscreen scenes stop rendering.
 
-## Mobile composition
-At 360/390/430px the title sits above the world; supporting copy and CTA sit below it. A higher camera target, wider portrait FOV and centered scene replace the lateral desktop composition. The rail becomes small bottom chapter indicators. Stable svh sizing prevents browser chrome from changing scroll length. Native touch scrolling is never canceled. Controls are at least 44px with safe-area inset spacing. Landscape/short screens use compact side-by-side composition.
+## Performance and fallback
+One merged textured world draw: 27,862 triangles, 64,782 compressed geometry bytes. Network: 12,960 triangles in one instanced draw. Target fewer than 20 calls, 45k triangles and 2.4 million framebuffer pixels. One padded 256×128 atlas, baked directional light, no shadow maps or post-processing. Clamp mip derivatives within atlas padding. Geometry expands once from bounded 24-byte face records.
 
-## Motion and accessibility
-Scroll is the sole narrative clock. No scroll locking, smooth-scroll library, autoplay camera orbit, or required hover interactions. Mouse movement has a bounded secondary camera response. The GPU sleeps when settled or hidden. A visible motion toggle returns to an editorial static sequence. `prefers-reduced-motion`, unavailable/weak WebGL, context loss, or renderer/asset failure use that same intentional static sequence with a poster of the actual reconstructed model, readable story, original screenshots, and working links. Inactive cinematic chapters are inert; keyboard users can skip the journey or select chapters.
-
-## Performance budgets
-Lazy import raw Three.js only on this route. One merged visible-face world draw and a small fixed set of line/portal/packet draws; target <20 calls and <45k triangles. World: 35,726 triangles, ~69KB gzip face data, one 256×128 atlas (~8KB PNG, ~171KiB GPU including mips). Visibility and directional shadow occlusion are baked offline; the client expands bounded face records once. No runtime ray casting, shadow maps or post-processing. Nearest pixel magnification with derivative-correct mip reduction limits distant shimmer. Transform block positions in the vertex shader instead of rewriting matrices each frame. Low starts at DPR ≤1 and 30fps; balanced ≤1.25 and 45fps; high ≤1.5 and 60fps. Cap total framebuffer pixels to 2.4 million. Downshift after sustained expensive frames; never oscillate upward. Low mode preserves all architectural geometry and cuts particles/render resolution. Save-data defaults low. Explicit visual quality control and static option are available.
+Quality is always automatic: device signals choose the initial level, sustained expensive frames reduce quality; no user settings. Low retains the complete architecture while reducing pixel ratio, particle count and frame rate. OS reduced-motion still receives a readable static story with the model poster; missing WebGL/assets and context loss use the same fallback. No-JS links remain functional.
 
 ## Verification
-Run full existing tests, targeted timeline/quality tests, lint, typecheck, production build and browser checks at 360, 430, 768, 1366, 1440, ultrawide and landscape. Exercise native wheel/touch, keyboard/menu, language, route navigation, reduced motion, unavailable WebGL, context loss, slow CPU and low device signals. Capture render calls/triangles/frame timings plus idle behavior. Emulation is not physical-device thermal validation; report that limit.
+See `docs/homepage-refinements-validation.md` for the 13 requested changes and current evidence. Browser checks cover 10 viewport sizes, all narrative beats, native touch, delayed loading, static fallback, navigation and language, plus CPU/device throttling. Emulation does not establish physical-device thermal or GPU performance.

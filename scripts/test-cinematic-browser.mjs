@@ -46,13 +46,12 @@ try {
         const title = el.querySelector('h2').getBoundingClientRect();
         const transport = document.querySelector('[class*="transport_"]').getBoundingClientRect();
         const image = el.querySelector('figure')?.getBoundingClientRect();
-        return { copyBottom: copy.bottom, titleRight: title.right, transportTop: transport.top, imageTop: image?.top, overflow: document.documentElement.scrollWidth > innerWidth, width: innerWidth, height: innerHeight };
+        return { copyBottom: copy.bottom, titleRight: title.right, transportTop: transport.top, overlapsTransport: copy.left < transport.right && copy.right > transport.left && copy.top < transport.bottom && copy.bottom > transport.top, imageTop: image?.top, overflow: document.documentElement.scrollWidth > innerWidth, width: innerWidth, height: innerHeight };
       });
       captures.push({ chapter: index, ...bounds });
       assert.equal(bounds.overflow, false, `${width}x${height} chapter ${index}: horizontal overflow`);
       assert.ok(bounds.copyBottom <= bounds.height - 30, `${width}x${height} chapter ${index}: copy clipped below viewport (${bounds.copyBottom})`);
-      assert.ok(bounds.copyBottom < bounds.transportTop + 5, `${width}x${height} chapter ${index}: copy overlaps transport`);
-      if (index === 5 && width < 760 && height > width) assert.ok(bounds.copyBottom < bounds.imageTop, `${width}x${height}: world image overlaps its link`);
+      assert.equal(bounds.overlapsTransport,false,`${width}x${height} chapter ${index}: copy overlaps join button`);
       const render = await stats(page);
       captures[captures.length - 1].render = render;
       assert.ok(Number(render.calls) <= 20);
@@ -78,20 +77,13 @@ try {
   await page.getByRole('dialog').waitFor({ state: 'detached' });
   assert.equal(await page.getByRole('dialog').count(), 0);
   assert.equal(await page.locator('button[aria-controls="site-menu"]').evaluate(el => el === document.activeElement), true);
-  await page.getByRole('combobox', { name: '3D quality' }).selectOption('low');
-  assert.equal((await stats(page)).quality, 'low');
+  assert.equal(await page.locator('main select, main nav, main button').count(),0);
+  assert.equal(await page.locator('main figure').count(),0);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.waitForSelector('main[data-mode="static"]');
+  assert.equal(await page.locator('main canvas').count(),0);
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.waitForSelector('main[data-mode="cinematic"]');
-  assert.equal((await stats(page)).quality, 'low', 'OS motion changes must preserve the selected quality');
-  await page.getByRole('button', { name: 'MOTION OFF', exact: false }).click();
-  await page.waitForSelector('main[data-mode="static"]');
-  assert.equal(await page.locator('main canvas').count(), 0);
-  assert.equal(await page.locator('main [inert]').count(), 0);
-  await page.getByRole('button', { name: 'ENABLE 3D', exact: false }).click();
-  await page.waitForSelector('main[data-mode="cinematic"]');
-  assert.equal(await page.locator('main canvas').count(), 1);
   await chapter(page, 6);
   await page.getByRole('link', { name: 'Join StimeMC', exact: false }).click();
   await page.waitForURL('**/join');
@@ -99,8 +91,51 @@ try {
   await page.goBack();
   await page.waitForSelector('main[data-mode="cinematic"]');
   assert.equal(await page.locator('canvas').count(), 1);
-  results.checks.push('language, wheel, menu Escape/focus, quality, motion toggle, join route, back/remount');
+  results.checks.push('language, wheel, menu Escape/focus, automatic quality, OS motion preference, join route, back/remount');
   await context.close();
+
+  // Data flows must still run after the old idle timeout, without wheel input.
+  {
+    const {context,page}=await pageFor({viewport:{width:1440,height:900}});
+    await open(page);
+    for(const index of [2,3,4]) {
+      await chapter(page,index); await page.waitForTimeout(1400);
+      const first=await stats(page); await page.waitForTimeout(1200); const second=await stats(page);
+      assert.ok(Number(second.frames)>Number(first.frames),'Data animation stopped at chapter '+index);
+      assert.notEqual(first.packetPhase,second.packetPhase);
+      assert.equal(second.sleeping,'false');
+      if(index>=3) assert.equal(second.networkNodes,'1080');
+    }
+    for(let n=0;n<6;n++) {
+      await page.evaluate(p=>{const t=document.querySelector('[class*="timeline_"]');window.scrollTo({top:p*(t.offsetHeight-t.firstElementChild.offsetHeight),behavior:'instant'});},(n+.5)/6);
+      await page.waitForTimeout(100);
+      const visible=await page.locator('[data-chapter]').evaluateAll(nodes=>nodes.filter(el=>Number(getComputedStyle(el).opacity)>.001).length);
+      assert.equal(visible,0,'Description handoff must contain a gap');
+    }
+    results.checks.push('No control/HUD clutter, separated description fades, continuously animated network, closed cube lattice');
+    await context.close();
+  }
+  // Loading may finish inside the intentionally blank description interval.
+  {
+    const { context, page } = await pageFor({ viewport: { width: 1366, height: 768 } });
+    let release, requested;
+    const hold = new Promise(resolve => { release = resolve; });
+    const pending = new Promise(resolve => { requested = resolve; });
+    await context.route('**/home/minecraft/settlement.bin.gz', async route => {
+      requested(); await hold; await route.continue();
+    });
+    await page.goto(base, { waitUntil: 'domcontentloaded' });
+    await Promise.race([pending, new Promise((_, reject) => setTimeout(() => reject(new Error('Geometry not requested')), 10000))]);
+    await page.evaluate(() => {
+      const track = document.querySelector('[class*="timeline_"]');
+      window.scrollTo({ top: .5 / 6 * (track.offsetHeight - track.firstElementChild.offsetHeight), behavior: 'instant' });
+    });
+    release();
+    await page.waitForSelector('main[data-mode="cinematic"][data-active="-1"]');
+    assert.equal(await page.locator('main [data-chapter][inert]').count(), 7);
+    results.checks.push('Delayed initial load inside fade gap keeps every hidden chapter inert');
+    await context.close();
+  }
 
   // Reproduce preference changes while the lazy renderer is still in flight.
   {

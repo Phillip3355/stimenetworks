@@ -17,7 +17,7 @@ export function createInfrastructure() {
   }
   const geometry = new THREE.BufferGeometry();
   geometry.setAttribute('position', new THREE.Float32BufferAttribute(edgePoints, 3));
-  const material = new THREE.LineBasicMaterial({ color: '#a9efca', transparent: true, opacity: 0 });
+  const material = new THREE.LineBasicMaterial({ color: '#dddddd', transparent: true, opacity: 0 });
   group.add(new THREE.LineSegments(geometry, material));
   return { group, material };
 }

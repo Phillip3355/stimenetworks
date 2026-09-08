@@ -1,13 +1,12 @@
 import * as THREE from 'three';
-import { adaptQuality, chooseQuality, qualitySettings, sampleTimeline } from './timeline.mjs';
+import { adaptQuality, shouldAnimate, chooseQuality, qualitySettings, sampleTimeline } from './timeline.mjs';
 import { createInfrastructure, createPortal } from './world';
 import { createTexturedWorld } from './textured-world';
+import { createNetworkWorld } from './network-world';
 
-export type Quality = 'auto' | 'low' | 'balanced' | 'high';
 export type SceneController = {
   setProgress: (progress: number) => void;
   setPointer: (x: number, y: number) => void;
-  setQuality: (quality: Quality) => void;
   dispose: () => void;
 };
 
@@ -19,7 +18,6 @@ export async function createScene(host: HTMLElement, onFailure: () => void, sign
   let mobile = window.innerWidth <= 1024 && window.innerHeight > window.innerWidth;
   const deviceQuality = () => chooseQuality({ cores: device.hardwareConcurrency, memory: device.deviceMemory, mobile: window.innerWidth < 760 || matchMedia('(pointer: coarse)').matches, saveData: device.connection?.saveData });
   let quality = deviceQuality();
-  let automatic = true;
   let settings = qualitySettings(quality, devicePixelRatio, host.clientWidth, host.clientHeight);
   // Reject unsupported GPUs before downloading/decompressing the world.
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false, powerPreference: 'low-power', failIfMajorPerformanceCaveat: true });
@@ -35,7 +33,7 @@ export async function createScene(host: HTMLElement, onFailure: () => void, sign
   }
   catch (error) { renderer.dispose(); renderer.forceContextLoss(); throw error; }
   finally { signal?.removeEventListener('abort', abortLoading); renderer.domElement.removeEventListener('webglcontextlost', loseWhileLoading); }
-  renderer.setClearColor(0x080e10, 0);
+  renderer.setClearColor(0x090909, 0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.domElement.setAttribute('aria-hidden', 'true');
   host.appendChild(renderer.domElement);
@@ -44,12 +42,14 @@ export async function createScene(host: HTMLElement, onFailure: () => void, sign
   const camera = new THREE.PerspectiveCamera(39, 1, .1, 130);
   const root = new THREE.Group();
   root.add(world.mesh);
+  const network = createNetworkWorld();
+  root.add(network.mesh);
   const infrastructure = createInfrastructure();
   root.add(infrastructure.group);
   scene.add(root);
 
-  const javaPortal = createPortal('#b5f4d0');
-  const bedrockPortal = createPortal('#ffad72');
+  const javaPortal = createPortal('#eeeeee');
+  const bedrockPortal = createPortal('#aaaaaa');
   javaPortal.position.set(-8.2, 1.8, 0);
   bedrockPortal.position.set(8.2, 1.8, 0);
   root.add(javaPortal, bedrockPortal);
@@ -59,9 +59,9 @@ export async function createScene(host: HTMLElement, onFailure: () => void, sign
     const angle = i / 128 * Math.PI * 2;
     return new THREE.Vector3(Math.cos(angle) * 10.6, -3.9, Math.sin(angle) * 10.6);
   });
-  const orbit = new THREE.Line(new THREE.BufferGeometry().setFromPoints(orbitPoints), new THREE.LineBasicMaterial({ color: '#577d71', transparent: true, opacity: .55 }));
+  const orbit = new THREE.Line(new THREE.BufferGeometry().setFromPoints(orbitPoints), new THREE.LineBasicMaterial({ color: '#888888', transparent: true, opacity: .55 }));
   root.add(orbit);
-  const grid = new THREE.GridHelper(25, 16, '#487265', '#273e37');
+  const grid = new THREE.GridHelper(25, 16, '#666666', '#303030');
   grid.position.y = -4.7;
   const gridMaterial = grid.material as THREE.Material;
   gridMaterial.transparent = true;
@@ -76,11 +76,11 @@ export async function createScene(host: HTMLElement, onFailure: () => void, sign
     positions[i * 3 + 2] = Math.sin(i * 4.73) * 16;
   }
   particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  const particles = new THREE.Points(particleGeometry, new THREE.PointsMaterial({ color: '#b1d5be', size: .045, sizeAttenuation: true }));
+  const particles = new THREE.Points(particleGeometry, new THREE.PointsMaterial({ color: '#cccccc', size: .045, sizeAttenuation: true }));
   root.add(particles);
 
   const packetGeometry = new THREE.BoxGeometry(.11, .11, .32);
-  const packets = new THREE.InstancedMesh(packetGeometry, new THREE.MeshBasicMaterial({ color: '#c5ffd9' }), 20);
+  const packets = new THREE.InstancedMesh(packetGeometry, new THREE.MeshBasicMaterial({ color: '#ffffff' }), 20);
   packets.frustumCulled = false;
   const packetDummy = new THREE.Object3D();
   root.add(packets);
@@ -100,7 +100,7 @@ export async function createScene(host: HTMLElement, onFailure: () => void, sign
     if (disposed) return;
     const width = host.clientWidth, height = host.clientHeight;
     const nextMobile = window.innerWidth <= 1024 && window.innerHeight > window.innerWidth;
-    if (automatic && nextMobile !== mobile) quality = deviceQuality();
+    if (nextMobile !== mobile) quality = deviceQuality();
     mobile = nextMobile;
     settings = qualitySettings(quality, devicePixelRatio, width, height);
     renderer.setPixelRatio(settings.dpr);
@@ -134,7 +134,9 @@ export async function createScene(host: HTMLElement, onFailure: () => void, sign
     camera.lookAt(pose.target[0], pose.target[1], pose.target[2]);
     root.rotation.y = pose.rotation + Math.max(-.025, Math.min(.025, velocity));
     root.rotation.z = mobile ? 0 : pointerX * .007;
-    world.uniforms.uExplode.value = pose.explode;
+    world.mesh.visible = pose.network < .999;
+    network.mesh.visible = pose.network > .01;
+    network.uniforms.uReveal.value = Math.min(1,pose.network * 1.5);
     world.uniforms.uNetwork.value = pose.network;
     world.uniforms.uSplit.value = pose.split;
     world.uniforms.uTime.value = now / 1000;
@@ -166,8 +168,10 @@ export async function createScene(host: HTMLElement, onFailure: () => void, sign
       host.dataset.frameMs = cpu.toFixed(2);
       host.dataset.geometries = String(renderer.info.memory.geometries);
       host.dataset.textures = String(renderer.info.memory.textures);
+      host.dataset.networkNodes = String(network.mesh.count);
+      host.dataset.packetPhase = String((now / 2400) % 1);
     }
-    if (automatic && frames > 10 && rafDelta < 150) {
+    if (frames > 10 && rafDelta < 150) {
       samples.push(Math.max(cpu, rafDelta));
       if (samples.length >= 60) {
         const next = adaptQuality(quality, samples);
@@ -176,7 +180,7 @@ export async function createScene(host: HTMLElement, onFailure: () => void, sign
       }
     }
     const unsettled = Math.abs(targetProgress - progress) > .00005 || Math.abs(targetX - pointerX) > .002 || Math.abs(targetY - pointerY) > .002;
-    if (unsettled || now < activeUntil) {
+    if (unsettled || shouldAnimate(pose) || now < activeUntil) {
       if (!raf) raf = requestAnimationFrame(draw);
     } else {
       host.dataset.frames = String(frames);
@@ -215,12 +219,7 @@ export async function createScene(host: HTMLElement, onFailure: () => void, sign
   return {
     setProgress(value) { targetProgress = value; wake(); },
     setPointer(x, y) { if (!mobile) { targetX = x; targetY = y; wake(); } },
-    setQuality(value) {
-      automatic = value === 'auto';
-      quality = automatic ? deviceQuality() : value;
-      samples = [];
-      resize();
-    },
+
     dispose() {
       disposed = true;
       cancelAnimationFrame(raf);

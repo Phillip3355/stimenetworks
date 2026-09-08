@@ -28,7 +28,7 @@ export async function createTexturedWorld(signal?: AbortSignal) {
   geometry.setIndex(new THREE.BufferAttribute(indices, 1));
   const uniforms = { uAtlas: { value: atlas }, uExplode: { value: 0 }, uNetwork: { value: 0 }, uSplit: { value: 0 }, uTime: { value: 0 } };
   const material = new THREE.ShaderMaterial({
-    uniforms,
+    uniforms, transparent: true,
     vertexShader: `
       attribute vec3 aCenter;
       attribute vec3 aTint;
@@ -40,17 +40,7 @@ export async function createTexturedWorld(signal?: AbortSignal) {
       varying vec3 vTint;
       varying float vTile, vLight;
       void main() {
-        vec3 scatter = aCenter * vec3(1.32, 1.15, 1.32);
-        scatter.y += sin(aId * 1.7) * 3.0;
-        float rack = mod(aId, 3.0);
-        float cell = floor(aId / 3.0);
-        vec3 network = vec3((rack - 1.0) * 6.0 + (mod(cell, 14.0) - 6.5) * .2, (floor(cell / 196.0) - 6.0) * .48, (mod(floor(cell / 14.0), 14.0) - 6.5) * .24);
-        vec3 center = mix(aCenter, scatter, uExplode);
-        center = mix(center, network, uNetwork);
-        center.x += sign(aCenter.x + .01) * uSplit * 3.6;
-        center.y += sin(uTime * .6 + aCenter.x) * .035 * uExplode;
-        vec3 local = position * mix(1.0, .32, uNetwork);
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(center + local, 1.0);
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(aCenter + position, 1.0);
         vUv = uv; vTile = aTile; vTint = aTint; vLight = aLight;
       }
     `,
@@ -69,7 +59,8 @@ export async function createTexturedWorld(signal?: AbortSignal) {
         atlasUv.y = 1.0 - atlasUv.y;
         // Derivatives come from continuous block UVs, avoiding seams at each repeat.
         vec2 scale = vec2(16.0 / 256.0, 16.0 / 128.0);
-        vec4 texel = textureGrad(uAtlas, atlasUv, dFdx(vUv) * scale, dFdy(vUv) * scale);
+        vec2 limit = vec2(8.0/256.0,8.0/128.0);
+        vec4 texel = textureGrad(uAtlas, atlasUv, clamp(dFdx(vUv) * scale,-limit,limit), clamp(dFdy(vUv) * scale,-limit,limit));
         if (vTile >= 10.0 && vTile <= 12.0) {
           // Minecraft's opaque-leaf presentation: dense canopies at every quality.
           texel.rgb = mix(vec3(.075), texel.rgb, texel.a);
@@ -78,8 +69,8 @@ export async function createTexturedWorld(signal?: AbortSignal) {
         color *= vec3(1.06, 1.0, .91);
         // Light sources stay bright without a bloom pass.
         if (vTile > 17.5 && vTile < 18.5) color = mix(color, vec3(1.0, .8, .28), .5);
-        color = mix(color, vec3(.35, .72, .48) * (.8 + vLight * .2), uNetwork);
-        gl_FragColor = vec4(color, 1.0);
+        color = vec3(dot(color, vec3(.2126,.7152,.0722)));
+        gl_FragColor = vec4(color, 1.0 - uNetwork);
         #include <colorspace_fragment>
       }
     `,

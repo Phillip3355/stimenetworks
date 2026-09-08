@@ -5,12 +5,12 @@ const corners = [
 ];
 export function expandSettlement(buffer) {
   const view = new DataView(buffer);
-  if (view.byteLength < 8 || view.getUint32(0, true) !== 0x53544d43) throw new Error('Invalid world geometry');
+  if (view.byteLength < 8 || view.getUint32(0, true) !== 0x53544d44) throw new Error('Invalid world geometry');
   const faces = view.getUint32(4, true);
-  if (faces > 22000 || view.byteLength !== 8 + faces * 20) throw new Error('Invalid world geometry');
+  if (faces > 30000 || view.byteLength !== 8 + faces * 24) throw new Error('Invalid world geometry');
   const vertices = new Float32Array(faces * 4 * 14), indices = new Uint32Array(faces * 6);
   for (let face = 0; face < faces; face++) {
-    const offset = 8 + face * 20;
+    const offset = 8 + face * 24;
     const cx = view.getInt16(offset, true) / 1000, cy = view.getInt16(offset + 2, true) / 1000, cz = view.getInt16(offset + 4, true) / 1000;
     const sx = view.getUint16(offset + 6, true) / 1000, sy = view.getUint16(offset + 8, true) / 1000, sz = view.getUint16(offset + 10, true) / 1000;
     const tile = view.getUint8(offset + 12), r = view.getUint8(offset + 13) / 255, g = view.getUint8(offset + 14) / 255, b = view.getUint8(offset + 15) / 255;
@@ -21,8 +21,8 @@ export function expandSettlement(buffer) {
       const c = corners[direction][corner], start = (face * 4 + corner) * 14;
       vertices[start] = (c[0] - .5) * sx; vertices[start + 1] = (c[1] - .5) * sy; vertices[start + 2] = (c[2] - .5) * sz;
       vertices[start + 3] = cx; vertices[start + 4] = cy; vertices[start + 5] = cz;
-      vertices[start + 6] = corner === 1 || corner === 2 ? uSize : 0;
-      vertices[start + 7] = corner >= 2 ? vSize : 0;
+      vertices[start + 6] = view.getUint16(offset + 20, true) / 1000 + (corner === 1 || corner === 2 ? uSize : 0);
+      vertices[start + 7] = view.getUint16(offset + 22, true) / 1000 + (corner >= 2 ? vSize : 0);
       vertices[start + 8] = r; vertices[start + 9] = g; vertices[start + 10] = b;
       vertices[start + 11] = tile;
       vertices[start + 12] = light * (cy + 1.3 - sy / 2 >= -.001 && direction !== 2 && c[1] === 0 ? .93 : 1);

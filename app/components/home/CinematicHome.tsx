@@ -2,10 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useLanguage } from '../LanguageProvider';
-import { clamp } from './timeline.mjs';
-import type { Quality, SceneController } from './scene';
+import { clamp, chapterOpacity } from './timeline.mjs';
+import type { SceneController } from './scene';
 import WorldFallback from './WorldFallback';
 import styles from './cinematic-home.module.css';
 
@@ -28,45 +27,39 @@ export default function CinematicHome() {
   const controller = useRef<SceneController | null>(null);
   const progressRef = useRef(0);
   const [mode, setMode] = useState<Mode>('loading');
-  const [motionEnabled, setMotionEnabled] = useState(true);
   const [active, setActive] = useState(0);
-  const [quality, setQuality] = useState<Quality>('auto');
-  const qualityRef = useRef<Quality>('auto');
-  const [attempt, setAttempt] = useState(0);
-  const [staticReason, setStaticReason] = useState('');
 
   useEffect(() => {
     let canceled = false;
     let generation = 0;
     let assetRequest: AbortController | undefined;
     const media = matchMedia('(prefers-reduced-motion: reduce)');
-    const stop = (reason = 'webgl') => { generation++; assetRequest?.abort(); controller.current?.dispose(); controller.current = null; setStaticReason(reason); setMode('static'); };
+    const stop = () => { generation++; assetRequest?.abort(); controller.current?.dispose(); controller.current = null; setMode('static'); };
     const start = async () => {
       const ticket = ++generation;
       assetRequest?.abort();
       const request = new AbortController();
       assetRequest = request;
-      if (media.matches || !motionEnabled) { stop(media.matches ? 'reduced' : 'manual'); return; }
+      if (media.matches) { stop(); return; }
       try {
         const { createScene } = await import('./scene');
-        if (canceled || ticket !== generation || media.matches || !motionEnabled || !hostRef.current) return;
+        if (canceled || ticket !== generation || media.matches || !hostRef.current) return;
         const scene = await createScene(hostRef.current, () => stop(), request.signal);
-        if (canceled || ticket !== generation || media.matches || !motionEnabled) { scene.dispose(); return; }
+        if (canceled || ticket !== generation || media.matches) { scene.dispose(); return; }
         controller.current = scene;
-        controller.current.setQuality(qualityRef.current);
         controller.current.setProgress(progressRef.current);
         setMode('cinematic');
       } catch { if (!canceled && ticket === generation) stop(); }
     };
-    const change = () => { stop(media.matches ? 'reduced' : 'manual'); if (!media.matches && motionEnabled) void start(); };
+    const change = () => { stop(); if (!media.matches) void start(); };
     void start();
     media.addEventListener('change', change);
     return () => { canceled = true; generation++; assetRequest?.abort(); media.removeEventListener('change', change); controller.current?.dispose(); controller.current = null; };
-  }, [motionEnabled, attempt]);
+  }, []);
 
   useEffect(() => {
     if (mode !== 'cinematic') return;
-    let raf = 0, lastActive = -1;
+    let raf = 0, lastActive = -2;
     const update = () => {
       raf = 0;
       const track = trackRef.current;
@@ -77,11 +70,13 @@ export default function CinematicHome() {
       progressRef.current = progress;
       controller.current?.setProgress(progress);
       rootRef.current.style.setProperty('--journey', String(progress));
-      const nextActive = Math.min(6, Math.round(progress * 6));
+      const nearest = Math.min(6, Math.round(progress * 6));
+      const nextActive = chapterOpacity(progress, nearest) > 0 ? nearest : -1;
       if (nextActive !== lastActive) { lastActive = nextActive; setActive(nextActive); }
+      const wordmark = rootRef.current.querySelector<HTMLElement>(`.${styles.wordmark}`);
+      if (wordmark) wordmark.style.opacity = String(chapterOpacity(progress, 0));
       rootRef.current.querySelectorAll<HTMLElement>('[data-chapter]').forEach((element, i) => {
-        const distance = Math.abs(progress * 6 - i);
-        element.style.setProperty('--chapter-opacity', String(clamp((.66 - distance) / .28)));
+        element.style.setProperty('--chapter-opacity', String(chapterOpacity(progress, i)));
         element.style.setProperty('--chapter-y', `${Math.max(-24, Math.min(24, (i - progress * 6) * 32))}px`);
       });
     };
@@ -111,54 +106,31 @@ export default function CinematicHome() {
           controller.current?.setPointer(event.clientX / window.innerWidth * 2 - 1, event.clientY / window.innerHeight * 2 - 1);
         }} onPointerLeave={() => controller.current?.setPointer(0, 0)}>
           <div className={styles.atmosphere} aria-hidden="true" />
-          <div className={styles.wordmark} aria-hidden="true">STIME<span>MC</span></div>
+          <div className={styles.wordmark} aria-hidden="true" style={{ opacity: mode === 'cinematic' ? undefined : 1 }}>STIME</div>
           <div className={styles.fallback}><WorldFallback /></div>
           <div ref={hostRef} className={styles.scene} aria-hidden="true" />
-          <div className={styles.topline} aria-hidden="true"><span><i /> A WORLD WITH MORE UNDERNEATH</span><span>JAVA + BEDROCK / STIMEMC</span></div>
-          <div className={styles.quickControls}>
-            {mode === 'cinematic' && <label><span className={styles.srOnly}>{t('3D 화질', '3D quality')}</span><select aria-label={t('3D 화질', '3D quality')} value={quality} onChange={event => { const value = event.target.value as Quality; qualityRef.current = value; setQuality(value); controller.current?.setQuality(value); }}><option value="auto">AUTO</option><option value="low">LOW</option><option value="balanced">BALANCED</option><option value="high">HIGH</option></select></label>}
-            {staticReason === 'reduced' && mode === 'static' ? <span>{t('모션 줄이기 적용됨', 'REDUCED MOTION')}</span> : <button onClick={() => { setMotionEnabled(mode !== 'cinematic'); if (mode !== 'cinematic') setAttempt(value => value + 1); window.scrollTo({ top: 0, behavior: 'instant' }); }} aria-pressed={mode === 'cinematic'}>{mode === 'cinematic' ? t('모션 끄기', 'MOTION OFF') : t('3D 켜기', 'ENABLE 3D')} <span>{mode === 'cinematic' ? '◉' : '○'}</span></button>}
-          </div>
-          <div className={styles.sceneCaption} aria-hidden="true"><span>WORLD / 01</span><span>THE SURFACE IS ONLY THE BEGINNING.</span></div>
           <div className={styles.chapters}>
             {chapters.map((chapter, i) => (
               <section key={chapter.id} id={chapter.id} data-chapter={i} className={`${styles.chapter} ${i === 0 ? styles.intro : ''}`} aria-labelledby={`${chapter.id}-title`} aria-hidden={mode === 'cinematic' && active !== i ? true : undefined} inert={mode === 'cinematic' && active !== i}>
                 <div className={styles.chapterCopy}>
-                  <p className={styles.eyebrow}><span>{chapter.eyebrow}</span></p>
                   <h2 id={`${chapter.id}-title`} className={styles.title}>{chapter.title.map(line => <span key={line}>{line}</span>)}</h2>
                   <p className={styles.statement}>{t(chapter.ko, chapter.en)}</p>
                   <p className={styles.detail}>{t(chapter.detailKo, chapter.detailEn)}</p>
-                  {i === 0 && <a className={styles.enter} href="#enter" onClick={event => { if (mode === 'cinematic') { event.preventDefault(); goToChapter(1); } }}>{t('세계 안으로', 'Enter the world')} <span>↘</span></a>}
-                  {(i === 2 || i === 3 || i === 4) && <Link className={styles.textLink} href="/server-mechanism">{t('연결의 구조 알아보기', 'Explore the technology')} <span>↗</span></Link>}
-                  {i === 5 && <Link className={styles.textLink} href="/rules">{t('함께하는 기준', 'What protects our world')} <span>↗</span></Link>}
-                  {i === 6 && <Link className={styles.joinAction} href="/join">{t('StimeMC에 합류하기', 'Join StimeMC')} <span>↗</span></Link>}
+                  {i === 0 && <a className={styles.action} href="#enter" onClick={event => { if (mode === 'cinematic') { event.preventDefault(); goToChapter(1); } }}>{t('세계 안으로', 'Enter the world')} <span>↘</span></a>}
+                  {(i === 2 || i === 3 || i === 4) && <Link className={styles.action} href="/server-mechanism">{t('연결의 구조 알아보기', 'Explore the technology')} <span>↗</span></Link>}
+                  {i === 5 && <Link className={styles.action} href="/rules">{t('함께하는 기준', 'What protects our world')} <span>↗</span></Link>}
+                  {i === 6 && <Link className={styles.action} href="/join">{t('StimeMC에 합류하기', 'Join StimeMC')} <span>↗</span></Link>}
                 </div>
-                {i === 2 && <div className={styles.editionLabels} aria-hidden="true"><span>JAVA <b>01</b></span><i>ONE WORLD</i><span>BEDROCK <b>02</b></span></div>}
-                {i === 3 && <div className={styles.systemLabels} aria-hidden="true"><span>GEYSER <small>TRANSLATE</small></span><span>VIAPROXY <small>CONNECT</small></span><span>JAVA SERVER <small>CREATE</small></span></div>}
-                {i === 4 && <div className={styles.noMods} aria-hidden="true"><span>SERVER-SIDE</span><strong>100<span>%</span></strong><span>CLIENT MODS REQUIRED <b>0</b></span></div>}
-                {i === 5 && <figure className={styles.worldImage}>
-                  <Image src="/image copy 8.png" alt={t('StimeMC 실제 월드의 숲 위 목조 건축물', 'Timber builds above the forest in the actual StimeMC world')} fill sizes="(max-width: 759px) 88vw, 48vw" />
-                  <figcaption><span>INSIDE STIMEMC</span><span>{t('실제 서버 월드', 'ACTUAL SERVER WORLD')} ↗</span></figcaption>
-                </figure>}
+
               </section>
             ))}
           </div>
-          <nav className={styles.chapterNav} aria-label={t('월드 여정', 'World journey')}>
-            {chapters.map((chapter, i) => <button key={chapter.id} onClick={() => goToChapter(i)} aria-label={`${i + 1}. ${chapter.label}`} aria-current={active === i ? 'step' : undefined}><span>{chapter.label}</span><i /><b>{String(i).padStart(2, '0')}</b></button>)}
-          </nav>
           <div className={styles.transport}>
-            <button className={styles.scrollCue} onClick={() => goToChapter(Math.min(6, active + 1))}><span>↓</span> {t('스크롤하여 탐험하기', 'SCROLL TO EXPLORE')}</button>
-            <span className={styles.transportIndex}>{String(active).padStart(2, '0')} <i>/</i> 06</span>
-            <Link href="/join" className={styles.persistentJoin}>JOIN STIME <span>↗</span></Link>
-            <div className={styles.progress} aria-hidden="true"><span /></div>
+            <Link href="/join" className={styles.action}>JOIN STIME <span>↗</span></Link>
           </div>
         </div>
       </div>
-      <div className={styles.experienceControls}>
-        <span>STIMEMC / {t('당신의 기기에 맞춘 경험', 'AN EXPERIENCE AT YOUR PACE')}</span>
-        <span>JAVA × BEDROCK · {t('하나의 세계', 'ONE WORLD')}</span>
-      </div>
-      <noscript><style>{`.${styles.timeline}{height:auto!important}.${styles.stage}{position:relative!important;height:auto!important}.${styles.chapter}{position:relative!important;opacity:1!important;transform:none!important;min-height:90svh}.${styles.chapters}{position:relative!important}.${styles.chapterNav},.${styles.transport},.${styles.quickControls}{display:none!important}.${styles.wordmark}{top:145px!important}.${styles.fallback}{top:200px!important;bottom:auto!important;height:450px!important}@media(max-width:759px){.${styles.fallback}{top:225px!important;height:300px!important}}`}</style></noscript>
+      <noscript><style>{`.${styles.timeline}{height:auto!important}.${styles.stage}{position:relative!important;height:auto!important}.${styles.chapter}{position:relative!important;opacity:1!important;transform:none!important;min-height:75svh}.${styles.chapters}{position:relative!important}.${styles.transport}{display:none!important}.${styles.chapterCopy}{position:relative!important;top:auto!important;bottom:auto!important;margin:24px 6%!important;width:88%!important;left:0!important}.${styles.chapter}:first-child{padding-top:60svh!important}.${styles.wordmark}{top:115px!important}.${styles.fallback}{top:180px!important;bottom:auto!important;height:350px!important}`}</style></noscript>
     </main>
   );
 }

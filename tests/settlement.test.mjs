@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
 import { createSettlement, visibleBoxes, materialFaces, textureNames } from '../app/components/home/settlement.mjs';
 import { expandSettlement } from '../app/components/home/settlement-geometry.mjs';
+import { unionSurfaces } from '../app/components/home/surface-union.mjs';
 
 test('voxel visibility removes sealed interiors and retains faces beside cutout leaves', () => {
   const cells = new Map();
@@ -20,8 +21,9 @@ test('Minecraft material orientation uses log end grain and grass top only on th
   assert.equal(materialFaces('barrel', 2), 'barrel_top');
 });
 test('the complete textured reconstruction fits its mobile geometry budget', () => {
-  const boxes = visibleBoxes(createSettlement());
-  const faces = boxes.reduce((total, box) => total + box.faces.filter(Boolean).length, 0);
+  const settlement = createSettlement();
+  const boxes = [...settlement.cells.values(),...settlement.details];
+  const faces = unionSurfaces(boxes).length;
   assert.ok(faces * 2 < 40000);
   for (const box of boxes) for (let face = 0; face < 6; face++) assert.ok(textureNames.includes(materialFaces(box.material, face)));
   const compressed = readFileSync('public/home/minecraft/settlement.bin.gz');
@@ -37,6 +39,28 @@ test('the complete textured reconstruction fits its mobile geometry budget', () 
 test('malformed packed geometry fails before GPU allocation', () => {
   assert.throws(() => expandSettlement(new ArrayBuffer(2)));
   const data = new ArrayBuffer(8), view = new DataView(data);
-  view.setUint32(0, 0x53544d43, true); view.setUint32(4, 30000, true);
+  view.setUint32(0, 0x53544d44, true); view.setUint32(4, 30001, true);
   assert.throws(() => expandSettlement(data));
+});
+
+test('the actual settlement has no overlapping opaque coplanar surfaces', () => {
+  const settlement = createSettlement();
+  const surfaces = unionSurfaces([...settlement.cells.values(), ...settlement.details]);
+  const axes = [[0,2,1],[0,2,1],[1,0,2],[1,0,2],[2,0,1],[2,0,1]];
+  const planes = new Map();
+  for (const box of surfaces) {
+    if (box.material === 'iron_bars') continue;
+    const min = [box.x,box.y,box.z], size = [box.sx,box.sy,box.sz];
+    const [axis,u,v] = axes[box.face];
+    const plane = min[axis] + (box.face % 2 === 0 ? size[axis] : 0);
+    const key = `${box.face}:${plane.toFixed(5)}`;
+    const rect = [min[u],min[v],min[u]+size[u],min[v]+size[v]];
+    const previous = planes.get(key) ?? [];
+    for (const other of previous) {
+      const width = Math.min(rect[2],other[2])-Math.max(rect[0],other[0]);
+      const height = Math.min(rect[3],other[3])-Math.max(rect[1],other[1]);
+      assert.ok(width < 1e-6 || height < 1e-6, `Duplicate visible surface on ${key}`);
+    }
+    previous.push(rect); planes.set(key,previous);
+  }
 });
