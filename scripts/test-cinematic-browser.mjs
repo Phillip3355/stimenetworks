@@ -44,9 +44,9 @@ try {
       const bounds = await page.locator(`[data-chapter="${index}"]`).evaluate(el => {
         const copy = el.firstElementChild.getBoundingClientRect();
         const title = el.querySelector('h2').getBoundingClientRect();
-        const transport = document.querySelector('[class*="transport_"]').getBoundingClientRect();
+        const transport = document.querySelector('[class*="transport_"]')?.getBoundingClientRect();
         const image = el.querySelector('figure')?.getBoundingClientRect();
-        return { copyBottom: copy.bottom, titleRight: title.right, transportTop: transport.top, overlapsTransport: copy.left < transport.right && copy.right > transport.left && copy.top < transport.bottom && copy.bottom > transport.top, imageTop: image?.top, overflow: document.documentElement.scrollWidth > innerWidth, width: innerWidth, height: innerHeight };
+        return { copyBottom: copy.bottom, titleRight: title.right, transportTop: transport?.top, overlapsTransport: !!transport && copy.left < transport.right && copy.right > transport.left && copy.top < transport.bottom && copy.bottom > transport.top, imageTop: image?.top, overflow: document.documentElement.scrollWidth > innerWidth, width: innerWidth, height: innerHeight };
       });
       captures.push({ chapter: index, ...bounds });
       assert.equal(bounds.overflow, false, `${width}x${height} chapter ${index}: horizontal overflow`);

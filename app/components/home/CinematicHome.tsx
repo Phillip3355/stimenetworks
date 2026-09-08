@@ -125,9 +125,6 @@ export default function CinematicHome() {
               </section>
             ))}
           </div>
-          <div className={styles.transport}>
-            <Link href="/join" className={styles.action}>JOIN STIME <span>↗</span></Link>
-          </div>
         </div>
       </div>
       <noscript><style>{`.${styles.timeline}{height:auto!important}.${styles.stage}{position:relative!important;height:auto!important}.${styles.chapter}{position:relative!important;opacity:1!important;transform:none!important;min-height:75svh}.${styles.chapters}{position:relative!important}.${styles.transport}{display:none!important}.${styles.chapterCopy}{position:relative!important;top:auto!important;bottom:auto!important;margin:24px 6%!important;width:88%!important;left:0!important}.${styles.chapter}:first-child{padding-top:60svh!important}.${styles.wordmark}{top:115px!important}.${styles.fallback}{top:180px!important;bottom:auto!important;height:350px!important}`}</style></noscript>
