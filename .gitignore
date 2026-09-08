@@ -45,3 +45,6 @@ next-env.d.ts
 /.superpowers/
 /.worktrees/
 /.codex-devserver.log
+
+# Local cinematic browser captures and performance reports
+/scratch/cinematic/

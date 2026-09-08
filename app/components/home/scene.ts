@@ -1,0 +1,231 @@
+import * as THREE from 'three';
+import { adaptQuality, chooseQuality, qualitySettings, sampleTimeline } from './timeline.mjs';
+import { createInfrastructure, createPortal, createWorld } from './world';
+
+export type Quality = 'auto' | 'low' | 'balanced' | 'high';
+export type SceneController = {
+  setProgress: (progress: number) => void;
+  setPointer: (x: number, y: number) => void;
+  setQuality: (quality: Quality) => void;
+  dispose: () => void;
+};
+
+type DeviceNavigator = Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } };
+
+export function createScene(host: HTMLElement, onFailure: () => void): SceneController {
+  const device = navigator as DeviceNavigator;
+  let mobile = window.innerWidth < 760 && window.innerHeight > window.innerWidth;
+  const deviceQuality = () => chooseQuality({ cores: device.hardwareConcurrency, memory: device.deviceMemory, mobile: window.innerWidth < 760 || matchMedia('(pointer: coarse)').matches, saveData: device.connection?.saveData });
+  let quality = deviceQuality();
+  let automatic = true;
+  let settings = qualitySettings(quality, devicePixelRatio, host.clientWidth, host.clientHeight);
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false, powerPreference: 'low-power', failIfMajorPerformanceCaveat: true });
+  renderer.setClearColor(0x080e10, 0);
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.domElement.setAttribute('aria-hidden', 'true');
+  host.appendChild(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(39, 1, .1, 130);
+  const root = new THREE.Group();
+  const world = createWorld();
+  root.add(world.mesh);
+  const infrastructure = createInfrastructure();
+  root.add(infrastructure.group);
+  scene.add(root);
+
+  const centralPortal = createPortal('#c3ffdb');
+  centralPortal.position.set(0, 2.5, .4);
+  root.add(centralPortal);
+  const javaPortal = createPortal('#b5f4d0');
+  const bedrockPortal = createPortal('#ffad72');
+  javaPortal.position.set(-8.2, 1.8, 0);
+  bedrockPortal.position.set(8.2, 1.8, 0);
+  root.add(javaPortal, bedrockPortal);
+
+  // Fine orbit and survey lines provide scale without transparent particle clouds.
+  const orbitPoints = Array.from({ length: 129 }, (_, i) => {
+    const angle = i / 128 * Math.PI * 2;
+    return new THREE.Vector3(Math.cos(angle) * 10.6, -3.9, Math.sin(angle) * 10.6);
+  });
+  const orbit = new THREE.Line(new THREE.BufferGeometry().setFromPoints(orbitPoints), new THREE.LineBasicMaterial({ color: '#577d71', transparent: true, opacity: .55 }));
+  root.add(orbit);
+  const grid = new THREE.GridHelper(25, 16, '#487265', '#273e37');
+  grid.position.y = -4.7;
+  const gridMaterial = grid.material as THREE.Material;
+  gridMaterial.transparent = true;
+  gridMaterial.opacity = .19;
+  root.add(grid);
+
+  const particleGeometry = new THREE.BufferGeometry();
+  const positions = new Float32Array(112 * 3);
+  for (let i = 0; i < 112; i++) {
+    positions[i * 3] = Math.sin(i * 13.31) * 17;
+    positions[i * 3 + 1] = Math.cos(i * 8.17) * 8;
+    positions[i * 3 + 2] = Math.sin(i * 4.73) * 16;
+  }
+  particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const particles = new THREE.Points(particleGeometry, new THREE.PointsMaterial({ color: '#b1d5be', size: .045, sizeAttenuation: true }));
+  root.add(particles);
+
+  const packetGeometry = new THREE.BoxGeometry(.11, .11, .32);
+  const packets = new THREE.InstancedMesh(packetGeometry, new THREE.MeshBasicMaterial({ color: '#c5ffd9' }), 20);
+  packets.frustumCulled = false;
+  const packetDummy = new THREE.Object3D();
+  root.add(packets);
+
+  let progress = 0, targetProgress = 0, pointerX = 0, pointerY = 0;
+  let targetX = 0, targetY = 0, lastRendered = 0, lastRaf = 0;
+  let raf = 0, disposed = false, visible = true, activeUntil = 0;
+  let samples: number[] = [];
+  let frames = 0;
+
+  function resize() {
+    if (disposed) return;
+    const width = host.clientWidth, height = host.clientHeight;
+    const nextMobile = window.innerWidth < 760 && window.innerHeight > window.innerWidth;
+    if (automatic && nextMobile !== mobile) quality = deviceQuality();
+    mobile = nextMobile;
+    settings = qualitySettings(quality, devicePixelRatio, width, height);
+    renderer.setPixelRatio(settings.dpr);
+    renderer.setSize(width, height);
+    camera.aspect = width / Math.max(1, height);
+    camera.fov = mobile ? 43 : height < 520 ? 47 : 39;
+    camera.updateProjectionMatrix();
+    particleGeometry.setDrawRange(0, settings.particles);
+    host.dataset.quality = quality;
+    wake();
+  }
+
+  function draw(now: number) {
+    raf = 0;
+    if (disposed || document.hidden || !visible) return;
+    const rafDelta = lastRaf ? now - lastRaf : 16.7;
+    lastRaf = now;
+    if (now - lastRendered < 1000 / settings.fps - .5) {
+      raf = requestAnimationFrame(draw);
+      return;
+    }
+    const elapsed = lastRendered ? Math.min(64, now - lastRendered) : 16.7;
+    lastRendered = now;
+    const alpha = 1 - Math.exp(-elapsed / (mobile ? 60 : 90));
+    const velocity = targetProgress - progress;
+    progress += velocity * alpha;
+    pointerX += (targetX - pointerX) * alpha;
+    pointerY += (targetY - pointerY) * alpha;
+    const pose = sampleTimeline(progress, mobile);
+    camera.position.set(pose.camera[0] + pointerX * .65, pose.camera[1] + pointerY * .4, pose.camera[2]);
+    camera.lookAt(pose.target[0], pose.target[1], pose.target[2]);
+    root.rotation.y = pose.rotation + Math.max(-.025, Math.min(.025, velocity));
+    root.rotation.z = mobile ? 0 : pointerX * .007;
+    world.uniforms.uExplode.value = pose.explode;
+    world.uniforms.uNetwork.value = pose.network;
+    world.uniforms.uSplit.value = pose.split;
+    world.uniforms.uTime.value = now / 1000;
+    infrastructure.material.opacity = pose.network * .65;
+    infrastructure.group.visible = pose.network > .01;
+    centralPortal.visible = pose.network < .8;
+    centralPortal.scale.setScalar(.97 + pose.portal * .06);
+    javaPortal.visible = bedrockPortal.visible = pose.split > .05;
+    javaPortal.scale.setScalar(.65 + pose.split * .35);
+    bedrockPortal.scale.copy(javaPortal.scale);
+    packets.visible = pose.split > .05 || pose.network > .05;
+    if (packets.visible) {
+      for (let i = 0; i < 20; i++) {
+        const phase = ((now / 2400 + i / 20) % 1);
+        packetDummy.position.set((phase - .5) * 16, -3.8 + Math.sin(i) * .16, .2);
+        packetDummy.updateMatrix();
+        packets.setMatrixAt(i, packetDummy.matrix);
+      }
+      packets.instanceMatrix.needsUpdate = true;
+    }
+    const start = performance.now();
+    renderer.render(scene, camera);
+    const cpu = performance.now() - start;
+    frames++;
+    // Low-frequency DOM diagnostics enable reproducible profiling without globals.
+    if (frames % 20 === 0 || frames === 1) {
+      host.dataset.calls = String(renderer.info.render.calls);
+      host.dataset.triangles = String(renderer.info.render.triangles);
+      host.dataset.frames = String(frames);
+      host.dataset.frameMs = cpu.toFixed(2);
+      host.dataset.geometries = String(renderer.info.memory.geometries);
+      host.dataset.textures = String(renderer.info.memory.textures);
+    }
+    if (automatic && frames > 10 && rafDelta < 150) {
+      samples.push(Math.max(cpu, rafDelta));
+      if (samples.length >= 60) {
+        const next = adaptQuality(quality, samples);
+        samples = [];
+        if (next !== quality) { quality = next; resize(); }
+      }
+    }
+    const unsettled = Math.abs(targetProgress - progress) > .00005 || Math.abs(targetX - pointerX) > .002 || Math.abs(targetY - pointerY) > .002;
+    if (unsettled || now < activeUntil) {
+      if (!raf) raf = requestAnimationFrame(draw);
+    } else {
+      host.dataset.frames = String(frames);
+      host.dataset.sleeping = 'true';
+    }
+  }
+
+  function wake() {
+    if (disposed || document.hidden || !visible) return;
+    activeUntil = performance.now() + (mobile ? 500 : 850);
+    host.dataset.sleeping = 'false';
+    if (!raf) { lastRaf = 0; raf = requestAnimationFrame(draw); }
+  }
+
+  function onVisibility() {
+    if (document.hidden) { cancelAnimationFrame(raf); raf = 0; }
+    else wake();
+  }
+  function onContextLost(event: Event) {
+    event.preventDefault();
+    cancelAnimationFrame(raf);
+    raf = 0;
+    onFailure();
+  }
+  renderer.domElement.addEventListener('webglcontextlost', onContextLost);
+  document.addEventListener('visibilitychange', onVisibility);
+  const observer = new ResizeObserver(resize);
+  observer.observe(host);
+  const intersection = new IntersectionObserver(([entry]) => {
+    visible = entry.isIntersecting;
+    if (visible) wake(); else { cancelAnimationFrame(raf); raf = 0; }
+  });
+  intersection.observe(host);
+  resize();
+
+  return {
+    setProgress(value) { targetProgress = value; wake(); },
+    setPointer(x, y) { if (!mobile) { targetX = x; targetY = y; wake(); } },
+    setQuality(value) {
+      automatic = value === 'auto';
+      quality = automatic ? deviceQuality() : value;
+      samples = [];
+      resize();
+    },
+    dispose() {
+      disposed = true;
+      cancelAnimationFrame(raf);
+      observer.disconnect();
+      intersection.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
+      renderer.domElement.removeEventListener('webglcontextlost', onContextLost);
+      const geometries = new Set<THREE.BufferGeometry>();
+      const materials = new Set<THREE.Material>();
+      scene.traverse(object => {
+        const drawable = object as THREE.Mesh;
+        if (drawable.geometry) geometries.add(drawable.geometry);
+        if (drawable.material) (Array.isArray(drawable.material) ? drawable.material : [drawable.material]).forEach(m => materials.add(m));
+        if (object instanceof THREE.InstancedMesh) object.dispose();
+      });
+      geometries.forEach(geometry => geometry.dispose());
+      materials.forEach(material => material.dispose());
+      renderer.dispose();
+      renderer.forceContextLoss();
+      renderer.domElement.remove();
+    },
+  };
+}

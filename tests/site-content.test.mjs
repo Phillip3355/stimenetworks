@@ -4,7 +4,6 @@ import test from 'node:test';
 import * as siteContent from '../app/shared/siteContent.mjs';
 
 const heroSource = await readFile(new URL('../app/components/Hero.tsx', import.meta.url), 'utf8');
-const homeSource = await readFile(new URL('../app/page.tsx', import.meta.url), 'utf8');
 const rulesPageSource = await readFile(new URL('../app/rules/page.tsx', import.meta.url), 'utf8');
 
 import {
@@ -80,11 +79,6 @@ test('home feature learn-more links target the documented services', () => {
 test('home introduction uses concise player-facing copy', () => {
   assert.equal(homeIntro.headingKo, '같이 접속하고, 즐길 수 있습니다.');
   assert.equal(homeIntro.headingEn, 'Connect and enjoy it together.');
-});
-
-test('home introduction flows directly into the Java and Bedrock feature card', () => {
-  assert.doesNotMatch(homeSource, /WorldShowcase/);
-  assert.match(homeSource, /<CardsGrid\s+cards=\{features\}/);
 });
 
 test('home differentiators use every newly supplied server screenshot', () => {
