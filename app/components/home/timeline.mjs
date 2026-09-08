@@ -5,13 +5,13 @@ const smooth = (t) => t * t * (3 - 2 * t);
 // Seven poses are interpolated continuously. These are artistic coordinates,
 // never live server metrics. Portrait uses its own path and target placement.
 const poses = [
-  { camera: [23, 17, 27], mobile: [28, 23, 35], target: [-2.2, 1, 0], rotation: -0.28, explode: 0, network: 0, split: 0, portal: 0.25 },
-  { camera: [12, 9, 16], mobile: [22, 19, 28], target: [-1.5, 1.5, 0], rotation: 0.12, explode: 0, network: 0, split: 0, portal: 0.7 },
+  { camera: [21, 19, 32], mobile: [28, 25, 43], target: [-2.2, 3, 0], rotation: -0.22, explode: 0, network: 0, split: 0, portal: 0.25 },
+  { camera: [12, 14, 27], mobile: [24, 23, 38], target: [-2, 4, 0], rotation: -0.12, explode: 0, network: 0, split: 0, portal: 0.7 },
   { camera: [23, 12, 27], mobile: [30, 26, 38], target: [-2, 0, 0], rotation: -0.18, explode: 0.1, network: 0, split: 1, portal: 1 },
   { camera: [22, 16, 29], mobile: [26, 25, 36], target: [-2, 1, 0], rotation: 0.45, explode: 1, network: 1, split: 0, portal: 0.3 },
   { camera: [12, 9, 17], mobile: [22, 20, 30], target: [-1, 1, 0], rotation: 1.25, explode: 0.8, network: 0.8, split: 0, portal: 0.7 },
-  { camera: [25, 19, 31], mobile: [28, 22, 34], target: [-2, 1, 0], rotation: 2.15, explode: 0, network: 0, split: 0, portal: 0.5 },
-  { camera: [9, 7, 15], mobile: [21, 16, 27], target: [-2.7, 2, 0], rotation: 3.12, explode: 0, network: 0, split: 0, portal: 1 },
+  { camera: [25, 19, 31], mobile: [28, 26, 40], target: [-2, 3, 0], rotation: .45, explode: 0, network: 0, split: 0, portal: 0.5 },
+  { camera: [11, 11, 24], mobile: [25, 23, 38], target: [-2.7, 4, 0], rotation: -.12, explode: 0, network: 0, split: 0, portal: 1 },
 ];
 
 export function sampleTimeline(progress, mobile = false) {
@@ -23,7 +23,7 @@ export function sampleTimeline(progress, mobile = false) {
   const cameraKey = mobile ? 'mobile' : 'camera';
   return {
     camera: from[cameraKey].map((v, i) => mix(v, to[cameraKey][i], t)),
-    target: mobile ? [0, 1.7, 0] : from.target.map((v, i) => mix(v, to.target[i], t)),
+    target: mobile ? [0, 3.5, 0] : from.target.map((v, i) => mix(v, to.target[i], t)),
     rotation: mix(from.rotation, to.rotation, t),
     explode: mix(from.explode, to.explode, t),
     network: mix(from.network, to.network, t),

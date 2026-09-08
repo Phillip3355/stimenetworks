@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { adaptQuality, chooseQuality, qualitySettings, sampleTimeline } from './timeline.mjs';
-import { createInfrastructure, createPortal, createWorld } from './world';
+import { createInfrastructure, createPortal } from './world';
+import { createTexturedWorld } from './textured-world';
 
 export type Quality = 'auto' | 'low' | 'balanced' | 'high';
 export type SceneController = {
@@ -12,14 +13,28 @@ export type SceneController = {
 
 type DeviceNavigator = Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } };
 
-export function createScene(host: HTMLElement, onFailure: () => void): SceneController {
+export async function createScene(host: HTMLElement, onFailure: () => void, signal?: AbortSignal): Promise<SceneController> {
+  signal?.throwIfAborted();
   const device = navigator as DeviceNavigator;
-  let mobile = window.innerWidth < 760 && window.innerHeight > window.innerWidth;
+  let mobile = window.innerWidth <= 1024 && window.innerHeight > window.innerWidth;
   const deviceQuality = () => chooseQuality({ cores: device.hardwareConcurrency, memory: device.deviceMemory, mobile: window.innerWidth < 760 || matchMedia('(pointer: coarse)').matches, saveData: device.connection?.saveData });
   let quality = deviceQuality();
   let automatic = true;
   let settings = qualitySettings(quality, devicePixelRatio, host.clientWidth, host.clientHeight);
+  // Reject unsupported GPUs before downloading/decompressing the world.
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false, powerPreference: 'low-power', failIfMajorPerformanceCaveat: true });
+  const loading = new AbortController();
+  const abortLoading = () => loading.abort(signal?.reason);
+  const loseWhileLoading = (event: Event) => { event.preventDefault(); loading.abort(new Error('WebGL lost while loading')); };
+  signal?.addEventListener('abort', abortLoading, { once: true });
+  renderer.domElement.addEventListener('webglcontextlost', loseWhileLoading);
+  let world: Awaited<ReturnType<typeof createTexturedWorld>>;
+  try {
+    world = await createTexturedWorld(loading.signal);
+    if (renderer.getContext().isContextLost()) { world.dispose(); throw new Error('WebGL lost while loading'); }
+  }
+  catch (error) { renderer.dispose(); renderer.forceContextLoss(); throw error; }
+  finally { signal?.removeEventListener('abort', abortLoading); renderer.domElement.removeEventListener('webglcontextlost', loseWhileLoading); }
   renderer.setClearColor(0x080e10, 0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.domElement.setAttribute('aria-hidden', 'true');
@@ -28,15 +43,11 @@ export function createScene(host: HTMLElement, onFailure: () => void): SceneCont
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(39, 1, .1, 130);
   const root = new THREE.Group();
-  const world = createWorld();
   root.add(world.mesh);
   const infrastructure = createInfrastructure();
   root.add(infrastructure.group);
   scene.add(root);
 
-  const centralPortal = createPortal('#c3ffdb');
-  centralPortal.position.set(0, 2.5, .4);
-  root.add(centralPortal);
   const javaPortal = createPortal('#b5f4d0');
   const bedrockPortal = createPortal('#ffad72');
   javaPortal.position.set(-8.2, 1.8, 0);
@@ -74,6 +85,11 @@ export function createScene(host: HTMLElement, onFailure: () => void): SceneCont
   const packetDummy = new THREE.Object3D();
   root.add(packets);
 
+  // Compile every transition material while the poster is visible. First entering
+  // the network must not trigger several driver shader compilations mid-scroll.
+  try { renderer.compile(scene, camera); }
+  catch (error) { world.dispose(); renderer.dispose(); renderer.forceContextLoss(); renderer.domElement.remove(); throw error; }
+
   let progress = 0, targetProgress = 0, pointerX = 0, pointerY = 0;
   let targetX = 0, targetY = 0, lastRendered = 0, lastRaf = 0;
   let raf = 0, disposed = false, visible = true, activeUntil = 0;
@@ -83,7 +99,7 @@ export function createScene(host: HTMLElement, onFailure: () => void): SceneCont
   function resize() {
     if (disposed) return;
     const width = host.clientWidth, height = host.clientHeight;
-    const nextMobile = window.innerWidth < 760 && window.innerHeight > window.innerWidth;
+    const nextMobile = window.innerWidth <= 1024 && window.innerHeight > window.innerWidth;
     if (automatic && nextMobile !== mobile) quality = deviceQuality();
     mobile = nextMobile;
     settings = qualitySettings(quality, devicePixelRatio, width, height);
@@ -124,8 +140,7 @@ export function createScene(host: HTMLElement, onFailure: () => void): SceneCont
     world.uniforms.uTime.value = now / 1000;
     infrastructure.material.opacity = pose.network * .65;
     infrastructure.group.visible = pose.network > .01;
-    centralPortal.visible = pose.network < .8;
-    centralPortal.scale.setScalar(.97 + pose.portal * .06);
+    orbit.visible = grid.visible = particles.visible = pose.network > .03 || pose.split > .03;
     javaPortal.visible = bedrockPortal.visible = pose.split > .05;
     javaPortal.scale.setScalar(.65 + pose.split * .35);
     bedrockPortal.scale.copy(javaPortal.scale);
@@ -223,6 +238,7 @@ export function createScene(host: HTMLElement, onFailure: () => void): SceneCont
       });
       geometries.forEach(geometry => geometry.dispose());
       materials.forEach(material => material.dispose());
+      world.uniforms.uAtlas.value.dispose();
       renderer.dispose();
       renderer.forceContextLoss();
       renderer.domElement.remove();

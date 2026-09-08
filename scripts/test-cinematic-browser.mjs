@@ -9,8 +9,8 @@ const results = { viewports: [], profiles: [], checks: [], errors: [] };
 const checksOnly = process.argv.includes('--checks-only');
 if (checksOnly && existsSync(`${output}/results.json`)) results.viewports = JSON.parse(readFileSync(`${output}/results.json`, 'utf8')).viewports;
 
-async function pageFor(options = {}) {
-  const context = await browser.newContext(options);
+async function pageFor(options = {}, session = browser) {
+  const context = await session.newContext(options);
   // Deployment-only analytics have no local server; don't pollute diagnostics.
   await context.route('**/_vercel/**', route => route.fulfill({ status: 200, contentType: 'application/javascript', body: '' }));
   const page = await context.newPage();
@@ -20,7 +20,7 @@ async function pageFor(options = {}) {
 }
 async function open(page, mode = 'cinematic') {
   await page.goto(base, { waitUntil: 'networkidle' });
-  await page.waitForSelector(`main[data-mode="${mode}"]`);
+  await page.waitForSelector(`main[data-mode="${mode}"]`, { timeout: 60000 });
 }
 async function chapter(page, index) {
   const button = page.locator('main nav button').nth(index);
@@ -112,7 +112,7 @@ try {
     await context.route('**/_next/static/chunks/*.js', async route => {
       const response = await route.fetch();
       const body = await response.text();
-      if (body.includes('aScatter') && body.includes('uExplode')) { requested(); await hold; }
+      if (body.includes('aCenter') && body.includes('uExplode')) { requested(); await hold; }
       await route.fulfill({ response, body });
     });
     await page.goto(base, { waitUntil: 'domcontentloaded' });
@@ -132,6 +132,8 @@ try {
 
   for (const mode of ['reduced', 'webgl', 'context-loss', 'no-js']) {
     const { context, page } = await pageFor({ viewport: { width: 390, height: 844 }, reducedMotion: mode === 'reduced' ? 'reduce' : 'no-preference', javaScriptEnabled: mode !== 'no-js' });
+    let geometryRequests = 0;
+    page.on('request', request => { if (request.url().includes('settlement.bin.gz')) geometryRequests++; });
     if (mode === 'webgl') await page.addInitScript(() => {
       const original = HTMLCanvasElement.prototype.getContext;
       HTMLCanvasElement.prototype.getContext = function(type, ...args) { return /^webgl/.test(type) ? null : original.call(this, type, ...args); };
@@ -146,6 +148,8 @@ try {
     assert.equal(await page.locator('main [inert]').count(), 0);
     assert.equal(await page.locator('main [aria-hidden="true"][data-chapter]').count(), 0);
     assert.equal(await page.locator('main h2').count(), 7);
+    assert.ok(await page.locator('main img[src*="settlement-poster"]').evaluate(img => img.complete && img.naturalWidth > 0));
+    if (mode !== 'context-loss') assert.equal(geometryRequests, 0, `${mode} must not download 3D geometry`);
     if (mode === 'no-js') {
       assert.ok(await page.locator('[class*="wordmark_"]').evaluate(el => el.getBoundingClientRect().bottom < innerHeight));
       await page.getByRole('link', { name: /세계 안으로/ }).click();
@@ -160,8 +164,44 @@ try {
     await context.close();
   }
 
+  for (const mode of ['missing-geometry', 'corrupt-geometry', 'missing-atlas', 'cancel-loading', 'context-loss-loading']) {
+    const { context, page } = await pageFor({ viewport: { width: 390, height: 844 } });
+    if (mode === 'context-loss-loading') await page.addInitScript(() => {
+      const original = HTMLCanvasElement.prototype.getContext;
+      HTMLCanvasElement.prototype.getContext = function(type, ...args) { const gl = original.call(this, type, ...args); if (/^webgl/.test(type) && gl) window.__loadingGL = gl; return gl; };
+    });
+    if (mode === 'missing-atlas') await context.route('**/home/minecraft/blocks.png', route => route.fulfill({ status: 404, body: '' }));
+    else await context.route('**/home/minecraft/settlement.bin.gz', async route => {
+      if (mode === 'cancel-loading' || mode === 'context-loss-loading') { await new Promise(resolve => setTimeout(resolve, 700)); try { await route.continue(); } catch {} }
+      else await route.fulfill({ status: mode === 'missing-geometry' ? 404 : 200, body: 'invalid' });
+    });
+    if (mode === 'context-loss-loading') {
+      await page.goto(base, { waitUntil: 'domcontentloaded' });
+      await page.waitForFunction(() => window.__loadingGL);
+      await page.evaluate(() => window.__loadingGL.getExtension('WEBGL_lose_context').loseContext());
+      await page.waitForSelector('main[data-mode="static"]');
+      assert.equal(await page.locator('main canvas').count(), 0);
+    } else if (mode === 'cancel-loading') {
+      await page.goto(base, { waitUntil: 'domcontentloaded' });
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+      await page.waitForSelector('main[data-mode="static"]');
+      await page.waitForTimeout(1100);
+      assert.equal(await page.locator('main canvas').count(), 0);
+      await page.emulateMedia({ reducedMotion: 'no-preference' });
+      await page.waitForSelector('main[data-mode="cinematic"]');
+      assert.equal(await page.locator('main canvas').count(), 1);
+    } else {
+      await open(page, 'static');
+      assert.equal(await page.locator('main canvas').count(), 0);
+    }
+    results.checks.push(mode);
+    await context.close();
+  }
+
   for (const [name, width, height, rate, low] of [['desktop', 1440, 900, 1, false], ['slow-desktop', 1366, 768, 6, true], ['mobile-low', 390, 844, 4, true]]) {
-    const { context, page } = await pageFor({ viewport: { width, height }, isMobile: width < 760, hasTouch: width < 760, deviceScaleFactor: width < 760 ? 3 : 1 });
+    // Isolate profiling from the prior deliberate context-loss/cancellation tests.
+    const profileBrowser = await chromium.launch({ channel: 'chrome', headless: true });
+    const { context, page } = await pageFor({ viewport: { width, height }, isMobile: width < 760, hasTouch: width < 760, deviceScaleFactor: width < 760 ? 3 : 1 }, profileBrowser);
     if (low) await page.addInitScript(() => { Object.defineProperty(navigator, 'hardwareConcurrency', { get: () => 2 }); Object.defineProperty(navigator, 'deviceMemory', { get: () => 2 }); });
     const cdp = await context.newCDPSession(page);
     await cdp.send('Emulation.setCPUThrottlingRate', { rate });
@@ -204,6 +244,7 @@ try {
     }
     results.profiles.push({ name, cpuThrottle: rate, ...profile, render: after });
     await context.close();
+    await profileBrowser.close();
   }
   assert.deepEqual(results.errors, []);
   console.log(JSON.stringify(results, null, 2));

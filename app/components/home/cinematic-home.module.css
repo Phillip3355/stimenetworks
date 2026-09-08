@@ -15,7 +15,7 @@
 .scene, .fallback { position: absolute; inset: 4% -12% -8% 3%; pointer-events: none; }
 .scene canvas { display: block; width: 100%; height: 100%; }
 .fallback { left: 27%; top: 16%; right: -2%; bottom: -2%; opacity: .94; }
-.fallback svg { width: 100%; height: 100%; }
+.fallback img { width: 100%; height: 100%; object-fit: contain; }
 .root[data-mode='cinematic'] .fallback { display: none; }
 .topline { position: absolute; inset: 100px 5.5% auto; display: flex; justify-content: space-between; font: 9px/1.4 monospace; letter-spacing: .15em; color: var(--soft); pointer-events: none; }
 .topline i { display: inline-block; width: 5px; height: 5px; background: var(--mint); margin-right: 10px; }
@@ -102,7 +102,7 @@
 .root[data-mode='static'] .worldImage { transform: none; }
 @media (min-width: 1700px) { .chapterCopy { left: 8%; } .wordmark { left: 7.5%; } .scene { left: 10%; right: -6%; } }
 @media (max-width: 1000px) and (min-width: 760px) { .title { font-size: 64px; } .chapterCopy { width: 49%; } .intro .chapterCopy { width: 36%; } .scene { left: 0; right: -25%; } .noMods { right: 10%; } }
-@media (max-width: 759px) {
+@media (max-width: 759px), (max-width: 1024px) and (orientation: portrait) {
   .timeline { height: 670svh; }
   .stage { min-height: 640px; }
   .topline { top: 94px; left: 6%; right: 6%; font-size: 8px; letter-spacing: .08em; }

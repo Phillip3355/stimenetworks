@@ -38,15 +38,21 @@ export default function CinematicHome() {
   useEffect(() => {
     let canceled = false;
     let generation = 0;
+    let assetRequest: AbortController | undefined;
     const media = matchMedia('(prefers-reduced-motion: reduce)');
-    const stop = (reason = 'webgl') => { generation++; controller.current?.dispose(); controller.current = null; setStaticReason(reason); setMode('static'); };
+    const stop = (reason = 'webgl') => { generation++; assetRequest?.abort(); controller.current?.dispose(); controller.current = null; setStaticReason(reason); setMode('static'); };
     const start = async () => {
       const ticket = ++generation;
+      assetRequest?.abort();
+      const request = new AbortController();
+      assetRequest = request;
       if (media.matches || !motionEnabled) { stop(media.matches ? 'reduced' : 'manual'); return; }
       try {
         const { createScene } = await import('./scene');
         if (canceled || ticket !== generation || media.matches || !motionEnabled || !hostRef.current) return;
-        controller.current = createScene(hostRef.current, () => stop());
+        const scene = await createScene(hostRef.current, () => stop(), request.signal);
+        if (canceled || ticket !== generation || media.matches || !motionEnabled) { scene.dispose(); return; }
+        controller.current = scene;
         controller.current.setQuality(qualityRef.current);
         controller.current.setProgress(progressRef.current);
         setMode('cinematic');
@@ -55,7 +61,7 @@ export default function CinematicHome() {
     const change = () => { stop(media.matches ? 'reduced' : 'manual'); if (!media.matches && motionEnabled) void start(); };
     void start();
     media.addEventListener('change', change);
-    return () => { canceled = true; generation++; media.removeEventListener('change', change); controller.current?.dispose(); controller.current = null; };
+    return () => { canceled = true; generation++; assetRequest?.abort(); media.removeEventListener('change', change); controller.current?.dispose(); controller.current = null; };
   }, [motionEnabled, attempt]);
 
   useEffect(() => {

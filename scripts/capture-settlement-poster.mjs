@@ -1,0 +1,13 @@
+import { chromium } from 'playwright';
+import sharp from 'sharp';
+const browser = await chromium.launch({ channel: 'chrome', headless: true });
+const page = await browser.newPage({ viewport: { width: 1500, height: 1200 }, deviceScaleFactor: 1.5 });
+await page.route('**/_vercel/**', route => route.fulfill({ status: 200, contentType: 'application/javascript', body: '' }));
+await page.goto('http://127.0.0.1:3100', { waitUntil: 'networkidle' });
+await page.waitForSelector('main[data-mode="cinematic"]');
+await page.addStyleTag({ content: `html,body,main { background: transparent !important; } body * { visibility: hidden !important; } main [class*="scene_"], main canvas { visibility: visible !important; } main [class*="scene_"] { inset: 0 !important; }` });
+await page.waitForTimeout(1400);
+const screenshot = await page.screenshot({ omitBackground: true });
+await sharp(screenshot).trim().resize({ width: 1050 }).webp({ quality: 88, alphaQuality: 100 }).toFile('public/home/minecraft/settlement-poster.webp');
+await browser.close();
+console.log('Captured fallback artwork directly from the implemented Three.js model.');

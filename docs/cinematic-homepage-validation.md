@@ -1,5 +1,9 @@
 # Cinematic homepage — implementation and validation
 
+This report records the initial untextured revision (`3601443`). The subsequent
+photo-based Minecraft reconstruction and its current measurements are documented
+in [minecraft-reconstruction-validation.md](minecraft-reconstruction-validation.md).
+
 ## Review boundary
 
 - Worktree: `C:/Users/hhajj/Desktop/stimemc-cinematic`

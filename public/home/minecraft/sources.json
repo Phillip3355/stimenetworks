@@ -1,0 +1,270 @@
+{
+  "edition": "Minecraft Java 1.21.1",
+  "owner": "Mojang / Microsoft",
+  "source": "https://piston-data.mojang.com/v1/objects/30c73b1c5da787909b2f73340419fdf13b9def88/client.jar",
+  "clientSHA1": "30c73b1c5da787909b2f73340419fdf13b9def88",
+  "processing": "Original 16px pixels; edge padding; first frame for animated images. No AI textures.",
+  "textures": [
+    {
+      "name": "bricks",
+      "sha256": "33f9411f1cb233a2020df0cf3fda32c0f67a4b0fac3751bde2ba6f2fee81b169",
+      "originalSize": [
+        16,
+        16
+      ],
+      "tile": 0
+    },
+    {
+      "name": "polished_andesite",
+      "sha256": "ffe83daad907f1240fa6f872c5a89aed1d17c5a5c65815e0cdc5cc896069ca16",
+      "originalSize": [
+        16,
+        16
+      ],
+      "tile": 1
+    },
+    {
+      "name": "stone_bricks",
+      "sha256": "33da66239c5586ee712ffa3fab45927cd7d4968cf111829d3049f84152d85953",
+      "originalSize": [
+        16,
+        16
+      ],
+      "tile": 2
+    },
+    {
+      "name": "cobblestone",
+      "sha256": "bcda95fdf5afa91747657aa198fc0b69ebf44141de30a718075f74045e9a5def",
+      "originalSize": [
+        16,
+        16
+      ],
+      "tile": 3
+    },
+    {
+      "name": "deepslate_tiles",
+      "sha256": "de5b1065c13dfbf4b758a886b5565c881ee1b2b13a36e1f46ad80969977fdb48",
+      "originalSize": [
+        16,
+        16
+      ],
+      "tile": 4
+    },
+    {
+      "name": "spruce_planks",
+      "sha256": "43ddc665352825876985faaed7e5f7b958f9b8fc3cad56d7bca1c2db7a54949a",
+      "originalSize": [
+        16,
+        16
+      ],
+      "tile": 5
+    },
+    {
+      "name": "spruce_log",
+      "sha256": "f28e8ce2783a0d14cc6f23904faf6858fba1295290a732735db82b54392574fd",
+      "originalSize": [
+        16,
+        16
+      ],
+      "tile": 6
+    },
+    {
+      "name": "spruce_log_top",
+      "sha256": "b153bde175085ba46e5badacf9d7dd4dc909a75f02118b73b9338685f06c5b42",
+      "originalSize": [
+        16,
+        16
+      ],
+      "tile": 7
+    },
+    {
+      "name": "birch_log",
+      "sha256": "cebcca1885e46164bf028cb7d1c2df6cb391da0e792b3d9c99641577d0c8baaf",
+      "originalSize": [
+        16,
+        16
+      ],
+      "tile": 8
+    },
+    {
+      "name": "birch_log_top",
+      "sha256": "7127d988e865ddaa53faa23251b8703c3c4003d0f82f35489daee2a39a562c4e",
+      "originalSize": [
+        16,
+        16
+      ],
+      "tile": 9
+    },
+    {
+      "name": "birch_leaves",
+      "sha256": "42ba8c5b9aaecef27ce17b730abd45ebebd8240811b78bb836088ed58e89c332",
+      "originalSize": [
+        16,
+        16
+      ],
+      "tile": 10
+    },
+    {
+      "name": "spruce_leaves",
+      "sha256": "1f6c193f73cdd1399e94809c0bd7dce0b1b76dcdae1da2088e481dbba714edb2",
+      "originalSize": [
+        16,
+        16
+      ],
+      "tile": 11
+    },
+    {
+      "name": "oak_leaves",
+      "sha256": "69c9c7048695e014aee6b8a2c4cb080607bd7a2a5291c06218b8134cbfcdc04f",
+      "originalSize": [
+        16,
+        16
+      ],
+      "tile": 12
+    },
+    {
+      "name": "gravel",
+      "sha256": "cc9feb24f18337c9a4f01ca0c28a61bc2f0c629962d4f002c23623528c5ca0ea",
+      "originalSize": [
+        16,
+        16
+      ],
+      "tile": 13
+    },
+    {
+      "name": "grass_block_top",
+      "sha256": "52f44b64ce884a13dfe35e4b4da2e35898b790dd4d7a5ea536f1b0c0d56d29b4",
+      "originalSize": [
+        16,
+        16
+      ],
+      "tile": 14
+    },
+    {
+      "name": "grass_block_side",
+      "sha256": "ab572ac7ebd373abdeb961de1f3cba0afcd91e1acb700745ece4f719790bae3d",
+      "originalSize": [
+        16,
+        16
+      ],
+      "tile": 15
+    },
+    {
+      "name": "dirt",
+      "sha256": "1f0f0e619e7dfe683ea45b9254859f14b0ed5f1debdb242ea878828575be5bf0",
+      "originalSize": [
+        16,
+        16
+      ],
+      "tile": 16
+    },
+    {
+      "name": "sand",
+      "sha256": "8875040fbee9e8c40ef1d6472e1548230d9ef1bad32d58e4e2fa857f1ae08027",
+      "originalSize": [
+        16,
+        16
+      ],
+      "tile": 17
+    },
+    {
+      "name": "glowstone",
+      "sha256": "1715e4d1e3209d5931f468b96fd67ca280e4ba27ce993aec6f66c57bf8bf369b",
+      "originalSize": [
+        16,
+        16
+      ],
+      "tile": 18
+    },
+    {
+      "name": "iron_bars",
+      "sha256": "7a1e5a72fa4d1e37e1077b79a4fe7b3df9b158ad5eefa921d2afbea8cba6d4c5",
+      "originalSize": [
+        16,
+        16
+      ],
+      "tile": 19
+    },
+    {
+      "name": "barrel_side",
+      "sha256": "a805eaf42d3bfff3fdd04b7e29ae1a8b10c8ac0aead2b171da505b17a22c66c1",
+      "originalSize": [
+        16,
+        16
+      ],
+      "tile": 20
+    },
+    {
+      "name": "barrel_top",
+      "sha256": "f128c7d5dd1efe6c858789ea35d617663f925b20a0d5104c66e36cd859adb7e1",
+      "originalSize": [
+        16,
+        16
+      ],
+      "tile": 21
+    },
+    {
+      "name": "mossy_cobblestone",
+      "sha256": "1c069f0513d01272d5e9951e96ca3d9279c34400a88c3c47d52d79b9ac21ef2f",
+      "originalSize": [
+        16,
+        16
+      ],
+      "tile": 22
+    },
+    {
+      "name": "stone",
+      "sha256": "33ac70ba8cb701087642a12c5fd29c1ba3006dc4730e9b014ed3a19ce7cdda7b",
+      "originalSize": [
+        16,
+        16
+      ],
+      "tile": 23
+    },
+    {
+      "name": "lantern",
+      "sha256": "d0820909a8de7c2736abbf184eac99f4faa536f07a58e10cff4d446291b45aaa",
+      "originalSize": [
+        16,
+        48
+      ],
+      "tile": 24
+    },
+    {
+      "name": "short_grass",
+      "sha256": "ca8502acca569a1e1ac5e69ac296d4ad2e4faa4d179beeb4ece67125cc998ace",
+      "originalSize": [
+        16,
+        16
+      ],
+      "tile": 25
+    },
+    {
+      "name": "oak_planks",
+      "sha256": "3a33db67a3ba30537d0890a5cb37c8087ca336be89cbb1393a71c23224e361a8",
+      "originalSize": [
+        16,
+        16
+      ],
+      "tile": 26
+    },
+    {
+      "name": "andesite",
+      "sha256": "bc1fec2c9136bfe15f10dcc8fbd447d82c876c01342fedb5c7092291e89f50f0",
+      "originalSize": [
+        16,
+        16
+      ],
+      "tile": 27
+    },
+    {
+      "name": "water_still",
+      "sha256": "5843e8826507c484dfc15d5d255843d041804bcaa2036ed137320610d7fb9af7",
+      "originalSize": [
+        16,
+        512
+      ],
+      "tile": 28
+    }
+  ]
+}

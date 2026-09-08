@@ -20,7 +20,7 @@ const loading = await page.evaluate(() => {
   const canvas = document.querySelector('canvas');
   const gl = canvas.getContext('webgl2');
   const debug = gl.getExtension('WEBGL_debug_renderer_info');
-  return { fcp: performance.getEntriesByName('first-contentful-paint')[0]?.startTime, lcp: window.__lcp, jsTransferred: resources.filter(e => e.name.includes('.js')).reduce((n, e) => n + e.transferSize, 0), imageTransferred: resources.filter(e => e.initiatorType === 'img').reduce((n, e) => n + e.transferSize, 0), renderer: debug ? gl.getParameter(debug.UNMASKED_RENDERER_WEBGL) : 'unavailable' };
+  return { fcp: performance.getEntriesByName('first-contentful-paint')[0]?.startTime, lcp: window.__lcp, jsTransferred: resources.filter(e => e.name.includes('.js')).reduce((n, e) => n + e.transferSize, 0), imageTransferred: resources.filter(e => e.initiatorType === 'img').reduce((n, e) => n + e.transferSize, 0), geometryTransferred: resources.filter(e => e.name.includes('settlement.bin.gz')).reduce((n, e) => n + e.transferSize, 0), renderer: debug ? gl.getParameter(debug.UNMASKED_RENDERER_WEBGL) : 'unavailable' };
 });
 await page.evaluate(() => { const track = document.querySelector('[class*="timeline_"]'); window.scrollTo({ top: (2.5 / 6) * (track.offsetHeight - track.firstElementChild.offsetHeight), behavior: 'instant' }); });
 await page.waitForTimeout(1200);

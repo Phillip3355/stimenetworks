@@ -1,0 +1,14 @@
+{
+  "blocks": 8218,
+  "vertices": 71452,
+  "triangles": 35726,
+  "stride": 14,
+  "bytes": 4430024,
+  "packedBytes": 357268,
+  "transferredBytes": 68675,
+  "bounds": {
+    "lighthouseHeight": 14.4,
+    "groundWidth": 19.200000000000003
+  },
+  "lighting": "Two-ray offline voxel sun occlusion, directional face light and contact shading. No runtime shadow maps."
+}
