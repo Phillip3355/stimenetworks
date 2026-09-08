@@ -69,7 +69,7 @@ export async function createTexturedWorld(signal?: AbortSignal) {
         color *= vec3(1.06, 1.0, .91);
         // Light sources stay bright without a bloom pass.
         if (vTile > 17.5 && vTile < 18.5) color = mix(color, vec3(1.0, .8, .28), .5);
-        color = vec3(dot(color, vec3(.2126,.7152,.0722)));
+
         gl_FragColor = vec4(color, 1.0 - uNetwork);
         #include <colorspace_fragment>
       }

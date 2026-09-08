@@ -9,7 +9,7 @@
 .wordmark { position:absolute; top:15%; left:5.5%; font-size:clamp(120px,20vw,320px); line-height:.9; font-weight:850; letter-spacing:-.065em; pointer-events:none; }
 .scene { position:absolute; inset:4% -12% -8% 3%; pointer-events:none; }
 .scene canvas { display:block; width:100%; height:100%; }
-.fallback { position:absolute; left:34%; top:17%; right:0; bottom:3%; pointer-events:none; filter:grayscale(1); }
+.fallback { position:absolute; left:34%; top:17%; right:0; bottom:3%; pointer-events:none; }
 .fallback img { width:100%; height:100%; object-fit:contain; }
 .root[data-mode='cinematic'] .fallback { display:none; }
 .chapters { position:absolute; inset:0; pointer-events:none; }

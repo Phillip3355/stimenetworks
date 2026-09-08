@@ -26,6 +26,6 @@ The full client archive and loose source PNGs remain in ignored scratch storage.
 24 bytes per visible face: int16 center XYZ, uint16 size XYZ (1/1000 scene unit),
 uint8 tile, uint8 linear RGB, uint8 light (1/100), uint8 direction, uint16 block ID, and two uint16 UV offsets (1/1000 tile). The v2 magic is 0x53544d44.
 The client expands this bounded array into GPU vertices once; all occlusion and
-shadow tracing stay offline. Offline surface union removes partial overlaps and duplicate coplanar faces. Transfer is 64,782 bytes for 27,862 triangles. The latest homepage theme renders these original textures in grayscale; the source pixels remain unchanged.
+shadow tracing stay offline. Offline surface union removes partial overlaps and duplicate coplanar faces. Transfer is 64,782 bytes for 27,862 triangles. The homepage preserves original world colors within its black/white interface. Scattered cubes share the atlas and turn neutral only when forming the network.
 `settlement.json` records the geometry/transfer budget. The poster is captured
 from the actual browser-rendered model, rather than from the reference photo.

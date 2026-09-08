@@ -42,7 +42,7 @@ export async function createScene(host: HTMLElement, onFailure: () => void, sign
   const camera = new THREE.PerspectiveCamera(39, 1, .1, 130);
   const root = new THREE.Group();
   root.add(world.mesh);
-  const network = createNetworkWorld();
+  const network = createNetworkWorld(world.mesh);
   root.add(network.mesh);
   const infrastructure = createInfrastructure();
   root.add(infrastructure.group);
@@ -134,10 +134,11 @@ export async function createScene(host: HTMLElement, onFailure: () => void, sign
     camera.lookAt(pose.target[0], pose.target[1], pose.target[2]);
     root.rotation.y = pose.rotation + Math.max(-.025, Math.min(.025, velocity));
     root.rotation.z = mobile ? 0 : pointerX * .007;
-    world.mesh.visible = pose.network < .999;
+    world.mesh.visible = pose.network < .18;
     network.mesh.visible = pose.network > .01;
-    network.uniforms.uReveal.value = Math.min(1,pose.network * 1.5);
-    world.uniforms.uNetwork.value = pose.network;
+    network.uniforms.uNetwork.value = pose.network;
+    network.uniforms.uSpread.value = mobile ? .72 : 1;
+    world.uniforms.uNetwork.value = Math.min(1, pose.network / .18);
     world.uniforms.uSplit.value = pose.split;
     world.uniforms.uTime.value = now / 1000;
     infrastructure.material.opacity = pose.network * .65;
