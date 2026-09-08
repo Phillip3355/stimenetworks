@@ -7,7 +7,7 @@ import {
   getJoinRequestSubmitErrorCode,
   normalizeJoinRequest,
   validateJoinRequest,
-} from '../app/lib/joinRequestPolicy.mjs';
+} from '../app/shared/joinRequestPolicy.mjs';
 
 const validRequest = {
   edition: 'java',

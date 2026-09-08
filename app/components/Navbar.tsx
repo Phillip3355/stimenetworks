@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { navigationGroups, serverProfile } from '../lib/siteContent.mjs';
+import { navigationGroups, serverProfile } from '../shared/siteContent.mjs';
 import styles from '../styles/navbar.module.css';
 import { useLanguage } from './LanguageProvider';
 

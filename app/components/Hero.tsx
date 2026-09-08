@@ -4,8 +4,8 @@ import { motion, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useLanguage } from './LanguageProvider';
-import { serverProfile } from '../lib/siteContent.mjs';
-import { getHeroRevealTransition } from '../lib/homeMotion.mjs';
+import { serverProfile } from '../shared/siteContent.mjs';
+import { getHeroRevealTransition } from '../shared/homeMotion.mjs';
 import styles from '../styles/hero.module.css';
 
 export default function Hero() {

@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useLanguage } from '../components/LanguageProvider';
-import { historyEntries } from '../lib/siteContent.mjs';
+import { historyEntries } from '../shared/siteContent.mjs';
 import styles from '../styles/history.module.css';
 
 export default function HistoryPage() {

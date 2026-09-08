@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import JoinRequestForm from '../components/JoinRequestForm';
 import { useLanguage } from '../components/LanguageProvider';
-import { joinConnectionGuide } from '../lib/siteContent.mjs';
+import { joinConnectionGuide } from '../shared/siteContent.mjs';
 import styles from '../styles/server-mechanism.module.css';
 
 export default function JoinServerPage() {

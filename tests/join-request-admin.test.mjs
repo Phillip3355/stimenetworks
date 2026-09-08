@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { completeAdminJoinRequest, loadAdminJoinRequests } from '../app/lib/joinRequestAdmin.mjs';
+import { completeAdminJoinRequest, loadAdminJoinRequests } from '../app/client/joinRequestAdmin.mjs';
 
 const requestRows = [
   {
@@ -32,6 +32,7 @@ function createClient({ email, authError = null, queryError = null, rows = reque
       },
     },
     async rpc(name, args) {
+      if (name === 'is_support_admin') return { data: ['cwj120408@gmail.com','kimjc.120211@gmail.com'].includes(email?.toLowerCase()), error: null };
       requestsQueried = true;
       if (name === 'complete_stimemc_join_request') {
         assert.deepEqual(args, { request_id: 'request-1' });

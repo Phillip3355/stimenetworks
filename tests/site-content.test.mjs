@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
-import * as siteContent from '../app/lib/siteContent.mjs';
+import * as siteContent from '../app/shared/siteContent.mjs';
 
 const heroSource = await readFile(new URL('../app/components/Hero.tsx', import.meta.url), 'utf8');
 const homeSource = await readFile(new URL('../app/page.tsx', import.meta.url), 'utf8');
@@ -17,7 +17,7 @@ import {
   serverMechanismFlow,
   serverProfile,
   joinConnectionGuide,
-} from '../app/lib/siteContent.mjs';
+} from '../app/shared/siteContent.mjs';
 
 test('server profile exposes the player-facing crossplay mod experience', () => {
   assert.deepEqual(serverProfile.editions, ['Java', 'Bedrock']);

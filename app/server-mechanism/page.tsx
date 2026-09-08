@@ -2,7 +2,7 @@
 
 import { useLanguage } from '../components/LanguageProvider';
 import { motion } from 'framer-motion';
-import { serverMechanismFlow } from '../lib/siteContent.mjs';
+import { serverMechanismFlow } from '../shared/siteContent.mjs';
 import styles from '../styles/server-mechanism.module.css';
 
 export default function ServerMechanism() {

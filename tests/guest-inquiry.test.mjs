@@ -5,7 +5,7 @@ import {
   buildGuestInquiryPayload,
   canAccessGuestInquiry,
   normalizeInquiryCode,
-} from '../app/lib/guestInquiry.mjs';
+} from '../app/shared/guestInquiry.mjs';
 
 test('normalizes a captured guest inquiry code for lookup', () => {
   assert.equal(normalizeInquiryCode(' stm-ab12cd '), 'STM-AB12CD');

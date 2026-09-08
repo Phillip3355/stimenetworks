@@ -1,3 +1,5 @@
+import 'server-only';
+
 export function buildInquiryDetailUrl(siteUrl, inquiryId) {
   const url = new URL('/taskboard', siteUrl);
   url.searchParams.set('inquiry', inquiryId);
@@ -67,10 +69,7 @@ export async function sendTelegramInquiryAlert({
 
     if (response.ok && payload?.ok === true) return { sent: true };
 
-    const description = typeof payload?.description === 'string'
-      ? payload.description
-      : `HTTP ${response.status}`;
-    return { sent: false, reason: `telegram_request_failed: ${description}` };
+    return { sent: false, reason: 'telegram_request_failed' };
   } catch {
     return { sent: false, reason: 'telegram_request_failed' };
   } finally {

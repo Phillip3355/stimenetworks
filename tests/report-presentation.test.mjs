@@ -4,7 +4,7 @@ import test from 'node:test';
 import {
   buildReportSummary,
   extractReportTitleAndContent,
-} from '../app/lib/reportPresentation.mjs';
+} from '../app/shared/reportPresentation.mjs';
 
 test('builds a single-line news item without exposing report body content', () => {
   assert.deepEqual(

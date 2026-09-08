@@ -6,6 +6,7 @@ function clean(value) {
 }
 
 export function validateJoinRequest(request) {
+  if (!request || typeof request !== 'object' || Array.isArray(request)) return ['request'];
   const errors = [];
   const edition = clean(request.edition).toLowerCase();
   const minecraftNickname = clean(request.minecraftNickname);
@@ -18,7 +19,7 @@ export function validateJoinRequest(request) {
     : edition === 'bedrock' && bedrockNicknamePattern.test(minecraftNickname);
   if (!nicknameIsValid) errors.push('minecraftNickname');
 
-  if (!clean(request.inviterName)) errors.push('inviterName');
+  if (!clean(request.inviterName) || clean(request.inviterName).length > 80) errors.push('inviterName');
   if (contact.length < 2 || contact.length > 120) errors.push('contact');
   if (request.rulesAgreed !== true) errors.push('rulesAgreed');
   if (request.privacyAgreed !== true) errors.push('privacyAgreed');
@@ -55,6 +56,11 @@ export function normalizeJoinRequest(request) {
 export function buildWhitelistCommand(edition, minecraftNickname) {
   const normalizedEdition = clean(edition).toLowerCase();
   const nickname = clean(minecraftNickname);
+
+  if (!(normalizedEdition === 'java' ? javaNicknamePattern.test(nickname)
+    : normalizedEdition === 'bedrock' && bedrockNicknamePattern.test(nickname))) {
+    throw new Error('Invalid Minecraft nickname.');
+  }
 
   if (normalizedEdition === 'java') return `/whitelist add ${nickname}`;
   if (normalizedEdition === 'bedrock') {

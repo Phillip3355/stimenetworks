@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import CardsGrid from './components/CardsGrid';
 import Hero from './components/Hero';
 import { useLanguage } from './components/LanguageProvider';
-import { homeFeatures, homeIntro } from './lib/siteContent.mjs';
+import { homeFeatures, homeIntro } from './shared/siteContent.mjs';
 
 export default function Home() {
   const { language, t } = useLanguage();

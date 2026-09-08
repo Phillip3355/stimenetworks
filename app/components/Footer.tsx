@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { navigationGroups, serverProfile } from '../lib/siteContent.mjs';
+import { navigationGroups, serverProfile } from '../shared/siteContent.mjs';
 import { useLanguage } from './LanguageProvider';
 
 export default function Footer() {

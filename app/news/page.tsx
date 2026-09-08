@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import NewsArchive from './NewsArchive';
-import { supabase } from '../lib/supabase';
-import { buildReportSummary } from '../lib/reportPresentation.mjs';
+import { getPublishedReports } from '../server/reports';
+import { buildReportSummary } from '../shared/reportPresentation.mjs';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,10 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default async function NewsPage() {
-  const { data, error } = await supabase
-    .from('reports')
-    .select('id, slug, content, created_at')
-    .order('created_at', { ascending: false });
+  const { data, error } = await getPublishedReports();
 
   if (error) {
     console.error('Failed to load published reports:', error);

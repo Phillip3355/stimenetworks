@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useState } from 'react';
-import { getRuleDetail, ruleMindMap } from '../lib/siteContent.mjs';
+import { getRuleDetail, ruleMindMap } from '../shared/siteContent.mjs';
 import styles from '../styles/rule-mind-map.module.css';
 
 type Language = 'ko' | 'en';

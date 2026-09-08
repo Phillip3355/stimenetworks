@@ -1,4 +1,3 @@
-import { isAdminEmail } from './adminPolicy.mjs';
 
 export class JoinRequestAdminError extends Error {
   constructor(code, message) {
@@ -8,14 +7,16 @@ export class JoinRequestAdminError extends Error {
   }
 }
 
-export async function loadAdminJoinRequests(client, configuredEmails = '') {
+export async function loadAdminJoinRequests(client) {
   const { data: { user }, error: authError } = await client.auth.getUser();
 
   if (authError || !user) {
     throw new JoinRequestAdminError('AUTH_REQUIRED', 'The administrator session is not valid.');
   }
 
-  if (!isAdminEmail(user.email, configuredEmails)) {
+  const { data: isAdmin, error: adminError } = await client.rpc('is_support_admin');
+  if (adminError) throw adminError;
+  if (isAdmin !== true) {
     throw new JoinRequestAdminError('ADMIN_REQUIRED', 'The signed-in account is not an administrator.');
   }
 

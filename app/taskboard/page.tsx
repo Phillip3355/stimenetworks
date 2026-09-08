@@ -3,12 +3,14 @@
 import { Suspense, useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import type { User } from '@supabase/supabase-js';
 import { motion, AnimatePresence } from 'framer-motion';
 import AdminJoinRequests from '../components/AdminJoinRequests';
 import { useLanguage } from '../components/LanguageProvider';
-import { supabase } from '../lib/supabase';
-import { buildStageRoomPayload } from '../lib/voiceRoomPolicy.mjs';
+import { supabase } from '../client/supabase';
+import { listInquiries, listMessages, sendMessage, deleteInquiry } from '../client/inquiries';
+import { listReports, publishReport, deleteReport } from '../client/reports';
+import { useAuthSession } from '../client/useAuthSession';
+import { INPUT_LIMITS, normalizeReportSlug } from '../shared/inputPolicy.mjs';
 import styles from '../styles/server-mechanism.module.css';
 
 interface Inquiry {
@@ -32,13 +34,6 @@ interface ReportRecord {
   created_at: string;
 }
 
-interface StageRoom {
-  id: string;
-  code: string;
-  title: string;
-  room_type?: string;
-  is_public?: boolean;
-}
 
 const inquiryIdPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -57,9 +52,7 @@ function TaskboardContent() {
   const requestedInquiryId = inquiryIdPattern.test(inquiryIdFromUrl ?? '') ? inquiryIdFromUrl : null;
 
   // 상태 관리
-  const [user, setUser] = useState<User | null>(null);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const { user, isAdmin, isAuthLoading } = useAuthSession();
 
   // 어드민 데이터 상태
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
@@ -77,66 +70,37 @@ function TaskboardContent() {
   const [isPublishingReport, setIsPublishingReport] = useState(false);
   const [reportFeedback, setReportFeedback] = useState('');
 
-  const [voiceRooms, setVoiceRooms] = useState<StageRoom[]>([]);
-  const [newRoomCode, setNewRoomCode] = useState('');
-  const [newRoomTitle, setNewRoomTitle] = useState('');
-  const [isCreatingRoom, setIsCreatingRoom] = useState(false);
-  const [voiceFeedback, setVoiceFeedback] = useState('');
-
-
-
-
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const appliedInquiryRef = useRef<string | null>(null);
+
+  useEffect(() => { setReplyText(''); }, [selectedInquiry?.id]);
 
   // 자동 스크롤
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // 1. 구글 로그인 세션 & 상태 감지
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      const activeUser = session?.user ?? null;
-      setUser(activeUser);
-      checkAdminStatus(activeUser?.email);
-      setIsLoading(false);
-    });
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      const activeUser = session?.user ?? null;
-      setUser(activeUser);
-      checkAdminStatus(activeUser?.email);
-      setIsLoading(false);
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
-
-  const checkAdminStatus = async (email: string | undefined) => {
-    if (!email) {
-      setIsAdmin(false);
-      return;
-    }
-    const { data, error } = await supabase.rpc('is_support_admin');
-    setIsAdmin(!error && data === true);
-  };
-
   // 2. 어드민 인증이 완료되었을 때 모든 문의 목록 실시간 동기화
   useEffect(() => {
-    if (!user || !isAdmin) return;
+    if (!user || !isAdmin) {
+      setInquiries([]);
+      setSelectedInquiry(null);
+      setMessages([]);
+      return;
+    }
+    let cancelled = false;
+    if (!requestedInquiryId) appliedInquiryRef.current = null;
 
     // 초기 문의방 목록 조회
     async function loadInquiries() {
-      const { data, error } = await supabase
-        .from('inquiries')
-        .select('*')
-        .order('created_at', { ascending: false });
-      if (!error && data) {
+      const { data, error } = await listInquiries();
+      if (!cancelled && !error && data) {
         setInquiries(data);
         const requestedInquiry = data.find((inquiry) => inquiry.id === requestedInquiryId);
-        if (requestedInquiry) setSelectedInquiry(requestedInquiry);
+        if (requestedInquiry && appliedInquiryRef.current !== requestedInquiryId) {
+          appliedInquiryRef.current = requestedInquiryId;
+          setSelectedInquiry(requestedInquiry);
+        }
       }
     }
     loadInquiries();
@@ -154,20 +118,19 @@ function TaskboardContent() {
       .subscribe();
 
     return () => {
+      cancelled = true;
       supabase.removeChannel(inquiriesChannel);
     };
   }, [user, isAdmin, requestedInquiryId]);
 
   // 2.5. 어드민 인증이 완료되었을 때 보고서 목록 동기화
   useEffect(() => {
-    if (!user || !isAdmin) return;
+    if (!user || !isAdmin) { setReports([]); return; }
+    let cancelled = false;
 
     async function loadReports() {
-      const { data, error } = await supabase
-        .from('reports')
-        .select('*')
-        .order('created_at', { ascending: false });
-      if (!error && data) {
+      const { data, error } = await listReports();
+      if (!cancelled && !error && data) {
         setReports(data);
       }
     }
@@ -181,6 +144,7 @@ function TaskboardContent() {
       .subscribe();
 
     return () => {
+      cancelled = true;
       supabase.removeChannel(reportsChannel);
     };
   }, [user, isAdmin]);
@@ -189,15 +153,13 @@ function TaskboardContent() {
   useEffect(() => {
     if (!selectedInquiry) return;
     const inquiryId = selectedInquiry.id;
+    let cancelled = false;
+    setMessages([]);
 
     // 초기 메시지 로드
     async function loadMessages() {
-      const { data, error } = await supabase
-        .from('inquiry_messages')
-        .select('*')
-        .eq('inquiry_id', inquiryId)
-        .order('created_at', { ascending: true });
-      if (!error && data) {
+      const { data, error } = await listMessages(inquiryId);
+      if (!cancelled && !error && data) {
         setMessages(data);
       }
     }
@@ -215,6 +177,7 @@ function TaskboardContent() {
           filter: `inquiry_id=eq.${inquiryId}`,
         },
         (payload) => {
+          if (cancelled) return;
           setMessages((prev) => {
             if (prev.find(m => m.id === payload.new.id)) return prev;
             return [...prev, payload.new as InquiryMessage];
@@ -224,6 +187,7 @@ function TaskboardContent() {
       .subscribe();
 
     return () => {
+      cancelled = true;
       supabase.removeChannel(messagesChannel);
     };
   }, [selectedInquiry]);
@@ -254,8 +218,6 @@ function TaskboardContent() {
   const handleLogout = async () => {
     try {
       await supabase.auth.signOut();
-      setUser(null);
-      setIsAdmin(false);
       setSelectedInquiry(null);
       setMessages([]);
     } catch (err) {
@@ -266,30 +228,17 @@ function TaskboardContent() {
   // 관리자 답장 전송 (복수의 어드민이 작성해도 'admin' 단일 아이덴티티로 전송)
   const handleSendReply = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!replyText.trim() || !selectedInquiry) return;
+    if (!replyText.trim() || replyText.trim().length > INPUT_LIMITS.message || !selectedInquiry || !isAdmin) return;
 
     const currentText = replyText.trim();
     setReplyText(''); // 즉시 청소
     setIsSubmittingReply(true);
 
     try {
-      const { error: msgError } = await supabase
-        .from('inquiry_messages')
-        .insert([
-          {
-            inquiry_id: selectedInquiry.id,
-            sender: 'admin',
-            message: currentText,
-          },
-        ]);
+      const { error: msgError } = await sendMessage(selectedInquiry.id, currentText, 'admin');
       
       if (msgError) throw msgError;
 
-      // 관리자가 답장을 보냈으므로 상태를 replied(답변완료)로 갱신
-      await supabase
-        .from('inquiries')
-        .update({ status: 'replied' })
-        .eq('id', selectedInquiry.id);
 
     } catch (err) {
       console.error(err);
@@ -306,7 +255,7 @@ function TaskboardContent() {
 
     setIsDeleting(true);
     try {
-      const { error } = await supabase.from('inquiries').delete().eq('id', selectedInquiry.id);
+      const { error } = await deleteInquiry(selectedInquiry.id);
       if (error) throw error;
       
       setInquiries((prev) => prev.filter((i) => i.id !== selectedInquiry.id));
@@ -330,15 +279,15 @@ function TaskboardContent() {
     setIsPublishingReport(true);
     setReportFeedback('');
 
-    const formattedSlug = reportSlug.trim().replace(/^\/+/, '');
+    const formattedSlug = normalizeReportSlug(reportSlug);
+    if (!formattedSlug || reportContent.length > INPUT_LIMITS.report) {
+      setReportFeedback(t('유효한 URL 경로와 200,000자 이내의 내용을 입력해 주세요.', 'Enter a valid path and content within 200,000 characters.'));
+      setIsPublishingReport(false);
+      return;
+    }
 
     try {
-      const { error } = await supabase.from('reports').insert([
-        {
-          slug: formattedSlug,
-          content: reportContent,
-        }
-      ]);
+      const { error } = await publishReport(formattedSlug, reportContent);
 
       if (error) {
         if (error.code === '23505') {
@@ -366,7 +315,7 @@ function TaskboardContent() {
     if (!confirmDelete) return;
 
     try {
-      const { error } = await supabase.from('reports').delete().eq('id', id);
+      const { error } = await deleteReport(id);
       if (error) throw error;
       setReports((prev) => prev.filter((r) => r.id !== id));
     } catch (err) {
@@ -375,68 +324,10 @@ function TaskboardContent() {
     }
   };
 
-  // STAGE 채널 생성 처리
-  const handleCreateVoiceRoom = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newRoomCode.trim() || !newRoomTitle.trim()) {
-      setVoiceFeedback(t('방 코드와 방 제목을 모두 입력해주세요.', 'Please enter both room code and title.'));
-      return;
-    }
-    setIsCreatingRoom(true);
-    setVoiceFeedback('');
-
-    const formattedCode = newRoomCode.trim().toLowerCase().replace(/[^a-z0-9-_]/g, '-');
-
-    try {
-      const { error } = await supabase.from('voice_rooms').insert([
-        buildStageRoomPayload({ code: formattedCode, title: newRoomTitle.trim() })
-      ]);
-
-
-
-      if (error) {
-        if (error.code === '23505') {
-          throw new Error(t('이미 존재하는 방 코드입니다.', 'Room code already exists.'));
-        }
-        throw error;
-      }
-
-      setNewRoomCode('');
-      setNewRoomTitle('');
-      setVoiceFeedback(t('STAGE 채널이 성공적으로 생성되었습니다!', 'STAGE channel created successfully!'));
-
-      setTimeout(() => setVoiceFeedback(''), 3000);
-    } catch (err: unknown) {
-      console.error(err);
-      setVoiceFeedback(err instanceof Error ? err.message : t('STAGE 채널 생성 중 오류가 발생했습니다.', 'Error creating STAGE channel.'));
-    } finally {
-      setIsCreatingRoom(false);
-    }
-  };
-
-  // STAGE 채널 수동 삭제 (삭제 시 해당 방 모든 유저 튕김)
-  const handleDeleteVoiceRoom = async (id: string, title: string) => {
-    const confirmDelete = window.confirm(
-      t(
-        `정말로 STAGE 채널 [${title}]을 삭제하시겠습니까?\n삭제 즉시 해당 채널에 있던 모든 유저가 강제 퇴장(튕김)됩니다.`,
-        `Are you sure you want to delete STAGE channel [${title}]?\nAll users currently in this channel will be kicked immediately.`
-      )
-    );
-    if (!confirmDelete) return;
-
-    try {
-      const { error } = await supabase.from('voice_rooms').delete().eq('id', id);
-      if (error) throw error;
-      setVoiceRooms((prev) => prev.filter((r) => r.id !== id));
-    } catch (err) {
-      console.error('Failed to delete STAGE channel:', err);
-      alert(t('삭제에 실패했습니다.', 'Failed to delete.'));
-    }
-  };
   return (
     <main className={styles.main}>
       <AnimatePresence mode="wait">
-        {isLoading ? (
+        {isAuthLoading ? (
           // 로딩 중 UI
           <div style={{
             minHeight: '80vh',
@@ -1030,139 +921,6 @@ function TaskboardContent() {
                 </div>
               )}
 
-              {/* 3. STAGE 채널 관리 탭 */}
-              {false && (
-                <div className={styles.dashboardGrid} style={{ gridTemplateColumns: '1fr', gap: '32px' }}>
-                  {/* 방 생성 폼 */}
-                  <div style={{
-                    border: '1px solid var(--color-hairline)', borderRadius: 'var(--radius-sm)', background: '#ffffff',
-                    padding: '32px', display: 'flex', flexDirection: 'column', gap: '24px'
-                  }}>
-                    <h3 style={{ margin: 0, fontWeight: 800 }}>🎙️ {t('새 STAGE 채널 생성', 'Create New STAGE Channel')}</h3>
-                    <form onSubmit={handleCreateVoiceRoom} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                        <div>
-                          <label style={{ display: 'block', fontWeight: 700, marginBottom: '8px', color: 'var(--color-ink)' }}>
-                            {t('방 제목', 'Room Title')}
-                          </label>
-                          <input
-                            type="text"
-                            placeholder={t('예: 자유 수다방', 'e.g. Lounge 1')}
-                            value={newRoomTitle}
-                            onChange={(e) => setNewRoomTitle(e.target.value)}
-                            required
-                            style={{
-                              width: '100%', padding: '12px 16px', border: '1px solid var(--color-hairline)',
-                              borderRadius: 'var(--radius-sm)', fontSize: '0.95rem'
-                            }}
-                          />
-                        </div>
-                        <div>
-                          <label style={{ display: 'block', fontWeight: 700, marginBottom: '8px', color: 'var(--color-ink)' }}>
-                            {t('방 코드 (URL 경로)', 'Room Code (URL Path)')}
-                          </label>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <span style={{ fontSize: '0.9rem', color: 'var(--color-mute)', fontWeight: 600 }}>stimemc.xyz/voice-</span>
-                            <input
-                              type="text"
-                              placeholder={t('예: lobby-1', 'e.g. lobby-1')}
-                              value={newRoomCode}
-                              onChange={(e) => setNewRoomCode(e.target.value)}
-                              required
-                              style={{
-                                flexGrow: 1, padding: '12px 16px', border: '1px solid var(--color-hairline)',
-                                borderRadius: 'var(--radius-sm)', fontSize: '0.95rem'
-                              }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-
-                      <div style={{ padding: '12px 16px', borderRadius: 'var(--radius-sm)', background: '#eff6ff', color: '#1e40af', fontSize: '0.9rem', fontWeight: 700 }}>
-                        🎙️ {t('STAGE 채널은 항상 공개되며 관리자만 생성·삭제할 수 있습니다.', 'STAGE channels are always public and can only be created or deleted by administrators.')}
-                      </div>
-
-                      {voiceFeedback && (
-                        <div style={{
-                          padding: '12px 16px', borderRadius: 'var(--radius-sm)', fontSize: '0.9rem', fontWeight: 600,
-                          background: voiceFeedback.includes('성공') || voiceFeedback.includes('successfully') ? '#f0fdf4' : '#fef2f2',
-                          color: voiceFeedback.includes('성공') || voiceFeedback.includes('successfully') ? '#16a34a' : '#dc2626'
-                        }}>
-                          {voiceFeedback}
-                        </div>
-                      )}
-
-                      <button
-                        type="submit"
-                        disabled={isCreatingRoom}
-                        style={{
-                          alignSelf: 'flex-start', padding: '12px 28px', background: 'var(--color-primary)', color: '#ffffff',
-                          border: 'none', borderRadius: 'var(--radius-sm)', fontWeight: 700, cursor: 'pointer'
-                        }}
-                      >
-                        {isCreatingRoom ? t('생성 중...', 'Creating...') : t('STAGE 채널 생성하기', 'Create STAGE Channel')}
-                      </button>
-                    </form>
-                  </div>
-
-                  {/* 활성화된 STAGE 채널 목록 및 삭제 제어 */}
-                  <div style={{
-                    border: '1px solid var(--color-hairline)', borderRadius: 'var(--radius-sm)', background: '#ffffff',
-                    padding: '32px', display: 'flex', flexDirection: 'column', gap: '20px'
-                  }}>
-                    <h3 style={{ margin: 0, fontWeight: 800 }}>{t('활성화된 STAGE 채널 목록', 'Active STAGE Channels')} ({voiceRooms.length})</h3>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                      {voiceRooms.length === 0 ? (
-                        <p style={{ color: 'var(--color-mute)', fontSize: '0.9rem' }}>{t('활성화된 STAGE 채널이 없습니다.', 'No active STAGE channels found.')}</p>
-                      ) : (
-                        voiceRooms.map((room) => (
-                          <div key={room.id} style={{
-                            padding: '16px 20px', border: '1px solid var(--color-hairline)', borderRadius: 'var(--radius-sm)',
-                            display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#faf9f6'
-                          }}>
-                            <div>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                <strong style={{ fontSize: '1.05rem', color: 'var(--color-ink)' }}>{room.title}</strong>
-                                <span style={{
-                                  fontSize: '0.75rem', padding: '3px 8px', borderRadius: '12px', fontWeight: 700,
-                                  background: '#dbeafe', color: '#1e40af'
-                                }}>
-                                  🎙️ STAGE · {t('공개', 'Public')}
-                                </span>
-                              </div>
-                              <p style={{ margin: '4px 0 0', fontSize: '0.85rem', color: 'var(--color-mute)' }}>
-                                URL: <code>stimemc.xyz/voice-{room.code}</code>
-                              </p>
-                            </div>
-                            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                              <a
-                                href={`/voice-${room.code}`}
-                                target="_blank"
-                                rel="noreferrer"
-                                style={{
-                                  padding: '6px 12px', background: '#f1f5f9', color: '#475569',
-                                  borderRadius: 'var(--radius-sm)', textDecoration: 'none', fontWeight: 600, fontSize: '0.85rem'
-                                }}
-                              >
-                                {t('입장', 'Enter')}
-                              </a>
-                              <button
-                                onClick={() => handleDeleteVoiceRoom(room.id, room.title)}
-                                style={{
-                                  padding: '6px 12px', background: '#fef2f2', color: '#ef4444', border: 'none',
-                                  borderRadius: 'var(--radius-sm)', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem'
-                                }}
-                              >
-                                {t('삭제 (전원 튕김)', 'Delete (Kick All)')}
-                              </button>
-                            </div>
-                          </div>
-                        ))
-                      )}
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           </motion.div>
         )}

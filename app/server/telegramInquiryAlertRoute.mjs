@@ -1,10 +1,13 @@
+import 'server-only';
 import { sendTelegramInquiryAlert } from './telegramInquiryAlert.mjs';
+import { authorizeInquiryAlert, isSameOriginRequest, readSmallJson } from './requestSecurity.mjs';
+import { normalizeInquiryCode } from '../shared/guestInquiry.mjs';
 import { createClient } from '@supabase/supabase-js';
 
 function json(data, status) {
   return new Response(JSON.stringify(data), {
     status,
-    headers: { 'content-type': 'application/json' },
+    headers: { 'content-type': 'application/json', 'cache-control': 'no-store' },
   });
 }
 
@@ -98,14 +101,17 @@ export async function handleInquiryAlert(
     releaseAlert = releaseInquiryTelegramAlert,
     markMessageAlertSent = markInquiryMessageTelegramAlertSent,
     releaseMessageAlert = releaseInquiryMessageTelegramAlert,
+    authorizeAlert = authorizeInquiryAlert,
   } = {},
 ) {
   let body;
 
+  if (!isSameOriginRequest(request)) return json({ error: 'Forbidden.' }, 403);
+
   try {
-    body = await request.json();
-  } catch {
-    return json({ error: 'Invalid request body.' }, 400);
+    body = await readSmallJson(request);
+  } catch (error) {
+    return json({ error: 'Invalid request body.' }, error.status ?? 400);
   }
 
   const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -116,8 +122,12 @@ export async function handleInquiryAlert(
     ? body.messageId
     : null;
 
-  if (!inquiryId && !messageId) {
+  if ((!inquiryId && !messageId) || (inquiryId && messageId)) {
     return json({ error: 'Invalid inquiry alert.' }, 400);
+  }
+
+  if (!request.headers.get('authorization')?.match(/^Bearer [^\s]+$/i) && !normalizeInquiryCode(body.guestCode)) {
+    return json({ error: 'Unauthorized.' }, 401);
   }
 
   const client = createSupabaseClient(environment);
@@ -127,6 +137,9 @@ export async function handleInquiryAlert(
   }
 
   try {
+    if (!await authorizeAlert(client, request, { inquiryId, messageId, guestCode: body.guestCode })) {
+      return json({ error: 'Unauthorized.' }, 401);
+    }
     const isMessageAlert = Boolean(messageId);
     const alertId = messageId ?? inquiryId;
     const inquiry = isMessageAlert

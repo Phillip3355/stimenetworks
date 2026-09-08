@@ -3,9 +3,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useLanguage } from './LanguageProvider';
-import { supabase } from '../lib/supabase';
-import { completeAdminJoinRequest, loadAdminJoinRequests } from '../lib/joinRequestAdmin.mjs';
-import { buildWhitelistCommand } from '../lib/joinRequestPolicy.mjs';
+import { supabase } from '../client/supabase';
+import { completeAdminJoinRequest, loadAdminJoinRequests } from '../client/joinRequestAdmin.mjs';
+import { buildWhitelistCommand } from '../shared/joinRequestPolicy.mjs';
 import styles from '../styles/join-admin.module.css';
 
 interface JoinRequestRecord {
@@ -53,7 +53,7 @@ export default function AdminJoinRequests() {
     setFeedback('');
 
     try {
-      const data = await loadAdminJoinRequests(supabase, process.env.NEXT_PUBLIC_ADMIN_EMAILS);
+      const data = await loadAdminJoinRequests(supabase);
       setRequests(data as JoinRequestRecord[]);
     } catch (error) {
       console.error('Failed to load join requests:', error);
@@ -66,7 +66,7 @@ export default function AdminJoinRequests() {
   useEffect(() => {
     let cancelled = false;
 
-    void loadAdminJoinRequests(supabase, process.env.NEXT_PUBLIC_ADMIN_EMAILS)
+    void loadAdminJoinRequests(supabase)
       .then((data) => {
         if (cancelled) return;
         setRequests(data as JoinRequestRecord[]);
@@ -87,15 +87,14 @@ export default function AdminJoinRequests() {
   }, [describeLoadError]);
 
   const copyCommand = async (request: JoinRequestRecord) => {
-    const command = buildWhitelistCommand(request.edition, request.minecraft_nickname);
-
     try {
+      const command = buildWhitelistCommand(request.edition, request.minecraft_nickname);
       await navigator.clipboard.writeText(command);
       setCopiedId(request.id);
       window.setTimeout(() => setCopiedId((current) => current === request.id ? null : current), 1800);
     } catch (error) {
       console.error('Failed to copy whitelist command:', error);
-      setFeedback(t(`명령어를 복사하지 못했습니다: ${command}`, `Could not copy the command: ${command}`));
+      setFeedback(t('명령어를 복사하지 못했습니다. 닉네임과 클립보드 권한을 확인해 주세요.', 'Could not copy the command. Check the nickname and clipboard permission.'));
     }
   };
 
@@ -145,7 +144,9 @@ export default function AdminJoinRequests() {
       ) : (
         <div className={styles.requestList}>
           {requests.map((request, index) => {
-            const command = buildWhitelistCommand(request.edition, request.minecraft_nickname);
+            let command: string | null = null;
+            try { command = buildWhitelistCommand(request.edition, request.minecraft_nickname); }
+            catch { /* Preserve malformed legacy rows for administrator review. */ }
             return (
               <motion.article
                 className={styles.request}
@@ -180,10 +181,10 @@ export default function AdminJoinRequests() {
                     </div>
                   </dl>
 
-                  <code className={styles.command}>{command}</code>
+                  <code className={styles.command}>{command ?? t('닉네임 형식을 확인해 주세요.', 'Review this nickname before adding it.')}</code>
 
                   <div className={styles.actions}>
-                    <button type="button" onClick={() => void copyCommand(request)}>
+                    <button type="button" disabled={!command} onClick={() => void copyCommand(request)}>
                       {copiedId === request.id ? t('복사됨', 'Copied') : t('화이트리스트 명령어 복사', 'Copy whitelist command')}
                     </button>
                     <button

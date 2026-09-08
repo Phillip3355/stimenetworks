@@ -1,9 +1,7 @@
-import { NextResponse } from 'next/server';
-import { handleInquiryAlert } from '../../../lib/telegramInquiryAlertRoute.mjs';
+import { handleInquiryAlert } from '../../../server/telegramInquiryAlertRoute.mjs';
+
+export const maxDuration = 15;
 
 export async function POST(request: Request) {
-  const response = await handleInquiryAlert(request);
-  const payload = await response.json();
-
-  return NextResponse.json(payload, { status: response.status });
+  return handleInquiryAlert(request);
 }

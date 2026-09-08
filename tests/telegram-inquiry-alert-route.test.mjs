@@ -6,7 +6,7 @@ import {
   handleInquiryAlert,
   markInquiryTelegramAlertSent,
   releaseInquiryTelegramAlert,
-} from '../app/lib/telegramInquiryAlertRoute.mjs';
+} from '../app/server/telegramInquiryAlertRoute.mjs';
 
 test('claims each stored user message once before it can produce an alert', async () => {
   const requests = [];
@@ -85,7 +85,7 @@ test('uses stored inquiry data instead of forged browser metadata', async () => 
   const sent = [];
   const completed = [];
   const response = await handleInquiryAlert(new Request('https://stimemc.xyz/api/telegram/inquiry-alert', {
-    method: 'POST',
+    method: 'POST', headers: { 'content-type': 'application/json', authorization: 'Bearer test-token' },
     body: JSON.stringify({
       inquiryId: 'a0f8ad5d-75f8-4c9d-8a65-1df54857274f',
       inquiryType: 'FORGED',
@@ -99,6 +99,7 @@ test('uses stored inquiry data instead of forged browser metadata', async () => 
     SITE_URL: 'https://stimemc.xyz',
   }, {
     createSupabaseClient: () => ({}),
+    authorizeAlert: async () => true,
     claimInquiry: async () => ({
       id: 'a0f8ad5d-75f8-4c9d-8a65-1df54857274f',
       inquiryType: '저장된 유형',
@@ -137,7 +138,7 @@ test('delivers an alert for a newly stored user message', async () => {
   const sent = [];
   const completed = [];
   const response = await handleInquiryAlert(new Request('https://stimemc.xyz/api/telegram/inquiry-alert', {
-    method: 'POST',
+    method: 'POST', headers: { 'content-type': 'application/json', authorization: 'Bearer test-token' },
     body: JSON.stringify({ messageId: 'd362625a-8843-492b-88bc-3d62f88f24a3' }),
   }), {
     NEXT_PUBLIC_SUPABASE_URL: 'https://example.supabase.co',
@@ -147,6 +148,7 @@ test('delivers an alert for a newly stored user message', async () => {
     SITE_URL: 'https://stimemc.xyz',
   }, {
     createSupabaseClient: () => ({}),
+    authorizeAlert: async () => true,
     claimInquiryMessage: async () => ({
       id: 'a0f8ad5d-75f8-4c9d-8a65-1df54857274f',
       inquiryType: '저장된 유형',
@@ -182,10 +184,11 @@ test('delivers an alert for a newly stored user message', async () => {
 
 test('does not alert when the inquiry was already claimed', async () => {
   const response = await handleInquiryAlert(new Request('https://stimemc.xyz/api/telegram/inquiry-alert', {
-    method: 'POST',
+    method: 'POST', headers: { 'content-type': 'application/json', authorization: 'Bearer test-token' },
     body: JSON.stringify({ inquiryId: 'a0f8ad5d-75f8-4c9d-8a65-1df54857274f' }),
   }), {}, {
     createSupabaseClient: () => ({}),
+    authorizeAlert: async () => true,
     claimInquiry: async () => null,
     sendAlert: async () => {
       throw new Error('An already claimed inquiry must not send a duplicate alert.');
@@ -198,10 +201,11 @@ test('does not alert when the inquiry was already claimed', async () => {
 test('releases the alert claim when Telegram delivery fails so it can be retried', async () => {
   const released = [];
   await handleInquiryAlert(new Request('https://stimemc.xyz/api/telegram/inquiry-alert', {
-    method: 'POST',
+    method: 'POST', headers: { 'content-type': 'application/json', authorization: 'Bearer test-token' },
     body: JSON.stringify({ inquiryId: 'a0f8ad5d-75f8-4c9d-8a65-1df54857274f' }),
   }), {}, {
     createSupabaseClient: () => ({}),
+    authorizeAlert: async () => true,
     claimInquiry: async () => ({
       id: 'a0f8ad5d-75f8-4c9d-8a65-1df54857274f',
       inquiryType: '기타',
@@ -251,7 +255,7 @@ test('uses the claim token when finalizing or releasing an alert', async () => {
 
 test('rejects a notification without an inquiry identifier', async () => {
   const response = await handleInquiryAlert(new Request('https://stimemc.xyz/api/telegram/inquiry-alert', {
-    method: 'POST',
+    method: 'POST', headers: { 'content-type': 'application/json', authorization: 'Bearer test-token' },
     body: JSON.stringify({}),
   }), {});
 

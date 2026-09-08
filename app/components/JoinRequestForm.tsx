@@ -4,8 +4,8 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useLanguage } from './LanguageProvider';
-import { supabase } from '../lib/supabase';
-import { classifyJoinRequestSubmitError, getJoinRequestSubmitErrorCode, normalizeJoinRequest, validateJoinRequest } from '../lib/joinRequestPolicy.mjs';
+import { supabase } from '../client/supabase';
+import { classifyJoinRequestSubmitError, getJoinRequestSubmitErrorCode, normalizeJoinRequest, validateJoinRequest } from '../shared/joinRequestPolicy.mjs';
 import styles from '../styles/join-request.module.css';
 
 type Edition = 'java' | 'bedrock';

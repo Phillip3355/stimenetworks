@@ -1,9 +1,9 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { supabase } from '../lib/supabase';
+import { getPublishedReport } from '../server/reports';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { extractReportTitleAndContent } from '../lib/reportPresentation.mjs';
+import { extractReportTitleAndContent } from '../shared/reportPresentation.mjs';
 import styles from '../styles/report.module.css';
 
 export const revalidate = 0; // SSR to fetch reports instantly
@@ -29,11 +29,7 @@ export default async function ReportPage({ params }: ReportPageProps) {
     notFound();
   }
 
-  const { data: report, error } = await supabase
-    .from('reports')
-    .select('*')
-    .eq('slug', slugPath)
-    .single();
+  const { data: report, error } = await getPublishedReport(slugPath);
 
   if (error || !report) {
     notFound();

@@ -4,7 +4,7 @@ import { motion, useInView, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRef } from 'react';
-import { getFeatureMotion } from '../lib/homeMotion.mjs';
+import { getFeatureMotion } from '../shared/homeMotion.mjs';
 import styles from '../styles/cards.module.css';
 
 interface CardProps {

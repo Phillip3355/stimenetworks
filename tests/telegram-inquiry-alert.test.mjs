@@ -4,11 +4,11 @@ import {
   buildInquiryDetailUrl,
   formatInquiryReceivedAt,
   sendTelegramInquiryAlert,
-} from '../app/lib/telegramInquiryAlert.mjs';
+} from '../app/server/telegramInquiryAlert.mjs';
 import {
   notifyInquiryCreated,
   notifyInquiryMessageCreated,
-} from '../app/lib/inquiryAlertClient.mjs';
+} from '../app/client/inquiryAlertClient.mjs';
 
 test('builds an admin deep link for the exact inquiry', () => {
   assert.equal(
@@ -91,7 +91,7 @@ test('contains a Telegram delivery failure without throwing', async () => {
     fetchImpl: async () => new Response(JSON.stringify({ ok: false }), { status: 500 }),
   });
 
-  assert.deepEqual(result, { sent: false, reason: 'telegram_request_failed: HTTP 500' });
+  assert.deepEqual(result, { sent: false, reason: 'telegram_request_failed' });
 });
 
 test('bounds the Telegram request with an abort signal', async () => {

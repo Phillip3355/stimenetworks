@@ -4,7 +4,7 @@ import test from 'node:test';
 import {
   getFeatureMotion,
   getHeroRevealTransition,
-} from '../app/lib/homeMotion.mjs';
+} from '../app/shared/homeMotion.mjs';
 
 test('hero content reveals in reading order without delaying reduced-motion users', () => {
   assert.deepEqual(

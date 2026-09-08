@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
-import { homeWorldShowcase } from '../lib/siteContent.mjs';
+import { homeWorldShowcase } from '../shared/siteContent.mjs';
 import styles from '../styles/world-showcase.module.css';
 import { useLanguage } from './LanguageProvider';
 

@@ -1,4 +1,5 @@
 export function normalizeInquiryCode(value) {
+  if (typeof value !== 'string') return null;
   const code = value.trim().toUpperCase();
   return /^STM-[A-Z0-9]{6,18}$/.test(code) ? code : null;
 }

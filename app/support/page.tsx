@@ -2,15 +2,18 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import type { User } from '@supabase/supabase-js';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useLanguage } from '../components/LanguageProvider';
-import { supabase } from '../lib/supabase';
-import { canAccessGuestInquiry, normalizeInquiryCode } from '../lib/guestInquiry.mjs';
+import { supabase } from '../client/supabase';
+import { listInquiries, listMessages, sendMessage } from '../client/inquiries';
+import { useAuthSession } from '../client/useAuthSession';
+import { createMemberInquiry } from '../client/support.mjs';
+import { INPUT_LIMITS, validInquiryInput } from '../shared/inputPolicy.mjs';
+import { canAccessGuestInquiry, normalizeInquiryCode } from '../shared/guestInquiry.mjs';
 import {
   notifyInquiryCreated,
   notifyInquiryMessageCreated,
-} from '../lib/inquiryAlertClient.mjs';
+} from '../client/inquiryAlertClient.mjs';
 import styles from '../styles/server-mechanism.module.css';
 
 interface Inquiry {
@@ -88,7 +91,7 @@ function InquiryChat({ inquiry, messages, newMessage, onMessageChange, onSubmit,
       <form className={styles.chatComposer} onSubmit={onSubmit} style={{ padding: '16px 24px', borderTop: '1px solid var(--color-hairline)', display: 'flex', gap: '12px' }}>
         <input
           type="text" placeholder={translate('추가 메시지를 입력해 주세요...', 'Type your message...')}
-          value={newMessage} onChange={(event) => onMessageChange(event.target.value)} required
+          maxLength={12000} value={newMessage} onChange={(event) => onMessageChange(event.target.value)} required
           style={{ flexGrow: 1, padding: '12px 18px', border: '1px solid var(--color-hairline)', borderRadius: '30px', fontSize: '0.95rem', outline: 'none' }}
         />
         <button type="submit" style={{ background: 'var(--color-ink)', border: 'none', color: 'var(--color-canvas)', padding: '0 24px', borderRadius: '30px', fontWeight: 700, cursor: 'pointer', fontSize: '0.95rem' }}>
@@ -99,24 +102,13 @@ function InquiryChat({ inquiry, messages, newMessage, onMessageChange, onSubmit,
   );
 }
 
-// 6자리 랜덤 대문자/숫자 문의 코드 생성 함수
-function generateInquiryCode() {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let result = 'STM-';
-  for (let i = 0; i < 6; i++) {
-    result += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return result;
-}
-
 export default function SupportPage() {
   const { t } = useLanguage();
   const reduceMotion = useReducedMotion();
 
   // 상태 관리
-  const [user, setUser] = useState<User | null>(null);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const { user, isAdmin, isAuthLoading } = useAuthSession();
+  const [isLoading, setIsLoading] = useState(false);
   const [errorText, setErrorText] = useState('');
 
   // 유저 대시보드 상태
@@ -165,70 +157,34 @@ export default function SupportPage() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // 1. 구글 Auth 세션 및 상태 감지
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      const activeUser = session?.user ?? null;
-      setUser(activeUser);
-      checkAdminStatus(activeUser?.email);
-      if (activeUser) {
-        const googleName = activeUser.user_metadata?.full_name || activeUser.user_metadata?.name || activeUser.email?.split('@')[0] || '';
-        setNickname(googleName);
-      }
-      setIsLoading(false);
-    });
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      const activeUser = session?.user ?? null;
-      setUser(activeUser);
-      checkAdminStatus(activeUser?.email);
-      if (activeUser) {
-        const googleName = activeUser.user_metadata?.full_name || activeUser.user_metadata?.name || activeUser.email?.split('@')[0] || '';
-        setNickname(googleName);
-      }
-      setIsLoading(false);
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
-
-  const checkAdminStatus = async (email: string | undefined) => {
-    if (!email) {
-      setIsAdmin(false);
-      return;
-    }
-    const { data, error } = await supabase.rpc('is_support_admin');
-    setIsAdmin(!error && data === true);
-  };
+    if (user) setNickname(user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split('@')[0] || '');
+  }, [user]);
 
   // 2. 로그인 완료 시 사용자의 모든 문의 목록 실시간 동기화
   useEffect(() => {
     if (!user || isAdmin) {
+      setIsLoading(false);
       setInquiries([]);
       setSelectedInquiry(null);
       setMessages([]);
       return;
     }
     const userId = user.id;
+    let cancelled = false;
 
     async function loadUserInquiries() {
       setIsLoading(true);
       try {
-        const { data, error } = await supabase
-          .from('inquiries')
-          .select('*')
-          .eq('user_id', userId)
-          .order('created_at', { ascending: false });
+        const { data, error } = await listInquiries(userId);
 
         if (error) throw error;
-        setInquiries(data || []);
+        if (!cancelled) setInquiries(data || []);
       } catch (err: unknown) {
         console.error('Failed to load inquiries:', err);
-        setErrorText(t('문의 내역을 불러오지 못했습니다.', 'Failed to load inquiries.'));
+        if (!cancelled) setErrorText(t('문의 내역을 불러오지 못했습니다.', 'Failed to load inquiries.'));
       } finally {
-        setIsLoading(false);
+        if (!cancelled) setIsLoading(false);
       }
     }
 
@@ -247,6 +203,7 @@ export default function SupportPage() {
       .subscribe();
 
     return () => {
+      cancelled = true;
       supabase.removeChannel(inquiriesChannel);
     };
   }, [user, isAdmin, t]);
@@ -257,17 +214,13 @@ export default function SupportPage() {
     const inquiryId = selectedInquiry.id;
     const inquiryCode = selectedInquiry.inquiry_code;
     const isGuestInquiry = selectedInquiry.user_id === null;
+    let cancelled = false;
+    setMessages([]);
 
     // 초기 메시지 로드
     async function loadMessages() {
-      const { data, error } = isGuestInquiry
-        ? await supabase.rpc('get_guest_inquiry_messages', { p_inquiry_code: inquiryCode })
-        : await supabase
-          .from('inquiry_messages')
-          .select('*')
-          .eq('inquiry_id', inquiryId)
-          .order('created_at', { ascending: true });
-      if (!error && data) {
+      const { data, error } = await listMessages(inquiryId, isGuestInquiry ? inquiryCode : undefined);
+      if (!cancelled && !error && data) {
         setMessages(data);
       }
     }
@@ -275,7 +228,7 @@ export default function SupportPage() {
 
     if (isGuestInquiry) {
       const poll = window.setInterval(loadMessages, 5000);
-      return () => window.clearInterval(poll);
+      return () => { cancelled = true; window.clearInterval(poll); };
     }
 
     // 실시간 구독 설정
@@ -290,6 +243,7 @@ export default function SupportPage() {
           filter: `inquiry_id=eq.${inquiryId}`,
         },
         (payload) => {
+          if (cancelled) return;
           setMessages((prev) => {
             if (prev.find(m => m.id === payload.new.id)) return prev;
             return [...prev, payload.new as InquiryMessage];
@@ -299,6 +253,7 @@ export default function SupportPage() {
       .subscribe();
 
     return () => {
+      cancelled = true;
       supabase.removeChannel(channel);
     };
   }, [selectedInquiry]);
@@ -330,7 +285,6 @@ export default function SupportPage() {
   const handleSignOut = async () => {
     try {
       await supabase.auth.signOut();
-      setUser(null);
       setInquiries([]);
       setSelectedInquiry(null);
       setMessages([]);
@@ -343,65 +297,26 @@ export default function SupportPage() {
   // 새로운 문의방 생성 및 초기 메시지 전송
   const handleCreateInquiry = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validInquiryInput({ nickname, inquiryType, content: inquiryContent, purpose: inquiryPurpose })) {
+      setErrorText(t('입력 항목과 길이를 확인해 주세요. 닉네임 80자, 내용 8,000자, 목적 2,000자까지 입력할 수 있습니다.', 'Check required fields and limits: nickname 80, content 8,000, purpose 2,000 characters.'));
+      return;
+    }
     if (!user || !nickname.trim() || !inquiryContent.trim() || !inquiryPurpose.trim()) return;
 
     setIsSubmitting(true);
     setErrorText('');
-    const code = generateInquiryCode();
 
     try {
-      // 0. 1시간 내 문의 3개 제한 확인
-      const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
-      const { count, error: countError } = await supabase
-        .from('inquiries')
-        .select('*', { count: 'exact', head: true })
-        .eq('user_id', user.id)
-        .gte('created_at', oneHourAgo);
-
-      if (countError) throw countError;
-      if (count !== null && count >= 3) {
-        setErrorText(t('1시간 내에 최대 3개의 문의만 생성할 수 있습니다.', 'You can only create up to 3 inquiries per hour.'));
-        setIsSubmitting(false);
-        return;
-      }
-
-      // 1. 문의방(inquiries) 생성
-      const { data: newInquiry, error: inquiryError } = await supabase
-        .from('inquiries')
-        .insert([{
-          user_id: user.id,
-          nickname: nickname.trim(),
-          inquiry_code: code,
-          status: 'open'
-        }])
-        .select()
-        .single();
+      const { data: newInquiry, error: inquiryError } = await createMemberInquiry(supabase, {
+        nickname, inquiryType, content: inquiryContent, purpose: inquiryPurpose,
+      });
 
       if (inquiryError) throw inquiryError;
 
       if (newInquiry) {
-        // 2. 초기 폼 데이터를 포맷팅하여 첫 메시지로 삽입
-        const initialMessage = `[문의 유형] ${inquiryType}
-[문의 내용]
-${inquiryContent.trim()}
-
-[문의 목적]
-${inquiryPurpose.trim()}`;
-
-        const { error: msgError } = await supabase
-          .from('inquiry_messages')
-          .insert([
-            {
-              inquiry_id: newInquiry.id,
-              sender: 'user',
-              message: initialMessage,
-            },
-          ]);
-
-        if (msgError) throw msgError;
-
         void notifyInquiryCreated({
           inquiryId: newInquiry.id,
+          accessToken: (await supabase.auth.getSession()).data.session?.access_token,
         });
 
         // 성공 시 상태 초기화 및 해당 방 열기
@@ -421,6 +336,10 @@ ${inquiryPurpose.trim()}`;
 
   const handleGuestCreateInquiry = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validInquiryInput({ nickname, inquiryType, content: inquiryContent, purpose: inquiryPurpose })) {
+      setErrorText(t('입력 항목과 길이를 확인해 주세요. 닉네임 80자, 내용 8,000자, 목적 2,000자까지 입력할 수 있습니다.', 'Check required fields and limits: nickname 80, content 8,000, purpose 2,000 characters.'));
+      return;
+    }
     if (!nickname.trim() || !inquiryContent.trim() || !inquiryPurpose.trim()) return;
 
     setIsSubmitting(true);
@@ -439,6 +358,7 @@ ${inquiryPurpose.trim()}`;
 
       void notifyInquiryCreated({
         inquiryId: newInquiry.id,
+        guestCode: newInquiry.inquiry_code,
       });
 
       setInquiryContent('');
@@ -488,42 +408,26 @@ ${inquiryPurpose.trim()}`;
   // 사용자 일반 메시지 전송
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newMessage.trim() || !selectedInquiry) return;
+    if (!newMessage.trim() || newMessage.trim().length > INPUT_LIMITS.message || !selectedInquiry) return;
 
     const msgContent = newMessage.trim();
     setNewMessage(''); // 즉시 청소
 
     try {
-      const { data: newInquiryMessage, error } = !user && selectedInquiry.user_id === null
-        ? await supabase.rpc('send_guest_inquiry_message', {
-          p_inquiry_code: selectedInquiry.inquiry_code,
-          p_message: msgContent,
-        })
-        : await supabase
-          .from('inquiry_messages')
-          .insert([
-            {
-              inquiry_id: selectedInquiry.id,
-              sender: 'user',
-              message: msgContent,
-            },
-          ])
-          .select()
-          .single();
+      const { data: newInquiryMessage, error } = await sendMessage(selectedInquiry.id, msgContent, 'user', selectedInquiry.user_id === null ? selectedInquiry.inquiry_code : undefined);
 
       if (error) throw error;
 
       if (newInquiryMessage?.id) {
-        void notifyInquiryMessageCreated({ messageId: newInquiryMessage.id });
+        void notifyInquiryMessageCreated({
+          messageId: newInquiryMessage.id,
+          ...(selectedInquiry.user_id === null
+            ? { guestCode: selectedInquiry.inquiry_code }
+            : { accessToken: (await supabase.auth.getSession()).data.session?.access_token }),
+        });
       }
 
-      if (user || selectedInquiry.user_id !== null) {
-        // 일반 유저가 메시지를 보냈으므로 문의방 상태를 open(대기중)으로 변경
-        await supabase
-          .from('inquiries')
-          .update({ status: 'open' })
-          .eq('id', selectedInquiry.id);
-      }
+
 
     } catch (err: unknown) {
       console.error(err);
@@ -549,7 +453,7 @@ ${inquiryPurpose.trim()}`;
 
       <section className={styles.sectionCanvas}>
         <div className={styles.sectionContent}>
-          {isLoading ? (
+          {isLoading || isAuthLoading ? (
             <div style={{ textAlign: 'center', padding: '60px 0', color: 'var(--color-mute)' }}>
               <div style={{
                 width: '32px', height: '32px', border: '3px solid var(--color-hairline)', borderTopColor: 'var(--color-primary)',
