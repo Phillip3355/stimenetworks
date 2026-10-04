@@ -5,7 +5,6 @@ import test from 'node:test';
 const taskboardPage = await readFile(new URL('../app/taskboard/page.tsx', import.meta.url), 'utf8');
 const supportPage = await readFile(new URL('../app/support/page.tsx', import.meta.url), 'utf8');
 const adminStyles = await readFile(new URL('../app/styles/server-mechanism.module.css', import.meta.url), 'utf8');
-const joinStyles = await readFile(new URL('../app/styles/join-admin.module.css', import.meta.url), 'utf8');
 
 test('admin taskboard exposes dark theme surfaces for chat and report actions', () => {
   assert.match(taskboardPage, /styles\.adminPanelHeader/);
@@ -26,7 +25,6 @@ test('admin controls stay usable on narrow screens', () => {
   assert.match(adminStyles, /\.adminAccountBar\s*\{[\s\S]*display:\s*flex/);
   assert.match(adminStyles, /@media\s*\(max-width:\s*760px\)[\s\S]*\.adminTabList\s*\{[\s\S]*overflow-x:\s*auto/);
   assert.match(adminStyles, /@media\s*\(max-width:\s*760px\)[\s\S]*\.adminAccountBar\s*\{[\s\S]*flex-direction:\s*column/);
-  assert.match(joinStyles, /@media\s*\(max-width:\s*520px\)[\s\S]*\.actions button\s*\{[\s\S]*width:\s*100%/);
 });
 
 test('support admin console CTA uses the shared dark action treatment', () => {

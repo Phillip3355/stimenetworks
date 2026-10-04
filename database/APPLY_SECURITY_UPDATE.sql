@@ -1,23 +1,18 @@
 -- Existing StimeMC database: paste this WHOLE file into Supabase SQL Editor and click Run.
--- Back up the database first. No existing inquiry, report or join request rows are deleted.
+-- Back up the database first. No existing inquiry or report rows are deleted.
 -- If any statement fails, the transaction is rolled back; send the error text for diagnosis.
 BEGIN;
 
 -- Read-only checks: returns counts, never row contents or secret tokens.
 SELECT 'inquiries_invalid_nickname_or_status' AS check_name, count(*) AS affected_rows
 FROM public.inquiries WHERE char_length(btrim(nickname)) NOT BETWEEN 1 AND 80 OR status NOT IN ('open','replied');
-SELECT 'join_requests_invalid_nickname' AS check_name, count(*) AS affected_rows
-FROM public.join_requests WHERE NOT (
-  (edition='java' AND minecraft_nickname ~ '^[A-Za-z0-9_]{3,16}$') OR
-  (edition='bedrock' AND char_length(btrim(minecraft_nickname)) BETWEEN 1 AND 32 AND minecraft_nickname !~ '[[:cntrl:]"\\]')
-);
 SELECT 'confirmed_administrators' AS check_name, count(*) AS affected_rows
 FROM public.support_admins a JOIN auth.users u ON lower(a.email)=lower(u.email) WHERE u.email_confirmed_at IS NOT NULL;
 SELECT 'required_tables' AS check_name, tablename FROM pg_tables WHERE schemaname='public'
-AND tablename IN ('inquiries','inquiry_messages','reports','join_requests','support_admins');
+AND tablename IN ('inquiries','inquiry_messages','reports','support_admins');
 
 -- Existing installations: run this whole transaction after taking a DB backup.
--- Requires the existing support/join/Telegram tables and claim functions.
+-- Requires the existing support/Telegram tables and claim functions.
 
 -- Avoid interpreting a timezone-less UTC timestamp a second time in the session timezone.
 ALTER TABLE public.inquiries ALTER COLUMN created_at SET DEFAULT now(), ALTER COLUMN updated_at SET DEFAULT now();
@@ -51,29 +46,21 @@ $$;
 REVOKE ALL ON FUNCTION public.is_support_admin() FROM PUBLIC, anon;
 GRANT EXECUTE ON FUNCTION public.is_support_admin() TO authenticated;
 
-CREATE OR REPLACE FUNCTION private.is_stimemc_admin()
-RETURNS boolean LANGUAGE sql STABLE SECURITY DEFINER SET search_path = '' AS $$
-  SELECT public.is_support_admin();
-$$;
-REVOKE ALL ON FUNCTION private.is_stimemc_admin() FROM PUBLIC, anon;
-GRANT EXECUTE ON FUNCTION private.is_stimemc_admin() TO authenticated;
-
 -- Remove all prior permissive policies on these app-owned tables, including
 -- policies with legacy names: permissive RLS policies are combined with OR.
 DO $$ DECLARE p record; BEGIN
   FOR p IN SELECT schemaname, tablename, policyname FROM pg_policies
     WHERE schemaname = 'public' AND tablename IN
-      ('reports','inquiries','inquiry_messages','join_requests','support_admins')
+      ('reports','inquiries','inquiry_messages','support_admins')
   LOOP EXECUTE format('DROP POLICY %I ON %I.%I',p.policyname,p.schemaname,p.tablename); END LOOP;
 END $$;
 
 ALTER TABLE public.reports ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.inquiries ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.inquiry_messages ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.join_requests ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.support_admins ENABLE ROW LEVEL SECURITY;
 REVOKE ALL ON public.reports, public.inquiries, public.inquiry_messages,
-  public.join_requests, public.support_admins FROM PUBLIC, anon, authenticated;
+  public.support_admins FROM PUBLIC, anon, authenticated;
 
 GRANT SELECT ON public.reports TO anon, authenticated;
 GRANT INSERT (slug,content), UPDATE (slug,content), DELETE ON public.reports TO authenticated;
@@ -100,24 +87,6 @@ CREATE POLICY messages_insert ON public.inquiry_messages FOR INSERT TO authentic
   (sender = 'user' AND EXISTS (SELECT 1 FROM public.inquiries i WHERE i.id = inquiry_id AND i.user_id = (SELECT auth.uid())))
 );
 
-GRANT INSERT (edition,minecraft_nickname,inviter_name,contact,rules_agreed,privacy_agreed) ON public.join_requests TO anon, authenticated;
-GRANT SELECT, DELETE ON public.join_requests TO authenticated;
-CREATE POLICY join_submit ON public.join_requests FOR INSERT TO anon, authenticated WITH CHECK (rules_agreed AND privacy_agreed);
-CREATE POLICY join_admin_read ON public.join_requests FOR SELECT TO authenticated USING ((SELECT public.is_support_admin()));
-CREATE POLICY join_admin_delete ON public.join_requests FOR DELETE TO authenticated USING ((SELECT public.is_support_admin()));
-
-CREATE OR REPLACE FUNCTION public.get_stimemc_join_requests()
-RETURNS SETOF public.join_requests LANGUAGE sql STABLE SECURITY DEFINER SET search_path = '' AS $$
-  SELECT r.* FROM public.join_requests r WHERE public.is_support_admin() ORDER BY r.created_at DESC;
-$$;
-CREATE OR REPLACE FUNCTION public.complete_stimemc_join_request(request_id uuid)
-RETURNS boolean LANGUAGE sql VOLATILE SECURITY DEFINER SET search_path = '' AS $$
-  WITH deleted AS (DELETE FROM public.join_requests WHERE id = $1 AND public.is_support_admin() RETURNING 1)
-  SELECT EXISTS (SELECT 1 FROM deleted);
-$$;
-REVOKE ALL ON FUNCTION public.get_stimemc_join_requests(), public.complete_stimemc_join_request(uuid) FROM PUBLIC, anon;
-GRANT EXECUTE ON FUNCTION public.get_stimemc_join_requests(), public.complete_stimemc_join_request(uuid) TO authenticated;
-
 -- NOT VALID preserves older rows while enforcing constraints for every new write.
 ALTER TABLE public.inquiries DROP CONSTRAINT IF EXISTS inquiries_valid_input;
 ALTER TABLE public.inquiries ADD CONSTRAINT inquiries_valid_input CHECK (
@@ -133,12 +102,6 @@ ALTER TABLE public.reports ADD CONSTRAINT reports_valid_input CHECK (
   AND slug ~ '^[A-Za-z0-9가-힣_-]+(/[A-Za-z0-9가-힣_-]+)*$'
   AND lower(split_part(slug,'/',1)) NOT IN ('api','_next','auth','taskboard','support','join','news','rules','history','updates','recovery-guidelines','server-mechanism')
   AND char_length(btrim(content)) BETWEEN 1 AND 200000
-) NOT VALID;
-ALTER TABLE public.join_requests DROP CONSTRAINT IF EXISTS join_requests_safe_nickname;
-ALTER TABLE public.join_requests ADD CONSTRAINT join_requests_safe_nickname CHECK (
-  (edition = 'java' AND minecraft_nickname ~ '^[A-Za-z0-9_]{3,16}$') OR
-  (edition = 'bedrock' AND char_length(btrim(minecraft_nickname)) BETWEEN 1 AND 32
-    AND minecraft_nickname !~ '[[:cntrl:]"\\]')
 ) NOT VALID;
 
 -- Initialize once with recent activity so deployment does not reset quotas.
@@ -277,17 +240,6 @@ $$;
 REVOKE ALL ON FUNCTION private.guard_message() FROM PUBLIC,anon,authenticated;
 DROP TRIGGER IF EXISTS guard_message ON public.inquiry_messages;
 CREATE TRIGGER guard_message AFTER INSERT ON public.inquiry_messages FOR EACH ROW EXECUTE FUNCTION private.guard_message();
-
-CREATE OR REPLACE FUNCTION private.guard_join_request()
-RETURNS trigger LANGUAGE plpgsql SECURITY DEFINER SET search_path = '' AS $$
-BEGIN
-  PERFORM private.consume_limit('join-submit',private.request_actor(),5,3600);
-  RETURN NEW;
-END;
-$$;
-REVOKE ALL ON FUNCTION private.guard_join_request() FROM PUBLIC,anon,authenticated;
-DROP TRIGGER IF EXISTS guard_join_request ON public.join_requests;
-CREATE TRIGGER guard_join_request BEFORE INSERT ON public.join_requests FOR EACH ROW EXECUTE FUNCTION private.guard_join_request();
 
 -- A fresh schema is generated with these same policies. No realtime publication
 -- is dropped here; existing subscriptions and unrelated tables remain intact.

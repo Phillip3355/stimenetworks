@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import { PGlite } from '@electric-sql/pglite';
 
 const owner = '11111111-1111-4111-8111-111111111111';
@@ -40,6 +40,14 @@ async function asUser(db, id, sql) {
 test('database enforces authorization even when the browser is bypassed', async (t) => {
   const db = await database();
   t.after(() => db.close());
+  await t.test('fresh installations expose no join request storage or RPCs', async () => {
+    const { rows } = await db.query(`SELECT to_regclass('public.join_requests') AS requests,
+      to_regprocedure('public.get_stimemc_join_requests()') AS list,
+      to_regprocedure('public.complete_stimemc_join_request(uuid)') AS complete,
+      to_regprocedure('private.guard_join_request()') AS guard,
+      to_regprocedure('private.is_stimemc_admin()') AS helper`);
+    assert.deepEqual(rows[0], { requests: null, list: null, complete: null, guard: null, helper: null });
+  });
   await t.test('ordinary users cannot publish reports', async () => {
     await assert.rejects(() => asUser(db, owner, "INSERT INTO reports(slug,content) VALUES ('forged','fake')"));
   });
@@ -85,13 +93,6 @@ test('database enforces authorization even when the browser is bypassed', async 
       await assert.rejects(() => db.query(`SELECT send_guest_inquiry_message('STM-GUEST123456789ABCD', repeat('x',12001))`));
     } finally { await db.exec('RESET ROLE'); }
   });
-  await t.test('join nickname command injection fails in the database', async () => {
-    await db.exec('SET ROLE anon');
-    try {
-      await assert.rejects(() => db.query(`INSERT INTO join_requests(edition,minecraft_nickname,inviter_name,contact,rules_agreed,privacy_agreed)
-        VALUES ('bedrock',E'Steve\\nop attacker','friend','contact',true,true)`));
-    } finally { await db.exec('RESET ROLE'); }
-  });
   await t.test('guest code access preserves messages without leaking internal fields', async () => {
     await db.exec("SET ROLE anon; SELECT set_config('request.headers','{\"x-forwarded-for\":\"192.0.2.10\"}',false)");
     try {
@@ -124,5 +125,47 @@ test('database enforces authorization even when the browser is bypassed', async 
     await db.exec(await readFile(new URL('../database/migrations/20260907_security_hardening.sql',import.meta.url),'utf8'));
     assert.equal((await db.query('SELECT count(*) AS n FROM inquiries')).rows[0].n,before);
     await assert.rejects(()=>asUser(db,owner,"INSERT INTO reports(slug,content) VALUES ('still-denied','fake')"));
+  });
+  await t.test('migrations remove legacy join requests without losing support data and can run twice', async () => {
+    const before = (await db.query(`SELECT
+      (SELECT count(*) FROM inquiries) AS inquiries,
+      (SELECT count(*) FROM inquiry_messages) AS messages,
+      (SELECT count(*) FROM reports) AS reports,
+      (SELECT count(*) FROM support_admins) AS admins`)).rows[0];
+    await db.exec(`CREATE TABLE IF NOT EXISTS public.join_requests (
+      id uuid PRIMARY KEY DEFAULT gen_random_uuid(), edition text NOT NULL,
+      minecraft_nickname text NOT NULL, inviter_name text NOT NULL, contact text NOT NULL,
+      rules_agreed boolean NOT NULL, privacy_agreed boolean NOT NULL,
+      created_at timestamptz NOT NULL DEFAULT now()
+    );
+    CREATE OR REPLACE FUNCTION public.get_stimemc_join_requests()
+      RETURNS SETOF public.join_requests LANGUAGE sql AS $$ SELECT * FROM public.join_requests $$;
+    CREATE OR REPLACE FUNCTION public.complete_stimemc_join_request(request_id uuid)
+      RETURNS boolean LANGUAGE sql AS $$ SELECT true $$;
+    CREATE OR REPLACE FUNCTION private.guard_join_request()
+      RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN RETURN NEW; END $$;
+    CREATE OR REPLACE FUNCTION private.is_stimemc_admin()
+      RETURNS boolean LANGUAGE sql AS $$ SELECT public.is_support_admin() $$;
+    DROP TRIGGER IF EXISTS guard_join_request ON public.join_requests;
+    CREATE TRIGGER guard_join_request BEFORE INSERT ON public.join_requests
+      FOR EACH ROW EXECUTE FUNCTION private.guard_join_request();
+    INSERT INTO public.join_requests(edition,minecraft_nickname,inviter_name,contact,rules_agreed,privacy_agreed)
+      VALUES ('java','Steve','Friend','contact',true,true);`);
+    const migrations = new URL('../database/migrations/', import.meta.url);
+    const names = (await readdir(migrations)).filter(name => name.endsWith('.sql')).sort();
+    for (let run = 0; run < 2; run++) {
+      for (const name of names) await db.exec(await readFile(new URL(name, migrations), 'utf8'));
+      const { rows } = await db.query(`SELECT to_regclass('public.join_requests') AS requests,
+        to_regprocedure('public.get_stimemc_join_requests()') AS list,
+        to_regprocedure('public.complete_stimemc_join_request(uuid)') AS complete,
+        to_regprocedure('private.guard_join_request()') AS guard,
+        to_regprocedure('private.is_stimemc_admin()') AS helper`);
+      assert.deepEqual(rows[0], { requests: null, list: null, complete: null, guard: null, helper: null });
+      assert.deepEqual((await db.query(`SELECT
+        (SELECT count(*) FROM inquiries) AS inquiries,
+        (SELECT count(*) FROM inquiry_messages) AS messages,
+        (SELECT count(*) FROM reports) AS reports,
+        (SELECT count(*) FROM support_admins) AS admins`)).rows[0], before);
+    }
   });
 });

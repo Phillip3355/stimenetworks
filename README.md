@@ -1,7 +1,7 @@
 # StimeMC 홈페이지
 
 Next.js, React, Supabase 기반 홈페이지입니다. Google 로그인, 회원·비회원 문의,
-실시간 답장, 가입 신청, 관리자 처리, Markdown 보고서와 텔레그램 알림을 제공합니다.
+실시간 답장, 관리자 문의 처리, Markdown 보고서와 텔레그램 알림을 제공합니다.
 
 ## 코드 구조
 
@@ -50,12 +50,19 @@ VALUES ('extra-admin@example.com') ON CONFLICT (email) DO NOTHING;
 1. 백업을 확보하고 [사전 검사](database/preflight.sql)를 실행합니다.
 2. [보안 변경 SQL](database/migrations/20260907_security_hardening.sql)을 SQL Editor에서
    전체 실행합니다. 기존 데이터를 삭제하지 않으며 하나의 트랜잭션으로 적용됩니다.
-   기존 support/join 테이블과 Telegram RPC가 설치된 DB를 전제로 합니다.
+   기존 support 테이블과 Telegram RPC가 설치된 DB를 전제로 합니다.
 3. [실시간 구독 설정](database/realtime.sql)을 실행합니다. 기존 publication을
    삭제하지 않고 필요한 테이블만 추가합니다.
 4. 새 홈페이지를 배포합니다. 권한을 먼저 강화하므로 이전 브라우저의 회원 문의
    생성은 새 페이지로 새로고침하기 전까지 실패할 수 있습니다.
-5. 회원·비회원 문의, 관리자 답장·가입 처리·보고서 발행과 실제 텔레그램 수신을 확인합니다.
+5. 회원·비회원 문의, 관리자 답장·보고서 발행과 실제 텔레그램 수신을 확인합니다.
+
+## 서버 가입 요청 기능 제거
+
+가입 요청 입력 양식과 관리자 가입 요청 탭은 제거했습니다. 서버 접속 안내는 `/join`에서 제공합니다.
+기존 DB에서는 [가입 요청 삭제 SQL](database/migrations/20261005_remove_join_requests.sql)을
+Supabase SQL Editor에서 전체 실행하세요. 저장된 가입 신청 데이터도 영구 삭제됩니다.
+문의, 보고서, 관리자 계정 데이터는 유지합니다. 운영 DB에는 자동으로 실행하지 않습니다.
 
 이전 루트의 네 `supabase_*.sql` 파일은 `database`로 통합했습니다.
 과거 스크립트를 다시 실행하면 권한을 약화시킬 수 있으므로 사용하지 마세요.

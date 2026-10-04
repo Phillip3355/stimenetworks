@@ -4,7 +4,6 @@ import { Suspense, useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import AdminJoinRequests from '../components/AdminJoinRequests';
 import { useLanguage } from '../components/LanguageProvider';
 import { supabase } from '../client/supabase';
 import { listInquiries, listMessages, sendMessage, deleteInquiry } from '../client/inquiries';
@@ -63,7 +62,7 @@ function TaskboardContent() {
   const [isDeleting, setIsDeleting] = useState(false);
 
   // 탭 및 보고서 관리 상태
-  const [activeTab, setActiveTab] = useState<'support' | 'join' | 'report'>('support');
+  const [activeTab, setActiveTab] = useState<'support' | 'report'>('support');
   const [reports, setReports] = useState<ReportRecord[]>([]);
   const [reportSlug, setReportSlug] = useState('');
   const [reportContent, setReportContent] = useState('');
@@ -531,12 +530,6 @@ function TaskboardContent() {
                       {t('문의 관리', 'Support Console')}
                     </button>
                     <button
-                      onClick={() => setActiveTab('join')}
-                      className={`${styles.adminTab} ${activeTab === 'join' ? styles.adminTabActive : ''}`}
-                    >
-                      {t('가입 요청', 'Join Requests')}
-                    </button>
-                    <button
                       onClick={() => setActiveTab('report')}
                       className={`${styles.adminTab} ${activeTab === 'report' ? styles.adminTabActive : ''}`}
                       style={{
@@ -808,8 +801,6 @@ function TaskboardContent() {
                 </div>
               </div>
             )}
-
-              {activeTab === 'join' && <AdminJoinRequests />}
 
               {activeTab === 'report' && (
                 <div className={styles.dashboardGrid} style={{ gridTemplateColumns: '1fr', gap: '32px' }}>
