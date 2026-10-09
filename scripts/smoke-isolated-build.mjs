@@ -7,6 +7,7 @@ import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 
 const target = path.resolve(process.argv[2] ?? '');
+const keepAlive = process.argv.includes('--keep-alive');
 assert.equal(path.dirname(target).toLowerCase(), path.resolve(tmpdir()).toLowerCase());
 assert.ok(path.basename(target).startsWith('stimemc-security-build-'));
 assert.ok(existsSync(path.join(target,'.next/BUILD_ID')));
@@ -24,11 +25,12 @@ try {
   let ready = false;
   for(let i=0;i<120;i++) {
     if(child.exitCode !== null) throw new Error('Isolated server exited');
-    try { if((await fetch(origin,{signal:AbortSignal.timeout(500)})).ok){ready=true;break;} } catch { /* Starting. */ }
+    // Homepage awaits a bounded news query; static servers is a short health probe.
+    try { if((await fetch(origin+'/servers',{signal:AbortSignal.timeout(500)})).ok){ready=true;break;} } catch { /* Starting. */ }
     await new Promise(resolve=>setTimeout(resolve,250));
   }
   assert.ok(ready,'Server did not start');
-  const routes = ['/','/join','/support','/taskboard','/auth/callback','/rules','/history','/updates','/recovery-guidelines','/server-mechanism'];
+  const routes = ['/','/servers','/servers/the-great-war','/servers/survival','/news','/join','/support','/taskboard','/auth/callback','/rules','/history','/updates','/recovery-guidelines','/server-mechanism'];
   for(const route of routes) {
     const response = await fetch(origin+route);
     assert.equal(response.status,200,route);
@@ -60,7 +62,18 @@ try {
   }
   inspect(chunks);
   console.log(`Passed: ${routes.length} page responses, security headers, 5 API rejection cases, server-secret isolation in browser chunks.`);
+  if (keepAlive) {
+    console.log(`Read-only production preview: ${origin} (child PID ${child.pid}); stop this command to clean up.`);
+    await new Promise(resolve => {
+      process.once('SIGINT', resolve);
+      process.once('SIGTERM', resolve);
+      child.once('exit', resolve);
+    });
+  }
 } finally {
-  child.kill();
-  await new Promise(resolve=>child.once('exit',resolve));
+  if (child.exitCode === null && child.signalCode === null) {
+    const exited = new Promise(resolve=>child.once('exit',resolve));
+    child.kill();
+    await exited;
+  }
 }

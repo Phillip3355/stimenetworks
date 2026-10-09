@@ -1,0 +1,550 @@
+{
+  "modal": [
+    {
+      "close": [
+        1271.2000732421875,
+        198.6374969482422,
+        1315.2000732421875,
+        242.6374969482422
+      ],
+      "dialog": [
+        580,
+        157.83750915527344,
+        1340,
+        922.1500091552734
+      ],
+      "fieldFonts": [
+        "16px",
+        "16px",
+        "16px",
+        "16px"
+      ],
+      "overflow": false,
+      "topLayer": true,
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "close": [
+        1031.2000732421875,
+        108.63750457763672,
+        1075.2000732421875,
+        152.63750457763672
+      ],
+      "dialog": [
+        340,
+        67.8375015258789,
+        1100,
+        832.1500015258789
+      ],
+      "fieldFonts": [
+        "16px",
+        "16px",
+        "16px",
+        "16px"
+      ],
+      "overflow": false,
+      "topLayer": true,
+      "viewport": [
+        1440,
+        900
+      ]
+    },
+    {
+      "close": [
+        985.6000366210938,
+        64.80000305175781,
+        1029.6000366210938,
+        108.8000030517578
+      ],
+      "dialog": [
+        303.20001220703125,
+        24,
+        1063.2000122070312,
+        744
+      ],
+      "fieldFonts": [
+        "16px",
+        "16px",
+        "16px",
+        "16px"
+      ],
+      "overflow": false,
+      "topLayer": true,
+      "viewport": [
+        1366,
+        768
+      ]
+    },
+    {
+      "close": [
+        942.4000244140624,
+        64.80000305175781,
+        986.4000244140624,
+        108.8000030517578
+      ],
+      "dialog": [
+        260,
+        24,
+        1020,
+        776
+      ],
+      "fieldFonts": [
+        "16px",
+        "16px",
+        "16px",
+        "16px"
+      ],
+      "overflow": false,
+      "topLayer": true,
+      "viewport": [
+        1280,
+        800
+      ]
+    },
+    {
+      "close": [
+        823.2000122070312,
+        341.8374938964844,
+        867.2000122070312,
+        385.8374938964844
+      ],
+      "dialog": [
+        132,
+        301.0375061035156,
+        892,
+        1065.3500061035156
+      ],
+      "fieldFonts": [
+        "16px",
+        "16px",
+        "16px",
+        "16px"
+      ],
+      "overflow": false,
+      "topLayer": true,
+      "viewport": [
+        1024,
+        1366
+      ]
+    },
+    {
+      "close": [
+        994.4000244140624,
+        170.6374969482422,
+        1038.4000244140625,
+        214.6374969482422
+      ],
+      "dialog": [
+        303.20001220703125,
+        129.83750915527344,
+        1063.2000122070312,
+        894.1500091552734
+      ],
+      "fieldFonts": [
+        "16px",
+        "16px",
+        "16px",
+        "16px"
+      ],
+      "overflow": false,
+      "topLayer": true,
+      "viewport": [
+        1366,
+        1024
+      ]
+    },
+    {
+      "close": [
+        707.2000122070312,
+        298.63751220703125,
+        751.2000122070312,
+        342.63751220703125
+      ],
+      "dialog": [
+        24,
+        257.8374938964844,
+        776,
+        1022.1499938964844
+      ],
+      "fieldFonts": [
+        "16px",
+        "16px",
+        "16px",
+        "16px"
+      ],
+      "overflow": false,
+      "topLayer": true,
+      "viewport": [
+        800,
+        1280
+      ]
+    },
+    {
+      "close": [
+        675.2000122070312,
+        170.6374969482422,
+        719.2000122070312,
+        214.6374969482422
+      ],
+      "dialog": [
+        24,
+        129.83750915527344,
+        744,
+        894.1500091552734
+      ],
+      "fieldFonts": [
+        "16px",
+        "16px",
+        "16px",
+        "16px"
+      ],
+      "overflow": false,
+      "topLayer": true,
+      "viewport": [
+        768,
+        1024
+      ]
+    },
+    {
+      "close": [
+        368.3999938964844,
+        188.1999969482422,
+        412.3999938964844,
+        232.1999969482422
+      ],
+      "dialog": [
+        0,
+        151.40000915527344,
+        430.3999938964844,
+        932.0000457763672
+      ],
+      "fieldFonts": [
+        "16px",
+        "16px",
+        "16px",
+        "16px"
+      ],
+      "overflow": false,
+      "topLayer": true,
+      "viewport": [
+        430,
+        932
+      ]
+    },
+    {
+      "close": [
+        328.3999938964844,
+        100.20000457763672,
+        372.3999938964844,
+        144.20000457763672
+      ],
+      "dialog": [
+        0,
+        63.400001525878906,
+        390.3999938964844,
+        844.0000381469727
+      ],
+      "fieldFonts": [
+        "16px",
+        "16px",
+        "16px",
+        "16px"
+      ],
+      "overflow": false,
+      "topLayer": true,
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "close": [
+        298,
+        56.20000076293945,
+        342,
+        100.20000076293944
+      ],
+      "dialog": [
+        0,
+        19.399999618530273,
+        360,
+        800.000036239624
+      ],
+      "fieldFonts": [
+        "16px",
+        "16px",
+        "16px",
+        "16px"
+      ],
+      "overflow": false,
+      "topLayer": true,
+      "viewport": [
+        360,
+        800
+      ]
+    },
+    {
+      "close": [
+        258,
+        56.20000076293945,
+        302,
+        100.20000076293944
+      ],
+      "dialog": [
+        0,
+        19.399999618530273,
+        320,
+        800.000036239624
+      ],
+      "fieldFonts": [
+        "16px",
+        "16px",
+        "16px",
+        "16px"
+      ],
+      "overflow": false,
+      "topLayer": true,
+      "viewport": [
+        320,
+        800
+      ]
+    }
+  ],
+  "historicalReport": [
+    {
+      "h1": "📢 Stime 서버 운영 개편 및 서비스 종료 안내",
+      "headingInBounds": true,
+      "overflow": false,
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "h1": "📢 Stime 서버 운영 개편 및 서비스 종료 안내",
+      "headingInBounds": true,
+      "overflow": false,
+      "viewport": [
+        1440,
+        900
+      ]
+    },
+    {
+      "h1": "📢 Stime 서버 운영 개편 및 서비스 종료 안내",
+      "headingInBounds": true,
+      "overflow": false,
+      "viewport": [
+        1366,
+        768
+      ]
+    },
+    {
+      "h1": "📢 Stime 서버 운영 개편 및 서비스 종료 안내",
+      "headingInBounds": true,
+      "overflow": false,
+      "viewport": [
+        1280,
+        800
+      ]
+    },
+    {
+      "h1": "📢 Stime 서버 운영 개편 및 서비스 종료 안내",
+      "headingInBounds": true,
+      "overflow": false,
+      "viewport": [
+        1024,
+        1366
+      ]
+    },
+    {
+      "h1": "📢 Stime 서버 운영 개편 및 서비스 종료 안내",
+      "headingInBounds": true,
+      "overflow": false,
+      "viewport": [
+        1366,
+        1024
+      ]
+    },
+    {
+      "h1": "📢 Stime 서버 운영 개편 및 서비스 종료 안내",
+      "headingInBounds": true,
+      "overflow": false,
+      "viewport": [
+        800,
+        1280
+      ]
+    },
+    {
+      "h1": "📢 Stime 서버 운영 개편 및 서비스 종료 안내",
+      "headingInBounds": true,
+      "overflow": false,
+      "viewport": [
+        768,
+        1024
+      ]
+    },
+    {
+      "h1": "📢 Stime 서버 운영 개편 및 서비스 종료 안내",
+      "headingInBounds": true,
+      "overflow": false,
+      "viewport": [
+        430,
+        932
+      ]
+    },
+    {
+      "h1": "📢 Stime 서버 운영 개편 및 서비스 종료 안내",
+      "headingInBounds": true,
+      "overflow": false,
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "h1": "📢 Stime 서버 운영 개편 및 서비스 종료 안내",
+      "headingInBounds": true,
+      "overflow": false,
+      "viewport": [
+        360,
+        800
+      ]
+    },
+    {
+      "h1": "📢 Stime 서버 운영 개편 및 서비스 종료 안내",
+      "headingInBounds": true,
+      "overflow": false,
+      "viewport": [
+        320,
+        800
+      ]
+    }
+  ],
+  "syntheticMarkdown": [
+    {
+      "overflow": false,
+      "pre": [
+        {
+          "client": 758,
+          "overflow": "auto",
+          "scroll": 3603
+        }
+      ],
+      "table": [
+        {
+          "display": "block",
+          "overflow": "auto",
+          "width": 760
+        }
+      ],
+      "title": 760,
+      "viewport": [
+        1440,
+        900
+      ]
+    },
+    {
+      "overflow": false,
+      "pre": [
+        {
+          "client": 718,
+          "overflow": "auto",
+          "scroll": 3603
+        }
+      ],
+      "table": [
+        {
+          "display": "block",
+          "overflow": "auto",
+          "width": 719.2000122070312
+        }
+      ],
+      "title": 719.2000122070312,
+      "viewport": [
+        768,
+        1024
+      ]
+    },
+    {
+      "overflow": false,
+      "pre": [
+        {
+          "client": 352,
+          "overflow": "auto",
+          "scroll": 3379
+        }
+      ],
+      "table": [
+        {
+          "display": "block",
+          "overflow": "auto",
+          "width": 353.6000061035156
+        }
+      ],
+      "title": 353.6000061035156,
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "overflow": false,
+      "pre": [
+        {
+          "client": 282,
+          "overflow": "auto",
+          "scroll": 3379
+        }
+      ],
+      "table": [
+        {
+          "display": "block",
+          "overflow": "auto",
+          "width": 283.20001220703125
+        }
+      ],
+      "title": 283.20001220703125,
+      "viewport": [
+        320,
+        800
+      ]
+    }
+  ],
+  "taskboard": [
+    {
+      "buttons": [
+        {
+          "height": 70.4000015258789,
+          "left": 60.79999923706055,
+          "name": "구글 로그인으로 어드민 접속",
+          "right": 250.40000534057617
+        }
+      ],
+      "h1": "Taskboard Auth",
+      "overflow": false,
+      "viewport": [
+        320,
+        800
+      ]
+    },
+    {
+      "buttons": [
+        {
+          "height": 48,
+          "left": 532.4000244140625,
+          "name": "구글 로그인으로 어드민 접속",
+          "right": 898.8000183105469
+        }
+      ],
+      "h1": "Taskboard Auth",
+      "overflow": false,
+      "viewport": [
+        1440,
+        900
+      ]
+    }
+  ]
+}
