@@ -1,0 +1,967 @@
+{
+  "applicationCommit": "27c37a0134c7178e371f1e392cae40bd4af746da",
+  "origin": "http://127.0.0.1:6944",
+  "method": "Selected tab 6; each requested viewport asserted equal to read-only DOM innerWidth/innerHeight. Current registry only; desktop browser viewport emulation, not real devices.",
+  "samples": [
+    {
+      "route": "/",
+      "requestedViewport": [
+        1920,
+        1080
+      ],
+      "actualViewport": [
+        1920,
+        1080
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "StimeMC.",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers",
+      "requestedViewport": [
+        1920,
+        1080
+      ],
+      "actualViewport": [
+        1920,
+        1080
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "우리의 세계들.",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers/the-great-war",
+      "requestedViewport": [
+        1920,
+        1080
+      ],
+      "actualViewport": [
+        1920,
+        1080
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "THE GREAT WAR",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers/survival",
+      "requestedViewport": [
+        1920,
+        1080
+      ],
+      "actualViewport": [
+        1920,
+        1080
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "SURVIVAL",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/join",
+      "requestedViewport": [
+        1920,
+        1080
+      ],
+      "actualViewport": [
+        1920,
+        1080
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "같이할 세계를 준비합니다",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/",
+      "requestedViewport": [
+        1440,
+        900
+      ],
+      "actualViewport": [
+        1440,
+        900
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "StimeMC.",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers",
+      "requestedViewport": [
+        1440,
+        900
+      ],
+      "actualViewport": [
+        1440,
+        900
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "우리의 세계들.",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers/the-great-war",
+      "requestedViewport": [
+        1440,
+        900
+      ],
+      "actualViewport": [
+        1440,
+        900
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "THE GREAT WAR",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers/survival",
+      "requestedViewport": [
+        1440,
+        900
+      ],
+      "actualViewport": [
+        1440,
+        900
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "SURVIVAL",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/join",
+      "requestedViewport": [
+        1440,
+        900
+      ],
+      "actualViewport": [
+        1440,
+        900
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "같이할 세계를 준비합니다",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/",
+      "requestedViewport": [
+        1366,
+        768
+      ],
+      "actualViewport": [
+        1366,
+        768
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "StimeMC.",
+      "overflow": -8,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers",
+      "requestedViewport": [
+        1366,
+        768
+      ],
+      "actualViewport": [
+        1366,
+        768
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "우리의 세계들.",
+      "overflow": -8,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers/the-great-war",
+      "requestedViewport": [
+        1366,
+        768
+      ],
+      "actualViewport": [
+        1366,
+        768
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "THE GREAT WAR",
+      "overflow": -8,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers/survival",
+      "requestedViewport": [
+        1366,
+        768
+      ],
+      "actualViewport": [
+        1366,
+        768
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "SURVIVAL",
+      "overflow": -8,
+      "smallButtons": []
+    },
+    {
+      "route": "/join",
+      "requestedViewport": [
+        1366,
+        768
+      ],
+      "actualViewport": [
+        1366,
+        768
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "같이할 세계를 준비합니다",
+      "overflow": -8,
+      "smallButtons": []
+    },
+    {
+      "route": "/",
+      "requestedViewport": [
+        1280,
+        800
+      ],
+      "actualViewport": [
+        1280,
+        800
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "StimeMC.",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers",
+      "requestedViewport": [
+        1280,
+        800
+      ],
+      "actualViewport": [
+        1280,
+        800
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "우리의 세계들.",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers/the-great-war",
+      "requestedViewport": [
+        1280,
+        800
+      ],
+      "actualViewport": [
+        1280,
+        800
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "THE GREAT WAR",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers/survival",
+      "requestedViewport": [
+        1280,
+        800
+      ],
+      "actualViewport": [
+        1280,
+        800
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "SURVIVAL",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/join",
+      "requestedViewport": [
+        1280,
+        800
+      ],
+      "actualViewport": [
+        1280,
+        800
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "같이할 세계를 준비합니다",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/",
+      "requestedViewport": [
+        1024,
+        1366
+      ],
+      "actualViewport": [
+        1024,
+        1366
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "StimeMC.",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers",
+      "requestedViewport": [
+        1024,
+        1366
+      ],
+      "actualViewport": [
+        1024,
+        1366
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "우리의 세계들.",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers/the-great-war",
+      "requestedViewport": [
+        1024,
+        1366
+      ],
+      "actualViewport": [
+        1024,
+        1366
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "THE GREAT WAR",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers/survival",
+      "requestedViewport": [
+        1024,
+        1366
+      ],
+      "actualViewport": [
+        1024,
+        1366
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "SURVIVAL",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/join",
+      "requestedViewport": [
+        1024,
+        1366
+      ],
+      "actualViewport": [
+        1024,
+        1366
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "같이할 세계를 준비합니다",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/",
+      "requestedViewport": [
+        1366,
+        1024
+      ],
+      "actualViewport": [
+        1366,
+        1024
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "StimeMC.",
+      "overflow": -8,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers",
+      "requestedViewport": [
+        1366,
+        1024
+      ],
+      "actualViewport": [
+        1366,
+        1024
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "우리의 세계들.",
+      "overflow": -8,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers/the-great-war",
+      "requestedViewport": [
+        1366,
+        1024
+      ],
+      "actualViewport": [
+        1366,
+        1024
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "THE GREAT WAR",
+      "overflow": -8,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers/survival",
+      "requestedViewport": [
+        1366,
+        1024
+      ],
+      "actualViewport": [
+        1366,
+        1024
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "SURVIVAL",
+      "overflow": -8,
+      "smallButtons": []
+    },
+    {
+      "route": "/join",
+      "requestedViewport": [
+        1366,
+        1024
+      ],
+      "actualViewport": [
+        1366,
+        1024
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "같이할 세계를 준비합니다",
+      "overflow": -8,
+      "smallButtons": []
+    },
+    {
+      "route": "/",
+      "requestedViewport": [
+        800,
+        1280
+      ],
+      "actualViewport": [
+        800,
+        1280
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "StimeMC.",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers",
+      "requestedViewport": [
+        800,
+        1280
+      ],
+      "actualViewport": [
+        800,
+        1280
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "우리의 세계들.",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers/the-great-war",
+      "requestedViewport": [
+        800,
+        1280
+      ],
+      "actualViewport": [
+        800,
+        1280
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "THE GREAT WAR",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers/survival",
+      "requestedViewport": [
+        800,
+        1280
+      ],
+      "actualViewport": [
+        800,
+        1280
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "SURVIVAL",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/join",
+      "requestedViewport": [
+        800,
+        1280
+      ],
+      "actualViewport": [
+        800,
+        1280
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "같이할 세계를 준비합니다",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/",
+      "requestedViewport": [
+        768,
+        1024
+      ],
+      "actualViewport": [
+        768,
+        1024
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "StimeMC.",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers",
+      "requestedViewport": [
+        768,
+        1024
+      ],
+      "actualViewport": [
+        768,
+        1024
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "우리의 세계들.",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers/the-great-war",
+      "requestedViewport": [
+        768,
+        1024
+      ],
+      "actualViewport": [
+        768,
+        1024
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "THE GREAT WAR",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers/survival",
+      "requestedViewport": [
+        768,
+        1024
+      ],
+      "actualViewport": [
+        768,
+        1024
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "SURVIVAL",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/join",
+      "requestedViewport": [
+        768,
+        1024
+      ],
+      "actualViewport": [
+        768,
+        1024
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "같이할 세계를 준비합니다",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/",
+      "requestedViewport": [
+        430,
+        932
+      ],
+      "actualViewport": [
+        430,
+        932
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "StimeMC.",
+      "overflow": -8,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers",
+      "requestedViewport": [
+        430,
+        932
+      ],
+      "actualViewport": [
+        430,
+        932
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "우리의 세계들.",
+      "overflow": -8,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers/the-great-war",
+      "requestedViewport": [
+        430,
+        932
+      ],
+      "actualViewport": [
+        430,
+        932
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "THE GREAT WAR",
+      "overflow": -8,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers/survival",
+      "requestedViewport": [
+        430,
+        932
+      ],
+      "actualViewport": [
+        430,
+        932
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "SURVIVAL",
+      "overflow": -8,
+      "smallButtons": []
+    },
+    {
+      "route": "/join",
+      "requestedViewport": [
+        430,
+        932
+      ],
+      "actualViewport": [
+        430,
+        932
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "같이할 세계를 준비합니다",
+      "overflow": -8,
+      "smallButtons": []
+    },
+    {
+      "route": "/",
+      "requestedViewport": [
+        390,
+        844
+      ],
+      "actualViewport": [
+        390,
+        844
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "StimeMC.",
+      "overflow": -8,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers",
+      "requestedViewport": [
+        390,
+        844
+      ],
+      "actualViewport": [
+        390,
+        844
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "우리의 세계들.",
+      "overflow": -8,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers/the-great-war",
+      "requestedViewport": [
+        390,
+        844
+      ],
+      "actualViewport": [
+        390,
+        844
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "THE GREAT WAR",
+      "overflow": -8,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers/survival",
+      "requestedViewport": [
+        390,
+        844
+      ],
+      "actualViewport": [
+        390,
+        844
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "SURVIVAL",
+      "overflow": -8,
+      "smallButtons": []
+    },
+    {
+      "route": "/join",
+      "requestedViewport": [
+        390,
+        844
+      ],
+      "actualViewport": [
+        390,
+        844
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "같이할 세계를 준비합니다",
+      "overflow": -8,
+      "smallButtons": []
+    },
+    {
+      "route": "/",
+      "requestedViewport": [
+        360,
+        800
+      ],
+      "actualViewport": [
+        360,
+        800
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "StimeMC.",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers",
+      "requestedViewport": [
+        360,
+        800
+      ],
+      "actualViewport": [
+        360,
+        800
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "우리의 세계들.",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers/the-great-war",
+      "requestedViewport": [
+        360,
+        800
+      ],
+      "actualViewport": [
+        360,
+        800
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "THE GREAT WAR",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers/survival",
+      "requestedViewport": [
+        360,
+        800
+      ],
+      "actualViewport": [
+        360,
+        800
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "SURVIVAL",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/join",
+      "requestedViewport": [
+        360,
+        800
+      ],
+      "actualViewport": [
+        360,
+        800
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "같이할 세계를 준비합니다",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/",
+      "requestedViewport": [
+        320,
+        800
+      ],
+      "actualViewport": [
+        320,
+        800
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "StimeMC.",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers",
+      "requestedViewport": [
+        320,
+        800
+      ],
+      "actualViewport": [
+        320,
+        800
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "우리의 세계들.",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers/the-great-war",
+      "requestedViewport": [
+        320,
+        800
+      ],
+      "actualViewport": [
+        320,
+        800
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "THE GREAT WAR",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/servers/survival",
+      "requestedViewport": [
+        320,
+        800
+      ],
+      "actualViewport": [
+        320,
+        800
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "SURVIVAL",
+      "overflow": -9,
+      "smallButtons": []
+    },
+    {
+      "route": "/join",
+      "requestedViewport": [
+        320,
+        800
+      ],
+      "actualViewport": [
+        320,
+        800
+      ],
+      "clippedHeadings": [],
+      "copyControls": [],
+      "h1": "같이할 세계를 준비합니다",
+      "overflow": -9,
+      "smallButtons": []
+    }
+  ]
+}

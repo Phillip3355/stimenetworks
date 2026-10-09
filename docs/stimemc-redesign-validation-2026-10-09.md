@@ -1,19 +1,27 @@
 # StimeMC redesign verification — 2026-10-09
 
-Verified on branch `codex/stimemc-server-group`, final application revision `f82d0d9`. The controller performed browser checks; the integrated-verification implementer ran the commands below. No production credentials, operational submissions, login, external messages, deployment, push or merge were used.
+Verified on branch `codex/stimemc-server-group`, final application revision `27c37a0`. The controller performed the original browser matrix; the final-review fix implementer reran the automated checks below on the final application. No production credentials, operational submissions, login, external messages, deployment, push or merge were used.
 
 ## Final automated checks
 
 | Check | Command | Observed result |
 | --- | --- | --- |
-| Full tests | `npm test` | Exit 0; 82 passed, 0 failed/skipped/cancelled |
+| Full tests | `npm test` | Exit 0; 91 passed, 0 failed/skipped/cancelled |
 | Lint | `npm run lint` | Exit 0; no diagnostics |
 | Isolated production build | `npm run verify:build` | Exit 0; Next 16.3.4 webpack compilation, TypeScript and all 15 static pages completed |
 | Explicit types | `node node_modules/typescript/bin/tsc --noEmit --incremental false --project <isolated-build>/tsconfig.json` | Exit 0; no diagnostics |
 | Production smoke | `node scripts/smoke-isolated-build.mjs <isolated-build> --keep-alive` | 14 page responses; security headers, 5 API rejection cases and browser-chunk secret isolation passed |
 | Original content comparison | Import baseline `a8cfac1:app/shared/siteContent.mjs` and compare current exports | Exact equality for `historyEntries`, `ruleMindMap`, and all 16 Korean/English rule-detail results |
 
-The test suite prints one expected simulated Telegram failure message while testing failure containment. It does not send a real notification. Database authorization tests use an isolated local database.
+The expected simulated Telegram failure warning is now captured and asserted by a scoped test mock, restored after the test. The production logger remains intact; the final successful suite has no diagnostic noise and sends no real notification. Database authorization tests use an isolated local database.
+
+## Final-review launch-state fix
+
+The whole-branch reviewer demonstrated that a registry-only launch could expose a valid address while cards/Join/detail still claimed preparation or unpublished version data. Revision `27c37a0` derives lifecycle labels, operation status and publication wording through shared presentation helpers. Cards, detail, Join, policy scope and crossplay now agree with an active registry record. Related home guidance and route metadata follow the same launch transition. Status remains a registry statement, without live telemetry; active status alone does not publish an address or dedicated policies. Confirmed version/release strings are shown for active records, including active records whose connection is still unpublished. Planned/preparing records continue to conceal supplied launch values.
+
+Nine new actual-render regressions exercise React server-rendered components, with TypeScript transpiled only in memory. Language, styles, Link, image and motion boundaries are mocked; actual component markup and the real shared registry/connection functions run in a disposable client-capable React process. The normal suite uses `react-server` conditions, so the render worker intentionally starts without that condition and receives only allowlisted OS environment variables. Synthetic publication data exists only in the test worker. Initial RED: eight checks, six supported-launch failures and two passing planned/preparing checks. A separate home-guidance RED failed on the old preparing text. GREEN: 51 targeted checks passed across the new render checks and existing registry, guide interactions, report dates, request security and Telegram tests; the final full suite passed all 91.
+
+As a separate preservation check, 38 current-registry component/metadata outputs were byte-identical to `f9df372`, covering Korean/English, both editions, both server details, legacy/server rule and recovery scopes, home/server surfaces and route metadata. No CSS, real registry record, policy/history body or operational handler changed. This substantiates unchanged current copy/layout; it does not reclassify the original browser matrix or screenshots as a new browser pass.
 
 The build runs from a separate temporary source copy. Only `app`, `public`, listed configuration/package files and a dependency junction are included. Copy filters exclude every name starting with `.env`; root and copied source trees were checked to contain zero environment files. Child processes receive only allowlisted OS variables, disabled telemetry and dummy public Supabase configuration. `.env.local` was never opened, read, copied, printed or modified.
 
@@ -21,7 +29,9 @@ Smoke coverage: `/`, `/servers`, `/servers/the-great-war`, `/servers/survival`, 
 
 ## Exact viewport coverage
 
-The controller confirmed actual DOM viewport dimensions, not merely requested browser settings. [Route measurements](verification/stimemc-2026-10-09/route-viewport-checks.json) contain 168 samples: all 14 routes above at all 12 sizes.
+The controller confirmed actual DOM viewport dimensions, not merely requested browser settings, during the original browser pass. [Route measurements](verification/stimemc-2026-10-09/route-viewport-checks.json) retain that provenance and contain 168 samples: all 14 routes above at all 12 sizes. They were not regenerated for the launch-state fix, whose current-registry rendered output is unchanged.
+
+After the final fix, the controller also performed a [scoped current-state browser acceptance](verification/stimemc-2026-10-09/final-launch-viewport-checks.json) on application `27c37a0`, preview `http://127.0.0.1:6944`. Its 60 samples cover `/`, `/servers`, both server details and `/join` at every one of the 12 dimensions below. Every sample asserts requested viewport equals actual DOM dimensions. The corrected artifact was independently checked before committing: all 60 match, with no positive document overflow, clipped headings, sampled buttons below 44px, missing main h1 or unpublished Copy controls. This is desktop browser viewport emulation of the current registry, distinct from synthetic launch rendering and real-device coverage. The original 168-sample matrix and screenshots retain their original provenance.
 
 | DOM width × height | Route samples | Horizontal document overflow | Clipped headings | Sampled undersized buttons |
 | --- | ---: | ---: | ---: | ---: |
@@ -71,17 +81,19 @@ The runner prints fresh local URLs, checks read-only POST rejection and exact ca
 Selected final output:
 
 ```text
-tests 82 / pass 82 / fail 0 / cancelled 0 / skipped 0
-Compiled successfully in 6.5s
-Finished TypeScript in 2.5s
+tests 91 / pass 91 / fail 0 / cancelled 0 / skipped 0
+Compiled successfully in 7.5s
+Finished TypeScript in 3.1s
 Generating static pages using 19 workers (15/15)
-Verified production output: C:\Users\hhajj\AppData\Local\Temp\stimemc-security-build-1mztjU
+Verified production output: C:\Users\hhajj\AppData\Local\Temp\stimemc-security-build-SEMPEt
 Passed: 14 page responses, security headers, 5 API rejection cases, server-secret isolation in browser chunks.
 ```
 
+The final application received exactly one environment-free `verify:build` run and one isolated keep-alive smoke run after the targeted checks. Explicit TypeScript checks in both the worktree and final isolated build exited 0 without diagnostics. The final read-only production preview is `http://127.0.0.1:6944` (Next child PID `38408`, keep-alive command session `9451`); the controller owns its subsequent acceptance and cleanup. Earlier previews were not restarted or stopped by this fix wave.
+
 ## Screenshots and provenance
 
-The controller replaced and visually inspected these production screenshots from the dummy-config preview at revision `63154af`. The intervening `f82d0d9` change only affects report timestamp formatting and its tests; pictured homepage/Geyser sections are unchanged. Screenshots contain no development pill.
+The controller replaced and visually inspected these production screenshots from the dummy-config preview at revision `63154af`. The intervening `f82d0d9` change only affects report timestamp formatting and its tests; `27c37a0` fixes future launch-state presentation while preserving current registry output. Pictured homepage/Geyser sections and styles are unchanged. Screenshots retain their original provenance and contain no development pill.
 
 - [Desktop homepage, 1440 × 900](verification/stimemc-2026-10-09/home-desktop-1440.jpg)
 - [Mobile homepage, 390 × 844](verification/stimemc-2026-10-09/home-mobile-390.jpg)
@@ -89,4 +101,4 @@ The controller replaced and visually inspected these production screenshots from
 
 ## Verification limits
 
-Browser control supplied exact viewport overrides and native scroll, but did not advertise reduced-motion emulation. MotionConfig, component fallbacks and CSS reduced-motion rules were reviewed; reduced-motion runtime was not verified. Real iOS Safari, Android Chrome and Samsung Internet were unavailable. Viewport orientation changes are layout checks, not proof of physical-device rotation or safe-area behavior on those devices. Real production Supabase connection success, OAuth completion and operational support submission were not tested. Independent whole-branch review is coordinated by the controller after this verification commit.
+Browser control supplied exact viewport overrides and native scroll, but did not advertise reduced-motion emulation. MotionConfig, component fallbacks and CSS reduced-motion rules were reviewed; reduced-motion runtime was not verified. Real iOS Safari, Android Chrome and Samsung Internet were unavailable. Viewport orientation changes are layout checks, not proof of physical-device rotation or safe-area behavior on those devices. Real production Supabase connection success, OAuth completion and operational support submission were not tested. Independent whole-branch review covered `a8cfac1..f9df372`; the controller coordinates one scoped re-review and final current-state browser acceptance of this fix wave.
