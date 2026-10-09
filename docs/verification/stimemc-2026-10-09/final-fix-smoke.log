@@ -1,0 +1,2 @@
+Passed: 14 page responses, security headers, 5 API rejection cases, server-secret isolation in browser chunks.
+Read-only production preview: http://127.0.0.1:6944 (child PID 38408); stop this command to clean up.
