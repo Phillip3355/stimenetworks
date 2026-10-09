@@ -1,45 +1,32 @@
-'use client';
-
-import { motion, useReducedMotion } from 'framer-motion';
-import CardsGrid from './components/CardsGrid';
+import type { Metadata } from 'next';
 import Hero from './components/Hero';
-import { useLanguage } from './components/LanguageProvider';
-import { homeFeatures, homeIntro } from './shared/siteContent.mjs';
+import ServerWorlds from './components/ServerWorlds';
+import ServerDirections from './components/ServerDirections';
+import CrossplayBridge from './components/CrossplayBridge';
+import HomeArchive from './components/HomeArchive';
+import HomeNews from './components/HomeNews';
+import HomeGuide from './components/HomeGuide';
+import { getPublishedReports } from './server/reports';
+import { loadHomeReports } from './server/homeReports.mjs';
 
-export default function Home() {
-  const { language, t } = useLanguage();
-  const reduceMotion = useReducedMotion();
+export const dynamic = 'force-dynamic';
+export const metadata: Metadata = {
+  title: 'StimeMC — One community. More worlds.',
+  description: '여러 세계, 하나의 Stime. The Great War는 운영 준비 중, Survival은 추가 계획 중인 Geyser 크로스플레이 서버 그룹입니다.',
+};
 
-  const features = homeFeatures.map((feature) => ({
-    ...feature,
-    eyebrow: language === 'ko' ? feature.eyebrowKo : feature.eyebrowEn,
-    title: language === 'ko' ? feature.titleKo : feature.titleEn,
-    description:
-      language === 'ko' ? feature.descriptionKo : feature.descriptionEn,
-    imageAlts:
-      language === 'ko' ? feature.imageAltsKo : feature.imageAltsEn,
-  }));
-
+export default async function Home() {
+  const news = await loadHomeReports((signal: AbortSignal) =>
+    getPublishedReports().limit(3).abortSignal(signal));
   return (
-    <main className="mainContainer">
+    <main>
       <Hero />
-
-      <motion.section
-        className="sectionCanvas"
-        aria-labelledby="home-story-title"
-        initial={reduceMotion ? false : { opacity: 0, y: 28 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.45 }}
-        transition={{ duration: reduceMotion ? 0 : 0.9, ease: [0.22, 0.75, 0.2, 1] }}
-      >
-        <div className="sectionContent">
-          <h2 id="home-story-title" className="sectionHeading">
-            {t(homeIntro.headingKo, homeIntro.headingEn)}
-          </h2>
-        </div>
-      </motion.section>
-
-      <CardsGrid cards={features} learnMoreLabel={t('더 알아보기', 'Learn more')} />
+      <ServerWorlds reveal />
+      <ServerDirections />
+      <CrossplayBridge />
+      <HomeArchive />
+      <HomeNews {...news} />
+      <HomeGuide />
     </main>
   );
 }

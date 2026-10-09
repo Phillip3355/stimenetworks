@@ -94,11 +94,6 @@ export const serverProfile = {
     'A server group for Java and Bedrock without installing client mods. The Great War is preparing; Survival is planned for later.',
 };
 
-export const homeIntro = {
-  headingKo: '같이 접속하고, 즐길 수 있습니다.',
-  headingEn: 'Connect and enjoy it together.',
-};
-
 export const serverMechanismFlow = {
   root: {
     eyebrowKo: 'VIAPROXY + GEYSER',
@@ -242,95 +237,6 @@ export const navigationGroups = [
     labelEn: 'Join',
     href: '/join',
     links: [{ href: '/join', labelKo: '접속 안내', labelEn: 'Join Guide' }],
-  },
-];
-
-export const homeFeatures = [
-  {
-    id: 'cross-edition',
-    index: '01',
-    eyebrowKo: '하나의 월드 · 두 개의 에디션',
-    eyebrowEn: 'One World · Two Editions',
-    titleKo: 'Java와 Bedrock이 한곳에서 만납니다',
-    titleEn: 'Java and Bedrock meet in one world',
-    descriptionKo:
-      'PC의 Java 에디션과 모바일·콘솔의 Bedrock 에디션이 같은 월드에 접속합니다. 사용하는 기기가 달라도 친구와 만나 함께 건축하고 탐험할 수 있습니다.',
-    descriptionEn:
-      'Java players on PC and Bedrock players on mobile or console share the same world, so different devices never keep friends apart.',
-    images: ['/image.png', '/image copy.png'],
-    imageAltsKo: [
-      '구름 위에서 내려다본 StimeMC 월드와 다양한 건축물 전경',
-      '여러 생물군계와 건축 구역이 이어진 StimeMC 월드의 항공 전경',
-    ],
-    imageAltsEn: [
-      'An aerial view of the StimeMC world and its many player-built structures',
-      'A wide aerial view of connected biomes and building districts in StimeMC',
-    ],
-    href: '/server-mechanism',
-    direction: 1,
-  },
-  {
-    id: 'evolving-world',
-    index: '02',
-    eyebrowKo: '계속 변화하는 월드',
-    eyebrowEn: 'An Evolving World',
-    titleKo: '새로운 건축물, 새로운 모드',
-    titleEn: 'New builds, new ways to play',
-    descriptionKo:
-      '플레이어가 만든 건축물로 월드의 풍경이 계속 바뀌고, 서버사이드 모드가 새로운 기능과 발견을 더합니다. 별도 설치 없이 접속할 때마다 달라진 장면을 만나보세요.',
-    descriptionEn:
-      'Player-built landmarks keep reshaping the world while server-side mods add fresh discoveries, all without installing anything extra.',
-    images: ['/image copy 8.png', '/image copy 9.png', '/image copy 5.png'],
-    imageAltsKo: [
-      '숲 위에 세워진 청록색 지붕의 StimeMC 대형 목조 건축물',
-      '부유섬 사이에서 빛나는 StimeMC의 거대한 공중 구조물',
-      '밤하늘 아래 빛나는 서버사이드 모드 건축물과 연결 구조',
-    ],
-    imageAltsEn: [
-      'A large StimeMC timber settlement with teal roofs above the forest',
-      'A luminous StimeMC structure suspended among shadowy floating islands',
-      'Illuminated server-side mod structures and connections beneath the night sky',
-    ],
-    href: '/server-mechanism',
-    direction: -1,
-  },
-  {
-    id: 'peaceful-rules',
-    index: '03',
-    eyebrowKo: '평화로운 플레이',
-    eyebrowEn: 'Peaceful Play',
-    titleKo: '체계적인 규칙이 자유로운 플레이를 지킵니다',
-    titleEn: 'Clear rules protect the way you play',
-    descriptionKo:
-      '플레이 방해, 테러, 건축물 파괴와 핵 사용을 명확하게 제한합니다. 서로의 시간과 창작물을 존중하는 기준 안에서 안심하고 오래 머물 수 있습니다.',
-    descriptionEn:
-      'Clear limits on disruption, griefing, build destruction, and cheats protect every player’s time and creations.',
-    images: ['/image copy 4.png'],
-    imageAltsKo: [
-      '노을 아래 플레이어 건축물과 농장이 이어지는 StimeMC 월드',
-    ],
-    imageAltsEn: [
-      'Player builds and farms stretching across the StimeMC world at sunset',
-    ],
-    href: '/rules',
-    direction: 1,
-  },
-];
-
-export const homeWorldShowcase = [
-  {
-    id: 'new-builds',
-    index: '00',
-    src: '/image copy 8.png',
-    altKo: '숲 위에 세워진 청록색 지붕의 StimeMC 대형 목조 건축물',
-    altEn: 'A large StimeMC timber settlement with teal roofs above the forest',
-  },
-  {
-    id: 'server-side-mods',
-    index: '01',
-    src: '/image copy 9.png',
-    altKo: '부유섬 사이에서 빛나는 StimeMC의 거대한 공중 구조물',
-    altEn: 'A luminous StimeMC structure suspended among shadowy floating islands',
   },
 ];
 

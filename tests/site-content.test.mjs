@@ -1,16 +1,11 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
-import * as siteContent from '../app/shared/siteContent.mjs';
 
-const heroSource = await readFile(new URL('../app/components/Hero.tsx', import.meta.url), 'utf8');
-const homeSource = await readFile(new URL('../app/page.tsx', import.meta.url), 'utf8');
 const rulesPageSource = await readFile(new URL('../app/rules/page.tsx', import.meta.url), 'utf8');
 
 import {
   getRuleDetail,
-  homeIntro,
-  homeFeatures,
   navigationGroups,
   requiredNavigationPaths,
   ruleMindMap,
@@ -71,83 +66,6 @@ test('navigation preserves every documented public and operational route', () =>
   }
   assert.ok(navigationGroups.find(({ id }) => id === 'guide').links.some(({ href }) => href === '/support'));
   assert.ok(navigationGroups.find(({ id }) => id === 'about').links.some(({ href }) => href === '/history'));
-});
-
-test('home feature learn-more links target the documented services', () => {
-  assert.deepEqual(
-    homeFeatures.map(({ href }) => href),
-    ['/server-mechanism', '/server-mechanism', '/rules'],
-  );
-});
-
-test('home introduction uses concise player-facing copy', () => {
-  assert.equal(homeIntro.headingKo, '같이 접속하고, 즐길 수 있습니다.');
-  assert.equal(homeIntro.headingEn, 'Connect and enjoy it together.');
-});
-
-test('home introduction flows directly into the Java and Bedrock feature card', () => {
-  assert.doesNotMatch(homeSource, /WorldShowcase/);
-  assert.match(homeSource, /<CardsGrid\s+cards=\{features\}/);
-});
-
-test('home differentiators use every newly supplied server screenshot', () => {
-  const usedImages = homeFeatures.flatMap((feature) => feature.images);
-
-  assert.deepEqual(usedImages, [
-    '/image.png',
-    '/image copy.png',
-    '/image copy 8.png',
-    '/image copy 9.png',
-    '/image copy 5.png',
-    '/image copy 4.png',
-  ]);
-
-  for (const feature of homeFeatures) {
-    assert.ok(feature.titleKo && feature.titleEn);
-    assert.ok(feature.descriptionKo && feature.descriptionEn);
-    assert.ok(feature.images.length > 0);
-    assert.equal(feature.imageAltsKo.length, feature.images.length);
-    assert.equal(feature.imageAltsEn.length, feature.images.length);
-    assert.ok(feature.imageAltsKo.every((alt) => alt.length >= 10));
-    assert.ok(feature.imageAltsEn.every((alt) => alt.length >= 10));
-  }
-
-  assert.deepEqual(
-    homeFeatures.map(({ id }) => id),
-    ['cross-edition', 'evolving-world', 'peaceful-rules'],
-  );
-
-  assert.equal(
-    homeFeatures.filter((feature) =>
-      feature.images.includes('/image copy 5.png'),
-    ).length,
-    1,
-  );
-  assert.equal(
-    homeFeatures.find((feature) =>
-      feature.images.includes('/image copy 5.png'),
-    ).id,
-    'evolving-world',
-  );
-});
-
-test('home hero uses the newly supplied copy 10 image', () => {
-  assert.match(heroSource, /src="\/image copy 10\.png"/);
-});
-
-test('home introduction showcases the new builds and mod scenes', () => {
-  assert.deepEqual(
-    siteContent.homeWorldShowcase?.map(({ src }) => src),
-    [
-      '/image copy 8.png',
-      '/image copy 9.png',
-    ],
-  );
-
-  for (const artwork of siteContent.homeWorldShowcase ?? []) {
-    assert.ok(artwork.altKo.length >= 10);
-    assert.ok(artwork.altEn.length >= 10);
-  }
 });
 
 test('property theft rule explains ownership signs, villager trading, and village limits', () => {

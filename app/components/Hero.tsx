@@ -1,65 +1,34 @@
 'use client';
-
-import { motion, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { brandProfile } from '../shared/serverGroup.mjs';
 import { useLanguage } from './LanguageProvider';
-import { serverProfile } from '../shared/siteContent.mjs';
-import { getHeroRevealTransition } from '../shared/homeMotion.mjs';
 import styles from '../styles/hero.module.css';
 
 export default function Hero() {
   const { t } = useLanguage();
-  const reduceMotion = useReducedMotion();
-
-  const reveal = (index: number) => ({
-    initial: reduceMotion ? false : { opacity: 0, y: 16 },
-    animate: { opacity: 1, y: 0 },
-    transition: {
-      ...getHeroRevealTransition(index, Boolean(reduceMotion)),
-      ease: [0.22, 0.75, 0.2, 1] as [number, number, number, number],
-    },
-  });
-
   return (
     <section className={styles.heroSection} aria-labelledby="home-title">
-      <motion.div
-        className={styles.imageFrame}
-        initial={reduceMotion ? false : { scale: 1.02, x: '-0.8%' }}
-        animate={reduceMotion ? undefined : { scale: 1.085, x: '0.8%' }}
-        transition={{ duration: reduceMotion ? 0 : 18, ease: [0.2, 0.6, 0.2, 1] }}
-      >
-        <Image
-          className={styles.heroImage}
-          src="/image copy 10.png"
-          alt={t('마을과 농장이 이어지는 StimeMC 서버 월드', 'The StimeMC server world with connected villages and farms')}
-          fill
-          priority
-          sizes="100vw"
-        />
-      </motion.div>
-      <div className={styles.overlay} />
-
       <div className={styles.content}>
-        <motion.p className={styles.kicker} {...reveal(0)}>
-          {t(serverProfile.kickerKo, serverProfile.kickerEn)}
-        </motion.p>
-        <motion.h1 id="home-title" className={styles.title} {...reveal(1)}>
-          StimeMC
-        </motion.h1>
-        <motion.p className={styles.description} {...reveal(2)}>
-          {t(
-            serverProfile.playerPromiseKo,
-            serverProfile.playerPromiseEn,
-          )}
-        </motion.p>
-        <motion.div className={styles.actions} {...reveal(3)}>
-          <Link href="/join" className={styles.primaryAction}>
-            {t('서버에 가입하기', 'Join the server')}
-          </Link>
-        </motion.div>
+        <div className={styles.brandLine}>
+          <h1 id="home-title">StimeMC<span className={styles.brandDot}>.</span></h1>
+          <p>{brandProfile.label}</p>
+        </div>
+        <div className={styles.composition}>
+          <div className={styles.statement}>
+            <p className={styles.message} lang="en">ONE COMMUNITY.<br />MORE WORLDS.</p>
+            <p className={styles.subtitle}>{t(brandProfile.headingKo, 'Many worlds, one Stime.')}</p>
+            <Link href="/servers" className={styles.action}>{t('서버 살펴보기', 'Explore servers')} <span aria-hidden="true">↗</span></Link>
+          </div>
+          <figure className={styles.imageWindow}>
+            <div className={styles.imageFrame}>
+              <Image src="/image copy 10.png" alt={t('기존 StimeMC 서버 기록: 마을과 농장', 'StimeMC archive: village and farms')} fill priority sizes="(max-width: 760px) calc(100vw - 40px), (max-width: 1440px) 52vw, 728px" />
+            </div>
+            <figcaption><span>STIMEMC ARCHIVE</span><span>{t('기존 서버 기록', 'Previous server record')}</span></figcaption>
+          </figure>
+        </div>
+        <div className={styles.meta}><span>JAVA × BEDROCK / GEYSER</span><span>{t('현재의 준비, 다음 세계의 계획', 'Preparing today. Planning what follows.')}</span></div>
       </div>
-
     </section>
   );
 }
