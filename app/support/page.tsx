@@ -90,6 +90,7 @@ function InquiryChat({ inquiry, messages, newMessage, onMessageChange, onSubmit,
 
       <form className={styles.chatComposer} onSubmit={onSubmit} style={{ padding: '16px 24px', borderTop: '1px solid var(--color-hairline)', display: 'flex', gap: '12px' }}>
         <input
+          aria-label={translate('추가 메시지를 입력해 주세요...', 'Type your message...')}
           type="text" placeholder={translate('추가 메시지를 입력해 주세요...', 'Type your message...')}
           maxLength={12000} value={newMessage} onChange={(event) => onMessageChange(event.target.value)} required
           style={{ flexGrow: 1, padding: '12px 18px', border: '1px solid var(--color-hairline)', borderRadius: '30px', fontSize: '0.95rem', outline: 'none' }}
@@ -696,10 +697,11 @@ export default function SupportPage() {
                     <form onSubmit={handleCreateInquiry} style={{ padding: '32px 24px', flexGrow: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '24px' }}>
                       {/* 마인크래프트 닉네임 작성 */}
                       <div>
-                        <label style={{ display: 'block', fontWeight: 700, marginBottom: '8px', color: 'var(--color-ink)' }}>
+                        <label htmlFor="member-inquiry-nickname" style={{ display: 'block', fontWeight: 700, marginBottom: '8px', color: 'var(--color-ink)' }}>
                           {t('마인크래프트 닉네임', 'Minecraft Nickname')} <span style={{ color: '#ef4444' }}>*</span>
                         </label>
                         <input
+                          id="member-inquiry-nickname"
                           type="text"
                           placeholder={t('마인크래프트 닉네임을 입력해 주세요', 'Enter your Minecraft nickname')}
                           value={nickname}
@@ -714,10 +716,11 @@ export default function SupportPage() {
 
                       {/* 문의 유형 선택 */}
                       <div>
-                        <label style={{ display: 'block', fontWeight: 700, marginBottom: '8px', color: 'var(--color-ink)' }}>
+                        <label htmlFor="member-inquiry-type" style={{ display: 'block', fontWeight: 700, marginBottom: '8px', color: 'var(--color-ink)' }}>
                           {t('문의 유형', 'Inquiry Type')} <span style={{ color: '#ef4444' }}>*</span>
                         </label>
                         <select
+                          id="member-inquiry-type"
                           value={inquiryType}
                           onChange={(e) => setInquiryType(e.target.value)}
                           required
@@ -735,10 +738,11 @@ export default function SupportPage() {
 
                       {/* 문의 내용 작성 */}
                       <div>
-                        <label style={{ display: 'block', fontWeight: 700, marginBottom: '8px', color: 'var(--color-ink)' }}>
+                        <label htmlFor="member-inquiry-content" style={{ display: 'block', fontWeight: 700, marginBottom: '8px', color: 'var(--color-ink)' }}>
                           {t('문의 내용', 'Inquiry Content')} <span style={{ color: '#ef4444' }}>*</span>
                         </label>
                         <textarea
+                          id="member-inquiry-content"
                           placeholder={t('//문의 내용을 입력해주세요!', '// Please enter the details of your inquiry!')}
                           value={inquiryContent}
                           onChange={(e) => setInquiryContent(e.target.value)}
@@ -753,10 +757,11 @@ export default function SupportPage() {
 
                       {/* 문의 목적 작성 */}
                       <div>
-                        <label style={{ display: 'block', fontWeight: 700, marginBottom: '8px', color: 'var(--color-ink)' }}>
+                        <label htmlFor="member-inquiry-purpose" style={{ display: 'block', fontWeight: 700, marginBottom: '8px', color: 'var(--color-ink)' }}>
                           {t('문의 목적', 'Expected Resolution')} <span style={{ color: '#ef4444' }}>*</span>
                         </label>
                         <textarea
+                          id="member-inquiry-purpose"
                           placeholder={t('//어떤 대응이나 답변을 원하시나요?', '// What kind of resolution or response are you expecting?')}
                           value={inquiryPurpose}
                           onChange={(e) => setInquiryPurpose(e.target.value)}
@@ -883,12 +888,12 @@ export default function SupportPage() {
                         transition={{ duration: reduceMotion ? 0 : 0.18 }}
                       >
                         <div>
-                          <label>{t('마인크래프트 닉네임', 'Minecraft Nickname')} <span aria-hidden="true">*</span></label>
-                          <input type="text" value={nickname} onChange={(event) => setNickname(event.target.value)} placeholder={t('마인크래프트 닉네임을 입력해 주세요', 'Enter your Minecraft nickname')} required />
+                          <label htmlFor="guest-inquiry-nickname">{t('마인크래프트 닉네임', 'Minecraft Nickname')} <span aria-hidden="true">*</span></label>
+                          <input id="guest-inquiry-nickname" type="text" value={nickname} onChange={(event) => setNickname(event.target.value)} placeholder={t('마인크래프트 닉네임을 입력해 주세요', 'Enter your Minecraft nickname')} required />
                         </div>
                         <div>
-                          <label>{t('문의 유형', 'Inquiry Type')} <span aria-hidden="true">*</span></label>
-                          <select value={inquiryType} onChange={(event) => setInquiryType(event.target.value)} required>
+                          <label htmlFor="guest-inquiry-type">{t('문의 유형', 'Inquiry Type')} <span aria-hidden="true">*</span></label>
+                          <select id="guest-inquiry-type" value={inquiryType} onChange={(event) => setInquiryType(event.target.value)} required>
                             <option value="복구">복구 (Recovery)</option>
                             <option value="신고">신고 (Report)</option>
                             <option value="서버">서버 (Server Issues)</option>
@@ -896,12 +901,12 @@ export default function SupportPage() {
                           </select>
                         </div>
                         <div>
-                          <label>{t('문의 내용', 'Inquiry Content')} <span aria-hidden="true">*</span></label>
-                          <textarea value={inquiryContent} onChange={(event) => setInquiryContent(event.target.value)} placeholder={t('//문의 내용을 입력해주세요!', '// Please enter the details of your inquiry!')} rows={5} required />
+                          <label htmlFor="guest-inquiry-content">{t('문의 내용', 'Inquiry Content')} <span aria-hidden="true">*</span></label>
+                          <textarea id="guest-inquiry-content" value={inquiryContent} onChange={(event) => setInquiryContent(event.target.value)} placeholder={t('//문의 내용을 입력해주세요!', '// Please enter the details of your inquiry!')} rows={5} required />
                         </div>
                         <div>
-                          <label>{t('문의 목적', 'Expected Resolution')} <span aria-hidden="true">*</span></label>
-                          <textarea value={inquiryPurpose} onChange={(event) => setInquiryPurpose(event.target.value)} placeholder={t('//어떤 대응이나 답변을 원하시나요?', '// What kind of resolution or response are you expecting?')} rows={3} required />
+                          <label htmlFor="guest-inquiry-purpose">{t('문의 목적', 'Expected Resolution')} <span aria-hidden="true">*</span></label>
+                          <textarea id="guest-inquiry-purpose" value={inquiryPurpose} onChange={(event) => setInquiryPurpose(event.target.value)} placeholder={t('//어떤 대응이나 답변을 원하시나요?', '// What kind of resolution or response are you expecting?')} rows={3} required />
                         </div>
                         <button type="submit" className={styles.modalSubmit} disabled={isSubmitting}>
                           {isSubmitting ? t('처리 중...', 'Processing...') : t('문의 전송하기', 'Send inquiry')}
@@ -922,8 +927,8 @@ export default function SupportPage() {
                       >
                         <p className={styles.timelineText}>{t('문의 접수 후 캡처해 둔 고유번호를 입력해 주세요.', 'Enter the unique code you captured after submitting your inquiry.')}</p>
                         <div>
-                          <label>{t('문의 고유번호', 'Inquiry code')}</label>
-                          <input type="text" value={guestLookupCode} onChange={(event) => setGuestLookupCode(event.target.value.toUpperCase())} placeholder="STM-ABC123" autoCapitalize="characters" autoCorrect="off" required />
+                          <label htmlFor="guest-inquiry-lookup-code">{t('문의 고유번호', 'Inquiry code')}</label>
+                          <input id="guest-inquiry-lookup-code" type="text" value={guestLookupCode} onChange={(event) => setGuestLookupCode(event.target.value.toUpperCase())} placeholder="STM-ABC123" autoCapitalize="characters" autoCorrect="off" required />
                         </div>
                         <button type="submit" className={styles.modalSubmit} disabled={isSubmitting}>
                           {isSubmitting ? t('조회 중...', 'Looking up...') : t('문의 채팅창 열기', 'Open inquiry chat')}
