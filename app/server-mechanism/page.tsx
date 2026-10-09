@@ -1,43 +1,27 @@
 'use client';
 
+import CrossplayBridge from '../components/CrossplayBridge';
+import GuideHeader from '../components/GuideHeader';
 import { useLanguage } from '../components/LanguageProvider';
-import { motion } from 'framer-motion';
 import { serverMechanismFlow } from '../shared/siteContent.mjs';
 import styles from '../styles/server-mechanism.module.css';
 
 export default function ServerMechanism() {
   const { language, t } = useLanguage();
   const isKorean = language === 'ko';
-  const { root, nodes } = serverMechanismFlow;
+  const { nodes } = serverMechanismFlow;
 
   return (
     <main className={styles.main}>
-      <section className={styles.heroSection}>
-        <div className={styles.heroContent}>
-          <motion.h1
-            className={styles.heroTitle}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            {isKorean ? root.titleKo : root.titleEn}
-          </motion.h1>
-          <motion.p
-            className={styles.heroSubtitle}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            {isKorean ? root.descriptionKo : root.descriptionEn}
-          </motion.p>
-        </div>
-      </section>
+      <GuideHeader eyebrow="STIMEMC / TECHNOLOGY" titleKo="두 에디션, 함께하는 플레이" titleEn="Two editions. Shared play." descriptionKo="모든 StimeMC 서버는 Geyser를 통한 Java × Bedrock 동시 접속을 공유하는 방향입니다. Survival은 추가 계획 중입니다." descriptionEn="Every StimeMC server shares Geyser-powered Java × Bedrock crossplay as its direction. Survival is planned for later." />
+      <CrossplayBridge />
       <section className={styles.sectionCanvas}>
         <div className={styles.sectionContent}>
           <header className={styles.mechanismHeader}>
-            <p className={styles.eyebrow}>{isKorean ? root.eyebrowKo : root.eyebrowEn}</p>
-            <h2 className={styles.sectionHeading}>{t('접속이 이어지는 방식', 'How the connection comes together')}</h2>
+            <p className={styles.eyebrow}>{t('기존 공개 구현 · VIAPROXY + GEYSER', 'Documented existing implementation · VIAPROXY + GEYSER')}</p>
+            <h2 className={styles.sectionHeading}>{t('기존 서버의 접속 구조', 'The existing server’s connection flow')}</h2>
           </header>
+          <p className={styles.sectionLead}>{t('아래는 기존에 문서화된 ViaProxy · Geyser · Java 1.21.1 구현입니다. 새 서버 그룹의 프록시 라우팅 구조나 각 서버의 확정 버전으로 해석하지 마세요.', 'The following is the documented existing ViaProxy · Geyser · Java 1.21.1 implementation. It does not confirm proxy routing for the new server group or versions for its servers.')}</p>
 
           <ol className={styles.mechanismTree} aria-label={t('StimeMC 접속 흐름', 'StimeMC connection flow')}>
             {nodes.map((node) => (

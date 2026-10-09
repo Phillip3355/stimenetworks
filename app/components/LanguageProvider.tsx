@@ -1,6 +1,7 @@
 'use client';
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { syncDocumentLanguage } from '../shared/guideInteractions.mjs';
 
 type Language = 'ko' | 'en';
 
@@ -26,6 +27,7 @@ interface LanguageProviderProps {
 
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('ko');
+  useEffect(() => { syncDocumentLanguage(document, language); }, [language]);
 
   const toggleLanguage = () => {
     setLanguage(prev => prev === 'ko' ? 'en' : 'ko');

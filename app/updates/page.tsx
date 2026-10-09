@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import GuideHeader from '../components/GuideHeader';
 import { useLanguage } from '../components/LanguageProvider';
 import styles from '../styles/server-mechanism.module.css';
 
@@ -48,43 +48,20 @@ export default function UpdatesPage() {
 
   return (
     <main className={styles.main}>
-      <section className={styles.heroSection}>
-        <div className={styles.heroContent}>
-          <motion.h1
-            className={styles.heroTitle}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            {t('업데이트 보기', 'Updates')}
-          </motion.h1>
-
-          <motion.p
-            className={styles.heroSubtitle}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            {t(
-              '새로 추가된 콘텐츠와 달라진 기능을 확인하고, 다음 접속에서 무엇을 경험할 수 있는지 한눈에 살펴보세요.',
-              'See what is new, what has changed, and what you can experience the next time you join.'
-            )}
-          </motion.p>
-        </div>
-      </section>
+      <GuideHeader eyebrow="STIMEMC / WEBSITE UPDATES" titleKo="홈페이지 업데이트" titleEn="Website updates" descriptionKo="StimeMC 홈페이지의 변경 기록입니다. 게임 서버의 출시 일정이나 콘텐츠 업데이트를 뜻하지 않습니다." descriptionEn="A record of changes to the StimeMC website. These entries describe website changes, separate from game server releases and content updates." />
 
       <section className={styles.sectionCanvas}>
         <div className={styles.sectionContent}>
           <div className={styles.sectionHeader}>
-            <p className={styles.eyebrow}>{t('배포 노트', 'Release Notes')}</p>
-            <h2 className={styles.sectionHeading}>{t('최근 업데이트', 'Recent Updates')}</h2>
+            <p className={styles.eyebrow}>{t('홈페이지 변경 기록', 'Website change log')}</p>
+            <h2 className={styles.sectionHeading}>{t('홈페이지 업데이트 기록', 'Website update records')}</h2>
           </div>
 
           <div className={styles.timelineGrid}>
             {updateCards.map((card, index) => (
               <article key={index} className={styles.timelineCard}>
                 <span className={styles.cornerSquare} />
-                <p className={styles.timelineDate}>{card.title}</p>
+                <time className={styles.timelineDate} dateTime={card.title.replaceAll('.', '-')}>{card.title}</time>
                 <h3 className={styles.timelineTitle}>{card.titleEn}</h3>
                 <p className={styles.timelineText}>{t(card.descriptionKo, card.descriptionEn)}</p>
               </article>

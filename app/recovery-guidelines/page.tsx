@@ -1,6 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import PolicyScope from '../components/PolicyScope';
+import GuideHeader from '../components/GuideHeader';
 import { useLanguage } from '../components/LanguageProvider';
 import styles from '../styles/server-mechanism.module.css';
 
@@ -36,30 +37,8 @@ export default function RecoveryGuidelines() {
 
   return (
     <main className={styles.main}>
-      <section className={styles.heroSection}>
-        <div className={styles.heroContent}>
-          <motion.h1
-            className={styles.heroTitle}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            {t('복구 가이드라인', 'Recovery Guidelines')}
-          </motion.h1>
-
-          <motion.p
-            className={styles.heroSubtitle}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            {t(
-              '아이템을 잃거나 건축물이 손상되었을 때 준비할 내용과 도움을 요청하는 방법을 확인할 수 있습니다.',
-              'Find out what to prepare and how to ask for help when items are lost or a build is damaged.'
-            )}
-          </motion.p>
-        </div>
-      </section>
+      <GuideHeader eyebrow="STIMEMC / RECOVERY" titleKo="복구 가이드라인" titleEn="Recovery guidelines" descriptionKo="손실을 기록하고 도움을 요청하는 기존 정책입니다. 새로운 서버의 별도 복구 정책은 아직 공개되지 않았습니다." descriptionEn="The existing policy for documenting losses and requesting help. Dedicated recovery policies for the new servers have not been published." />
+      <PolicyScope kind="recovery" />
 
       <section className={styles.sectionCanvas}>
         <div className={styles.sectionContent}>

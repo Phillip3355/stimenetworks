@@ -1,6 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import PolicyScope from '../components/PolicyScope';
+import GuideHeader from '../components/GuideHeader';
 import { useLanguage } from '../components/LanguageProvider';
 import RuleMindMap from '../components/RuleMindMap';
 import styles from '../styles/server-mechanism.module.css';
@@ -10,30 +11,8 @@ export default function RulesPage() {
 
   return (
     <main className={styles.main}>
-      <section className={styles.heroSection}>
-        <div className={styles.heroContent}>
-          <motion.h1
-            className={styles.heroTitle}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            {t('서버 규칙을 한눈에', 'Server Rules at a Glance')}
-          </motion.h1>
-
-          <motion.p
-            className={styles.heroSubtitle}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            {t(
-              '함께 플레이할 때 필요한 기준을 빠르게 확인하고, 서로의 건축물과 경험을 존중하며 자유롭게 즐겨보세요.',
-              'Quickly check the shared expectations, respect other players and their builds, and enjoy the server freely.'
-            )}
-          </motion.p>
-        </div>
-      </section>
+      <GuideHeader eyebrow="STIMEMC / RULES" titleKo="함께 플레이하는 기준" titleEn="A guide to playing together" descriptionKo="기존 공개 규칙과 새로운 서버의 준비 현황을 구분해 확인하세요." descriptionEn="Explore the existing published rules alongside the preparation status of the new servers." />
+      <PolicyScope kind="rules" />
 
       <section className={styles.sectionCanvas}>
         <div className={styles.sectionContent}>

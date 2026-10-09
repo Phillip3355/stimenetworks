@@ -1,0 +1,26 @@
+.main { min-height: 100svh; padding-top: var(--nav-height); padding-bottom: max(64px, env(safe-area-inset-bottom)); background: var(--color-canvas); }
+.container { width: min(calc(100% - 40px), var(--container-wide)); margin: 0 auto; min-width: 0; }
+.header { padding: clamp(48px, 8vw, 104px) 0; border-bottom: 1px solid var(--color-hairline); background: linear-gradient(120deg, var(--color-surface-raised), var(--color-canvas)); }
+.header .container { display: grid; gap: 24px; }
+.eyebrow { color: var(--color-accent); font: 600 11px/1.6 var(--font-mono); letter-spacing: .12em; }
+.header h1 { max-width: 18ch; color: var(--color-ink); font-size: clamp(36px, 6.8vw, 84px); line-height: 1.13; font-weight: 550; letter-spacing: -.045em; word-break: keep-all; overflow-wrap: anywhere; }
+.lead { max-width: 65ch; color: var(--color-body); font-size: clamp(15px, 1.6vw, 18px); line-height: 1.8; }
+.sectionIntro { display: grid; gap: 16px; padding-top: clamp(40px, 6vw, 72px); margin-bottom: 28px; }
+.sectionIntro h2 { max-width: 30ch; font-size: clamp(25px, 3vw, 42px); font-weight: 550; line-height: 1.25; overflow-wrap: anywhere; }
+.sectionIntro p, .serverPanel p, .scope p { max-width: 68ch; color: var(--color-body); font-size: 15px; line-height: 1.8; overflow-wrap: anywhere; }
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0; }
+.tabs button, .copyValue button { min-height: 48px; padding: 10px 20px; border: 1px solid var(--color-hairline-strong); color: var(--color-ink); background: var(--color-surface); cursor: pointer; font: inherit; }
+.tabs button[aria-selected='true'] { background: var(--color-accent); color: var(--color-canvas); border-color: var(--color-accent); }
+.serverGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.serverPanel { display: grid; align-content: start; gap: 20px; padding: clamp(24px, 3vw, 40px); border: 1px solid var(--color-hairline); background: var(--color-surface); min-width: 0; }
+.serverPanel h3 { font: 600 clamp(28px, 3vw, 42px)/1.1 var(--font-display); overflow-wrap: anywhere; }
+.notice { padding: 20px 0 0; border-top: 1px solid var(--color-hairline); }
+.copyValue { display: grid; gap: 10px; padding: 16px 0; min-width: 0; }
+.copyValue code { overflow-wrap: anywhere; color: var(--color-accent); }
+.copyValue input, .scope select { width: 100%; min-height: 48px; border: 1px solid var(--color-hairline-strong); padding: 10px 14px; color: var(--color-ink); background: var(--color-surface-raised); font: inherit; border-radius: 0; }
+.copyValue label { display: grid; gap: 12px; font-size: 15px; line-height: 1.7; }
+.scope { display: grid; gap: 20px; padding: clamp(22px, 3vw, 36px); margin: 40px auto 0; width: min(calc(100% - 40px), var(--container-wide)); border: 1px solid var(--color-hairline); border-left: 3px solid var(--color-accent); background: var(--color-surface); }
+.scope select { max-width: 520px; }
+.scope a { display: inline-flex; align-items: center; min-height: 44px; color: var(--color-accent); }
+@media (max-width: 760px) { .serverGrid { grid-template-columns: 1fr; } }
+@media (max-width: 600px) { .container, .scope { width: calc(100% - 28px); } .header { padding: 40px 0; } }

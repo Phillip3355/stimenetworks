@@ -1,10 +1,8 @@
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
+import type { Metadata } from 'next';
+import ReportArticle from '../components/ReportArticle';
 import { getPublishedReport } from '../server/reports';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 import { extractReportTitleAndContent } from '../shared/reportPresentation.mjs';
-import styles from '../styles/report.module.css';
 
 export const revalidate = 0; // SSR to fetch reports instantly
 
@@ -37,41 +35,15 @@ export default async function ReportPage({ params }: ReportPageProps) {
 
   const { title, content } = extractReportTitleAndContent(report.content, slugPath);
 
-  const formattedDate = new Date(report.created_at).toLocaleDateString('ko-KR', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
-  });
+  return <ReportArticle title={title} content={content} createdAt={report.created_at} />;
+}
 
-  return (
-    <main className={styles.main}>
-      <div className={styles.container}>
-        {/* Navigation back button */}
-        <Link href="/news" className={styles.backButton}>
-          <span>←</span>
-          <span>뉴스 목록으로 돌아가기</span>
-        </Link>
-
-        <header className={styles.header}>
-          <span className={styles.badge}>Stime Report</span>
-          <h1 className={styles.title}>{title}</h1>
-          <div className={styles.metadata}>
-            <span className={styles.author}>StimeMC</span>
-            <span className={styles.separator}>|</span>
-            <time dateTime={report.created_at}>{formattedDate}</time>
-          </div>
-        </header>
-
-        <article className={styles.card}>
-          <div className={styles.markdown}>
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
-              {content}
-            </ReactMarkdown>
-          </div>
-        </article>
-      </div>
-    </main>
-  );
+export async function generateMetadata({ params }: ReportPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const slugPath = slug.join('/');
+  if (slugPath.startsWith('_next') || slugPath.startsWith('api')) return { title: 'Report' };
+  const { data: report } = await getPublishedReport(slugPath);
+  if (!report) return { title: 'Report' };
+  const { title } = extractReportTitleAndContent(report.content, slugPath);
+  return { title, description: 'StimeMC에서 발행한 보고서. Published StimeMC report.' };
 }

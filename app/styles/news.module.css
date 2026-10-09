@@ -1,6 +1,6 @@
 .main {
   min-height: 100svh;
-  padding: calc(var(--nav-height) + clamp(48px, 7vw, 92px)) 0 clamp(76px, 10vw, 132px);
+  padding: var(--nav-height) 0 max(76px, env(safe-area-inset-bottom));
   background: var(--color-canvas);
   color: var(--color-body);
 }
@@ -8,6 +8,7 @@
 .container {
   width: min(calc(100% - 40px), 1120px);
   margin: 0 auto;
+  padding-top: 40px;
 }
 
 .header {
@@ -86,7 +87,7 @@
 
 @media (max-width: 600px) {
   .main {
-    padding-top: calc(var(--nav-height) + 40px);
+    padding-top: var(--nav-height);
   }
 
   .container {

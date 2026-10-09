@@ -2,6 +2,13 @@ import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import test from 'node:test';
 import { formatReportDate } from '../app/shared/reportDate.mjs';
+import * as reportDates from '../app/shared/reportDate.mjs';
+
+test('report timestamp displays the same community date and time at the midnight boundary', () => {
+  assert.equal(typeof reportDates.formatReportTimestamp, 'function');
+  assert.equal(reportDates.formatReportTimestamp('2026-10-01T15:00:00Z', 'en'), 'Oct 2, 2026, 12:00 AM');
+  assert.equal(reportDates.formatReportTimestamp('bad-date', 'ko'), '날짜 미상');
+});
 
 test('report dates cross midnight according to the community time zone', () => {
   assert.equal(formatReportDate('2026-10-01T14:59:59Z', 'en'), 'Oct 1, 2026');

@@ -1,7 +1,7 @@
 .main {
   min-height: 100svh;
   padding-top: var(--nav-height);
-  overflow: clip;
+  min-width: 0;
   background: var(--color-canvas);
   color: var(--color-body);
 }
@@ -14,7 +14,7 @@
   border-bottom: 1px solid var(--color-hairline);
   background:
     radial-gradient(circle at 82% 10%, rgba(255, 255, 255, 0.075), transparent 32%),
-    linear-gradient(145deg, #080808, #030303);
+    linear-gradient(145deg, var(--color-surface-raised), var(--color-canvas));
 }
 
 .heroContent,
@@ -52,7 +52,7 @@
   max-width: 720px;
   margin: 0;
   color: var(--color-body);
-  font-size: clamp(14px, 1.45vw, 17px);
+  font-size: clamp(15px, 1.45vw, 17px);
   line-height: 1.75;
   word-break: keep-all;
 }
@@ -952,7 +952,7 @@
 }
 
 .adminLogoutButton {
-  min-height: 42px !important;
+  min-height: 44px !important;
   padding: 10px 20px;
   border: 1px solid color-mix(in srgb, var(--color-danger) 68%, transparent) !important;
   border-radius: var(--radius-sm) !important;
@@ -1076,7 +1076,7 @@
 .reportViewButton,
 .reportDeleteButton {
   min-width: 72px;
-  min-height: 42px;
+  min-height: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1134,7 +1134,7 @@
 }
 
 .main button {
-  min-height: 42px;
+  min-height: 44px;
 }
 
 .adminTab {
@@ -1202,7 +1202,7 @@
 
 .reportPublishButton:hover:not(:disabled) {
   border-color: var(--color-ink) !important;
-  background: #20201f !important;
+  background: var(--color-surface-soft) !important;
 }
 
 .reportPublishButton:disabled {
@@ -1539,3 +1539,15 @@
     transition: none;
   }
 }
+
+/* Shared reading and functional surfaces use the server-group brand. */
+.heroSection { min-height: 0; padding: clamp(44px, 7vw, 88px) 0; }
+.heroTitle, .title { line-height: 1.14; overflow-wrap: anywhere; }
+.sectionHeading, .timelineTitle, .nodeTitle { line-height: 1.2; overflow-wrap: anywhere; }
+.timelineText, .nodeDescription, .nodePoints { font-size: 15px; line-height: 1.8; }
+.timelineCard { background: var(--color-surface); }
+.eyebrow, .timelineDate, .nodeEyebrow { color: var(--color-accent); }
+.main input, .main textarea, .main select { font-size: 16px !important; }
+.main form { min-width: 0; }
+.chatComposer { padding-bottom: max(16px, env(safe-area-inset-bottom)) !important; }
+@media (max-width: 600px) { .heroSection { padding: 40px 0; } }

@@ -1,5 +1,7 @@
 'use client';
 
+import GuideHeader from '../components/GuideHeader';
+import { formatReportDate } from '../shared/reportDate.mjs';
 import Link from 'next/link';
 import { useLanguage } from '../components/LanguageProvider';
 import styles from '../styles/news.module.css';
@@ -19,18 +21,10 @@ interface NewsArchiveProps {
 export default function NewsArchive({ reports, loadFailed }: NewsArchiveProps) {
   const { language, t } = useLanguage();
 
-  const formatDate = (date: string) => new Intl.DateTimeFormat(
-    language === 'ko' ? 'ko-KR' : 'en-US',
-    { year: 'numeric', month: '2-digit', day: '2-digit' },
-  ).format(new Date(date));
-
   return (
     <main className={styles.main}>
+      <GuideHeader eyebrow="STIMEMC / NEWS" titleKo="StimeMC 소식" titleEn="StimeMC news" descriptionKo="실제로 발행된 공지와 보고서를 최신순으로 확인하세요." descriptionEn="Published notices and reports, newest first." />
       <div className={styles.container}>
-        <header className={styles.header}>
-          <h1>{t('뉴스 보기', 'News')}</h1>
-        </header>
-
         {loadFailed ? (
           <section className={styles.state} role="alert">
             <p>{t('뉴스를 불러오지 못했습니다. 잠시 후 새로고침해주세요.', 'The news archive could not be loaded. Please refresh shortly.')}</p>
@@ -44,7 +38,7 @@ export default function NewsArchive({ reports, loadFailed }: NewsArchiveProps) {
             {reports.map((report) => (
               <Link key={report.id} href={`/${report.slug}`} className={styles.row}>
                 <h2>{report.title}</h2>
-                <time dateTime={report.createdAt}>{formatDate(report.createdAt)}</time>
+                <time dateTime={report.createdAt}>{formatReportDate(report.createdAt, language)}</time>
               </Link>
             ))}
           </section>

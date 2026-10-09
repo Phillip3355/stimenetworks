@@ -11,6 +11,7 @@
 }
 
 .backButton {
+  gap: 12px;
   min-height: 44px;
   display: inline-flex;
   align-items: center;
@@ -43,10 +44,10 @@
   color: var(--color-ink);
   font-size: clamp(38px, 7vw, 72px);
   font-weight: 400;
-  line-height: 1.02;
+  line-height: 1.15;
   letter-spacing: -0.06em;
   word-break: keep-all;
-  overflow-wrap: normal;
+  overflow-wrap: anywhere;
   text-wrap: balance;
 }
 
@@ -71,6 +72,7 @@
 }
 
 .card {
+  min-width: 0;
   padding: clamp(26px, 5vw, 52px) 0 0;
   color: var(--color-body);
   font-size: 16px;
@@ -126,7 +128,7 @@
   padding: 20px;
   overflow-x: auto;
   border: 1px solid var(--color-hairline);
-  background: #090909;
+  background: var(--color-surface);
 }
 
 .markdown pre code {
@@ -136,6 +138,7 @@
 }
 
 .markdown table {
+  max-width: 100%;
   width: 100%;
   margin: 1.8em 0;
   border-collapse: collapse;
@@ -143,6 +146,10 @@
   overflow-x: auto;
   font-size: 13px;
 }
+.markdown { min-width: 0; overflow-wrap: anywhere; }
+.markdown img { max-width: 100%; height: auto; }
+.badge, .markdown a { color: var(--color-accent); }
+.markdown pre { overscroll-behavior-inline: contain; }
 
 .markdown th,
 .markdown td {

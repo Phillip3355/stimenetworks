@@ -6,7 +6,7 @@ import { buildReportSummary } from '../shared/reportPresentation.mjs';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: '뉴스 | StimeMC',
+  title: '뉴스',
   description: 'StimeMC에서 발행한 공지, 소식과 보고서를 최신순으로 확인하세요.',
 };
 

@@ -1,6 +1,6 @@
 .main {
   min-height: 100svh;
-  padding: calc(var(--nav-height) + 40px) 20px 48px;
+  padding: calc(var(--nav-height) + 40px) max(20px, env(safe-area-inset-right)) max(48px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
   display: grid;
   place-items: center;
   background: var(--color-canvas);
@@ -35,7 +35,7 @@
 .message {
   margin: 0;
   color: var(--color-text-soft);
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.65;
   word-break: keep-all;
 }

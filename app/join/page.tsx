@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import ConnectionGuide from '../components/ConnectionGuide';
+import GuideHeader from '../components/GuideHeader';
 import { useLanguage } from '../components/LanguageProvider';
 import { joinConnectionGuide } from '../shared/siteContent.mjs';
 import styles from '../styles/server-mechanism.module.css';
@@ -12,39 +13,18 @@ export default function JoinServerPage() {
   return (
     <main className={styles.main}>
       {/* 히어로 섹션 */}
-      <section className={styles.heroSection}>
-        <div className={styles.heroContent}>
-          <motion.h1
-            className={styles.heroTitle}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            {t('서버에 가입하기', 'Join the Server')}
-          </motion.h1>
-
-          <motion.p
-            className={styles.heroSubtitle}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            {t(
-              'Java와 Bedrock 중 익숙한 에디션으로 접속하세요. 클라이언트 모드를 따로 설치하지 않아도 확장된 콘텐츠를 바로 즐길 수 있습니다.',
-              'Connect with the Java or Bedrock edition you already use. No client mods are required to enjoy the expanded content.'
-            )}
-          </motion.p>
-        </div>
-      </section>
+      <GuideHeader eyebrow="STIMEMC / JOIN" titleKo="같이할 세계를 준비합니다" titleEn="Your next world is in preparation" descriptionKo="The Great War는 운영 준비 중이며 Survival은 추가 계획 중입니다. 서버 현황과 에디션별 안내를 먼저 확인하세요." descriptionEn="The Great War is preparing to operate; Survival is planned for later. Check each server’s status and edition guide first." />
+      <ConnectionGuide />
 
       {/* 접속 스펙 및 가이드 카드 */}
       <section className={styles.sectionCanvas}>
         <div className={styles.sectionContent}>
           <div className={styles.sectionHeader}>
-            <p className={styles.eyebrow}>{t('플랫폼 스펙', 'Platform Specifications')}</p>
-            <h2 className={styles.sectionHeading}>{t('어떤 에디션이든 환영합니다', 'All Minecraft Editions Welcome')}</h2>
+            <p className={styles.eyebrow}>{t('기존 공개 가이드 · 아카이브', 'Previously published guide · Archive')}</p>
+            <h2 className={styles.sectionHeading}>{t('기존 서버 접속 안내', 'Existing server connection guide')}</h2>
           </div>
 
+          <p className={styles.sectionLead}>{t('아래 1.21.1 버전과 커뮤니티 안내는 기존 공개 가이드입니다. The Great War 또는 Survival의 확정 접속 버전이나 주소가 아닙니다.', 'The 1.21.1 version and community instructions below are the previously published guide. They are not confirmed connection versions or addresses for The Great War or Survival.')}</p>
           <div className={styles.timelineGrid}>
             {/* Java 에디션 가이드 */}
             <article className={styles.timelineCard}>
@@ -96,8 +76,8 @@ export default function JoinServerPage() {
           </h2>
           <p className={styles.sectionLead} style={{ maxWidth: '600px', margin: '0 auto' }}>
             {t(
-              '누구나 편하게 참여하고 원하는 방식으로 플레이할 수 있도록 몇 가지 기본 규칙만 함께 지켜주세요. 접속 전에 한 번 읽어두면 바로 시작할 수 있습니다.',
-              'A few shared rules keep the server open and comfortable for everyone. Read them once before joining, then jump straight into play.'
+              '누구나 편하게 참여하고 원하는 방식으로 플레이할 수 있도록 몇 가지 기본 규칙만 함께 지켜주세요. 기존 공개 규칙의 적용 범위를 확인하고, 새 서버의 별도 규칙 공개를 기다려 주세요.',
+              'A few shared rules keep the server open and comfortable for everyone. Check the scope of the existing published rules and wait for dedicated rules for the new servers.'
             )}
           </p>
           <Link href="/rules" className={styles.buttonOutline} style={{ marginTop: '8px' }}>
