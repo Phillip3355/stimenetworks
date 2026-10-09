@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { navigationGroups, serverProfile } from '../shared/siteContent.mjs';
+import { navigationGroups } from '../shared/siteContent.mjs';
+import { brandProfile } from '../shared/serverGroup.mjs';
 import { useLanguage } from './LanguageProvider';
 
 export default function Footer() {
@@ -10,17 +11,18 @@ export default function Footer() {
     language === 'ko' ? item.labelKo : item.labelEn;
 
   return (
-    <footer className="footer">
+    <footer className="footer" data-menu-background>
       <div className="footerInner">
         <div className="footerBrand">
           <div>
             <p className="footerTitle">StimeMC</p>
             <p className="footerText">
               {t(
-                serverProfile.playerPromiseKo,
-                serverProfile.playerPromiseEn,
+                brandProfile.descriptionKo,
+                brandProfile.descriptionEn,
               )}
             </p>
+            <p className="footerText">{t(brandProfile.crossplayKo, brandProfile.crossplayEn)}</p>
           </div>
 
           {navigationGroups.map((group) => (
@@ -37,7 +39,7 @@ export default function Footer() {
 
         <div className="footerBottom">
           <span>© 2026 StimeMC</span>
-          <span>{t('접속 전에도 월드와 새 콘텐츠를 둘러볼 수 있는 공간', 'A place to explore the world and new content before you join')}</span>
+          <span>{t(brandProfile.headingKo, brandProfile.headingEn)}</span>
         </div>
       </div>
     </footer>

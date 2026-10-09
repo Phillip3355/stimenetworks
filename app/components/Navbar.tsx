@@ -2,13 +2,12 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { navigationGroups, serverProfile } from '../shared/siteContent.mjs';
+import { navigationGroups } from '../shared/siteContent.mjs';
+import { brandProfile } from '../shared/serverGroup.mjs';
 import styles from '../styles/navbar.module.css';
 import { useLanguage } from './LanguageProvider';
-
-const desktopPaths = new Set(['/join', '/server-mechanism', '/support']);
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -17,37 +16,44 @@ export default function Navbar() {
   const [menuState, setMenuState] = useState({ open: false, pathname });
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
   const isOpen = menuState.open && menuState.pathname === pathname;
 
-  const desktopLinks = useMemo(
-    () =>
-      navigationGroups
-        .flatMap((group) => group.links)
-        .filter((link) => desktopPaths.has(link.href)),
-    [],
-  );
+  const desktopLinks = navigationGroups.filter((group) => group.id !== 'join');
 
   useEffect(() => {
     if (!isOpen) return;
 
     const previousOverflow = document.body.style.overflow;
+    const trigger = triggerRef.current;
     document.body.style.overflow = 'hidden';
     const focusable = panelRef.current?.querySelectorAll<HTMLElement>(
       'a[href], button:not([disabled])',
     );
     focusable?.[0]?.focus();
+    const background = [headerRef.current, ...document.querySelectorAll<HTMLElement>('[data-menu-background]')]
+      .filter((element): element is HTMLElement => element !== null);
+    const previousBackground = background.map((element) => ({
+      element, inert: element.inert, ariaHidden: element.getAttribute('aria-hidden'),
+    }));
+    background.forEach((element) => {
+      element.inert = true;
+      element.setAttribute('aria-hidden', 'true');
+    });
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setMenuState({ open: false, pathname });
-        requestAnimationFrame(() => triggerRef.current?.focus());
         return;
       }
 
       if (event.key !== 'Tab' || !focusable?.length) return;
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
+      if (!panelRef.current?.contains(document.activeElement)) {
+        event.preventDefault();
+        first.focus();
+      } else if (event.shiftKey && document.activeElement === first) {
         event.preventDefault();
         last.focus();
       } else if (!event.shiftKey && document.activeElement === last) {
@@ -60,6 +66,12 @@ export default function Navbar() {
     return () => {
       document.body.style.overflow = previousOverflow;
       document.removeEventListener('keydown', onKeyDown);
+      previousBackground.forEach(({ element, inert, ariaHidden }) => {
+        element.inert = inert;
+        if (ariaHidden === null) element.removeAttribute('aria-hidden');
+        else element.setAttribute('aria-hidden', ariaHidden);
+      });
+      trigger?.focus();
     };
   }, [isOpen, pathname]);
 
@@ -68,12 +80,11 @@ export default function Navbar() {
 
   const closeMenu = () => {
     setMenuState({ open: false, pathname });
-    requestAnimationFrame(() => triggerRef.current?.focus());
   };
 
   return (
     <>
-      <header className={styles.header}>
+      <header ref={headerRef} className={styles.header}>
         <div className={styles.headerInner}>
           <Link href="/" className={styles.brand} aria-label="StimeMC home">
             <span className={styles.brandMark} aria-hidden="true" />
@@ -87,11 +98,16 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   className={pathname === link.href ? styles.activeLink : undefined}
+                  aria-current={pathname === link.href ? 'page' : undefined}
                 >
                   {labelFor(link)}
                 </Link>
               ))}
             </nav>
+
+            <Link href="/join" className={styles.joinLink} aria-current={pathname === '/join' ? 'page' : undefined}>
+              {labelFor({ labelKo: '접속', labelEn: 'Join' })}
+            </Link>
 
             <button
               type="button"
@@ -125,7 +141,7 @@ export default function Navbar() {
             className={styles.menuLayer}
             initial={reduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            exit={{ opacity: 0, pointerEvents: 'none' }}
             transition={{ duration: reduceMotion ? 0 : 0.24 }}
           >
             <motion.div
@@ -143,6 +159,9 @@ export default function Navbar() {
             >
               <div className={styles.menuTopline}>
                 <span>StimeMC</span>
+                <button type="button" onClick={toggleLanguage} className={styles.closeButton} aria-label={language === 'ko' ? 'Switch to English' : '한국어로 전환'}>
+                  KO / EN
+                </button>
                 <button type="button" onClick={closeMenu} className={styles.closeButton}>
                   {labelFor({ labelKo: '닫기', labelEn: 'Close' })}
                 </button>
@@ -162,6 +181,7 @@ export default function Navbar() {
                             closeMenu();
                           }}
                           className={pathname === link.href ? styles.menuLinkActive : undefined}
+                          aria-current={pathname === link.href ? 'page' : undefined}
                         >
                           {labelFor(link)}
                         </Link>
@@ -173,12 +193,12 @@ export default function Navbar() {
 
               <p className={styles.menuFootnote}>
                 {labelFor({
-                  labelKo: serverProfile.playerPromiseKo,
-                  labelEn: serverProfile.playerPromiseEn,
+                  labelKo: brandProfile.crossplayKo,
+                  labelEn: brandProfile.crossplayEn,
                 })}
               </p>
             </motion.div>
-            <button className={styles.backdrop} onClick={closeMenu} aria-label="Close menu" />
+            <button className={styles.backdrop} onClick={closeMenu} tabIndex={-1} aria-label={labelFor({ labelKo: '메뉴 닫기', labelEn: 'Close menu' })} />
           </motion.div>
         )}
       </AnimatePresence>

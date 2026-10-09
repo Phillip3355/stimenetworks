@@ -45,12 +45,13 @@ test('join connection guide points Java players to version 1.21.1 and a server a
 });
 
 test('navigation preserves every documented public and operational route', () => {
-  assert.deepEqual(navigationGroups.map(({ labelKo }) => labelKo), ['안내', '유저', '기술']);
+  assert.deepEqual(navigationGroups.map(({ labelEn }) => labelEn), ['Servers', 'News', 'Guide', 'About', 'Join']);
   assert.equal(navigationGroups.flatMap((group) => group.links).some(({ href }) => href === '/taskboard'), false);
-  assert.deepEqual(navigationGroups[1].links.map(({ href }) => href), ['/join', '/support']);
-  assert.deepEqual(navigationGroups[2].links.map(({ href }) => href), ['/server-mechanism', '/history']);
   assert.deepEqual(requiredNavigationPaths, [
     '/',
+    '/servers',
+    '/servers/the-great-war',
+    '/servers/survival',
     '/join',
     '/support',
     '/server-mechanism',
@@ -68,6 +69,8 @@ test('navigation preserves every documented public and operational route', () =>
   for (const path of requiredNavigationPaths) {
     assert.ok(renderedPaths.includes(path), `navigation is missing ${path}`);
   }
+  assert.ok(navigationGroups.find(({ id }) => id === 'guide').links.some(({ href }) => href === '/support'));
+  assert.ok(navigationGroups.find(({ id }) => id === 'about').links.some(({ href }) => href === '/history'));
 });
 
 test('home feature learn-more links target the documented services', () => {

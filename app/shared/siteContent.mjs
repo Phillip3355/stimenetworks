@@ -1,5 +1,8 @@
 export const requiredNavigationPaths = [
   '/',
+  '/servers',
+  '/servers/the-great-war',
+  '/servers/survival',
   '/join',
   '/support',
   '/server-mechanism',
@@ -86,9 +89,9 @@ export const serverProfile = {
   kickerKo: 'Java · Bedrock · 클라이언트 모드 불필요',
   kickerEn: 'Java · Bedrock · No client mods required',
   playerPromiseKo:
-    '별도 모드 설치 없이 Java와 Bedrock 어디서든 접속해, 확장된 콘텐츠를 자유롭게 즐길 수 있습니다.',
+    '별도 모드 설치 없이 Java와 Bedrock이 함께하는 서버 그룹을 준비합니다. The Great War는 운영 준비 중이며 Survival은 추가 계획 중입니다.',
   playerPromiseEn:
-    'Join from Java or Bedrock without installing client mods, then explore expanded content your way.',
+    'A server group for Java and Bedrock without installing client mods. The Great War is preparing; Survival is planned for later.',
 };
 
 export const homeIntro = {
@@ -191,34 +194,54 @@ export const joinConnectionGuide = {
 
 export const navigationGroups = [
   {
-    id: 'guide',
-    labelKo: '안내',
-    labelEn: 'Guide',
+    id: 'servers',
+    labelKo: '서버',
+    labelEn: 'Servers',
+    href: '/servers',
     links: [
-      { href: '/', labelKo: '홈', labelEn: 'Home' },
-      { href: '/rules', labelKo: '서버 규칙', labelEn: 'Rules' },
-      { href: '/recovery-guidelines', labelKo: '복구 가이드', labelEn: 'Recovery Guide' },
-      { href: '/updates', labelKo: '업데이트', labelEn: 'Updates' },
-      { href: '/news', labelKo: '뉴스 보기', labelEn: 'News' },
+      { href: '/servers', labelKo: '서버 둘러보기', labelEn: 'All Servers' },
+      { href: '/servers/the-great-war', labelKo: 'THE GREAT WAR', labelEn: 'THE GREAT WAR' },
+      { href: '/servers/survival', labelKo: 'SURVIVAL · 계획 중', labelEn: 'SURVIVAL · Planned' },
     ],
   },
   {
-    id: 'player',
-    labelKo: '유저',
-    labelEn: 'Players',
+    id: 'news',
+    labelKo: '뉴스',
+    labelEn: 'News',
+    href: '/news',
     links: [
-      { href: '/join', labelKo: '서버 가입', labelEn: 'Join Server' },
+      { href: '/news', labelKo: 'StimeMC 소식', labelEn: 'StimeMC News' },
+      { href: '/updates', labelKo: '홈페이지 업데이트', labelEn: 'Website Updates' },
+    ],
+  },
+  {
+    id: 'guide',
+    labelKo: '안내',
+    labelEn: 'Guide',
+    href: '/rules',
+    links: [
+      { href: '/rules', labelKo: '서버 규칙', labelEn: 'Rules' },
+      { href: '/recovery-guidelines', labelKo: '복구 가이드', labelEn: 'Recovery Guide' },
       { href: '/support', labelKo: '1:1 문의', labelEn: 'Support' },
     ],
   },
   {
-    id: 'technology',
-    labelKo: '기술',
-    labelEn: 'Technology',
+    id: 'about',
+    labelKo: '소개',
+    labelEn: 'About',
+    href: '/history',
     links: [
+      { href: '/', labelKo: 'StimeMC', labelEn: 'StimeMC' },
       { href: '/server-mechanism', labelKo: '서버 메커니즘', labelEn: 'Server Mechanism' },
       { href: '/history', labelKo: '서버의 역사', labelEn: 'History' },
     ],
+  },
+  {
+    id: 'join',
+    labelKo: '접속 안내',
+    labelEn: 'Join',
+    href: '/join',
+    links: [{ href: '/join', labelKo: '접속 안내', labelEn: 'Join Guide' }],
   },
 ];
 

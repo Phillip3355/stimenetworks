@@ -1,156 +1,35 @@
-# StimeMC 리디자인 전 유지 사항
+# StimeMC Redesign Preservation Notes
 
-## 서버 정체성
+The approved redesign specification is `docs/superpowers/specs/2026-10-09-stimemc-server-group-redesign.md`. These notes describe the current application, not removed signup or voice features.
 
-- Java Edition과 Bedrock Edition에서 같은 월드에 접속할 수 있음
-- 확장 콘텐츠는 서버사이드 모드로 제공하며 플레이어는 별도 클라이언트 모드를 설치하지 않음
-- 특정 야생 플레이 방식으로 한정하지 않고 다양한 참여와 피드백에 열린 서버로 운영
-- 사용자에게 보이는 설명은 운영자 관점보다 플레이어가 할 수 있는 일과 얻는 경험을 우선함
+## Current functions
 
-## 1. 현재 사이트 구조
+The application uses Next.js App Router, Supabase and existing Framer Motion. Public information includes home, Join guidance, mechanism, rules, recovery, website updates, news, history and Markdown reports. The redesign adds a server hub and details for The Great War and planned Survival.
 
-이 사이트는 Next.js App Router와 Supabase를 기반으로 한 마인크래프트 서버 소개 및 운영 지원 사이트다.
+Support offers Google OAuth member inquiries and guest inquiries identified by a private inquiry code. Members and authorized administrators can read and reply to their permitted conversations. Guest access stays scoped to the matching guest inquiry. Taskboard manages authorized inquiry responses and report publication. Telegram inquiry notifications use the existing server-side authorization and atomic claim contracts.
 
-- 공개 정보 페이지: 홈, 서버 가입, 서버 메커니즘, 규칙, 복구 가이드, 업데이트
-- 사용자 지원: Google 로그인 후 문의 티켓 생성 및 실시간 1:1 채팅
-- 관리자 기능: 문의 답변, Markdown 보고서 발행, STAGE 채널 관리
-- STAGE 채널: 관리자 생성, 공개 목록, WebRTC 음성·화면 공유, 관리자 발언자 권한 관리
-- 동적 보고서: Supabase의 Markdown 데이터를 URL 페이지로 표시
+There is no current signup-request form or voice/STAGE UI. Legacy join-request storage is removed by the existing migrations. Do not restore those features or describe them as current.
 
-일반 사용자가 생성하는 보이스룸 기능은 제거되었으며, 현재 보이스 기능은 STAGE 채널만 지원한다.
+## Preserve these contracts
 
-## 2. 리디자인에서 건들면 안 되는 것
+Keep `/`, `/join`, `/support`, `/taskboard`, `/auth/callback`, `/server-mechanism`, `/rules`, `/recovery-guidelines`, `/updates`, `/news`, `/history`, existing report slugs and inquiry alert API routes. `/News` is a historical report slug with uppercase N; never normalize it to `/news`. New static `/servers`, `/servers/the-great-war` and `/servers/survival` routes take precedence over the report catch-all.
 
-### URL 및 라우팅
+Preserve report Markdown and historical text. Rule, punishment, appeal and recovery meanings stay unchanged. No new war exceptions or invented Survival policy may be inferred from old rules. Existing 1.21.1 guidance remains identified as the previously published connection guide.
 
-아래 경로는 Navbar, 외부 링크, Supabase 데이터와 연결되어 있으므로 유지한다.
+Preserve Supabase schema, RLS, RPCs, realtime subscriptions, inquiry codes, member/guest ownership, rolling three-per-hour limits, admin authorization, report publishing and notification claiming. UI visibility does not replace database authorization. Preserve OAuth destination validation, support/admin routing and client/server secret separation.
 
-- `/`
-- `/join`
-- `/support`
-- `/taskboard`
-- `/voice`
-- `/voice-방코드`
-- `/server-mechanism`
-- `/rules`
-- `/recovery-guidelines`
-- `/updates`
-- `/auth/callback`
+Maintain Korean and English UI text, including empty/error states. Keep mobile support list-to-conversation transitions, back navigation and message scrolling. Retain the language provider, analytics and Speed Insights in the root layout.
 
-보이스 채널의 외부 URL은 `/voice-방코드` 형식이다. 실제 페이지는 `/voice/[roomCode]`이며 `next.config.ts`의 rewrite를 통해 연결된다. 이 URL 규칙을 변경하면 기존 STAGE 채널 링크가 깨진다.
+## Shared server truth
 
-### 공통 레이아웃
+Use `app/shared/serverGroup.mjs` for all new server panels, details and Join decisions. The Great War is current/preparing; Survival is planned/planned. Both have Java and Bedrock editions, Geyser crossplay and no client-mod requirement. Release, version and connection remain null until facts are confirmed.
 
-`app/layout.tsx`의 공통 구조는 유지한다.
+The eligibility helper conceals any supplied address for planned or preparing servers. Future active/current connection publication uses `connection.java = { address }` and `connection.bedrock = { address, port }`. Unsupported editions and incomplete data never enable Copy. A Bedrock port must be an integer between 1 and 65535. Test fixture addresses never become actual server data.
 
-- 고정 Navbar
-- 언어 전환 기능
-- Navbar 아래 콘텐츠 여백
-- Footer
-- Google 로그인 이후 라우팅에 사용되는 공통 구조
-- Vercel Analytics와 Speed Insights
+Keep reusable legacy homepage exports during the staged redesign until their consumers are replaced. Existing archive screenshots are historical records, not evidence of either new server’s map or systems.
 
-Navbar를 리디자인하더라도 홈, 가입, 문의, 관리자, STAGE 채널, 서버 소개, 규칙, 복구 가이드, 업데이트 링크는 제거하지 않는다.
+## Verification boundaries
 
-### Supabase 데이터 계약
+Do not open, read, print, copy or modify `.env.local`, and do not create an environment file in the isolated worktree. Use dummy public configuration for preview and builds. Never submit production inquiries, send real external messages, change production data or deploy as verification.
 
-다음 테이블명과 주요 필드는 코드와 실시간 구독에 사용된다.
-
-- `inquiries`
-- `inquiry_messages`
-- `reports`
-- `voice_rooms`
-- `voice_room_members`
-
-테이블명, `inquiry_code`, `status`, `room_type`, `is_public`, `room_code`, `client_id` 등의 필드를 변경하려면 화면 코드와 데이터베이스를 함께 수정해야 한다.
-
-문의 메시지와 STAGE 참가자 상태는 Supabase Realtime에 의존하므로, 관련 구독과 publication 설정을 시각적 리디자인 중에 제거하지 않는다.
-
-### 로그인 및 권한
-
-- Google OAuth 로그인 흐름 유지
-- `/auth/callback` 유지
-- 관리자 이메일은 필수 관리자 목록과 `NEXT_PUBLIC_ADMIN_EMAILS`를 합쳐 판별
-- 일반 사용자는 `/support`, 관리자는 `/taskboard`로 이동
-- STAGE 생성·삭제 및 발언자 지정은 관리자 기능으로 유지
-
-화면에서 관리자 버튼을 숨기는 것만으로 권한 처리를 대체하지 않는다.
-
-### 문의 기능
-
-문의 화면의 다음 흐름은 유지한다.
-
-1. Google 로그인
-2. Minecraft 닉네임, 문의 유형, 문의 내용, 문의 목적 입력
-3. 문의 티켓과 문의 코드 생성
-4. 첫 문의 내용을 메시지로 저장
-5. 실시간 관리자 답변 수신
-6. 문의 상태를 `open` 또는 `replied`로 관리
-7. 1시간 내 최대 3개 문의 제한
-
-폼 디자인은 바꿀 수 있지만 입력 의미와 실시간 채팅 동작은 보존한다.
-
-### STAGE 채널 기능
-
-현재 보이스 기능은 STAGE 채널만 남아 있다.
-
-- 일반 사용자의 채널 생성 기능 없음
-- 일반 보이스룸 목록 및 비공개 보이스룸 기능 없음
-- 관리자만 STAGE 채널 생성 가능
-- 새 STAGE 채널은 항상 공개 상태로 생성
-- `/voice`에는 공개된 STAGE 채널만 표시
-- `/voice-방코드` 직접 접근도 공개 STAGE 채널만 허용
-- 관리자만 채널 삭제 및 참가자 발언권 지정 가능
-- 일반 참가자는 기본적으로 음소거된 시청자
-- 관리자 또는 지정된 발언자만 마이크·화면 공유 가능
-- WebRTC 음성·화면 공유와 참가자 Realtime 상태 유지
-- STAGE 채널은 참가자 0명이어도 자동 삭제하지 않음
-
-기존 Supabase에 남아 있는 `general` 레코드는 물리 삭제하지 않고 화면 목록과 입장에서 제외한 상태다. 리디자인 작업에서 일반 채널 생성 UI나 접근 경로를 다시 추가하지 않는다.
-
-### 다국어 처리
-
-기존 화면은 `t(한국어, 영어)` 방식으로 한국어와 영어를 함께 관리한다.
-
-- 새 텍스트는 두 언어를 함께 작성
-- 버튼, 오류 메시지, 빈 상태, 안내 문구도 번역 처리
-- STAGE 채널 관련 문구도 한국어·영어를 함께 유지
-
-### 모바일 동작
-
-문의 화면은 모바일에서 문의 목록과 채팅 화면을 전환한다. CSS를 정리할 때 다음 동작이 깨지지 않는지 확인한다.
-
-- 문의 목록 선택
-- 선택된 문의의 채팅 화면 전환
-- 뒤로가기
-- 채팅 메시지 자동 스크롤
-
-STAGE 채널의 닉네임 입력, 마이크 권한, 화면 공유 권한 안내도 모바일에서 접근 가능해야 한다.
-
-## 3. 자유롭게 바꿔도 되는 영역
-
-- 색상과 폰트
-- 여백과 섹션 간격
-- 카드, 버튼, 배지 스타일
-- 홈 히어로 이미지와 오버레이
-- Navbar의 시각적 배치
-- STAGE 목록 카드의 시각적 표현
-- 관리자 대시보드의 시각적 계층 구조
-- 애니메이션과 hover 효과
-- 공통 CSS 정리
-
-단, 시각적 변경과 기능·라우팅·데이터 변경은 분리해서 진행하는 것이 안전하다.
-
-## 4. 리디자인 전후 확인 체크리스트
-
-- [ ] 모든 기존 URL이 그대로 열리는가?
-- [ ] `/voice-방코드` rewrite가 유지되는가?
-- [ ] `/voice`에 일반 보이스룸이 다시 노출되지 않는가?
-- [ ] 관리자만 STAGE 채널을 생성·삭제할 수 있는가?
-- [ ] 새 STAGE 채널이 항상 공개로 생성되는가?
-- [ ] STAGE 입장, 음성, 화면 공유, 발언자 권한이 동작하는가?
-- [ ] 문의 생성과 실시간 답변이 동작하는가?
-- [ ] 모바일 문의 목록/채팅 전환이 동작하는가?
-- [ ] 한국어·영어 전환 후 새 문구가 누락되지 않는가?
-- [ ] Supabase 테이블명과 Realtime 구독이 유지되는가?
-- [ ] `npm test`와 `npm run build`가 통과하는가?
+Baseline is commit b8007b4 with 69 passing tests. Preserve existing security/functionality tests. Replace tests that intentionally pin retired visual/copy decisions only when the corresponding consumer changes. Eligibility gate tests use hand-written planned/preparing/active fixtures and RED/GREEN evidence. Run the whole test suite and lint, then check types, isolated production build and responsive behavior as appropriate to the integrated redesign.

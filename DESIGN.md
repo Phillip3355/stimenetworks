@@ -1,96 +1,54 @@
-# StimeMC Living Archive Design System
+# StimeMC Server Group Design System
 
-## Intent
+The approved source is `docs/superpowers/specs/2026-10-09-stimemc-server-group-redesign.md`. The brand hierarchy is STIMEMC → SERVER → SEASON / CONTENT. The first message is “ONE COMMUNITY. MORE WORLDS.” / “여러 세계, 하나의 Stime.”
 
-- Audience: 별도 클라이언트 모드 설치 없이 Java·Bedrock 크로스플레이와 확장 콘텐츠를 즐기려는 플레이어, 커뮤니티 구성원, 문의 사용자, 서버 관리자.
-- Primary user action: 서버 가입, 서버 안내 확인, 1:1 문의 중 현재 목적에 맞는 서비스로 이동.
-- Design character: 실제 서버 월드를 전시처럼 보여주는 차분하고 몰입적인 디지털 아카이브.
-- Reference observations: 전체 화면 이미지, 검정색 UI, 간결한 산세리프 타이포그래피, 절제된 내비게이션, 모바일 풀스크린 메뉴, 이미지에서 정보 영역으로 이어지는 명확한 전환.
-- Deliberate adaptations: Refik Anadol의 브랜드 자산·카피·정확한 구성을 복제하지 않고, StimeMC의 실제 서버 스크린샷과 개방형 서버사이드 모드 경험에 맞춘 독자적인 편집 시스템으로 재구성한다.
+## Brand and facts
+
+StimeMC is the parent Minecraft server group. Public server choices are THE GREAT WAR and SURVIVAL only. The Great War is CURRENT and preparing to operate a single war-focused season. CURRENT identifies its place in the group and never means online. Survival is PLANNED / COMING LATER, with release date and version undecided. Its Vanilla / Vanilla+ direction, server-side mods and datapacks remain plans.
+
+Geyser-powered Java × Bedrock crossplay is a primary shared feature of every StimeMC server. Repeat this feature on the homepage, hub and details while keeping Survival visibly planned. Separate the conceptual group connection graphic from the historically verified ViaProxy implementation. No new infrastructure, live players, gameplay systems, addresses, ports, release dates or versions may be invented.
+
+`app/shared/serverGroup.mjs` is the shared registry. Actual connection, release and version fields remain null. The connection helper returns a language-neutral state; only current, active servers with published edition data can enable Copy. Bedrock requires a complete address and integer port in 1–65535. Existing Java 1.21.1 copy belongs to the previously published guide and is not a confirmed version for either new server.
 
 ## Foundations
 
-- Canvas: `#050505`; raised surface: `#0a0a0a`; soft surface: `#111111`.
-- Primary text: `#f2f1ec`; secondary text: `#a7a7a2`; muted text: `#787873`.
-- Hairline: `rgba(255,255,255,.16)`; strong hairline: `rgba(255,255,255,.34)`.
-- Accent: 흰색을 기본으로 사용하고 상태 색상은 성공·경고·오류에만 제한한다.
-- Typography: Pretendard, Noto Sans KR, Segoe UI 순의 로컬 시스템 산세리프 스택을 사용한다. 한국어 제목은 `word-break: keep-all`, `overflow-wrap: normal`, `text-wrap: balance`를 적용한다.
-- Display sizes: desktop `clamp(3rem, 7vw, 7.5rem)`, mobile `clamp(2rem, 9vw, 3.2rem)`.
-- 메인 `StimeMC` 워드마크는 본문보다 분명하되 과하게 무겁지 않은 `font-weight: 480`을 사용한다.
-- Body sizes: desktop 15–17px, mobile 14–16px. 모바일 제목은 특별한 이유가 없으면 34px를 넘지 않는다.
-- Spacing: 4/8/12/16/24/32/48/72/104px scale.
-- Radius: 기본 0px, 폼·상태 칩에만 2–6px.
-- Imagery: 실제 서버 이미지를 우선 사용한다. `object-fit: cover`와 장면별 `object-position`을 지정하며 모바일은 4:3 또는 16:10 비율을 사용한다.
+| Role | Value |
+| --- | --- |
+| Canvas | #071013 |
+| Surface | #0b191d |
+| Raised | #10242a |
+| Primary text | #edf5f2 |
+| Secondary text | #b3c7c4 |
+| Muted text | #91aaa7 |
+| Mint accent | #8fe2cc |
+| Blue accent | #8cb9d1 |
+| Hairline | rgba(166,211,201,.20) |
+| War emphasis | #d5b09a |
 
-## Layout and Content
+Use rectangular world panels, thin borders, 0–6px corners and clear typographic hierarchy. Avoid large blur, neon and rounded dashboard cards. Main content reaches at most 1400px; reading text stays around 42–68ch. English display text uses a condensed local sans-serif stack; Korean uses Pretendard / Noto Sans KR / system sans-serif. No external font is required. Mobile body copy starts at 15px with 1.7 line-height. Long labels must wrap within their column.
 
-- 공통 고정 내비게이션은 StimeMC 이름, `안내·유저·기술`로 재분류한 링크, 언어 선택, 메뉴 버튼을 제공한다. 관리자 콘솔은 내비게이션에 노출하지 않고 관리자 계정의 `/support` 접근 안내에서만 연결한다.
-- 정보 카드의 본문은 데스크톱에서도 상단부터 읽히도록 배치하고, 늘어난 카드 높이 때문에 제목 위에 빈 공간이 생기지 않게 한다.
-- 1000px 초과에서는 주요 링크와 전체 메뉴 버튼을 함께 표시해 규칙·복구·업데이트 등 모든 페이지에 즉시 접근할 수 있게 한다. 621–1000px에서는 주요 링크를 숨기고 전체 메뉴 버튼만 유지한다. 360–620px에서는 44px 이상의 컨트롤과 모바일 전용 구성을 사용한다.
-- KO·EN 선택 영역은 동일한 너비와 높이의 두 칸으로 구성하고 텍스트를 수평·수직 중앙 정렬한다.
-- 홈 페이지는 실제 월드 히어로 → 서버 소개와 월드 쇼케이스 → 세 가지 차별점 스크롤 서사 → 서비스 진입 순서로 구성한다.
-- 메인 소개 헤드라인은 `같이 접속하고, 즐길 수 있습니다.`로 짧게 유지하고, 반복적인 보조 문구와 장식용 이미지 캡션은 사용하지 않는다.
-- 메인 소개 헤드라인 바로 아래에는 Java·Bedrock 동시 접속 특징 카드가 이어지도록 구성한다. 기간이 끝난 런칭 카운트다운과 별도의 하단 오픈 전시는 사용하지 않는다.
-- 홈의 특징 카드는 다음 서비스로 연결한다.
-  - Java·Bedrock 동시 접속: `/server-mechanism`
-  - 새로운 건축물과 서버사이드 모드: `/server-mechanism`
-  - 체계적인 규칙과 평화로운 플레이: `/rules`
-- 특징 섹션은 새로 제공된 실제 서버 스크린샷을 적극적으로 사용한다. 두 장이 배정된 특징은 큰 전경과 작은 상세 장면을 겹친 편집형 이미지 스테이지로 보여준다. `image copy 5.png`의 야간 모드 건축 장면은 모드 관련 설명 안에서만 별도 `SERVER-SIDE MOD SCENE`으로 노출한다.
-- 모든 `더 알아보기 / Learn more` 링크는 내부 라우팅을 사용하고 키보드 포커스를 제공한다.
-- 공개 페이지의 설명은 운영·관리 기능보다 플레이어가 할 수 있는 행동과 얻게 되는 경험을 먼저 말한다.
-- 서버 정체성은 Java·Bedrock 모두 접속 가능, 클라이언트 모드 설치 불필요, 서버사이드 모드 기반 확장 콘텐츠, 개방적인 참여로 정의한다.
-- 정보 페이지는 인트로, 페이지 인덱스, 본문 섹션을 사용한다. 반복 카드만 나열하지 않고 번호와 경계선으로 읽기 순서를 만든다.
-- `/server-mechanism`은 ViaProxy와 Geyser를 접속 브리지로 설명하는 세로 트리다. 데스크톱에서는 줄기와 양쪽 정보 열을 함께 보여주고, 모바일에서는 각 가지를 한 열로 쌓는다.
-- `/history`는 2023년부터 현재까지를 세로 연대기 축으로 보여준다. 연도·장 제목·플레이어 관점의 설명·핵심 변화 순서로 읽히며 모바일에서는 한 열로 재배치한다.
-- `/news`는 Supabase에서 발행된 모든 보고서를 최신순으로 보여준다. 각 행에는 제목과 발행일만 두고, 행 전체를 누르면 기존 보고서 URL을 그대로 연다.
-- `/join`의 주 CTA는 `서버 가입 요청하기`이며, 클릭하면 같은 페이지 안에서 에디션·Minecraft 닉네임·초대자·연락처·규정 및 개인정보 동의를 받는 편집형 신청 양식을 펼친다. 제출 후에는 신청 내용을 다시 노출하거나 수정하게 하지 않고 접수 완료 상태와 관리자 연락 안내만 보여준다.
-- 가입 요청 개인정보 안내는 수집 항목, 이용 목적, 보유 기간을 분리해 표시한다. 웹 신청 정보는 관리자 처리 후 삭제하며, Minecraft 서버가 보안 목적으로 자동 기록할 수 있는 IP·UUID/XUID·접속 시각과 최대 30일 보관 사실을 별도로 고지한다.
-- `/rules`는 왼쪽 루트 노드에서 여덟 개 규칙으로 뻗는 인터랙티브 마인드맵을 사용한다. 선택한 규칙은 연결선과 노드를 강조하고 설명·금지 예시를 상세 패널에 표시한다.
-- 지원·관리 화면은 같은 색상과 타이포그래피를 유지하면서 정보 밀도가 높은 작업 화면으로 전환한다.
-- 문의 관리 탭, 대화 피드, 입력 영역과 메시지 버블은 밝은 레거시 배경을 사용하지 않고 surface 계열의 다크 토큰으로 구분한다.
-- 관리자 보고서 작성·목록 패널과 발행 버튼은 밝은 레거시 배경이나 발광 효과 없이 `surface`·`surface-raised`·hairline 토큰만 사용한다.
+Real screenshots are StimeMC archive images unless their server provenance is verified. Preserve the originals and optimize with next/image and responsive sizes. Never imply an archive image is a new Great War or Survival map. Survival uses typography and graphics rather than a fabricated screenshot.
 
-## Desktop Composition
+## Shared shell
 
-- Primary desktop: 1440px. 최대 콘텐츠 폭은 1360px.
-- 히어로 이미지는 뷰포트의 72–88svh를 사용하되 핵심 CTA를 가리지 않는다.
-- 메인 소개 영역은 별도 이미지 쇼케이스 없이 첫 번째 Java·Bedrock 특징 카드로 바로 이어진다.
-- 서버 특징 카드는 이미지와 텍스트를 교차 배치하며 좌우에서 한 장씩 나타난다.
-- 규칙 마인드맵은 데스크톱에서 루트, 2열 브랜치, 고정 상세 패널을 함께 보여주어 전체 구조와 선택 내용을 동시에 읽게 한다.
-- 폼과 대시보드는 320–360px 목록 패널과 유동적인 상세 패널을 사용한다.
-- 뉴스 목록은 데스크톱에서 제목을 왼쪽, 발행일을 오른쪽에 둔 한 줄 구조를 유지한다.
-- 가입 요청 양식은 데스크톱에서 에디션 2열과 입력 필드 2열을 사용하되 연락처·동의·제출 경고는 전체 폭으로 이어간다. 관리자 가입 요청 탭은 신청자 한 명을 번호·에디션·상세·명령어·처리 버튼 순서의 가로 레코드로 보여준다.
+Navigation groups are Servers, News, Guide, About and Join. Guide contains rules, recovery and support. About contains home, mechanism and history; News keeps website updates. All documented public routes remain accessible. `/News` is a case-sensitive historical report route distinct from `/news`. Administrator entry remains in the existing authorized support flow.
 
-## Mobile Composition
+The fixed header keeps the visible StimeMC name, Join, KO/EN control and menu trigger at 320px. Full primary links appear only while they fit; the compact header keeps the full menu available. Every navigation action has at least a 44px touch target. The menu supports native internal scrolling, safe areas, keyboard focus cycling, Escape, focus return, and scroll lock. Unrelated background regions become inert and hidden from assistive technology while the dialog is open. The dialog contains its own language control.
 
-- Target widths: 360px, 390px, 430px.
-- 데스크톱을 축소하지 않는다. 이미지 → 제목과 CTA → 서비스 목록 순서로 재구성한다.
-- 2열·3열 반복 콘텐츠는 한 열의 1→2→3 순서로 쌓는다.
-- 메인 소개 영역은 모바일에서도 Java·Bedrock 특징 카드가 제목 바로 아래에 이어지도록 유지한다.
-- 규칙 마인드맵은 모바일에서 축소하지 않고 루트 아래로 연결선이 이어지는 세로 트리로 바꾸며, 선택한 규칙의 상세 내용을 해당 노드 바로 아래에 펼친다.
-- 모바일 이미지는 4:3 또는 16:10으로 제한하며 고정 픽셀 높이를 사용하지 않는다.
-- 버튼은 너비 100%, 높이 44px 이상을 기본으로 한다.
-- 가입 요청 양식은 760px 이하에서 모든 입력을 한 열로 재배치하고, Java/Bedrock 선택은 520px 이하에서 세로로 쌓는다. 관리자 가입 요청 레코드도 상세 정보를 한 열로 바꾸고 복사·삭제 버튼을 전체 폭으로 제공한다.
-- 문의 목록과 채팅은 기존 목록/상세 전환, 뒤로가기, 자동 스크롤을 보존한다.
-- 뉴스 목록은 모바일에서 제목 아래에 발행일을 오른쪽 정렬해 겹침과 어색한 줄바꿈을 막는다.
-- 문의 채팅 작성기는 431px 이상에서 `minmax(0, 1fr) + 전송 버튼` 구조를 사용하고, 430px 이하에서는 입력창과 100% 너비 전송 버튼을 세로로 쌓아 가로 오버플로와 터치 불가 영역을 만들지 않는다.
-- 고정 UI는 safe-area 여백을 포함하고 가상 키보드가 입력 영역을 가리지 않게 한다.
+A visible-on-focus skip link moves focus to the page content. Root metadata identifies the server group and preparation/planning facts; page-specific metadata is supplied by the page work. Viewport fit covers device safe areas. The language provider, analytics and speed insights remain integrated.
 
-## Motion
+## Page composition
 
-- Framer Motion을 사용하되 상호작용 컴포넌트만 클라이언트로 격리한다.
-- 화면 진입: opacity와 8–14px의 작은 y 이동, 0.45–0.7초.
-- 서버 특징 카드: 좌우 28–40px에서 0.9–1.15초 동안 한 장씩 등장한다. 모바일 이동은 18–24px로 제한한다.
-- 카드 모션은 뷰포트 진입 시 한 번만 실행하고 레이아웃 크기를 변경하지 않는다.
-- 버튼과 링크: 120–220ms의 색상·opacity·2px 이내 transform 피드백.
-- `prefers-reduced-motion`에서는 비필수 transform, 순차 지연, 이미지 정착 효과를 제거한다.
+The homepage moves from a short brand hero to the two server panels, each server’s direction, a Java × Bedrock / Geyser scene, a labeled StimeMC archive, real news and Join guidance. Essential server state and CTA remain visible without hover or waiting for animation.
 
-## Do Not
+The server hub and detail pages use the same registry as Join. Join separates server status and edition selection; missing connection values produce an honest preparation or planning state without fake disabled examples. Rules and recovery retain existing policy meaning and distinguish historical regulations from unpublished server-specific rules. News keeps report URLs and original text. Website updates are explicitly website records. Technology separates shared Geyser direction from verified legacy implementation. History entries remain unchanged.
 
-- Refik Anadol의 로고, 이미지, 문구, 정확한 화면 구성을 복제하지 않는다.
-- AI 생성 이미지를 실제 서버 사진보다 우선하지 않는다.
-- 한국어와 영어를 한 텍스트 블록 안에서 보조 라벨과 제목으로 혼합하지 않는다.
-- 제목에 임의의 `<br>`를 넣지 않는다.
-- 모바일에서 데스크톱 열을 가로로 압축하지 않는다.
-- 필수 정보를 hover에서만 표시하지 않는다.
-- 스크롤 재킹, 무한 루프 장식, 큰 패럴랙스, 레이아웃 이동 애니메이션을 사용하지 않는다.
+Support preserves member and guest entry, inquiry lists, conversations, input validation and mobile list/detail transitions. Taskboard preserves its authorized inquiry and report tools. No signup form or voice/STAGE feature is part of this design.
+
+## Responsive layout and motion
+
+Desktop and wide tablets use two readable server columns. Portrait tablets and mobile stack panels as soon as a useful reading width is lost. Mobile has a short hero, immediate status and CTA, one-column reading and native page scroll. Avoid prolonged sticky scenes or desktop layouts compressed sideways.
+
+Framer Motion is already installed. `MotionProvider` applies MotionConfig reducedMotion="user" across the shell; individual scroll scenes also show complete stationary content under reduced motion. Use small, one-time opacity/transform reveals with no loops, scroll interception, WebGL, cursor tracking or new heavy libraries. Motion must never hide required content indefinitely.
+
+Check actual DOM viewport and overflow at 1920×1080, 1440×900, 1366×768, 1280×800, 1024×1366, 1366×1024, 800×1280, 768×1024, 430×932, 390×844, 360×800 and 320px. Include rotation, keyboard menu, reduced motion, footer and long Korean text. Report real-device Safari/Android limitations explicitly.
