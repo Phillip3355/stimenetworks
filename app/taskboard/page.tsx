@@ -386,9 +386,9 @@ function TaskboardContent() {
                 }}>
                   StimeMC Admin Platform
                 </span>
-                <h2 style={{ fontSize: '1.8rem', fontWeight: 800, margin: '8px 0 0', color: 'var(--color-ink)' }}>
+                <h1 style={{ fontSize: '1.8rem', fontWeight: 800, margin: '8px 0 0', color: 'var(--color-ink)' }}>
                   Taskboard Auth
-                </h2>
+                </h1>
               </div>
 
               <p style={{ fontSize: '0.9rem', color: 'var(--color-mute)', lineHeight: 1.6 }}>
@@ -458,9 +458,9 @@ function TaskboardContent() {
             >
               <div>
                 <span style={{ fontSize: '3rem' }}>🚫</span>
-                <h2 style={{ fontSize: '1.6rem', fontWeight: 800, margin: '12px 0 0', color: '#ef4444' }}>
+                <h1 style={{ fontSize: '1.6rem', fontWeight: 800, margin: '12px 0 0', color: '#ef4444' }}>
                   Access Denied
-                </h2>
+                </h1>
               </div>
 
               <p style={{ fontSize: '0.9rem', color: 'var(--color-mute)', lineHeight: 1.6 }}>
