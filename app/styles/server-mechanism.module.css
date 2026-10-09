@@ -451,6 +451,38 @@
   box-shadow: 0 20px 70px rgba(0, 0, 0, 0.38);
 }
 
+dialog.modalCard,
+dialog.codeNotice {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(calc(100% - 48px), 760px);
+  max-width: 760px;
+  padding: 0;
+}
+
+dialog.codeNotice { padding: 24px; }
+
+dialog.modalCard:not([open]),
+dialog.codeNotice:not([open]) { display: none; }
+
+dialog.modalCard::backdrop,
+dialog.codeNotice::backdrop { background: rgba(0, 0, 0, 0.72); }
+
+.modalBackdrop:has(dialog) { background: transparent; backdrop-filter: none; }
+
+@media (max-width: 760px) {
+  dialog.modalCard, dialog.codeNotice {
+    inset: auto 0 0;
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    max-height: 100svh;
+    padding-top: env(safe-area-inset-top);
+  }
+  dialog.codeNotice { padding: calc(20px + env(safe-area-inset-top)) 18px calc(20px + env(safe-area-inset-bottom)); }
+}
+
 .modalGrip {
   width: 48px;
   height: 4px;

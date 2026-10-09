@@ -129,28 +129,67 @@ export default function SupportPage() {
   const [guestCodeNotice, setGuestCodeNotice] = useState<string | null>(null);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const guestDialogRef = useRef<HTMLDialogElement>(null);
+  const guestNoticeRef = useRef<HTMLDialogElement>(null);
+  const supportMainRef = useRef<HTMLElement>(null);
+  const isGuestModalOpen = Boolean(guestDialog || guestCodeNotice);
 
   const drawerTransition = reduceMotion
     ? { duration: 0 }
     : { type: 'spring' as const, stiffness: 320, damping: 30, mass: 0.9 };
 
   useEffect(() => {
-    if (!guestDialog && !guestCodeNotice) return;
+    if (!isGuestModalOpen) return;
 
     const previousOverflow = document.body.style.overflow;
+    const trigger = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const supportMain = supportMainRef.current;
     document.body.style.overflow = 'hidden';
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key !== 'Escape' || isSubmitting) return;
-      setGuestDialog(null);
-      setGuestCodeNotice(null);
-    };
-
-    window.addEventListener('keydown', handleEscape);
     return () => {
+      supportMain?.querySelectorAll<HTMLDialogElement>('dialog').forEach(dialog => dialog.close());
       document.body.style.overflow = previousOverflow;
-      window.removeEventListener('keydown', handleEscape);
+      (trigger?.isConnected ? trigger : supportMain?.isConnected ? supportMain : null)?.focus({ preventScroll: true });
     };
-  }, [guestDialog, guestCodeNotice, isSubmitting]);
+  }, [isGuestModalOpen]);
+
+  useEffect(() => {
+    const dialog = guestCodeNotice ? guestNoticeRef.current : guestDialog ? guestDialogRef.current : null;
+    if (!dialog) return;
+    if (!dialog.open) dialog.showModal();
+    // The close control survives chooser/form exit animations, so focus cannot
+    // fall back to the document when the outgoing view is removed.
+    dialog.querySelector<HTMLButtonElement>('button')?.focus({ preventScroll: true });
+  }, [guestDialog, guestCodeNotice]);
+
+  const handleGuestModalCancel = (event: React.SyntheticEvent<HTMLDialogElement>) => {
+    event.preventDefault();
+    if (isSubmitting) return;
+    setGuestDialog(null);
+    setGuestCodeNotice(null);
+  };
+
+  const handleGuestModalKeyDown = (event: React.KeyboardEvent<HTMLDialogElement>) => {
+    if (event.key !== 'Tab') return;
+    const dialog = event.currentTarget;
+    const controls = [...dialog.querySelectorAll<HTMLElement>(
+      'button:not([disabled]), a[href], input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    )].filter(control => {
+      const view = control.closest('[data-guest-view]')?.getAttribute('data-guest-view');
+      return control.tabIndex >= 0 && !control.matches(':disabled') && control.getClientRects().length > 0
+        && window.getComputedStyle(control).visibility !== 'hidden' && !control.closest('[inert]') && (!view || view === guestDialog);
+    });
+    if (!controls.length) { event.preventDefault(); dialog.focus(); return; }
+    const first = controls[0];
+    const last = controls[controls.length - 1];
+    if (!controls.includes(document.activeElement as HTMLElement)) {
+      event.preventDefault();
+      (event.shiftKey ? last : first).focus();
+    } else if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault(); last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault(); first.focus();
+    }
+  };
 
   // 채팅방 자동 스크롤
   useEffect(() => {
@@ -436,7 +475,7 @@ export default function SupportPage() {
   };
 
   return (
-    <main className={styles.main}>
+    <main ref={supportMainRef} tabIndex={-1} className={styles.main}>
       <section className={styles.heroSection}>
         <div className={styles.heroContent}>
           <motion.h1 className={styles.heroTitle} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
@@ -775,7 +814,8 @@ export default function SupportPage() {
                 transition={{ duration: reduceMotion ? 0 : 0.22, ease: 'easeOut' }}
                 onMouseDown={() => !isSubmitting && setGuestDialog(null)}
               >
-                <motion.section
+                <motion.dialog
+                  ref={guestDialogRef}
                   className={styles.modalCard}
                   role="dialog"
                   aria-modal="true"
@@ -784,7 +824,14 @@ export default function SupportPage() {
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: reduceMotion ? 0 : '100%', opacity: reduceMotion ? 1 : 0.7 }}
                   transition={drawerTransition}
-                  onMouseDown={(event) => event.stopPropagation()}
+                  onCancel={handleGuestModalCancel}
+                  onKeyDown={handleGuestModalKeyDown}
+                  tabIndex={-1}
+                  onMouseDown={(event) => {
+                    event.stopPropagation();
+                    const bounds = event.currentTarget.getBoundingClientRect();
+                    if (!isSubmitting && (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom)) setGuestDialog(null);
+                  }}
                 >
                   <div className={styles.modalGrip} aria-hidden="true" />
                   <div className={`${styles.modalHeader} ${guestDialog === 'menu' ? styles.modalHeaderMenu : ''}`}>
@@ -803,6 +850,7 @@ export default function SupportPage() {
                     {guestDialog === 'menu' && (
                       <motion.div
                         key="guest-menu"
+                        data-guest-view="menu"
                         className={styles.modalBody}
                         initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -826,6 +874,7 @@ export default function SupportPage() {
                     {guestDialog === 'create' && (
                       <motion.form
                         key="guest-create"
+                        data-guest-view="create"
                         className={styles.modalForm}
                         onSubmit={handleGuestCreateInquiry}
                         initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
@@ -863,6 +912,7 @@ export default function SupportPage() {
                     {guestDialog === 'lookup' && (
                       <motion.form
                         key="guest-lookup"
+                        data-guest-view="lookup"
                         className={styles.modalForm}
                         onSubmit={handleGuestLookup}
                         initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
@@ -881,7 +931,7 @@ export default function SupportPage() {
                       </motion.form>
                     )}
                   </AnimatePresence>
-                </motion.section>
+                </motion.dialog>
               </motion.div>
             )}
           </AnimatePresence>
@@ -896,11 +946,15 @@ export default function SupportPage() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: reduceMotion ? 0 : 0.22, ease: 'easeOut' }}
               >
-                <motion.section
+                <motion.dialog
+                  ref={guestNoticeRef}
                   className={styles.codeNotice}
                   role="dialog"
                   aria-modal="true"
                   aria-labelledby="guest-code-title"
+                  onCancel={handleGuestModalCancel}
+                  onKeyDown={handleGuestModalKeyDown}
+                  tabIndex={-1}
                   initial={{ y: reduceMotion ? 0 : '100%', opacity: reduceMotion ? 1 : 0.7 }}
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: reduceMotion ? 0 : '100%', opacity: reduceMotion ? 1 : 0.7 }}
@@ -914,7 +968,7 @@ export default function SupportPage() {
                   <button type="button" className={styles.modalSubmit} onClick={() => setGuestCodeNotice(null)}>
                     {t('확인하고 채팅으로 이동', 'Continue to chat')}
                   </button>
-                </motion.section>
+                </motion.dialog>
               </motion.div>
             )}
           </AnimatePresence>
