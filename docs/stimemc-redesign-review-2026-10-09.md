@@ -23,5 +23,5 @@ Ruling: Accept unavailable device/reduced-motion/operational-service checks as e
 
 These are the exhaustive two controller rulings from the execution ledger, preserved in their original order with the rework cost if wrong.
 
-Only this completed plan's ignored scratch workspace will be removed after preserving these records. Source, screenshots, committed measurements, dependency junction, other plans and the final preview build stay intact.
+Cleanup attempted only this completed plan's ignored scratch workspace, after preserving these records and validating the resolved path. Automatic approval review rejected the removal as “blocked by policy”; no more specific reason was supplied. The scratch directory is retained. Source, screenshots, committed measurements, dependency junction, other plans and the final preview build stay intact.
 Trailing whitespace and final blank lines in copied build/lint transcripts were normalized for the repository whitespace check; diagnostic and result text is unchanged.
