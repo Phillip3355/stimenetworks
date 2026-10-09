@@ -1,12 +1,13 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { brandProfile } from '../shared/serverGroup.mjs';
+import { brandProfile, getServerGroupPresentation } from '../shared/serverGroup.mjs';
 import { useLanguage } from './LanguageProvider';
 import styles from '../styles/hero.module.css';
 
 export default function Hero() {
   const { t } = useLanguage();
+  const group = getServerGroupPresentation();
   return (
     <section className={styles.heroSection} aria-labelledby="home-title">
       <div className={styles.content}>
@@ -27,7 +28,7 @@ export default function Hero() {
             <figcaption><span>STIMEMC ARCHIVE</span><span>{t('기존 서버 기록', 'Previous server record')}</span></figcaption>
           </figure>
         </div>
-        <div className={styles.meta}><span>JAVA × BEDROCK / GEYSER</span><span>{t('현재의 준비, 다음 세계의 계획', 'Preparing today. Planning what follows.')}</span></div>
+        <div className={styles.meta}><span>JAVA × BEDROCK / GEYSER</span><span>{group.hasActive ? t('서로 다른 세계, 함께하는 플레이', 'Different worlds. Play together.') : t('현재의 준비, 다음 세계의 계획', 'Preparing today. Planning what follows.')}</span></div>
       </div>
     </section>
   );

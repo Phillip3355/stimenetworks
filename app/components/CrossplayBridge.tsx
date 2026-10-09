@@ -1,13 +1,14 @@
 'use client';
 import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
-import { servers } from '../shared/serverGroup.mjs';
+import { getServerPresentation, servers } from '../shared/serverGroup.mjs';
 import { useLanguage } from './LanguageProvider';
 import styles from '../styles/crossplay-bridge.module.css';
 
 export default function CrossplayBridge() {
   const { t } = useLanguage();
   const reduced = useReducedMotion();
+  const survivalPlanned = servers.some(server => server.id === 'survival' && getServerPresentation(server).planned);
   return (
     <section className={styles.section} aria-labelledby="crossplay-title">
       <div className={styles.container}>
@@ -30,9 +31,12 @@ export default function CrossplayBridge() {
           <div className={styles.bridge}><span>GEYSER</span><p>{t('Java × Bedrock 에디션 브리지', 'Java × Bedrock edition bridge')}</p></div>
           <div className={styles.stem} aria-hidden="true" />
           <p className={styles.group}>STIMEMC / {t('모든 서버의 공통 특징', 'Shared by every server')}</p>
-          <div className={styles.worlds}>{servers.map((server) => <Link key={server.id} href={server.href}><strong>{server.name}</strong><span>{server.lifecycle === 'planned' ? t('PLANNED · 추가 계획 중', 'PLANNED · Coming later') : t('CURRENT · 운영 준비 중', 'CURRENT · Preparing')}</span></Link>)}</div>
+          <div className={styles.worlds}>{servers.map((server) => {
+            const presentation = getServerPresentation(server);
+            return <Link key={server.id} href={server.href}><strong>{server.name}</strong><span>{presentation.planned ? t('PLANNED · 추가 계획 중', 'PLANNED · Coming later') : presentation.preparing ? t('CURRENT · 운영 준비 중', 'CURRENT · Preparing') : `${presentation.active ? 'CURRENT' : 'STATUS'} · ${t(presentation.statusKo, presentation.statusEn)}`}</span></Link>;
+          })}</div>
         </div>
-        <div className={styles.note}><p>{t('지원 에디션과 서버 그룹을 나타내는 개념도입니다. Survival의 크로스플레이는 계획된 운영 방향입니다.', 'A concept diagram of supported editions and the server group. Crossplay for Survival is a planned direction.')}</p><Link href="/server-mechanism">{t('접속 기술 알아보기', 'Explore the connection technology')} <span aria-hidden="true">↗</span></Link></div>
+        <div className={styles.note}><p>{survivalPlanned ? t('지원 에디션과 서버 그룹을 나타내는 개념도입니다. Survival의 크로스플레이는 계획된 운영 방향입니다.', 'A concept diagram of supported editions and the server group. Crossplay for Survival is a planned direction.') : t('지원 에디션과 서버 그룹을 나타내는 개념도입니다.', 'A concept diagram of supported editions and the server group.')}</p><Link href="/server-mechanism">{t('접속 기술 알아보기', 'Explore the connection technology')} <span aria-hidden="true">↗</span></Link></div>
       </div>
     </section>
   );

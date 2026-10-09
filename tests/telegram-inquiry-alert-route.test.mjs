@@ -198,7 +198,9 @@ test('does not alert when the inquiry was already claimed', async () => {
   assert.equal(response.status, 202);
 });
 
-test('releases the alert claim when Telegram delivery fails so it can be retried', async () => {
+test('releases the alert claim when Telegram delivery fails so it can be retried', async (t) => {
+  const warning = t.mock.method(console, 'warn', () => {});
+  t.after(() => warning.mock.restore());
   const released = [];
   await handleInquiryAlert(new Request('https://stimemc.xyz/api/telegram/inquiry-alert', {
     method: 'POST', headers: { 'content-type': 'application/json', authorization: 'Bearer test-token' },
@@ -221,6 +223,9 @@ test('releases the alert claim when Telegram delivery fails so it can be retried
     'a0f8ad5d-75f8-4c9d-8a65-1df54857274f',
     '2bd98e08-f2cd-4e56-a4ff-b7fecf01e2c5',
   ]]);
+  assert.deepEqual(warning.mock.calls.map(call => call.arguments), [
+    ['Telegram inquiry alert was not delivered: telegram_request_failed'],
+  ]);
 });
 
 test('uses the claim token when finalizing or releasing an alert', async () => {

@@ -5,15 +5,17 @@ import ConnectionGuide from '../components/ConnectionGuide';
 import GuideHeader from '../components/GuideHeader';
 import { useLanguage } from '../components/LanguageProvider';
 import { joinConnectionGuide } from '../shared/siteContent.mjs';
+import { getServerGroupPresentation } from '../shared/serverGroup.mjs';
 import styles from '../styles/server-mechanism.module.css';
 
 export default function JoinServerPage() {
   const { t } = useLanguage();
+  const group = getServerGroupPresentation();
 
   return (
     <main className={styles.main}>
       {/* 히어로 섹션 */}
-      <GuideHeader eyebrow="STIMEMC / JOIN" titleKo="같이할 세계를 준비합니다" titleEn="Your next world is in preparation" descriptionKo="The Great War는 운영 준비 중이며 Survival은 추가 계획 중입니다. 서버 현황과 에디션별 안내를 먼저 확인하세요." descriptionEn="The Great War is preparing to operate; Survival is planned for later. Check each server’s status and edition guide first." />
+      <GuideHeader eyebrow="STIMEMC / JOIN" titleKo={group.joinTitleKo} titleEn={group.joinTitleEn} descriptionKo={group.joinDescriptionKo} descriptionEn={group.joinDescriptionEn} />
       <ConnectionGuide />
 
       {/* 접속 스펙 및 가이드 카드 */}

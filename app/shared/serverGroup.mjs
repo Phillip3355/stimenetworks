@@ -54,6 +54,57 @@ export function getServerBySlug(slug) {
   return servers.find((server) => server.slug === slug);
 }
 
+// Lifecycle identifies the world; operation status is a published registry
+// statement, never live telemetry. Publication still requires its own gate.
+export function getServerPresentation(server) {
+  const planned = server?.lifecycle === 'planned';
+  const active = server?.lifecycle === 'current' && server.status === 'active';
+  const preparing = server?.lifecycle === 'current' && server.status === 'preparing';
+  const label = planned ? 'PLANNED / COMING LATER' : active ? 'CURRENT / ACTIVE' : preparing ? 'CURRENT / PREPARING' : 'STATUS UNPUBLISHED';
+  const statusKo = planned ? '추가 계획 중 · 출시 일정과 버전 미정' : active ? '운영 중' : preparing ? '운영 준비 중' : '운영 현황 미공개';
+  const statusEn = planned ? 'Planned · Release date and version undecided' : active ? 'Active' : preparing ? 'Preparing to operate' : 'Operation status unpublished';
+  const connectionPublished = ['Java', 'Bedrock'].some(edition => getConnectionPresentation(server, edition).canCopy);
+  const connectionKo = connectionPublished ? '접속 정보 공개' : '접속 정보 미공개';
+  const connectionEn = connectionPublished ? 'Connection information published' : 'Connection information unpublished';
+  const confirmed = value => active && typeof value === 'string' && value.trim() ? value.trim() : null;
+  const version = confirmed(server?.version);
+  const release = confirmed(server?.release);
+  return {
+    planned, active, preparing, label, statusKo, statusEn, connectionPublished,
+    connectionKo, connectionEn, version, release,
+    detailStateKo: planned ? statusKo : `${statusKo} · ${connectionKo}`,
+    detailStateEn: planned ? statusEn : `${statusEn} · ${connectionEn}`,
+    guidanceKo: planned ? '출시 일정, 버전, 접속 정보는 아직 확정되지 않았습니다. 계획이 공개되면 StimeMC 소식에서 확인할 수 있습니다.' : preparing ? 'CURRENT는 StimeMC의 현재 서버를 뜻하며, 온라인 상태를 나타내지 않습니다. 서버의 접속 정보와 버전은 아직 공개되지 않았습니다.' : `CURRENT는 StimeMC의 현재 서버를 뜻하며, 온라인 상태를 나타내지 않습니다. ${connectionKo}. ${version ? `버전: ${version}` : '버전 미공개'}. ${release ? `출시: ${release}` : '출시 일정 미정'}.`,
+    guidanceEn: planned ? 'Release date, version and connection information have not been confirmed. Follow StimeMC news for published plans.' : preparing ? 'CURRENT identifies StimeMC’s current server; it does not indicate an online status. Connection information and version have not been published.' : `CURRENT identifies StimeMC’s current server; it does not indicate an online status. ${connectionEn}. ${version ? `Version: ${version}` : 'Version unpublished'}. ${release ? `Release: ${release}` : 'Release date undecided'}.`,
+  };
+}
+
+export function getServerGroupPresentation(records = servers) {
+  const hasActive = records.some(server => getServerPresentation(server).active);
+  const summaryKo = records.map(server => `${server.name} · ${getServerPresentation(server).statusKo}`).join(' / ');
+  const summaryEn = records.map(server => `${server.name} · ${getServerPresentation(server).statusEn}`).join(' / ');
+  return {
+    hasActive,
+    descriptionKo: hasActive ? `StimeMC는 여러 Minecraft 서버를 운영하는 커뮤니티입니다. ${summaryKo}.` : brandProfile.descriptionKo,
+    descriptionEn: hasActive ? `StimeMC is a community of Minecraft servers. ${summaryEn}.` : brandProfile.descriptionEn,
+    worldsKo: hasActive ? 'StimeMC의 서버와 각 세계의 운영 현황을 만나보세요.' : '지금 준비하는 세계와 앞으로 더해질 세계를 만나보세요.',
+    worldsEn: hasActive ? 'Explore StimeMC’s worlds and each server’s operation status.' : 'Meet the world in preparation and the world planned to follow.',
+    joinTitleKo: hasActive ? '같이할 세계를 만나보세요' : '같이할 세계를 준비합니다',
+    joinTitleEn: hasActive ? 'Find your next world' : 'Your next world is in preparation',
+    joinDescriptionKo: hasActive ? `${summaryKo}. 서버 현황과 에디션별 안내를 먼저 확인하세요.` : 'The Great War는 운영 준비 중이며 Survival은 추가 계획 중입니다. 서버 현황과 에디션별 안내를 먼저 확인하세요.',
+    joinDescriptionEn: hasActive ? `${summaryEn}. Check each server’s status and edition guide first.` : 'The Great War is preparing to operate; Survival is planned for later. Check each server’s status and edition guide first.',
+  };
+}
+
+export function getServerMetadata(server, fallback) {
+  const presentation = getServerPresentation(server);
+  if (!presentation.active) return fallback;
+  return {
+    title: server.name,
+    description: `${server.descriptionKo} ${presentation.detailStateKo}. Geyser 기반 Java × Bedrock 크로스플레이. ${presentation.version ? `버전: ${presentation.version}.` : '버전 미공개.'} ${presentation.release ? `출시: ${presentation.release}.` : '출시 일정 미정.'}`,
+  };
+}
+
 // Future published data uses connection.java / connection.bedrock objects.
 // Lifecycle and operation status take precedence over any supplied addresses.
 export function getConnectionPresentation(server, edition, language = 'ko') {

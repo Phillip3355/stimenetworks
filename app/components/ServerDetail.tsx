@@ -1,13 +1,14 @@
 'use client';
 import Link from 'next/link';
-import { servers } from '../shared/serverGroup.mjs';
+import { getServerPresentation, servers } from '../shared/serverGroup.mjs';
 import { useLanguage } from './LanguageProvider';
 import styles from '../styles/server-detail.module.css';
 
 type Server = (typeof servers)[number];
 export default function ServerDetail({ server }: { server: Server }) {
   const { language, t } = useLanguage();
-  const planned = server.lifecycle === 'planned';
+  const presentation = getServerPresentation(server);
+  const { planned } = presentation;
   return (
     <main className={styles.main}>
       <header className={`${styles.intro} ${planned ? styles.survival : styles.war}`}>
@@ -15,7 +16,7 @@ export default function ServerDetail({ server }: { server: Server }) {
           <nav className={styles.breadcrumbs} aria-label={t('현재 위치', 'Breadcrumb')}><Link href="/">StimeMC</Link><Link href="/servers">{t('서버', 'Servers')}</Link><span aria-current="page">{server.name}</span></nav>
           <p className={styles.eyebrow}>STIMEMC / {planned ? 'PLANNED / COMING LATER' : 'CURRENT'}</p>
           <h1>{server.name}</h1>
-          <p className={styles.state}>{planned ? t('추가 계획 중 · 출시 일정과 버전 미정', 'Planned · Release date and version undecided') : t('운영 준비 중 · 접속 정보 미공개', 'Preparing to operate · Connection information unpublished')}</p>
+          <p className={styles.state}>{t(presentation.detailStateKo, presentation.detailStateEn)}</p>
           <p className={styles.lead}>{t(server.descriptionKo, server.descriptionEn)}</p>
           <p className={styles.badge}>JAVA × BEDROCK / {server.crossplay}</p>
         </div>
@@ -33,7 +34,7 @@ export default function ServerDetail({ server }: { server: Server }) {
         </section>
         <section className={styles.section} aria-labelledby="server-guide-title">
           <h2 id="server-guide-title">{t('공개된 안내부터 확인하세요.', 'Start with the published guidance.')}</h2>
-          <p>{planned ? t('출시 일정, 버전, 접속 정보는 아직 확정되지 않았습니다. 계획이 공개되면 StimeMC 소식에서 확인할 수 있습니다.', 'Release date, version and connection information have not been confirmed. Follow StimeMC news for published plans.') : t('CURRENT는 StimeMC의 현재 서버를 뜻하며, 온라인 상태를 나타내지 않습니다. 서버의 접속 정보와 버전은 아직 공개되지 않았습니다.', 'CURRENT identifies StimeMC’s current server; it does not indicate an online status. Connection information and version have not been published.')}</p>
+          <p>{t(presentation.guidanceKo, presentation.guidanceEn)}</p>
           <p>{t('기존 공개 규정은 계속 확인할 수 있습니다. The Great War의 별도 규정과 Survival 규정은 미공개이며, 기존 규정의 서버별 적용은 별도 안내가 필요합니다.', 'The existing published rules remain accessible. Dedicated rules for The Great War and Survival are unpublished; their server-specific applicability needs separate guidance.')}</p>
           <div className={styles.actions}><Link href="/join">{t('접속 안내', 'Connection guide')} ↗</Link><Link href="/rules">{t('기존 공개 규정', 'Existing published rules')} ↗</Link><Link href="/news">{t('StimeMC 소식', 'StimeMC news')} ↗</Link><Link href="/support">{t('문의하기', 'Contact support')} ↗</Link></div>
         </section>

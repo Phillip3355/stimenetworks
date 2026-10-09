@@ -6,13 +6,15 @@ import Footer from "./components/Footer";
 import MotionProvider from "./components/MotionProvider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
+import { getServerGroupPresentation } from "./shared/serverGroup.mjs";
 
+const group = getServerGroupPresentation();
 export const metadata: Metadata = {
   title: {
     default: "StimeMC — Minecraft Server Group",
     template: "%s | StimeMC",
   },
-  description: "여러 세계, 하나의 Stime. Geyser 기반 Java × Bedrock 크로스플레이를 공유하는 서버 그룹. The Great War는 운영 준비 중이며 Survival은 추가 계획 중입니다.",
+  description: group.hasActive ? group.descriptionKo : "여러 세계, 하나의 Stime. Geyser 기반 Java × Bedrock 크로스플레이를 공유하는 서버 그룹. The Great War는 운영 준비 중이며 Survival은 추가 계획 중입니다.",
 };
 
 export const viewport: Viewport = {
