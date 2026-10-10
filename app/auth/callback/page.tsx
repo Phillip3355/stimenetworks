@@ -8,7 +8,7 @@ import styles from './auth.module.css';
 
 export default function AuthCallback() {
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<AuthStatus />}>
       <AuthCallbackContent />
     </Suspense>
   );
@@ -17,7 +17,6 @@ export default function AuthCallback() {
 function AuthCallbackContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { t } = useLanguage();
   const requestedNext = searchParams.get('next');
   const adminDestination = /^\/taskboard\?inquiry=[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(requestedNext ?? '')
     ? requestedNext ?? '/taskboard'
@@ -49,11 +48,17 @@ function AuthCallbackContent() {
     };
   }, [adminDestination, router]);
 
+  return <AuthStatus />;
+}
+
+function AuthStatus() {
+  const { t } = useLanguage();
   return (
     <main className={styles.main}>
       <section className={styles.status} aria-live="polite" aria-busy="true">
-        <p className={styles.brand}>StimeMC · Authentication</p>
+        <p className={styles.brand}>STIMEMC / AUTHENTICATION</p>
         <div className={styles.spinner} aria-hidden="true" />
+        <h1 className={styles.title}>{t('로그인 연결 중', 'Connecting your account')}</h1>
         <p className={styles.message}>
           {t(
             'Google 로그인 세션을 처리하고 있습니다. 잠시만 기다려 주세요.',

@@ -2,8 +2,9 @@
 
 import PolicyScope from '../components/PolicyScope';
 import GuideHeader from '../components/GuideHeader';
+import DocsLayout from '../components/DocsLayout';
 import { useLanguage } from '../components/LanguageProvider';
-import styles from '../styles/server-mechanism.module.css';
+import styles from '../styles/policy.module.css';
 
 const recoveryGuidelines = [
   {
@@ -36,21 +37,22 @@ export default function RecoveryGuidelines() {
   const { t, language } = useLanguage();
 
   return (
-    <main className={styles.main}>
+    <DocsLayout toc={[{ id: 'scope-recovery', labelKo: '적용 범위', labelEn: 'Policy scope' }, { id: 'recovery-criteria', labelKo: '복구 기준', labelEn: 'Recovery criteria' }, { id: 'recovery-request', labelKo: '요청 절차', labelEn: 'Request process' }]}>
       <GuideHeader eyebrow="STIMEMC / RECOVERY" titleKo="복구 가이드라인" titleEn="Recovery guidelines" descriptionKo="손실을 기록하고 도움을 요청하는 기존 정책입니다. 새로운 서버의 별도 복구 정책은 아직 공개되지 않았습니다." descriptionEn="The existing policy for documenting losses and requesting help. Dedicated recovery policies for the new servers have not been published." />
       <PolicyScope kind="recovery" />
 
-      <section className={styles.sectionCanvas}>
+      <section data-scroll-reveal id="recovery-criteria" className={styles.sectionCanvas}>
         <div className={styles.sectionContent}>
           <div className={styles.sectionHeader}>
-            <p className={styles.eyebrow}>{t('복구 절차', 'Recovery Process')}</p>
+            <p className={styles.eyebrow}>02 / {t('복구 기준', 'Recovery criteria')}</p>
             <h2 className={styles.sectionHeading}>{t('아이템 및 월드 복구 가이드', 'Item & World Recovery Guide')}</h2>
           </div>
 
-          <div className={styles.timelineGrid}>
+          <div className={`${styles.timelineGrid} ${styles.criteriaGrid}`}>
             {recoveryGuidelines.map((guideline, index) => (
               <article key={index} className={styles.timelineCard}>
                 <span className={styles.cornerSquare} />
+                <p className={styles.timelineDate}>{String(index + 1).padStart(2, '0')}</p>
                 <h3 className={styles.timelineTitle}>{t(guideline.title, guideline.titleEn)}</h3>
                 <p className={styles.timelineText}>
                   {language === 'ko' ? guideline.descriptionKo : guideline.descriptionEn}
@@ -61,10 +63,10 @@ export default function RecoveryGuidelines() {
         </div>
       </section>
 
-      <section className={styles.sectionCanvas}>
+      <section data-scroll-reveal id="recovery-request" className={styles.sectionCanvas}>
         <div className={styles.sectionContent}>
           <div className={styles.sectionHeader}>
-            <p className={styles.eyebrow}>{t('요청 방법', 'How to Request')}</p>
+            <p className={styles.eyebrow}>03 / {t('요청 방법', 'How to request')}</p>
             <h2 className={styles.sectionHeading}>{t('복구 요청 절차', 'Recovery Request Process')}</h2>
           </div>
 
@@ -112,6 +114,6 @@ export default function RecoveryGuidelines() {
           </div>
         </div>
       </section>
-    </main>
+    </DocsLayout>
   );
 }

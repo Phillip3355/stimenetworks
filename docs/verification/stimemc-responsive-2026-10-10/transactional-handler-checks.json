@@ -1,0 +1,75 @@
+{
+  "reference": "HEAD function initializers normalized through TypeScript AST; presentation effects and JSX reviewed separately.",
+  "checks": [
+    {
+      "file": "app/support/page.tsx",
+      "name": "handleGuestModalCancel",
+      "unchanged": true
+    },
+    {
+      "file": "app/support/page.tsx",
+      "name": "handleGuestModalKeyDown",
+      "unchanged": true
+    },
+    {
+      "file": "app/support/page.tsx",
+      "name": "handleGoogleSignIn",
+      "unchanged": true
+    },
+    {
+      "file": "app/support/page.tsx",
+      "name": "handleSignOut",
+      "unchanged": true
+    },
+    {
+      "file": "app/support/page.tsx",
+      "name": "handleCreateInquiry",
+      "unchanged": true
+    },
+    {
+      "file": "app/support/page.tsx",
+      "name": "handleGuestCreateInquiry",
+      "unchanged": true
+    },
+    {
+      "file": "app/support/page.tsx",
+      "name": "handleGuestLookup",
+      "unchanged": true
+    },
+    {
+      "file": "app/support/page.tsx",
+      "name": "handleSendMessage",
+      "unchanged": true
+    },
+    {
+      "file": "app/taskboard/page.tsx",
+      "name": "handleGoogleSignIn",
+      "unchanged": true
+    },
+    {
+      "file": "app/taskboard/page.tsx",
+      "name": "handleLogout",
+      "unchanged": true
+    },
+    {
+      "file": "app/taskboard/page.tsx",
+      "name": "handleSendReply",
+      "unchanged": true
+    },
+    {
+      "file": "app/taskboard/page.tsx",
+      "name": "handleDeleteInquiry",
+      "unchanged": true
+    },
+    {
+      "file": "app/taskboard/page.tsx",
+      "name": "handlePublishReport",
+      "unchanged": true
+    },
+    {
+      "file": "app/taskboard/page.tsx",
+      "name": "handleDeleteReport",
+      "unchanged": true
+    }
+  ]
+}

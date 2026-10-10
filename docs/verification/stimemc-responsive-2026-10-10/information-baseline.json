@@ -1,0 +1,8676 @@
+{
+  "results": [
+    {
+      "route": "/join",
+      "width": 280,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 280,
+      "body": 280,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "JOIN",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/join",
+      "width": 280,
+      "language": "en",
+      "scale": 1,
+      "scroll": 280,
+      "body": 280,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "JOIN",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/rules",
+      "width": 280,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 280,
+      "body": 280,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "RULES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/rules",
+      "width": 280,
+      "language": "en",
+      "scale": 1,
+      "scroll": 280,
+      "body": 280,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "RULES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/recovery-guidelines",
+      "width": 280,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 280,
+      "body": 280,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "RECOVERY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/recovery-guidelines",
+      "width": 280,
+      "language": "en",
+      "scale": 1,
+      "scroll": 280,
+      "body": 280,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "RECOVERY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/history",
+      "width": 280,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 280,
+      "body": 280,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "HISTORY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "2023.04 — 2026.08",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "TODAY / STIMEMC",
+          "class": "history_eyebrow__YSc_g",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/history",
+      "width": 280,
+      "language": "en",
+      "scale": 1,
+      "scroll": 280,
+      "body": 280,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "HISTORY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "2023.04 — 2026.08",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "TODAY / STIMEMC",
+          "class": "history_eyebrow__YSc_g",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/updates",
+      "width": 280,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 280,
+      "body": 280,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "WEBSITE UPDATES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "WEBSITE CHANGE LOG",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "06 / 기록",
+          "class": "server-mechanism_journalCount__BGwE9",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/updates",
+      "width": 280,
+      "language": "en",
+      "scale": 1,
+      "scroll": 280,
+      "body": 280,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "WEBSITE UPDATES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "WEBSITE CHANGE LOG",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "06 / ENTRIES",
+          "class": "server-mechanism_journalCount__BGwE9",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/news",
+      "width": 280,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 280,
+      "body": 280,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "NEWS",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "02 개의 기록",
+          "class": "news_archiveCount__TT7b5",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 8월 19일",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 10월 9일",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "웹사이트 기록",
+          "class": "news_eyebrow__tD4fS",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/news",
+      "width": 280,
+      "language": "en",
+      "scale": 1,
+      "scroll": 280,
+      "body": 280,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "NEWS",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "02 RECORDS",
+          "class": "news_archiveCount__TT7b5",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Aug 19, 2026",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Oct 9, 2026",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "WEBSITE JOURNAL",
+          "class": "news_eyebrow__tD4fS",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/News",
+      "width": 280,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 280,
+      "body": 280,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 8월 19일 16:29",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/News",
+      "width": 280,
+      "language": "en",
+      "scale": 1,
+      "scroll": 280,
+      "body": 280,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Aug 19, 2026, 16:29",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/__test-only-markdown",
+      "width": 280,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 280,
+      "body": 280,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 10월 9일 09:00",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/__test-only-markdown",
+      "width": 280,
+      "language": "en",
+      "scale": 1,
+      "scroll": 280,
+      "body": 280,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Oct 9, 2026, 09:00",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/server-mechanism",
+      "width": 280,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 280,
+      "body": 280,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "TECHNOLOGY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "A SHARED STIMEMC FEATURE",
+          "class": "crossplay-bridge_eyebrow__8udxQ",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC / 모든 서버의 공통 특징",
+          "class": "crossplay-bridge_group__5f1wE",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "기존 공개 구현",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "VIAPROXY + GEYSER",
+          "class": "server-mechanism_implementationTag__S_n_F",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "ARCHIVE / JAVA 1.21.1",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "01 / JAVA EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "02 / BEDROCK EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "03 / THE PROXY LAYER",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "04 / THE TRANSLATOR",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "05 / KEEP IN MIND",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/server-mechanism",
+      "width": 280,
+      "language": "en",
+      "scale": 1,
+      "scroll": 280,
+      "body": 280,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "TECHNOLOGY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "A SHARED STIMEMC FEATURE",
+          "class": "crossplay-bridge_eyebrow__8udxQ",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC / Shared by every server",
+          "class": "crossplay-bridge_group__5f1wE",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "DOCUMENTED IMPLEMENTATION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "VIAPROXY + GEYSER",
+          "class": "server-mechanism_implementationTag__S_n_F",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "ARCHIVE / JAVA 1.21.1",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "01 / JAVA EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "02 / BEDROCK EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "03 / THE PROXY LAYER",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "04 / THE TRANSLATOR",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "05 / KEEP IN MIND",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/join",
+      "width": 320,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 320,
+      "body": 320,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "JOIN",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/join",
+      "width": 320,
+      "language": "en",
+      "scale": 1,
+      "scroll": 320,
+      "body": 320,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "JOIN",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/rules",
+      "width": 320,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 320,
+      "body": 320,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "RULES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/rules",
+      "width": 320,
+      "language": "en",
+      "scale": 1,
+      "scroll": 320,
+      "body": 320,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "RULES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/recovery-guidelines",
+      "width": 320,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 320,
+      "body": 320,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "RECOVERY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/recovery-guidelines",
+      "width": 320,
+      "language": "en",
+      "scale": 1,
+      "scroll": 320,
+      "body": 320,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "RECOVERY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/history",
+      "width": 320,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 320,
+      "body": 320,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "HISTORY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "2023.04 — 2026.08",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "TODAY / STIMEMC",
+          "class": "history_eyebrow__YSc_g",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/history",
+      "width": 320,
+      "language": "en",
+      "scale": 1,
+      "scroll": 320,
+      "body": 320,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "HISTORY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "2023.04 — 2026.08",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "TODAY / STIMEMC",
+          "class": "history_eyebrow__YSc_g",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/updates",
+      "width": 320,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 320,
+      "body": 320,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "WEBSITE UPDATES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "WEBSITE CHANGE LOG",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "06 / 기록",
+          "class": "server-mechanism_journalCount__BGwE9",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/updates",
+      "width": 320,
+      "language": "en",
+      "scale": 1,
+      "scroll": 320,
+      "body": 320,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "WEBSITE UPDATES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "WEBSITE CHANGE LOG",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "06 / ENTRIES",
+          "class": "server-mechanism_journalCount__BGwE9",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/news",
+      "width": 320,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 320,
+      "body": 320,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "NEWS",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "02 개의 기록",
+          "class": "news_archiveCount__TT7b5",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 8월 19일",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 10월 9일",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "웹사이트 기록",
+          "class": "news_eyebrow__tD4fS",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/news",
+      "width": 320,
+      "language": "en",
+      "scale": 1,
+      "scroll": 320,
+      "body": 320,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "NEWS",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "02 RECORDS",
+          "class": "news_archiveCount__TT7b5",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Aug 19, 2026",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Oct 9, 2026",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "WEBSITE JOURNAL",
+          "class": "news_eyebrow__tD4fS",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/News",
+      "width": 320,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 320,
+      "body": 320,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 8월 19일 16:29",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/News",
+      "width": 320,
+      "language": "en",
+      "scale": 1,
+      "scroll": 320,
+      "body": 320,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Aug 19, 2026, 16:29",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/__test-only-markdown",
+      "width": 320,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 320,
+      "body": 320,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 10월 9일 09:00",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/__test-only-markdown",
+      "width": 320,
+      "language": "en",
+      "scale": 1,
+      "scroll": 320,
+      "body": 320,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Oct 9, 2026, 09:00",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/server-mechanism",
+      "width": 320,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 320,
+      "body": 320,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "TECHNOLOGY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "A SHARED STIMEMC FEATURE",
+          "class": "crossplay-bridge_eyebrow__8udxQ",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC / 모든 서버의 공통 특징",
+          "class": "crossplay-bridge_group__5f1wE",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "기존 공개 구현",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "VIAPROXY + GEYSER",
+          "class": "server-mechanism_implementationTag__S_n_F",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "ARCHIVE / JAVA 1.21.1",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "01 / JAVA EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "02 / BEDROCK EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "03 / THE PROXY LAYER",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "04 / THE TRANSLATOR",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "05 / KEEP IN MIND",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/server-mechanism",
+      "width": 320,
+      "language": "en",
+      "scale": 1,
+      "scroll": 320,
+      "body": 320,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "TECHNOLOGY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "A SHARED STIMEMC FEATURE",
+          "class": "crossplay-bridge_eyebrow__8udxQ",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC / Shared by every server",
+          "class": "crossplay-bridge_group__5f1wE",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "DOCUMENTED IMPLEMENTATION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "VIAPROXY + GEYSER",
+          "class": "server-mechanism_implementationTag__S_n_F",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "ARCHIVE / JAVA 1.21.1",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "01 / JAVA EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "02 / BEDROCK EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "03 / THE PROXY LAYER",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "04 / THE TRANSLATOR",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "05 / KEEP IN MIND",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/join",
+      "width": 390,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 390,
+      "body": 390,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "JOIN",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/join",
+      "width": 390,
+      "language": "en",
+      "scale": 1,
+      "scroll": 390,
+      "body": 390,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "JOIN",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/rules",
+      "width": 390,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 390,
+      "body": 390,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "RULES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/rules",
+      "width": 390,
+      "language": "en",
+      "scale": 1,
+      "scroll": 390,
+      "body": 390,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "RULES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/recovery-guidelines",
+      "width": 390,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 390,
+      "body": 390,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "RECOVERY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/recovery-guidelines",
+      "width": 390,
+      "language": "en",
+      "scale": 1,
+      "scroll": 390,
+      "body": 390,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "RECOVERY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/history",
+      "width": 390,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 390,
+      "body": 390,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "HISTORY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "2023.04 — 2026.08",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "TODAY / STIMEMC",
+          "class": "history_eyebrow__YSc_g",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/history",
+      "width": 390,
+      "language": "en",
+      "scale": 1,
+      "scroll": 390,
+      "body": 390,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "HISTORY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "2023.04 — 2026.08",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "TODAY / STIMEMC",
+          "class": "history_eyebrow__YSc_g",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/updates",
+      "width": 390,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 390,
+      "body": 390,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "WEBSITE UPDATES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "WEBSITE CHANGE LOG",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "06 / 기록",
+          "class": "server-mechanism_journalCount__BGwE9",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/updates",
+      "width": 390,
+      "language": "en",
+      "scale": 1,
+      "scroll": 390,
+      "body": 390,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "WEBSITE UPDATES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "WEBSITE CHANGE LOG",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "06 / ENTRIES",
+          "class": "server-mechanism_journalCount__BGwE9",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/news",
+      "width": 390,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 390,
+      "body": 390,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "NEWS",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "02 개의 기록",
+          "class": "news_archiveCount__TT7b5",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 8월 19일",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 10월 9일",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "웹사이트 기록",
+          "class": "news_eyebrow__tD4fS",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/news",
+      "width": 390,
+      "language": "en",
+      "scale": 1,
+      "scroll": 390,
+      "body": 390,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "NEWS",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "02 RECORDS",
+          "class": "news_archiveCount__TT7b5",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Aug 19, 2026",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Oct 9, 2026",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "WEBSITE JOURNAL",
+          "class": "news_eyebrow__tD4fS",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/News",
+      "width": 390,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 390,
+      "body": 390,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 8월 19일 16:29",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/News",
+      "width": 390,
+      "language": "en",
+      "scale": 1,
+      "scroll": 390,
+      "body": 390,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Aug 19, 2026, 16:29",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/__test-only-markdown",
+      "width": 390,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 390,
+      "body": 390,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 10월 9일 09:00",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/__test-only-markdown",
+      "width": 390,
+      "language": "en",
+      "scale": 1,
+      "scroll": 390,
+      "body": 390,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Oct 9, 2026, 09:00",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/server-mechanism",
+      "width": 390,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 390,
+      "body": 390,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "TECHNOLOGY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "A SHARED STIMEMC FEATURE",
+          "class": "crossplay-bridge_eyebrow__8udxQ",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC / 모든 서버의 공통 특징",
+          "class": "crossplay-bridge_group__5f1wE",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "기존 공개 구현",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "VIAPROXY + GEYSER",
+          "class": "server-mechanism_implementationTag__S_n_F",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "ARCHIVE / JAVA 1.21.1",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "01 / JAVA EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "02 / BEDROCK EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "03 / THE PROXY LAYER",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "04 / THE TRANSLATOR",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "05 / KEEP IN MIND",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/server-mechanism",
+      "width": 390,
+      "language": "en",
+      "scale": 1,
+      "scroll": 390,
+      "body": 390,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "TECHNOLOGY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "A SHARED STIMEMC FEATURE",
+          "class": "crossplay-bridge_eyebrow__8udxQ",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC / Shared by every server",
+          "class": "crossplay-bridge_group__5f1wE",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "DOCUMENTED IMPLEMENTATION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "VIAPROXY + GEYSER",
+          "class": "server-mechanism_implementationTag__S_n_F",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "ARCHIVE / JAVA 1.21.1",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "01 / JAVA EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "02 / BEDROCK EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "03 / THE PROXY LAYER",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "04 / THE TRANSLATOR",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "05 / KEEP IN MIND",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/join",
+      "width": 653,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 653,
+      "body": 653,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "JOIN",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/join",
+      "width": 653,
+      "language": "en",
+      "scale": 1,
+      "scroll": 653,
+      "body": 653,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "JOIN",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/rules",
+      "width": 653,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 653,
+      "body": 653,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "RULES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/rules",
+      "width": 653,
+      "language": "en",
+      "scale": 1,
+      "scroll": 653,
+      "body": 653,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "RULES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/recovery-guidelines",
+      "width": 653,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 653,
+      "body": 653,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "RECOVERY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/recovery-guidelines",
+      "width": 653,
+      "language": "en",
+      "scale": 1,
+      "scroll": 653,
+      "body": 653,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "RECOVERY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/history",
+      "width": 653,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 653,
+      "body": 653,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "HISTORY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "2023.04 — 2026.08",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "TODAY / STIMEMC",
+          "class": "history_eyebrow__YSc_g",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/history",
+      "width": 653,
+      "language": "en",
+      "scale": 1,
+      "scroll": 653,
+      "body": 653,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "HISTORY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "2023.04 — 2026.08",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "TODAY / STIMEMC",
+          "class": "history_eyebrow__YSc_g",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/updates",
+      "width": 653,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 653,
+      "body": 653,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "WEBSITE UPDATES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "WEBSITE CHANGE LOG",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "06 / 기록",
+          "class": "server-mechanism_journalCount__BGwE9",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/updates",
+      "width": 653,
+      "language": "en",
+      "scale": 1,
+      "scroll": 653,
+      "body": 653,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "WEBSITE UPDATES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "WEBSITE CHANGE LOG",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "06 / ENTRIES",
+          "class": "server-mechanism_journalCount__BGwE9",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/news",
+      "width": 653,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 653,
+      "body": 653,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "NEWS",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "02 개의 기록",
+          "class": "news_archiveCount__TT7b5",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 8월 19일",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 10월 9일",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "웹사이트 기록",
+          "class": "news_eyebrow__tD4fS",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/news",
+      "width": 653,
+      "language": "en",
+      "scale": 1,
+      "scroll": 653,
+      "body": 653,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "NEWS",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "02 RECORDS",
+          "class": "news_archiveCount__TT7b5",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Aug 19, 2026",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Oct 9, 2026",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "WEBSITE JOURNAL",
+          "class": "news_eyebrow__tD4fS",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/News",
+      "width": 653,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 653,
+      "body": 653,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 8월 19일 16:29",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/News",
+      "width": 653,
+      "language": "en",
+      "scale": 1,
+      "scroll": 653,
+      "body": 653,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Aug 19, 2026, 16:29",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/__test-only-markdown",
+      "width": 653,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 653,
+      "body": 653,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 10월 9일 09:00",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/__test-only-markdown",
+      "width": 653,
+      "language": "en",
+      "scale": 1,
+      "scroll": 653,
+      "body": 653,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Oct 9, 2026, 09:00",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/server-mechanism",
+      "width": 653,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 653,
+      "body": 653,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "TECHNOLOGY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "A SHARED STIMEMC FEATURE",
+          "class": "crossplay-bridge_eyebrow__8udxQ",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC / 모든 서버의 공통 특징",
+          "class": "crossplay-bridge_group__5f1wE",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "기존 공개 구현",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "VIAPROXY + GEYSER",
+          "class": "server-mechanism_implementationTag__S_n_F",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "ARCHIVE / JAVA 1.21.1",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "01 / JAVA EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "02 / BEDROCK EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "03 / THE PROXY LAYER",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "04 / THE TRANSLATOR",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "05 / KEEP IN MIND",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/server-mechanism",
+      "width": 653,
+      "language": "en",
+      "scale": 1,
+      "scroll": 653,
+      "body": 653,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "TECHNOLOGY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "A SHARED STIMEMC FEATURE",
+          "class": "crossplay-bridge_eyebrow__8udxQ",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC / Shared by every server",
+          "class": "crossplay-bridge_group__5f1wE",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "DOCUMENTED IMPLEMENTATION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "VIAPROXY + GEYSER",
+          "class": "server-mechanism_implementationTag__S_n_F",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "ARCHIVE / JAVA 1.21.1",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "01 / JAVA EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "02 / BEDROCK EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "03 / THE PROXY LAYER",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "04 / THE TRANSLATOR",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "05 / KEEP IN MIND",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/join",
+      "width": 768,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 768,
+      "body": 768,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "JOIN",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/join",
+      "width": 768,
+      "language": "en",
+      "scale": 1,
+      "scroll": 768,
+      "body": 768,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "JOIN",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/rules",
+      "width": 768,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 768,
+      "body": 768,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "RULES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/rules",
+      "width": 768,
+      "language": "en",
+      "scale": 1,
+      "scroll": 768,
+      "body": 768,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "RULES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/recovery-guidelines",
+      "width": 768,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 768,
+      "body": 768,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "RECOVERY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/recovery-guidelines",
+      "width": 768,
+      "language": "en",
+      "scale": 1,
+      "scroll": 768,
+      "body": 768,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "RECOVERY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/history",
+      "width": 768,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 768,
+      "body": 768,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "HISTORY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "2023.04 — 2026.08",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "TODAY / STIMEMC",
+          "class": "history_eyebrow__YSc_g",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/history",
+      "width": 768,
+      "language": "en",
+      "scale": 1,
+      "scroll": 768,
+      "body": 768,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "HISTORY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "2023.04 — 2026.08",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "TODAY / STIMEMC",
+          "class": "history_eyebrow__YSc_g",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/updates",
+      "width": 768,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 768,
+      "body": 768,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "WEBSITE UPDATES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "WEBSITE CHANGE LOG",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "06 / 기록",
+          "class": "server-mechanism_journalCount__BGwE9",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/updates",
+      "width": 768,
+      "language": "en",
+      "scale": 1,
+      "scroll": 768,
+      "body": 768,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "WEBSITE UPDATES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "WEBSITE CHANGE LOG",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "06 / ENTRIES",
+          "class": "server-mechanism_journalCount__BGwE9",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/news",
+      "width": 768,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 768,
+      "body": 768,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "NEWS",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "02 개의 기록",
+          "class": "news_archiveCount__TT7b5",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 8월 19일",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 10월 9일",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "웹사이트 기록",
+          "class": "news_eyebrow__tD4fS",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/news",
+      "width": 768,
+      "language": "en",
+      "scale": 1,
+      "scroll": 768,
+      "body": 768,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "NEWS",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "02 RECORDS",
+          "class": "news_archiveCount__TT7b5",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Aug 19, 2026",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Oct 9, 2026",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "WEBSITE JOURNAL",
+          "class": "news_eyebrow__tD4fS",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/News",
+      "width": 768,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 768,
+      "body": 768,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 8월 19일 16:29",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/News",
+      "width": 768,
+      "language": "en",
+      "scale": 1,
+      "scroll": 768,
+      "body": 768,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Aug 19, 2026, 16:29",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/__test-only-markdown",
+      "width": 768,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 768,
+      "body": 768,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 10월 9일 09:00",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/__test-only-markdown",
+      "width": 768,
+      "language": "en",
+      "scale": 1,
+      "scroll": 768,
+      "body": 768,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Oct 9, 2026, 09:00",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/server-mechanism",
+      "width": 768,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 768,
+      "body": 768,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "TECHNOLOGY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "A SHARED STIMEMC FEATURE",
+          "class": "crossplay-bridge_eyebrow__8udxQ",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC / 모든 서버의 공통 특징",
+          "class": "crossplay-bridge_group__5f1wE",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "기존 공개 구현",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "VIAPROXY + GEYSER",
+          "class": "server-mechanism_implementationTag__S_n_F",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "ARCHIVE / JAVA 1.21.1",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "01 / JAVA EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "02 / BEDROCK EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "03 / THE PROXY LAYER",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "04 / THE TRANSLATOR",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "05 / KEEP IN MIND",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/server-mechanism",
+      "width": 768,
+      "language": "en",
+      "scale": 1,
+      "scroll": 768,
+      "body": 768,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "TECHNOLOGY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "A SHARED STIMEMC FEATURE",
+          "class": "crossplay-bridge_eyebrow__8udxQ",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC / Shared by every server",
+          "class": "crossplay-bridge_group__5f1wE",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "DOCUMENTED IMPLEMENTATION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "VIAPROXY + GEYSER",
+          "class": "server-mechanism_implementationTag__S_n_F",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "ARCHIVE / JAVA 1.21.1",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "01 / JAVA EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "02 / BEDROCK EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "03 / THE PROXY LAYER",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "04 / THE TRANSLATOR",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "05 / KEEP IN MIND",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/join",
+      "width": 1024,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 1024,
+      "body": 1024,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "플레이 가이드",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "JOIN",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "안내 페이지 찾기",
+          "class": "",
+          "width": 132.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "접속 안내",
+          "class": "docs-layout_active__UyiPI",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 규칙",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "복구 가이드",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "1:1 문의",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 살펴보기",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "StimeMC 소식",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "홈페이지 업데이트",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 메커니즘",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버의 역사",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 준비 현황",
+          "class": "docs-layout_tocActive__76x_R",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "기존 공개 가이드",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "플레이 전 확인",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/join",
+      "width": 1024,
+      "language": "en",
+      "scale": 1,
+      "scroll": 1024,
+      "body": 1024,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "PLAY GUIDE",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "JOIN",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "Find a guide page",
+          "class": "",
+          "width": 132.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "Connection guide",
+          "class": "docs-layout_active__UyiPI",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Rules",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Recovery",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Support",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Our servers",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "News",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Website updates",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Technology",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "History",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Server status",
+          "class": "docs-layout_tocActive__76x_R",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "Published guide",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "Before playing",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/rules",
+      "width": 1024,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 1024,
+      "body": 1024,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "플레이 가이드",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "RULES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "안내 페이지 찾기",
+          "class": "",
+          "width": 132.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "접속 안내",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 규칙",
+          "class": "docs-layout_active__UyiPI",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "복구 가이드",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "1:1 문의",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 살펴보기",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "StimeMC 소식",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "홈페이지 업데이트",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 메커니즘",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버의 역사",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "적용 범위",
+          "class": "docs-layout_tocActive__76x_R",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "기존 공개 규칙",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "신고 및 처벌",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/rules",
+      "width": 1024,
+      "language": "en",
+      "scale": 1,
+      "scroll": 1024,
+      "body": 1024,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "PLAY GUIDE",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "RULES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "Find a guide page",
+          "class": "",
+          "width": 132.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "Connection guide",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Rules",
+          "class": "docs-layout_active__UyiPI",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Recovery",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Support",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Our servers",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "News",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Website updates",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Technology",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "History",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Policy scope",
+          "class": "docs-layout_tocActive__76x_R",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "Published rules",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "Reporting & enforcement",
+          "class": "",
+          "width": 123,
+          "height": 39
+        }
+      ]
+    },
+    {
+      "route": "/recovery-guidelines",
+      "width": 1024,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 1024,
+      "body": 1024,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "플레이 가이드",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "RECOVERY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "안내 페이지 찾기",
+          "class": "",
+          "width": 132.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "접속 안내",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 규칙",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "복구 가이드",
+          "class": "docs-layout_active__UyiPI",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "1:1 문의",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 살펴보기",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "StimeMC 소식",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "홈페이지 업데이트",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 메커니즘",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버의 역사",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "적용 범위",
+          "class": "docs-layout_tocActive__76x_R",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "복구 기준",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "요청 절차",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/recovery-guidelines",
+      "width": 1024,
+      "language": "en",
+      "scale": 1,
+      "scroll": 1024,
+      "body": 1024,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "PLAY GUIDE",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "RECOVERY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "Find a guide page",
+          "class": "",
+          "width": 132.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "Connection guide",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Rules",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Recovery",
+          "class": "docs-layout_active__UyiPI",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Support",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Our servers",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "News",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Website updates",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Technology",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "History",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Policy scope",
+          "class": "docs-layout_tocActive__76x_R",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "Recovery criteria",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "Request process",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/history",
+      "width": 1024,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 1024,
+      "body": 1024,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "플레이 가이드",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "HISTORY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "2023.04 — 2026.08",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "TODAY / STIMEMC",
+          "class": "history_eyebrow__YSc_g",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "안내 페이지 찾기",
+          "class": "",
+          "width": 132.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "접속 안내",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 규칙",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "복구 가이드",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "1:1 문의",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 살펴보기",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "StimeMC 소식",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "홈페이지 업데이트",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 메커니즘",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버의 역사",
+          "class": "docs-layout_active__UyiPI",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "2023.04 · 첫 번째 서버",
+          "class": "docs-layout_tocActive__76x_R",
+          "width": 123,
+          "height": 39
+        },
+        {
+          "tag": "A",
+          "text": "2024.03 · 새로운 시작",
+          "class": "",
+          "width": 123,
+          "height": 39
+        },
+        {
+          "tag": "A",
+          "text": "2024.08 · Stime 161",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "2026.03 · Stime Networks",
+          "class": "",
+          "width": 123,
+          "height": 39
+        },
+        {
+          "tag": "A",
+          "text": "2026.08 · StimeMC",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "지금의 StimeMC",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/history",
+      "width": 1024,
+      "language": "en",
+      "scale": 1,
+      "scroll": 1024,
+      "body": 1024,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "PLAY GUIDE",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "HISTORY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "2023.04 — 2026.08",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "TODAY / STIMEMC",
+          "class": "history_eyebrow__YSc_g",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "Find a guide page",
+          "class": "",
+          "width": 132.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "Connection guide",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Rules",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Recovery",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Support",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Our servers",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "News",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Website updates",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Technology",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "History",
+          "class": "docs-layout_active__UyiPI",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "2023.04 · The first server",
+          "class": "docs-layout_tocActive__76x_R",
+          "width": 123,
+          "height": 39
+        },
+        {
+          "tag": "A",
+          "text": "2024.03 · A new beginning",
+          "class": "",
+          "width": 123,
+          "height": 39
+        },
+        {
+          "tag": "A",
+          "text": "2024.08 · Stime 161",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "2026.03 · Stime Networks",
+          "class": "",
+          "width": 123,
+          "height": 39
+        },
+        {
+          "tag": "A",
+          "text": "2026.08 · StimeMC",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "StimeMC today",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/updates",
+      "width": 1024,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 1024,
+      "body": 1024,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "플레이 가이드",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "WEBSITE UPDATES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "WEBSITE CHANGE LOG",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "06 / 기록",
+          "class": "server-mechanism_journalCount__BGwE9",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "안내 페이지 찾기",
+          "class": "",
+          "width": 132.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "접속 안내",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 규칙",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "복구 가이드",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "1:1 문의",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 살펴보기",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "StimeMC 소식",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "홈페이지 업데이트",
+          "class": "docs-layout_active__UyiPI",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 메커니즘",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버의 역사",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "2026.05.30",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "2026.05.28",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "2026.05.21",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "2026.05.14",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "2026.05.07",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "2026.05.03",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/updates",
+      "width": 1024,
+      "language": "en",
+      "scale": 1,
+      "scroll": 1024,
+      "body": 1024,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "PLAY GUIDE",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "WEBSITE UPDATES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "WEBSITE CHANGE LOG",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "06 / ENTRIES",
+          "class": "server-mechanism_journalCount__BGwE9",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "Find a guide page",
+          "class": "",
+          "width": 132.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "Connection guide",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Rules",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Recovery",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Support",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Our servers",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "News",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Website updates",
+          "class": "docs-layout_active__UyiPI",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Technology",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "History",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "May 30, 2026",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "May 28, 2026",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "May 21, 2026",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "May 14, 2026",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "May 7, 2026",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "May 3, 2026",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/news",
+      "width": 1024,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 1024,
+      "body": 1024,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "플레이 가이드",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "NEWS",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "02 개의 기록",
+          "class": "news_archiveCount__TT7b5",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 8월 19일",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 10월 9일",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "웹사이트 기록",
+          "class": "news_eyebrow__tD4fS",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "안내 페이지 찾기",
+          "class": "",
+          "width": 132.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "접속 안내",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 규칙",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "복구 가이드",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "1:1 문의",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 살펴보기",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "StimeMC 소식",
+          "class": "docs-layout_active__UyiPI",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "홈페이지 업데이트",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 메커니즘",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버의 역사",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "발행 기록",
+          "class": "docs-layout_tocActive__76x_R",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "웹사이트 기록",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/news",
+      "width": 1024,
+      "language": "en",
+      "scale": 1,
+      "scroll": 1024,
+      "body": 1024,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "PLAY GUIDE",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "NEWS",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "02 RECORDS",
+          "class": "news_archiveCount__TT7b5",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Aug 19, 2026",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Oct 9, 2026",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "WEBSITE JOURNAL",
+          "class": "news_eyebrow__tD4fS",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "Find a guide page",
+          "class": "",
+          "width": 132.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "Connection guide",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Rules",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Recovery",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Support",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Our servers",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "News",
+          "class": "docs-layout_active__UyiPI",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Website updates",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Technology",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "History",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Published archive",
+          "class": "docs-layout_tocActive__76x_R",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "Website journal",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/News",
+      "width": 1024,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 1024,
+      "body": 1024,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "플레이 가이드",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 8월 19일 16:29",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "안내 페이지 찾기",
+          "class": "",
+          "width": 132.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "접속 안내",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 규칙",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "복구 가이드",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "1:1 문의",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 살펴보기",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "StimeMC 소식",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "홈페이지 업데이트",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 메커니즘",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버의 역사",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "보고서 개요",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "본문",
+          "class": "docs-layout_tocActive__76x_R",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "다른 소식",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/News",
+      "width": 1024,
+      "language": "en",
+      "scale": 1,
+      "scroll": 1024,
+      "body": 1024,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "PLAY GUIDE",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Aug 19, 2026, 16:29",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "Find a guide page",
+          "class": "",
+          "width": 132.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "Connection guide",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Rules",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Recovery",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Support",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Our servers",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "News",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Website updates",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Technology",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "History",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Report overview",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "Article",
+          "class": "docs-layout_tocActive__76x_R",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "More news",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/__test-only-markdown",
+      "width": 1024,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 1024,
+      "body": 1024,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "플레이 가이드",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 10월 9일 09:00",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "안내 페이지 찾기",
+          "class": "",
+          "width": 132.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "접속 안내",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 규칙",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "복구 가이드",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "1:1 문의",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 살펴보기",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "StimeMC 소식",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "홈페이지 업데이트",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 메커니즘",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버의 역사",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "보고서 개요",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "본문",
+          "class": "docs-layout_tocActive__76x_R",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "다른 소식",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/__test-only-markdown",
+      "width": 1024,
+      "language": "en",
+      "scale": 1,
+      "scroll": 1024,
+      "body": 1024,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "PLAY GUIDE",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Oct 9, 2026, 09:00",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "Find a guide page",
+          "class": "",
+          "width": 132.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "Connection guide",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Rules",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Recovery",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Support",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Our servers",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "News",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Website updates",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Technology",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "History",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Report overview",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "Article",
+          "class": "docs-layout_tocActive__76x_R",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "More news",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/server-mechanism",
+      "width": 1024,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 1024,
+      "body": 1024,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "플레이 가이드",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "TECHNOLOGY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "A SHARED STIMEMC FEATURE",
+          "class": "crossplay-bridge_eyebrow__8udxQ",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC / 모든 서버의 공통 특징",
+          "class": "crossplay-bridge_group__5f1wE",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "기존 공개 구현",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "VIAPROXY + GEYSER",
+          "class": "server-mechanism_implementationTag__S_n_F",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "ARCHIVE / JAVA 1.21.1",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "01 / JAVA EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "02 / BEDROCK EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "03 / THE PROXY LAYER",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "04 / THE TRANSLATOR",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "05 / KEEP IN MIND",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "안내 페이지 찾기",
+          "class": "",
+          "width": 132.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "접속 안내",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 규칙",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "복구 가이드",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "1:1 문의",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 살펴보기",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "StimeMC 소식",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "홈페이지 업데이트",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 메커니즘",
+          "class": "docs-layout_active__UyiPI",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버의 역사",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Java × Bedrock",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "기존 서버의 접속 구조",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "JAVA EDITION",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "BEDROCK EDITION",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "THE PROXY LAYER",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "THE TRANSLATOR",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "KEEP IN MIND",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/server-mechanism",
+      "width": 1024,
+      "language": "en",
+      "scale": 1,
+      "scroll": 1024,
+      "body": 1024,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "PLAY GUIDE",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "TECHNOLOGY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "A SHARED STIMEMC FEATURE",
+          "class": "crossplay-bridge_eyebrow__8udxQ",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC / Shared by every server",
+          "class": "crossplay-bridge_group__5f1wE",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "DOCUMENTED IMPLEMENTATION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "VIAPROXY + GEYSER",
+          "class": "server-mechanism_implementationTag__S_n_F",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "ARCHIVE / JAVA 1.21.1",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "01 / JAVA EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "02 / BEDROCK EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "03 / THE PROXY LAYER",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "04 / THE TRANSLATOR",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "05 / KEEP IN MIND",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "Find a guide page",
+          "class": "",
+          "width": 132.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "Connection guide",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Rules",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Recovery",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Support",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Our servers",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "News",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Website updates",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Technology",
+          "class": "docs-layout_active__UyiPI",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "History",
+          "class": "",
+          "width": 179,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Java × Bedrock",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "Existing connection flow",
+          "class": "",
+          "width": 123,
+          "height": 39
+        },
+        {
+          "tag": "A",
+          "text": "JAVA EDITION",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "BEDROCK EDITION",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "THE PROXY LAYER",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "THE TRANSLATOR",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "KEEP IN MIND",
+          "class": "",
+          "width": 123,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/join",
+      "width": 1440,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 1440,
+      "body": 1440,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "플레이 가이드",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "JOIN",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "안내 페이지 찾기",
+          "class": "",
+          "width": 152.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "접속 안내",
+          "class": "docs-layout_active__UyiPI",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 규칙",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "복구 가이드",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "1:1 문의",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 살펴보기",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "StimeMC 소식",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "홈페이지 업데이트",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 메커니즘",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버의 역사",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 준비 현황",
+          "class": "docs-layout_tocActive__76x_R",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "기존 공개 가이드",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "플레이 전 확인",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/join",
+      "width": 1440,
+      "language": "en",
+      "scale": 1,
+      "scroll": 1440,
+      "body": 1440,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "PLAY GUIDE",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "JOIN",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "Find a guide page",
+          "class": "",
+          "width": 152.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "Connection guide",
+          "class": "docs-layout_active__UyiPI",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Rules",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Recovery",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Support",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Our servers",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "News",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Website updates",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Technology",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "History",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Server status",
+          "class": "docs-layout_tocActive__76x_R",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "Published guide",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "Before playing",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/rules",
+      "width": 1440,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 1440,
+      "body": 1440,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "플레이 가이드",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "RULES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "안내 페이지 찾기",
+          "class": "",
+          "width": 152.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "접속 안내",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 규칙",
+          "class": "docs-layout_active__UyiPI",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "복구 가이드",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "1:1 문의",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 살펴보기",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "StimeMC 소식",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "홈페이지 업데이트",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 메커니즘",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버의 역사",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "적용 범위",
+          "class": "docs-layout_tocActive__76x_R",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "기존 공개 규칙",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "신고 및 처벌",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/rules",
+      "width": 1440,
+      "language": "en",
+      "scale": 1,
+      "scroll": 1440,
+      "body": 1440,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "PLAY GUIDE",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "RULES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "Find a guide page",
+          "class": "",
+          "width": 152.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "Connection guide",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Rules",
+          "class": "docs-layout_active__UyiPI",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Recovery",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Support",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Our servers",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "News",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Website updates",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Technology",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "History",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Policy scope",
+          "class": "docs-layout_tocActive__76x_R",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "Published rules",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "Reporting & enforcement",
+          "class": "",
+          "width": 143,
+          "height": 39
+        }
+      ]
+    },
+    {
+      "route": "/recovery-guidelines",
+      "width": 1440,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 1440,
+      "body": 1440,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "플레이 가이드",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "RECOVERY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "안내 페이지 찾기",
+          "class": "",
+          "width": 152.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "접속 안내",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 규칙",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "복구 가이드",
+          "class": "docs-layout_active__UyiPI",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "1:1 문의",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 살펴보기",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "StimeMC 소식",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "홈페이지 업데이트",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 메커니즘",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버의 역사",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "적용 범위",
+          "class": "docs-layout_tocActive__76x_R",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "복구 기준",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "요청 절차",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/recovery-guidelines",
+      "width": 1440,
+      "language": "en",
+      "scale": 1,
+      "scroll": 1440,
+      "body": 1440,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "PLAY GUIDE",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "RECOVERY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "Find a guide page",
+          "class": "",
+          "width": 152.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "Connection guide",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Rules",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Recovery",
+          "class": "docs-layout_active__UyiPI",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Support",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Our servers",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "News",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Website updates",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Technology",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "History",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Policy scope",
+          "class": "docs-layout_tocActive__76x_R",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "Recovery criteria",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "Request process",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/history",
+      "width": 1440,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 1440,
+      "body": 1440,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "플레이 가이드",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "HISTORY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "2023.04 — 2026.08",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "TODAY / STIMEMC",
+          "class": "history_eyebrow__YSc_g",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "안내 페이지 찾기",
+          "class": "",
+          "width": 152.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "접속 안내",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 규칙",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "복구 가이드",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "1:1 문의",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 살펴보기",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "StimeMC 소식",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "홈페이지 업데이트",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 메커니즘",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버의 역사",
+          "class": "docs-layout_active__UyiPI",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "2023.04 · 첫 번째 서버",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "2024.03 · 새로운 시작",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "2024.08 · Stime 161",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "2026.03 · Stime Networks",
+          "class": "",
+          "width": 143,
+          "height": 39
+        },
+        {
+          "tag": "A",
+          "text": "2026.08 · StimeMC",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "지금의 StimeMC",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/history",
+      "width": 1440,
+      "language": "en",
+      "scale": 1,
+      "scroll": 1440,
+      "body": 1440,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "PLAY GUIDE",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "HISTORY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "2023.04 — 2026.08",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "TODAY / STIMEMC",
+          "class": "history_eyebrow__YSc_g",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "Find a guide page",
+          "class": "",
+          "width": 152.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "Connection guide",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Rules",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Recovery",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Support",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Our servers",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "News",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Website updates",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Technology",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "History",
+          "class": "docs-layout_active__UyiPI",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "2023.04 · The first server",
+          "class": "",
+          "width": 143,
+          "height": 39
+        },
+        {
+          "tag": "A",
+          "text": "2024.03 · A new beginning",
+          "class": "",
+          "width": 143,
+          "height": 39
+        },
+        {
+          "tag": "A",
+          "text": "2024.08 · Stime 161",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "2026.03 · Stime Networks",
+          "class": "",
+          "width": 143,
+          "height": 39
+        },
+        {
+          "tag": "A",
+          "text": "2026.08 · StimeMC",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "StimeMC today",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/updates",
+      "width": 1440,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 1440,
+      "body": 1440,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "플레이 가이드",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "WEBSITE UPDATES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "WEBSITE CHANGE LOG",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "06 / 기록",
+          "class": "server-mechanism_journalCount__BGwE9",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "안내 페이지 찾기",
+          "class": "",
+          "width": 152.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "접속 안내",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 규칙",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "복구 가이드",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "1:1 문의",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 살펴보기",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "StimeMC 소식",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "홈페이지 업데이트",
+          "class": "docs-layout_active__UyiPI",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 메커니즘",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버의 역사",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "2026.05.30",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "2026.05.28",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "2026.05.21",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "2026.05.14",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "2026.05.07",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "2026.05.03",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/updates",
+      "width": 1440,
+      "language": "en",
+      "scale": 1,
+      "scroll": 1440,
+      "body": 1440,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "PLAY GUIDE",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "WEBSITE UPDATES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "WEBSITE CHANGE LOG",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "06 / ENTRIES",
+          "class": "server-mechanism_journalCount__BGwE9",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "Find a guide page",
+          "class": "",
+          "width": 152.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "Connection guide",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Rules",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Recovery",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Support",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Our servers",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "News",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Website updates",
+          "class": "docs-layout_active__UyiPI",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Technology",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "History",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "May 30, 2026",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "May 28, 2026",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "May 21, 2026",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "May 14, 2026",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "May 7, 2026",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "May 3, 2026",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/news",
+      "width": 1440,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 1440,
+      "body": 1440,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "플레이 가이드",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "NEWS",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "02 개의 기록",
+          "class": "news_archiveCount__TT7b5",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 8월 19일",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 10월 9일",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "웹사이트 기록",
+          "class": "news_eyebrow__tD4fS",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "안내 페이지 찾기",
+          "class": "",
+          "width": 152.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "접속 안내",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 규칙",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "복구 가이드",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "1:1 문의",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 살펴보기",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "StimeMC 소식",
+          "class": "docs-layout_active__UyiPI",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "홈페이지 업데이트",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 메커니즘",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버의 역사",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "발행 기록",
+          "class": "docs-layout_tocActive__76x_R",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "웹사이트 기록",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/news",
+      "width": 1440,
+      "language": "en",
+      "scale": 1,
+      "scroll": 1440,
+      "body": 1440,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "PLAY GUIDE",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "NEWS",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "02 RECORDS",
+          "class": "news_archiveCount__TT7b5",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Aug 19, 2026",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Oct 9, 2026",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "WEBSITE JOURNAL",
+          "class": "news_eyebrow__tD4fS",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "Find a guide page",
+          "class": "",
+          "width": 152.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "Connection guide",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Rules",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Recovery",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Support",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Our servers",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "News",
+          "class": "docs-layout_active__UyiPI",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Website updates",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Technology",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "History",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Published archive",
+          "class": "docs-layout_tocActive__76x_R",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "Website journal",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/News",
+      "width": 1440,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 1440,
+      "body": 1440,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "플레이 가이드",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 8월 19일 16:29",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "안내 페이지 찾기",
+          "class": "",
+          "width": 152.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "접속 안내",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 규칙",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "복구 가이드",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "1:1 문의",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 살펴보기",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "StimeMC 소식",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "홈페이지 업데이트",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 메커니즘",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버의 역사",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "보고서 개요",
+          "class": "docs-layout_tocActive__76x_R",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "본문",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "다른 소식",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/News",
+      "width": 1440,
+      "language": "en",
+      "scale": 1,
+      "scroll": 1440,
+      "body": 1440,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "PLAY GUIDE",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Aug 19, 2026, 16:29",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "Find a guide page",
+          "class": "",
+          "width": 152.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "Connection guide",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Rules",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Recovery",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Support",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Our servers",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "News",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Website updates",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Technology",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "History",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Report overview",
+          "class": "docs-layout_tocActive__76x_R",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "Article",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "More news",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/__test-only-markdown",
+      "width": 1440,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 1440,
+      "body": 1440,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "플레이 가이드",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "2026년 10월 9일 09:00",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "안내 페이지 찾기",
+          "class": "",
+          "width": 152.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "접속 안내",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 규칙",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "복구 가이드",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "1:1 문의",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 살펴보기",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "StimeMC 소식",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "홈페이지 업데이트",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 메커니즘",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버의 역사",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "보고서 개요",
+          "class": "docs-layout_tocActive__76x_R",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "본문",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "다른 소식",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/__test-only-markdown",
+      "width": 1440,
+      "language": "en",
+      "scale": 1,
+      "scroll": 1440,
+      "body": 1440,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "PLAY GUIDE",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Oct 9, 2026, 09:00",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "Find a guide page",
+          "class": "",
+          "width": 152.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "Connection guide",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Rules",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Recovery",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Support",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Our servers",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "News",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Website updates",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Technology",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "History",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Report overview",
+          "class": "docs-layout_tocActive__76x_R",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "Article",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "More news",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/server-mechanism",
+      "width": 1440,
+      "language": "ko",
+      "scale": 1,
+      "scroll": 1440,
+      "body": 1440,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "플레이 가이드",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "TECHNOLOGY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "A SHARED STIMEMC FEATURE",
+          "class": "crossplay-bridge_eyebrow__8udxQ",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC / 모든 서버의 공통 특징",
+          "class": "crossplay-bridge_group__5f1wE",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "기존 공개 구현",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "VIAPROXY + GEYSER",
+          "class": "server-mechanism_implementationTag__S_n_F",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "ARCHIVE / JAVA 1.21.1",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "01 / JAVA EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "02 / BEDROCK EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "03 / THE PROXY LAYER",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "04 / THE TRANSLATOR",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "05 / KEEP IN MIND",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "안내 페이지 찾기",
+          "class": "",
+          "width": 152.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "접속 안내",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 규칙",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "복구 가이드",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "1:1 문의",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 살펴보기",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "StimeMC 소식",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "홈페이지 업데이트",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버 메커니즘",
+          "class": "docs-layout_active__UyiPI",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "서버의 역사",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Java × Bedrock",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "기존 서버의 접속 구조",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "JAVA EDITION",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "BEDROCK EDITION",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "THE PROXY LAYER",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "THE TRANSLATOR",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "KEEP IN MIND",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/server-mechanism",
+      "width": 1440,
+      "language": "en",
+      "scale": 1,
+      "scroll": 1440,
+      "body": 1440,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "PLAY GUIDE",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "JAVA × BEDROCK",
+          "class": "",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "TECHNOLOGY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "A SHARED STIMEMC FEATURE",
+          "class": "crossplay-bridge_eyebrow__8udxQ",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "STIMEMC / Shared by every server",
+          "class": "crossplay-bridge_group__5f1wE",
+          "font": "10px"
+        },
+        {
+          "tag": "P",
+          "text": "DOCUMENTED IMPLEMENTATION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "VIAPROXY + GEYSER",
+          "class": "server-mechanism_implementationTag__S_n_F",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "ARCHIVE / JAVA 1.21.1",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "01 / JAVA EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "02 / BEDROCK EDITION",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "03 / THE PROXY LAYER",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "04 / THE TRANSLATOR",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "05 / KEEP IN MIND",
+          "class": "server-mechanism_editorialLabel__S8HYm",
+          "font": "11px"
+        }
+      ],
+      "shortControls": [
+        {
+          "tag": "INPUT",
+          "text": "Find a guide page",
+          "class": "",
+          "width": 152.3125,
+          "height": 40
+        },
+        {
+          "tag": "A",
+          "text": "Connection guide",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Rules",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Recovery",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Support",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Our servers",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "News",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Website updates",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Technology",
+          "class": "docs-layout_active__UyiPI",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "History",
+          "class": "",
+          "width": 199,
+          "height": 37
+        },
+        {
+          "tag": "A",
+          "text": "Java × Bedrock",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "Existing connection flow",
+          "class": "",
+          "width": 143,
+          "height": 39
+        },
+        {
+          "tag": "A",
+          "text": "JAVA EDITION",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "BEDROCK EDITION",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "THE PROXY LAYER",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "THE TRANSLATOR",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        },
+        {
+          "tag": "A",
+          "text": "KEEP IN MIND",
+          "class": "",
+          "width": 143,
+          "height": 19.5
+        }
+      ]
+    },
+    {
+      "route": "/join",
+      "width": 390,
+      "language": "en",
+      "scale": 2,
+      "scroll": 390,
+      "body": 390,
+      "overflow": [],
+      "small": [],
+      "shortControls": []
+    },
+    {
+      "route": "/rules",
+      "width": 390,
+      "language": "en",
+      "scale": 2,
+      "scroll": 390,
+      "body": 390,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "RULES",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/recovery-guidelines",
+      "width": 390,
+      "language": "en",
+      "scale": 2,
+      "scroll": 390,
+      "body": 390,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "RECOVERY",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/history",
+      "width": 390,
+      "language": "en",
+      "scale": 2,
+      "scroll": 390,
+      "body": 390,
+      "overflow": [],
+      "small": [],
+      "shortControls": []
+    },
+    {
+      "route": "/updates",
+      "width": 390,
+      "language": "en",
+      "scale": 2,
+      "scroll": 390,
+      "body": 390,
+      "overflow": [],
+      "small": [],
+      "shortControls": []
+    },
+    {
+      "route": "/news",
+      "width": 390,
+      "language": "en",
+      "scale": 2,
+      "scroll": 390,
+      "body": 390,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "P",
+          "text": "NEWS",
+          "class": "guide_eyebrow__CrGO6",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "02 RECORDS",
+          "class": "news_archiveCount__TT7b5",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Aug 19, 2026",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / REPORT",
+          "class": "news_rowLabel__B2R1J",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Oct 9, 2026",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "P",
+          "text": "WEBSITE JOURNAL",
+          "class": "news_eyebrow__tD4fS",
+          "font": "11px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/News",
+      "width": 390,
+      "language": "en",
+      "scale": 2,
+      "scroll": 390,
+      "body": 390,
+      "overflow": [],
+      "small": [],
+      "shortControls": []
+    },
+    {
+      "route": "/__test-only-markdown",
+      "width": 390,
+      "language": "en",
+      "scale": 2,
+      "scroll": 390,
+      "body": 390,
+      "overflow": [],
+      "small": [
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / PUBLISHED REPORT",
+          "class": "report_badge__J2Adr",
+          "font": "11px"
+        },
+        {
+          "tag": "TIME",
+          "text": "Oct 9, 2026, 09:00",
+          "class": "",
+          "font": "11px"
+        },
+        {
+          "tag": "SPAN",
+          "text": "STIMEMC / END OF REPORT",
+          "class": "",
+          "font": "10px"
+        }
+      ],
+      "shortControls": []
+    },
+    {
+      "route": "/server-mechanism",
+      "width": 390,
+      "language": "en",
+      "scale": 2,
+      "scroll": 390,
+      "body": 390,
+      "overflow": [],
+      "small": [],
+      "shortControls": []
+    }
+  ],
+  "errors": []
+}

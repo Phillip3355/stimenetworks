@@ -1,0 +1,167 @@
+{
+  "checks": [
+    {
+      "route": "/join",
+      "width": 1440,
+      "readingWidth": 720,
+      "canvas": "rgb(255, 255, 255)",
+      "headingFont": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "tocTargets": "valid"
+    },
+    {
+      "route": "/rules",
+      "width": 1440,
+      "readingWidth": 720,
+      "canvas": "rgb(255, 255, 255)",
+      "headingFont": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "tocTargets": "valid"
+    },
+    {
+      "route": "/recovery-guidelines",
+      "width": 1440,
+      "readingWidth": 720,
+      "canvas": "rgb(255, 255, 255)",
+      "headingFont": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "tocTargets": "valid"
+    },
+    {
+      "route": "/news",
+      "width": 1440,
+      "readingWidth": 720,
+      "canvas": "rgb(255, 255, 255)",
+      "headingFont": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "tocTargets": "valid"
+    },
+    {
+      "route": "/updates",
+      "width": 1440,
+      "readingWidth": 720,
+      "canvas": "rgb(255, 255, 255)",
+      "headingFont": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "tocTargets": "valid"
+    },
+    {
+      "route": "/history",
+      "width": 1440,
+      "readingWidth": 720,
+      "canvas": "rgb(255, 255, 255)",
+      "headingFont": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "tocTargets": "valid"
+    },
+    {
+      "route": "/server-mechanism",
+      "width": 1440,
+      "readingWidth": 720,
+      "canvas": "rgb(255, 255, 255)",
+      "headingFont": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "tocTargets": "valid"
+    },
+    {
+      "route": "/News",
+      "width": 1440,
+      "readingWidth": 720,
+      "canvas": "rgb(255, 255, 255)",
+      "headingFont": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "tocTargets": "valid"
+    },
+    {
+      "route": "/__test-only-markdown",
+      "width": 1440,
+      "readingWidth": 720,
+      "canvas": "rgb(255, 255, 255)",
+      "headingFont": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "tocTargets": "valid"
+    },
+    {
+      "behavior": "Guide filtering and empty state",
+      "passed": true
+    },
+    {
+      "route": "/join",
+      "width": 320,
+      "guideDrawer": "usable",
+      "overflow": false
+    },
+    {
+      "route": "/rules",
+      "width": 320,
+      "guideDrawer": "usable",
+      "overflow": false
+    },
+    {
+      "route": "/recovery-guidelines",
+      "width": 320,
+      "guideDrawer": "usable",
+      "overflow": false
+    },
+    {
+      "route": "/news",
+      "width": 320,
+      "guideDrawer": "usable",
+      "overflow": false
+    },
+    {
+      "route": "/updates",
+      "width": 320,
+      "guideDrawer": "usable",
+      "overflow": false
+    },
+    {
+      "route": "/history",
+      "width": 320,
+      "guideDrawer": "usable",
+      "overflow": false
+    },
+    {
+      "route": "/server-mechanism",
+      "width": 320,
+      "guideDrawer": "usable",
+      "overflow": false
+    },
+    {
+      "route": "/News",
+      "width": 320,
+      "guideDrawer": "usable",
+      "overflow": false
+    },
+    {
+      "route": "/__test-only-markdown",
+      "width": 320,
+      "guideDrawer": "usable",
+      "overflow": false
+    },
+    {
+      "behavior": "Mobile footer accordion opens and closes",
+      "passed": true
+    },
+    {
+      "behavior": "Custom 404 and home action",
+      "passed": true
+    },
+    {
+      "route": "/",
+      "behavior": "47px simulated CSS top safe area",
+      "headerBottom": 111,
+      "contentTop": 186
+    },
+    {
+      "route": "/join",
+      "behavior": "47px simulated CSS top safe area",
+      "headerBottom": 111,
+      "contentTop": 135
+    },
+    {
+      "route": "/servers",
+      "behavior": "47px simulated CSS top safe area",
+      "headerBottom": 111,
+      "contentTop": 226.390625
+    },
+    {
+      "route": "/servers/the-great-war",
+      "behavior": "47px simulated CSS top safe area",
+      "headerBottom": 111,
+      "contentTop": 226.390625
+    }
+  ],
+  "errors": []
+}

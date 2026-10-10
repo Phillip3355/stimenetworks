@@ -1,0 +1,90 @@
+{
+  "fixture": "Synthetic localhost sessions and read-only intercepted data; no real authentication or live submissions.",
+  "checks": [
+    {
+      "role": "synthetic member",
+      "width": 360,
+      "state": "inquiry-list",
+      "scrollWidth": 360,
+      "controls": []
+    },
+    {
+      "role": "synthetic member",
+      "width": 360,
+      "state": "conversation",
+      "scrollWidth": 360,
+      "controls": []
+    },
+    {
+      "role": "synthetic member",
+      "width": 360,
+      "state": "inquiry-form",
+      "scrollWidth": 360,
+      "controls": []
+    },
+    {
+      "role": "synthetic member",
+      "width": 1440,
+      "state": "inquiry-list",
+      "scrollWidth": 1440,
+      "controls": []
+    },
+    {
+      "role": "synthetic member",
+      "width": 1440,
+      "state": "conversation",
+      "scrollWidth": 1440,
+      "controls": []
+    },
+    {
+      "role": "synthetic member",
+      "width": 1440,
+      "state": "inquiry-form",
+      "scrollWidth": 1440,
+      "controls": []
+    },
+    {
+      "role": "synthetic admin",
+      "width": 360,
+      "state": "inquiry-list",
+      "scrollWidth": 360,
+      "controls": []
+    },
+    {
+      "role": "synthetic admin",
+      "width": 360,
+      "state": "conversation",
+      "scrollWidth": 360,
+      "controls": []
+    },
+    {
+      "role": "synthetic admin",
+      "width": 360,
+      "state": "report-editor",
+      "scrollWidth": 360,
+      "controls": []
+    },
+    {
+      "role": "synthetic admin",
+      "width": 1440,
+      "state": "inquiry-list",
+      "scrollWidth": 1440,
+      "controls": []
+    },
+    {
+      "role": "synthetic admin",
+      "width": 1440,
+      "state": "conversation",
+      "scrollWidth": 1440,
+      "controls": []
+    },
+    {
+      "role": "synthetic admin",
+      "width": 1440,
+      "state": "report-editor",
+      "scrollWidth": 1440,
+      "controls": []
+    }
+  ],
+  "writes": []
+}

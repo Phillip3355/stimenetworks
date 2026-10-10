@@ -3,26 +3,27 @@
 import Link from 'next/link';
 import ConnectionGuide from '../components/ConnectionGuide';
 import GuideHeader from '../components/GuideHeader';
+import DocsLayout from '../components/DocsLayout';
 import { useLanguage } from '../components/LanguageProvider';
 import { joinConnectionGuide } from '../shared/siteContent.mjs';
 import { getServerGroupPresentation } from '../shared/serverGroup.mjs';
-import styles from '../styles/server-mechanism.module.css';
+import styles from '../styles/policy.module.css';
 
 export default function JoinServerPage() {
   const { t } = useLanguage();
   const group = getServerGroupPresentation();
 
   return (
-    <main className={styles.main}>
+    <DocsLayout toc={[{ id: 'connection-status', labelKo: '서버 준비 현황', labelEn: 'Server status' }, { id: 'legacy-connection', labelKo: '기존 공개 가이드', labelEn: 'Published guide' }, { id: 'before-playing', labelKo: '플레이 전 확인', labelEn: 'Before playing' }]}>
       {/* 히어로 섹션 */}
       <GuideHeader eyebrow="STIMEMC / JOIN" titleKo={group.joinTitleKo} titleEn={group.joinTitleEn} descriptionKo={group.joinDescriptionKo} descriptionEn={group.joinDescriptionEn} />
       <ConnectionGuide />
 
       {/* 접속 스펙 및 가이드 카드 */}
-      <section className={styles.sectionCanvas}>
+      <section data-scroll-reveal id="legacy-connection" className={styles.sectionCanvas}>
         <div className={styles.sectionContent}>
           <div className={styles.sectionHeader}>
-            <p className={styles.eyebrow}>{t('기존 공개 가이드 · 아카이브', 'Previously published guide · Archive')}</p>
+            <p className={styles.eyebrow}>02 / {t('기존 공개 가이드 · 아카이브', 'Published guide · Archive')}</p>
             <h2 className={styles.sectionHeading}>{t('기존 서버 접속 안내', 'Existing server connection guide')}</h2>
           </div>
 
@@ -71,22 +72,22 @@ export default function JoinServerPage() {
       </section>
 
       {/* 플레이 전 규칙 안내 섹션 */}
-      <section className={styles.sectionCanvas}>
-        <div className={styles.sectionContent} style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px' }}>
-          <h2 className={styles.sectionHeading} style={{ margin: 0 }}>
+      <section data-scroll-reveal id="before-playing" className={`${styles.sectionCanvas} ${styles.ctaSection}`}>
+        <div className={styles.sectionContent}>
+          <h2 className={styles.sectionHeading}>
             {t('플레이 전 규칙을 꼭 확인해주세요!', 'Please check the rules before playing!')}
           </h2>
-          <p className={styles.sectionLead} style={{ maxWidth: '600px', margin: '0 auto' }}>
+          <p className={styles.sectionLead}>
             {t(
               '누구나 편하게 참여하고 원하는 방식으로 플레이할 수 있도록 몇 가지 기본 규칙만 함께 지켜주세요. 기존 공개 규칙의 적용 범위를 확인하고, 새 서버의 별도 규칙 공개를 기다려 주세요.',
               'A few shared rules keep the server open and comfortable for everyone. Check the scope of the existing published rules and wait for dedicated rules for the new servers.'
             )}
           </p>
-          <Link href="/rules" className={styles.buttonOutline} style={{ marginTop: '8px' }}>
+          <Link href="/rules" className={styles.buttonOutline}>
             {t('서버 규칙 확인하기', 'View Server Rules')}
           </Link>
         </div>
       </section>
-    </main>
+    </DocsLayout>
   );
 }

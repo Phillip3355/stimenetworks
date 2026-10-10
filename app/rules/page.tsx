@@ -2,22 +2,23 @@
 
 import PolicyScope from '../components/PolicyScope';
 import GuideHeader from '../components/GuideHeader';
+import DocsLayout from '../components/DocsLayout';
 import { useLanguage } from '../components/LanguageProvider';
 import RuleMindMap from '../components/RuleMindMap';
-import styles from '../styles/server-mechanism.module.css';
+import styles from '../styles/policy.module.css';
 
 export default function RulesPage() {
   const { t, language } = useLanguage();
 
   return (
-    <main className={styles.main}>
+    <DocsLayout toc={[{ id: 'scope-rules', labelKo: '적용 범위', labelEn: 'Policy scope' }, { id: 'published-rules', labelKo: '기존 공개 규칙', labelEn: 'Published rules' }, { id: 'reporting', labelKo: '신고 및 처벌', labelEn: 'Reporting & enforcement' }]}>
       <GuideHeader eyebrow="STIMEMC / RULES" titleKo="함께 플레이하는 기준" titleEn="A guide to playing together" descriptionKo="기존 공개 규칙과 새로운 서버의 준비 현황을 구분해 확인하세요." descriptionEn="Explore the existing published rules alongside the preparation status of the new servers." />
       <PolicyScope kind="rules" />
 
-      <section className={styles.sectionCanvas}>
+      <section data-scroll-reveal id="published-rules" className={styles.sectionCanvas}>
         <div className={styles.sectionContent}>
           <div className={styles.sectionHeader}>
-            <p className={styles.eyebrow}>{t('함께 플레이하기', 'Playing Together')}</p>
+            <p className={styles.eyebrow}>02 / {t('함께 플레이하기', 'Playing together')}</p>
             <h2 className={styles.sectionHeading}>{t('규칙을 선택해 자세히 살펴보세요', 'Choose a Rule to Explore')}</h2>
           </div>
 
@@ -25,10 +26,10 @@ export default function RulesPage() {
         </div>
       </section>
 
-      <section className={styles.sectionCanvas}>
+      <section data-scroll-reveal id="reporting" className={styles.sectionCanvas}>
         <div className={styles.sectionContent}>
           <div className={styles.sectionHeader}>
-            <p className={styles.eyebrow}>{t('신고 방법', 'How to Report')}</p>
+            <p className={styles.eyebrow}>03 / {t('신고 방법', 'How to report')}</p>
             <h2 className={styles.sectionHeading}>{t('규칙 위반 신고 및 처벌 절차', 'Reporting Violations & Enforcement Process')}</h2>
           </div>
 
@@ -76,6 +77,6 @@ export default function RulesPage() {
           </div>
         </div>
       </section>
-    </main>
+    </DocsLayout>
   );
 }

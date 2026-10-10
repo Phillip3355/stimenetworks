@@ -1,0 +1,114 @@
+[
+  {
+    "file": "app/shared/guestInquiry.mjs",
+    "unchanged": true
+  },
+  {
+    "file": "app/shared/guideInteractions.mjs",
+    "unchanged": true
+  },
+  {
+    "file": "app/shared/inputPolicy.mjs",
+    "unchanged": true
+  },
+  {
+    "file": "app/shared/publicSupabaseConfig.mjs",
+    "unchanged": true
+  },
+  {
+    "file": "app/shared/reportDate.mjs",
+    "unchanged": true
+  },
+  {
+    "file": "app/shared/reportPresentation.mjs",
+    "unchanged": true
+  },
+  {
+    "file": "app/shared/serverGroup.mjs",
+    "unchanged": true
+  },
+  {
+    "file": "app/shared/siteContent.mjs",
+    "unchanged": true
+  },
+  {
+    "file": "app/server/homeReports.mjs",
+    "unchanged": true
+  },
+  {
+    "file": "app/server/reports.ts",
+    "unchanged": true
+  },
+  {
+    "file": "app/server/requestSecurity.mjs",
+    "unchanged": true
+  },
+  {
+    "file": "app/server/supabase.ts",
+    "unchanged": true
+  },
+  {
+    "file": "app/server/telegramInquiryAlert.mjs",
+    "unchanged": true
+  },
+  {
+    "file": "app/server/telegramInquiryAlertRoute.mjs",
+    "unchanged": true
+  },
+  {
+    "file": "app/client/inquiries.ts",
+    "unchanged": true
+  },
+  {
+    "file": "app/client/inquiryAlertClient.mjs",
+    "unchanged": true
+  },
+  {
+    "file": "app/client/reports.ts",
+    "unchanged": true
+  },
+  {
+    "file": "app/client/supabase.ts",
+    "unchanged": true
+  },
+  {
+    "file": "app/client/support.mjs",
+    "unchanged": true
+  },
+  {
+    "file": "app/client/useAuthSession.ts",
+    "unchanged": true
+  },
+  {
+    "file": "app/api/telegram/inquiry-alert/route.ts",
+    "unchanged": true
+  },
+  {
+    "file": "database/APPLY_SECURITY_UPDATE.sql",
+    "unchanged": true
+  },
+  {
+    "file": "database/foundation.sql",
+    "unchanged": true
+  },
+  {
+    "file": "database/migrations/20260907_security_hardening.sql",
+    "unchanged": true
+  },
+  {
+    "file": "database/migrations/20261005_remove_join_requests.sql",
+    "unchanged": true
+  },
+  {
+    "file": "database/preflight.sql",
+    "unchanged": true
+  },
+  {
+    "file": "database/realtime.sql",
+    "unchanged": true
+  },
+  {
+    "file": "database/schema.sql",
+    "unchanged": true
+  }
+]

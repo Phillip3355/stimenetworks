@@ -4,14 +4,14 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useLanguage } from './LanguageProvider';
 import { getServerPresentation, servers } from '../shared/serverGroup.mjs';
-import styles from '../styles/guide.module.css';
+import styles from '../styles/policy.module.css';
 
 export default function PolicyScope({ kind }: { kind: 'rules' | 'recovery' }) {
   const { t } = useLanguage();
   const [scope, setScope] = useState('legacy');
   const server = servers.find(server => server.id === scope);
-  return <aside className={styles.scope} aria-label={t('정책 적용 범위', 'Policy scope')}>
-    <label className={styles.eyebrow} htmlFor={`policy-scope-${kind}`}>{t('정책 적용 범위', 'Policy scope')}</label>
+  return <aside id={`scope-${kind}`} className={styles.scope} aria-label={t('정책 적용 범위', 'Policy scope')}>
+    <label className={styles.eyebrow} htmlFor={`policy-scope-${kind}`}>01 / {t('정책 적용 범위', 'Policy scope')}</label>
     <select id={`policy-scope-${kind}`} value={scope} onChange={event => setScope(event.target.value)}>
       <option value="legacy">{t('기존 공개 정책', 'Existing published policy')}</option>
       {servers.map(server => <option key={server.id} value={server.id}>{server.name}</option>)}

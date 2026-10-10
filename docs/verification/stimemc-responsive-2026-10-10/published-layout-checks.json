@@ -1,0 +1,111 @@
+{
+  "fixture": "DOM-only test markup using the real CSS; no registry or backend mutation.",
+  "checks": [
+    {
+      "width": 280,
+      "language": "ko",
+      "panelInnerWidth": 206,
+      "wrapperWidth": 206,
+      "buttonHeight": 64,
+      "buttonRadius": "8px",
+      "buttonBackground": "rgb(17, 17, 17)",
+      "inputFont": 16,
+      "selected": true,
+      "overflow": false
+    },
+    {
+      "width": 280,
+      "language": "en",
+      "panelInnerWidth": 206,
+      "wrapperWidth": 206,
+      "buttonHeight": 64,
+      "buttonRadius": "8px",
+      "buttonBackground": "rgb(17, 17, 17)",
+      "inputFont": 16,
+      "selected": true,
+      "overflow": false
+    },
+    {
+      "width": 653,
+      "language": "ko",
+      "panelInnerWidth": 563,
+      "wrapperWidth": 563,
+      "buttonHeight": 44,
+      "buttonRadius": "8px",
+      "buttonBackground": "rgb(17, 17, 17)",
+      "inputFont": 16,
+      "selected": true,
+      "overflow": false
+    },
+    {
+      "width": 653,
+      "language": "en",
+      "panelInnerWidth": 563,
+      "wrapperWidth": 563,
+      "buttonHeight": 44,
+      "buttonRadius": "8px",
+      "buttonBackground": "rgb(17, 17, 17)",
+      "inputFont": 16,
+      "selected": true,
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "language": "ko",
+      "panelInnerWidth": 538,
+      "wrapperWidth": 538,
+      "buttonHeight": 44,
+      "buttonRadius": "8px",
+      "buttonBackground": "rgb(17, 17, 17)",
+      "inputFont": 16,
+      "selected": true,
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "language": "en",
+      "panelInnerWidth": 538,
+      "wrapperWidth": 538,
+      "buttonHeight": 44,
+      "buttonRadius": "8px",
+      "buttonBackground": "rgb(17, 17, 17)",
+      "inputFont": 16,
+      "selected": true,
+      "overflow": false
+    },
+    {
+      "width": 1366,
+      "language": "ko",
+      "panelInnerWidth": 670,
+      "wrapperWidth": 670,
+      "buttonHeight": 44,
+      "buttonRadius": "8px",
+      "buttonBackground": "rgb(17, 17, 17)",
+      "inputFont": 16,
+      "selected": true,
+      "overflow": false
+    },
+    {
+      "width": 1366,
+      "language": "en",
+      "panelInnerWidth": 670,
+      "wrapperWidth": 670,
+      "buttonHeight": 44,
+      "buttonRadius": "8px",
+      "buttonBackground": "rgb(17, 17, 17)",
+      "inputFont": 16,
+      "selected": true,
+      "overflow": false
+    },
+    {
+      "case": "Keyboard scroll",
+      "selector": "#report-content pre",
+      "passed": true
+    },
+    {
+      "case": "Keyboard scroll",
+      "selector": "#report-content table",
+      "passed": true
+    }
+  ]
+}

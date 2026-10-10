@@ -1,35 +1,30 @@
-# StimeMC Redesign Preservation Notes
+# StimeMC Light Redesign Notes
 
-The approved redesign specification is `docs/superpowers/specs/2026-10-09-stimemc-server-group-redesign.md`. These notes describe the current application, not removed signup or voice features.
+Updated 2026-10-10. The latest white design brief replaces all earlier visual directions. `DESIGN.md` describes the current system; `app/styles/main.css` is authoritative for live tokens.
 
-## Current functions
+## What changed
 
-The application uses Next.js App Router, Supabase and existing Framer Motion. Public information includes home, Join guidance, mechanism, rules, recovery, website updates, news, history and Markdown reports. The redesign adds a server hub and details for The Great War and planned Survival.
+The interface now uses white/light surfaces, Inter for all headings and prose, Geist Mono for technical details, black primary actions, restrained mint indicators, 8px controls and 12px panels. The homepage has centered text above a wide archival image and white server panels. Information pages use the shared three-column `DocsLayout` with route filtering and anchored TOC; narrow screens use native disclosures. Support and administration have dedicated portal and workspace layouts. The mechanism page uses the compact crossplay diagram. Footer groups become native mobile accordions.
 
-Support offers Google OAuth member inquiries and guest inquiries identified by a private inquiry code. Members and authorized administrators can read and reply to their permitted conversations. Guest access stays scoped to the matching guest inquiry. Taskboard manages authorized inquiry responses and report publication. Telegram inquiry notifications use the existing server-side authorization and atomic claim contracts.
+History, updates, news and Markdown reports retain their original records. News has preserved empty/error handling, and report code/table regions scroll within the reading column. Join, policy, support and taskboard layouts change presentation while keeping their existing handlers and access boundaries.
 
-There is no current signup-request form or voice/STAGE UI. Legacy join-request storage is removed by the existing migrations. Do not restore those features or describe them as current.
+## Preserved contracts
 
-## Preserve these contracts
+- Keep all public and operational routes, report slugs and inquiry alert APIs. `/News` is a case-sensitive historical report route distinct from `/news`. Static server routes take precedence over the report catchall.
+- Preserve historical text, report Markdown, rule/punishment/appeal/recovery meanings and Korean/English UI, including unavailable/error states. Previously published Java 1.21.1 instructions remain historical guidance.
+- Keep the server registry factual: The Great War is current/preparing; Survival is planned/coming later. Neither implies online access. Null release/version/connection data stays unpublished. Archive images remain explicitly historical.
+- Preserve Supabase schema, RLS/RPC authorization, realtime conversations, guest inquiry codes, member ownership, rate limits, administrator authorization, report publishing and atomic notification claims. UI visibility never substitutes for backend authorization.
+- Preserve Google OAuth destination validation, member/guest support, mobile list/conversation transitions and message scrolling. Keep the language provider, analytics and Speed Insights. No signup-request or voice/STAGE workflow is introduced.
+- Copy is enabled only for eligible current/active servers with complete published edition data. Bedrock requires an address and an integer port from 1 to 65535. Fixtures are never published as actual connection details.
 
-Keep `/`, `/join`, `/support`, `/taskboard`, `/auth/callback`, `/server-mechanism`, `/rules`, `/recovery-guidelines`, `/updates`, `/news`, `/history`, existing report slugs and inquiry alert API routes. `/News` is a historical report slug with uppercase N; never normalize it to `/news`. New static `/servers`, `/servers/the-great-war` and `/servers/survival` routes take precedence over the report catch-all.
+## Verification record
 
-Preserve report Markdown and historical text. Rule, punishment, appeal and recovery meanings stay unchanged. No new war exceptions or invented Survival policy may be inferred from old rules. Existing 1.21.1 guidance remains identified as the previously published connection guide.
+The responsive follow-up raises tiny metadata/captions to at least 12px, restores 44px mobile/touch targets, darkens muted labels for contrast, and corrects 280px card/header compositions. Conversation and report workspaces use available-width breakpoints. Content-sized numeric/arrow columns survive enlarged text; future connection copy/fallback controls span their panel. Markdown scroll regions support keyboard focus.
 
-Preserve Supabase schema, RLS, RPCs, realtime subscriptions, inquiry codes, member/guest ownership, rolling three-per-hour limits, admin authorization, report publishing and notification claiming. UI visibility does not replace database authorization. Preserve OAuth destination validation, support/admin routing and client/server secret separation.
+The device audit, enlarged-text checks, short-dialog/fold-resize checks and synthetic member/admin states are recorded in `docs/verification/stimemc-responsive-2026-10-10`. Browser device ratios are emulations; physical-device and unavailable-browser testing must not be implied.
 
-Maintain Korean and English UI text, including empty/error states. Keep mobile support list-to-conversation transitions, back navigation and message scrolling. Retain the language provider, analytics and Speed Insights in the root layout.
+Conversation scrolling positions a newly opened stacked panel below the fixed header, then scrolls only its message feed. The composer remains visible on portrait phones; message updates preserve the outer page position.
 
-## Shared server truth
+Evidence is stored in `docs/verification/stimemc-light-2026-10-10`, including screenshots, content/backend baselines and functional fixture results. Fixtures document controlled UI states, not production activity. Use recorded lint, type, test, isolated-build and browser results when reporting completion; do not carry forward old baseline counts or unverified device claims.
 
-Use `app/shared/serverGroup.mjs` for all new server panels, details and Join decisions. The Great War is current/preparing; Survival is planned/planned. Both have Java and Bedrock editions, Geyser crossplay and no client-mod requirement. Release, version and connection remain null until facts are confirmed.
-
-The eligibility helper conceals any supplied address for planned or preparing servers. Future active/current connection publication uses `connection.java = { address }` and `connection.bedrock = { address, port }`. Unsupported editions and incomplete data never enable Copy. A Bedrock port must be an integer between 1 and 65535. Test fixture addresses never become actual server data.
-
-Keep reusable legacy homepage exports during the staged redesign until their consumers are replaced. Existing archive screenshots are historical records, not evidence of either new server’s map or systems.
-
-## Verification boundaries
-
-Do not open, read, print, copy or modify `.env.local`, and do not create an environment file in the isolated worktree. Use dummy public configuration for preview and builds. Never submit production inquiries, send real external messages, change production data or deploy as verification.
-
-Baseline is commit b8007b4 with 69 passing tests. Preserve existing security/functionality tests. Replace tests that intentionally pin retired visual/copy decisions only when the corresponding consumer changes. Eligibility gate tests use hand-written planned/preparing/active fixtures and RED/GREEN evidence. Run the whole test suite and lint, then check types, isolated production build and responsive behavior as appropriate to the integrated redesign.
+Do not open, read, print, copy or modify `.env.local`. Preview/build verification uses dummy public configuration without copying an environment file. Verification does not submit production inquiries, send external notifications or alter production data.

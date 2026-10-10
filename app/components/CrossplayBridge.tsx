@@ -1,16 +1,23 @@
 'use client';
 import Link from 'next/link';
-import { motion, useReducedMotion } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import useMotionPreference from './useMotionPreference';
 import { getServerPresentation, servers } from '../shared/serverGroup.mjs';
 import { useLanguage } from './LanguageProvider';
 import styles from '../styles/crossplay-bridge.module.css';
 
-export default function CrossplayBridge() {
+export default function CrossplayBridge({ compact = false }: { compact?: boolean }) {
   const { t } = useLanguage();
-  const reduced = useReducedMotion();
+  const reduced = useMotionPreference();
+  const scene = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: scene, offset: ['start end', 'end start'] });
+  const javaX = useTransform(scrollYProgress, [0, .3], [-24, 0]);
+  const bedrockX = useTransform(scrollYProgress, [0, .3], [24, 0]);
+  const bridgeScale = useTransform(scrollYProgress, [0, .3], [.65, 1]);
   const survivalPlanned = servers.some(server => server.id === 'survival' && getServerPresentation(server).planned);
   return (
-    <section className={styles.section} aria-labelledby="crossplay-title">
+    <section ref={scene} className={compact ? `${styles.section} ${styles.compact}` : styles.section} aria-labelledby="crossplay-title">
       <div className={styles.container}>
         <header className={styles.header}>
           <p className={styles.eyebrow}>A SHARED STIMEMC FEATURE</p>
@@ -21,13 +28,13 @@ export default function CrossplayBridge() {
         <div className={styles.diagram} aria-label={t('StimeMC 공통 크로스플레이 개념', 'Shared StimeMC crossplay concept')}>
           <div className={styles.editions}>
             {['Java', 'Bedrock'].map((edition, index) => (
-              <motion.div key={edition} className={styles.edition} initial={reduced ? false : { x: index ? 12 : -12 }} whileInView={{ x: 0 }} viewport={{ once: true, amount: .5 }} transition={{ duration: .65 }}>
+              <motion.div key={edition} className={styles.edition} style={reduced ? undefined : { x: index ? bedrockX : javaX }}>
                 <span className={styles.editionMark} aria-hidden="true">{index ? 'B' : 'J'}</span><h3>{edition}</h3>
                 <p>{index ? t('Geyser로 에디션을 연결', 'Edition bridge through Geyser') : t('Java 플레이어는 평소처럼', 'Java players connect as usual')}</p>
               </motion.div>
             ))}
           </div>
-          <motion.div aria-hidden="true" className={styles.convergence} initial={reduced ? false : { scaleX: .35 }} whileInView={{ scaleX: 1 }} viewport={{ once: true, amount: .8 }} transition={{ duration: .7 }} />
+          <motion.div aria-hidden="true" className={styles.convergence} style={reduced ? undefined : { scaleX: bridgeScale }} />
           <div className={styles.bridge}><span>GEYSER</span><p>{t('Java × Bedrock 에디션 브리지', 'Java × Bedrock edition bridge')}</p></div>
           <div className={styles.stem} aria-hidden="true" />
           <p className={styles.group}>STIMEMC / {t('모든 서버의 공통 특징', 'Shared by every server')}</p>

@@ -1,0 +1,1285 @@
+{
+  "checks": [
+    {
+      "route": "/",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "status": 200,
+      "width": 360,
+      "scrollWidth": 360,
+      "bodyWidth": 360,
+      "headings": [
+        "ONE COMMUNITY.MORE WORLDS."
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/servers",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "status": 200,
+      "width": 360,
+      "scrollWidth": 360,
+      "bodyWidth": 360,
+      "headings": [
+        "우리의 세계들."
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/servers/the-great-war",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "status": 200,
+      "width": 360,
+      "scrollWidth": 360,
+      "bodyWidth": 360,
+      "headings": [
+        "THE GREAT WAR"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/servers/survival",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "status": 200,
+      "width": 360,
+      "scrollWidth": 360,
+      "bodyWidth": 360,
+      "headings": [
+        "SURVIVAL"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/join",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "status": 200,
+      "width": 360,
+      "scrollWidth": 360,
+      "bodyWidth": 360,
+      "headings": [
+        "같이할 세계를 준비합니다"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/rules",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "status": 200,
+      "width": 360,
+      "scrollWidth": 360,
+      "bodyWidth": 360,
+      "headings": [
+        "함께 플레이하는 기준"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/recovery-guidelines",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "status": 200,
+      "width": 360,
+      "scrollWidth": 360,
+      "bodyWidth": 360,
+      "headings": [
+        "복구 가이드라인"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/news",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "status": 200,
+      "width": 360,
+      "scrollWidth": 360,
+      "bodyWidth": 360,
+      "headings": [
+        "StimeMC 소식"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/News",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "status": 200,
+      "width": 360,
+      "scrollWidth": 360,
+      "bodyWidth": 360,
+      "headings": [
+        "📢 Stime 서버 운영 개편 및 서비스 종료 안내"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/__test-only-markdown",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "status": 200,
+      "width": 360,
+      "scrollWidth": 360,
+      "bodyWidth": 360,
+      "headings": [
+        "TEST ONLY — 긴 한국어 제목과 Markdown 작은 화면 검사"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/updates",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "status": 200,
+      "width": 360,
+      "scrollWidth": 360,
+      "bodyWidth": 360,
+      "headings": [
+        "홈페이지 업데이트"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/history",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "status": 200,
+      "width": 360,
+      "scrollWidth": 360,
+      "bodyWidth": 360,
+      "headings": [
+        "우리가 여기까지 온 시간"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/server-mechanism",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "status": 200,
+      "width": 360,
+      "scrollWidth": 360,
+      "bodyWidth": 360,
+      "headings": [
+        "두 에디션, 함께하는 플레이"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/support",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "status": 200,
+      "width": 360,
+      "scrollWidth": 360,
+      "bodyWidth": 360,
+      "headings": [
+        "도움이 필요하신가요?"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/taskboard",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "status": 200,
+      "width": 360,
+      "scrollWidth": 360,
+      "bodyWidth": 360,
+      "headings": [
+        "Taskboard Auth"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/auth/callback",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "status": 200,
+      "width": 360,
+      "scrollWidth": 360,
+      "bodyWidth": 360,
+      "headings": [
+        "로그인 연결 중"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/",
+      "viewport": {
+        "width": 430,
+        "height": 932
+      },
+      "status": 200,
+      "width": 430,
+      "scrollWidth": 430,
+      "bodyWidth": 430,
+      "headings": [
+        "ONE COMMUNITY.MORE WORLDS."
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/servers",
+      "viewport": {
+        "width": 430,
+        "height": 932
+      },
+      "status": 200,
+      "width": 430,
+      "scrollWidth": 430,
+      "bodyWidth": 430,
+      "headings": [
+        "우리의 세계들."
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/servers/the-great-war",
+      "viewport": {
+        "width": 430,
+        "height": 932
+      },
+      "status": 200,
+      "width": 430,
+      "scrollWidth": 430,
+      "bodyWidth": 430,
+      "headings": [
+        "THE GREAT WAR"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/servers/survival",
+      "viewport": {
+        "width": 430,
+        "height": 932
+      },
+      "status": 200,
+      "width": 430,
+      "scrollWidth": 430,
+      "bodyWidth": 430,
+      "headings": [
+        "SURVIVAL"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/join",
+      "viewport": {
+        "width": 430,
+        "height": 932
+      },
+      "status": 200,
+      "width": 430,
+      "scrollWidth": 430,
+      "bodyWidth": 430,
+      "headings": [
+        "같이할 세계를 준비합니다"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/rules",
+      "viewport": {
+        "width": 430,
+        "height": 932
+      },
+      "status": 200,
+      "width": 430,
+      "scrollWidth": 430,
+      "bodyWidth": 430,
+      "headings": [
+        "함께 플레이하는 기준"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/recovery-guidelines",
+      "viewport": {
+        "width": 430,
+        "height": 932
+      },
+      "status": 200,
+      "width": 430,
+      "scrollWidth": 430,
+      "bodyWidth": 430,
+      "headings": [
+        "복구 가이드라인"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/news",
+      "viewport": {
+        "width": 430,
+        "height": 932
+      },
+      "status": 200,
+      "width": 430,
+      "scrollWidth": 430,
+      "bodyWidth": 430,
+      "headings": [
+        "StimeMC 소식"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/News",
+      "viewport": {
+        "width": 430,
+        "height": 932
+      },
+      "status": 200,
+      "width": 430,
+      "scrollWidth": 430,
+      "bodyWidth": 430,
+      "headings": [
+        "📢 Stime 서버 운영 개편 및 서비스 종료 안내"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/__test-only-markdown",
+      "viewport": {
+        "width": 430,
+        "height": 932
+      },
+      "status": 200,
+      "width": 430,
+      "scrollWidth": 430,
+      "bodyWidth": 430,
+      "headings": [
+        "TEST ONLY — 긴 한국어 제목과 Markdown 작은 화면 검사"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/updates",
+      "viewport": {
+        "width": 430,
+        "height": 932
+      },
+      "status": 200,
+      "width": 430,
+      "scrollWidth": 430,
+      "bodyWidth": 430,
+      "headings": [
+        "홈페이지 업데이트"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/history",
+      "viewport": {
+        "width": 430,
+        "height": 932
+      },
+      "status": 200,
+      "width": 430,
+      "scrollWidth": 430,
+      "bodyWidth": 430,
+      "headings": [
+        "우리가 여기까지 온 시간"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/server-mechanism",
+      "viewport": {
+        "width": 430,
+        "height": 932
+      },
+      "status": 200,
+      "width": 430,
+      "scrollWidth": 430,
+      "bodyWidth": 430,
+      "headings": [
+        "두 에디션, 함께하는 플레이"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/support",
+      "viewport": {
+        "width": 430,
+        "height": 932
+      },
+      "status": 200,
+      "width": 430,
+      "scrollWidth": 430,
+      "bodyWidth": 430,
+      "headings": [
+        "도움이 필요하신가요?"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/taskboard",
+      "viewport": {
+        "width": 430,
+        "height": 932
+      },
+      "status": 200,
+      "width": 430,
+      "scrollWidth": 430,
+      "bodyWidth": 430,
+      "headings": [
+        "Taskboard Auth"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/auth/callback",
+      "viewport": {
+        "width": 430,
+        "height": 932
+      },
+      "status": 200,
+      "width": 430,
+      "scrollWidth": 430,
+      "bodyWidth": 430,
+      "headings": [
+        "로그인 연결 중"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "status": 200,
+      "width": 768,
+      "scrollWidth": 768,
+      "bodyWidth": 768,
+      "headings": [
+        "ONE COMMUNITY.MORE WORLDS."
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/servers",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "status": 200,
+      "width": 768,
+      "scrollWidth": 768,
+      "bodyWidth": 768,
+      "headings": [
+        "우리의 세계들."
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/servers/the-great-war",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "status": 200,
+      "width": 768,
+      "scrollWidth": 768,
+      "bodyWidth": 768,
+      "headings": [
+        "THE GREAT WAR"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/servers/survival",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "status": 200,
+      "width": 768,
+      "scrollWidth": 768,
+      "bodyWidth": 768,
+      "headings": [
+        "SURVIVAL"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/join",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "status": 200,
+      "width": 768,
+      "scrollWidth": 768,
+      "bodyWidth": 768,
+      "headings": [
+        "같이할 세계를 준비합니다"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/rules",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "status": 200,
+      "width": 768,
+      "scrollWidth": 768,
+      "bodyWidth": 768,
+      "headings": [
+        "함께 플레이하는 기준"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/recovery-guidelines",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "status": 200,
+      "width": 768,
+      "scrollWidth": 768,
+      "bodyWidth": 768,
+      "headings": [
+        "복구 가이드라인"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/news",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "status": 200,
+      "width": 768,
+      "scrollWidth": 768,
+      "bodyWidth": 768,
+      "headings": [
+        "StimeMC 소식"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/News",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "status": 200,
+      "width": 768,
+      "scrollWidth": 768,
+      "bodyWidth": 768,
+      "headings": [
+        "📢 Stime 서버 운영 개편 및 서비스 종료 안내"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/__test-only-markdown",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "status": 200,
+      "width": 768,
+      "scrollWidth": 768,
+      "bodyWidth": 768,
+      "headings": [
+        "TEST ONLY — 긴 한국어 제목과 Markdown 작은 화면 검사"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/updates",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "status": 200,
+      "width": 768,
+      "scrollWidth": 768,
+      "bodyWidth": 768,
+      "headings": [
+        "홈페이지 업데이트"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/history",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "status": 200,
+      "width": 768,
+      "scrollWidth": 768,
+      "bodyWidth": 768,
+      "headings": [
+        "우리가 여기까지 온 시간"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/server-mechanism",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "status": 200,
+      "width": 768,
+      "scrollWidth": 768,
+      "bodyWidth": 768,
+      "headings": [
+        "두 에디션, 함께하는 플레이"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/support",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "status": 200,
+      "width": 768,
+      "scrollWidth": 768,
+      "bodyWidth": 768,
+      "headings": [
+        "도움이 필요하신가요?"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/taskboard",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "status": 200,
+      "width": 768,
+      "scrollWidth": 768,
+      "bodyWidth": 768,
+      "headings": [
+        "Taskboard Auth"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/auth/callback",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "status": 200,
+      "width": 768,
+      "scrollWidth": 768,
+      "bodyWidth": 768,
+      "headings": [
+        "로그인 연결 중"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "status": 200,
+      "width": 1366,
+      "scrollWidth": 1366,
+      "bodyWidth": 1366,
+      "headings": [
+        "ONE COMMUNITY.MORE WORLDS."
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/servers",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "status": 200,
+      "width": 1366,
+      "scrollWidth": 1366,
+      "bodyWidth": 1366,
+      "headings": [
+        "우리의 세계들."
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/servers/the-great-war",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "status": 200,
+      "width": 1366,
+      "scrollWidth": 1366,
+      "bodyWidth": 1366,
+      "headings": [
+        "THE GREAT WAR"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/servers/survival",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "status": 200,
+      "width": 1366,
+      "scrollWidth": 1366,
+      "bodyWidth": 1366,
+      "headings": [
+        "SURVIVAL"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/join",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "status": 200,
+      "width": 1366,
+      "scrollWidth": 1366,
+      "bodyWidth": 1366,
+      "headings": [
+        "같이할 세계를 준비합니다"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/rules",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "status": 200,
+      "width": 1366,
+      "scrollWidth": 1366,
+      "bodyWidth": 1366,
+      "headings": [
+        "함께 플레이하는 기준"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/recovery-guidelines",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "status": 200,
+      "width": 1366,
+      "scrollWidth": 1366,
+      "bodyWidth": 1366,
+      "headings": [
+        "복구 가이드라인"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/news",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "status": 200,
+      "width": 1366,
+      "scrollWidth": 1366,
+      "bodyWidth": 1366,
+      "headings": [
+        "StimeMC 소식"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/News",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "status": 200,
+      "width": 1366,
+      "scrollWidth": 1366,
+      "bodyWidth": 1366,
+      "headings": [
+        "📢 Stime 서버 운영 개편 및 서비스 종료 안내"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/__test-only-markdown",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "status": 200,
+      "width": 1366,
+      "scrollWidth": 1366,
+      "bodyWidth": 1366,
+      "headings": [
+        "TEST ONLY — 긴 한국어 제목과 Markdown 작은 화면 검사"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/updates",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "status": 200,
+      "width": 1366,
+      "scrollWidth": 1366,
+      "bodyWidth": 1366,
+      "headings": [
+        "홈페이지 업데이트"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/history",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "status": 200,
+      "width": 1366,
+      "scrollWidth": 1366,
+      "bodyWidth": 1366,
+      "headings": [
+        "우리가 여기까지 온 시간"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/server-mechanism",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "status": 200,
+      "width": 1366,
+      "scrollWidth": 1366,
+      "bodyWidth": 1366,
+      "headings": [
+        "두 에디션, 함께하는 플레이"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/support",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "status": 200,
+      "width": 1366,
+      "scrollWidth": 1366,
+      "bodyWidth": 1366,
+      "headings": [
+        "도움이 필요하신가요?"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/taskboard",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "status": 200,
+      "width": 1366,
+      "scrollWidth": 1366,
+      "bodyWidth": 1366,
+      "headings": [
+        "Taskboard Auth"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/auth/callback",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "status": 200,
+      "width": 1366,
+      "scrollWidth": 1366,
+      "bodyWidth": 1366,
+      "headings": [
+        "로그인 연결 중"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440,
+      "headings": [
+        "ONE COMMUNITY.MORE WORLDS."
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/servers",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440,
+      "headings": [
+        "우리의 세계들."
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/servers/the-great-war",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440,
+      "headings": [
+        "THE GREAT WAR"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/servers/survival",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440,
+      "headings": [
+        "SURVIVAL"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/join",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440,
+      "headings": [
+        "같이할 세계를 준비합니다"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/rules",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440,
+      "headings": [
+        "함께 플레이하는 기준"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/recovery-guidelines",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440,
+      "headings": [
+        "복구 가이드라인"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/news",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440,
+      "headings": [
+        "StimeMC 소식"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/News",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440,
+      "headings": [
+        "📢 Stime 서버 운영 개편 및 서비스 종료 안내"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/__test-only-markdown",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440,
+      "headings": [
+        "TEST ONLY — 긴 한국어 제목과 Markdown 작은 화면 검사"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/updates",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440,
+      "headings": [
+        "홈페이지 업데이트"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/history",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440,
+      "headings": [
+        "우리가 여기까지 온 시간"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/server-mechanism",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440,
+      "headings": [
+        "두 에디션, 함께하는 플레이"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/support",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440,
+      "headings": [
+        "도움이 필요하신가요?"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/taskboard",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440,
+      "headings": [
+        "Taskboard Auth"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    },
+    {
+      "route": "/auth/callback",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "width": 1440,
+      "scrollWidth": 1440,
+      "bodyWidth": 1440,
+      "headings": [
+        "로그인 연결 중"
+      ],
+      "font": "inter, \"inter Fallback\", Pretendard, \"Noto Sans KR\", \"Segoe UI\", Arial, sans-serif",
+      "outOfBoundsControls": []
+    }
+  ],
+  "errors": []
+}

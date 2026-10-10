@@ -1583,3 +1583,35 @@ dialog.codeNotice::backdrop { background: rgba(0, 0, 0, 0.72); }
 .main form { min-width: 0; }
 .chatComposer { padding-bottom: max(16px, env(safe-area-inset-bottom)) !important; }
 @media (max-width: 600px) { .heroSection { padding: 40px 0; } }
+
+/* Information pages: documentation content inside the shared DocsLayout. */
+.journalSection, .technologySection { min-width: 0; margin-top: 24px; }
+.editorialLabel { margin: 0; color: var(--color-mute); font-family: var(--font-mono); font-size: 12px; line-height: 1.5; letter-spacing: .025em; }
+.editorialHeading { margin: 10px 0 0; color: var(--color-ink); font-family: var(--font-sans); font-size: clamp(28px, 3vw, 36px); font-weight: 600; line-height: 1.25; letter-spacing: -.025em; word-break: keep-all; overflow-wrap: anywhere; }
+.journalIntro, .technologyIntro { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding-bottom: 24px; }
+.journalCount { padding-top: 4px; color: var(--color-mute); font-family: var(--font-mono); font-size: 12px; line-height: 1.5; }
+.journalLog { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--color-hairline); }
+.journalEntry { padding-block: 28px; border-bottom: 1px solid var(--color-hairline); scroll-margin-top: calc(var(--nav-height) + 24px); }
+.journalMeta { margin-bottom: 14px; }
+.journalDate { display: inline-block; padding: 4px 8px; border: 1px solid var(--color-hairline); border-radius: 6px; background: var(--color-surface); color: var(--color-mute); font-family: var(--font-mono); font-size: 12px; line-height: 1.5; }
+.journalBody { min-width: 0; }
+.journalBody h3 { margin: 0 0 16px; color: var(--color-ink); font-size: 24px; font-weight: 600; line-height: 1.3; letter-spacing: -.02em; }
+.journalBody ul { display: grid; gap: 8px; margin: 0; padding-left: 20px; color: var(--color-body); font-size: 16px; line-height: 1.5; }
+.journalBody li { word-break: keep-all; overflow-wrap: anywhere; }
+.journalBody li::marker { color: var(--color-mute); }
+.implementationTag { padding: 4px 8px; border: 1px solid var(--color-hairline); border-radius: 6px; color: var(--color-mute); background: var(--color-surface); font-family: var(--font-mono); font-size: 12px; line-height: 1.5; }
+.implementationNote { display: grid; gap: 10px; padding: 20px 24px; border: 1px solid var(--color-hairline); border-left: 3px solid #cbd5e1; border-radius: 0 12px 12px 0; background: var(--color-surface); }
+.implementationNote p { margin: 0; color: var(--color-body); font-size: 16px; line-height: 1.5; word-break: keep-all; overflow-wrap: anywhere; }
+.technologyFlow { margin: 28px 0 0; padding: 0; list-style: none; }
+.technologyNode { padding-block: 28px; border-top: 1px solid var(--color-hairline); scroll-margin-top: calc(var(--nav-height) + 24px); }
+.technologyNode:last-child { border-bottom: 1px solid var(--color-hairline); }
+.technologyBody, .technologyCopy { min-width: 0; }
+.technologyCopy h3 { margin: 10px 0 16px; color: var(--color-ink); font-size: clamp(24px, 2.5vw, 28px); font-weight: 600; line-height: 1.3; letter-spacing: -.025em; word-break: keep-all; overflow-wrap: anywhere; }
+.technologyCopy > p:not(.editorialLabel) { margin: 0; color: var(--color-body); font-size: 16px; line-height: 1.5; word-break: keep-all; overflow-wrap: anywhere; }
+.technologyPoints { display: grid; gap: 8px; margin: 20px 0 0; padding-left: 20px; color: var(--color-body); font-size: 16px; line-height: 1.5; }
+.technologyPoints li { word-break: keep-all; overflow-wrap: anywhere; }
+.technologyPoints li::marker { color: var(--color-mute); }
+.technologyPoints a { display: inline-flex; align-items: center; min-height: 44px; color: var(--color-brand-green-deep); font-size: 14px; line-height: 1.5; text-decoration-color: #b6d8cd; text-underline-offset: 4px; }
+.technologyPoints a:hover { text-decoration-color: var(--color-brand-green-deep); }
+.technologyPoints a:focus-visible { outline: 2px solid var(--color-brand-green-deep); outline-offset: 4px; border-radius: 4px; }
+@media (max-width: 600px) { .journalSection, .technologySection { margin-top: 20px; } .editorialHeading { font-size: 28px; } .journalIntro, .technologyIntro { gap: 12px; padding-bottom: 20px; } .journalBody h3 { font-size: 23px; } .implementationNote { padding: 18px 20px; } .technologyCopy h3 { font-size: 24px; } }

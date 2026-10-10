@@ -1,0 +1,111 @@
+{
+  "checks": [
+    {
+      "width": 360,
+      "preference": "no-preference",
+      "menuMoved": true,
+      "drawerMoved": true,
+      "drawerWidth": 360,
+      "exitFocusReturned": true
+    },
+    {
+      "width": 430,
+      "preference": "no-preference",
+      "menuMoved": true,
+      "drawerMoved": true,
+      "drawerWidth": 430,
+      "exitFocusReturned": true
+    },
+    {
+      "width": 768,
+      "preference": "no-preference",
+      "menuMoved": true,
+      "drawerMoved": true,
+      "drawerWidth": 640,
+      "exitFocusReturned": true
+    },
+    {
+      "width": 1366,
+      "preference": "no-preference",
+      "menuMoved": true,
+      "drawerMoved": true,
+      "drawerWidth": 640,
+      "exitFocusReturned": true
+    },
+    {
+      "width": 1440,
+      "preference": "no-preference",
+      "menuMoved": true,
+      "drawerMoved": true,
+      "drawerWidth": 640,
+      "exitFocusReturned": true
+    },
+    {
+      "preference": "no-preference",
+      "behavior": "Native disclosure expands, collapses, reverses and supports keyboard",
+      "passed": true
+    },
+    {
+      "behavior": "Scroll reveal, immediate focus visibility and live reduced-motion change",
+      "passed": true
+    },
+    {
+      "behavior": "Changing reduced motion cancels an in-progress disclosure",
+      "passed": true
+    },
+    {
+      "width": 360,
+      "preference": "reduce",
+      "menuMoved": false,
+      "drawerMoved": false,
+      "drawerWidth": 360,
+      "exitFocusReturned": true
+    },
+    {
+      "width": 430,
+      "preference": "reduce",
+      "menuMoved": false,
+      "drawerMoved": false,
+      "drawerWidth": 430,
+      "exitFocusReturned": true
+    },
+    {
+      "width": 768,
+      "preference": "reduce",
+      "menuMoved": false,
+      "drawerMoved": false,
+      "drawerWidth": 640,
+      "exitFocusReturned": true
+    },
+    {
+      "width": 1366,
+      "preference": "reduce",
+      "menuMoved": false,
+      "drawerMoved": false,
+      "drawerWidth": 640,
+      "exitFocusReturned": true
+    },
+    {
+      "width": 1440,
+      "preference": "reduce",
+      "menuMoved": false,
+      "drawerMoved": false,
+      "drawerWidth": 640,
+      "exitFocusReturned": true
+    },
+    {
+      "preference": "reduce",
+      "behavior": "Native disclosure expands, collapses, reverses and supports keyboard",
+      "passed": true
+    },
+    {
+      "behavior": "Reduced-motion content is immediately visible",
+      "passed": true
+    },
+    {
+      "behavior": "Server HTML remains visible without JavaScript",
+      "passed": true
+    }
+  ],
+  "errors": []
+}

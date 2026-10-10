@@ -1,6 +1,7 @@
 'use client';
 
 import GuideHeader from '../components/GuideHeader';
+import DocsLayout from '../components/DocsLayout';
 import { useLanguage } from '../components/LanguageProvider';
 import styles from '../styles/server-mechanism.module.css';
 
@@ -47,28 +48,32 @@ export default function UpdatesPage() {
   const { t } = useLanguage();
 
   return (
-    <main className={styles.main}>
+    <DocsLayout toc={updateCards.map((card) => ({ id: `update-${card.title.replaceAll('.', '-')}`, labelKo: card.title, labelEn: card.titleEn }))}>
       <GuideHeader eyebrow="STIMEMC / WEBSITE UPDATES" titleKo="홈페이지 업데이트" titleEn="Website updates" descriptionKo="StimeMC 홈페이지의 변경 기록입니다. 게임 서버의 출시 일정이나 콘텐츠 업데이트를 뜻하지 않습니다." descriptionEn="A record of changes to the StimeMC website. These entries describe website changes, separate from game server releases and content updates." />
 
-      <section className={styles.sectionCanvas}>
-        <div className={styles.sectionContent}>
-          <div className={styles.sectionHeader}>
-            <p className={styles.eyebrow}>{t('홈페이지 변경 기록', 'Website change log')}</p>
-            <h2 className={styles.sectionHeading}>{t('홈페이지 업데이트 기록', 'Website update records')}</h2>
+      <section className={styles.journalSection} aria-labelledby="updates-title">
+        <div className={styles.journalIntro}>
+          <div>
+            <p className={styles.editorialLabel}>WEBSITE CHANGE LOG</p>
+            <h2 id="updates-title" className={styles.editorialHeading}>{t('홈페이지 업데이트 기록', 'Website update records')}</h2>
           </div>
-
-          <div className={styles.timelineGrid}>
-            {updateCards.map((card, index) => (
-              <article key={index} className={styles.timelineCard}>
-                <span className={styles.cornerSquare} />
-                <time className={styles.timelineDate} dateTime={card.title.replaceAll('.', '-')}>{card.title}</time>
-                <h3 className={styles.timelineTitle}>{card.titleEn}</h3>
-                <p className={styles.timelineText}>{t(card.descriptionKo, card.descriptionEn)}</p>
-              </article>
-            ))}
-          </div>
+          <span className={styles.journalCount}>{String(updateCards.length).padStart(2, '0')} / {t('기록', 'ENTRIES')}</span>
         </div>
+
+        <ol className={styles.journalLog}>
+          {updateCards.map((card) => (
+            <li data-scroll-reveal key={card.title} id={`update-${card.title.replaceAll('.', '-')}`} className={styles.journalEntry}>
+              <div className={styles.journalMeta}>
+                <time className={styles.journalDate} dateTime={card.title.replaceAll('.', '-')}>{card.title}</time>
+              </div>
+              <article className={styles.journalBody}>
+                <h3>{card.titleEn}</h3>
+                <ul>{t(card.descriptionKo, card.descriptionEn).split('\n').map((line) => <li key={line}>{line.replace(/^•\s*/, '').trim()}</li>)}</ul>
+              </article>
+            </li>
+          ))}
+        </ol>
       </section>
-    </main>
+    </DocsLayout>
   );
 }

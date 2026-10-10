@@ -1,0 +1,8 @@
+{
+  "origin": "http://127.0.0.1:4596",
+  "isolatedBuild": "stimemc-security-build-ScTuCq",
+  "pageResponses": 14,
+  "apiRejections": 5,
+  "securityHeaders": true,
+  "browserSecretIsolation": true
+}

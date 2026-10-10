@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion, useScroll, useMotionValueEvent } from 'framer-motion';
+import useMotionPreference from './useMotionPreference';
 import { navigationGroups } from '../shared/siteContent.mjs';
 import { brandProfile } from '../shared/serverGroup.mjs';
 import styles from '../styles/navbar.module.css';
@@ -11,13 +12,16 @@ import { useLanguage } from './LanguageProvider';
 
 export default function Navbar() {
   const pathname = usePathname();
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useMotionPreference();
   const { language, toggleLanguage } = useLanguage();
   const [menuState, setMenuState] = useState({ open: false, pathname });
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
   const isOpen = menuState.open && menuState.pathname === pathname;
+  const [scrolled, setScrolled] = useState(false);
+  const { scrollY } = useScroll();
+  useMotionValueEvent(scrollY, 'change', (value) => setScrolled(value > 32));
 
   const desktopLinks = navigationGroups.filter((group) => group.id !== 'join');
 
@@ -84,7 +88,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header ref={headerRef} className={styles.header}>
+      <header ref={headerRef} className={`${styles.header} ${scrolled || pathname !== '/' ? styles.solid : ''}`}>
         <div className={styles.headerInner}>
           <Link href="/" className={styles.brand} aria-label="StimeMC home">
             <span className={styles.brandMark} aria-hidden="true" />
@@ -142,7 +146,7 @@ export default function Navbar() {
             initial={reduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, pointerEvents: 'none' }}
-            transition={{ duration: reduceMotion ? 0 : 0.24 }}
+            transition={{ duration: reduceMotion ? 0 : 0.18 }}
           >
             <motion.div
               ref={panelRef}
@@ -152,10 +156,11 @@ export default function Navbar() {
               aria-modal="true"
               aria-label={labelFor({ labelKo: '전체 메뉴', labelEn: 'Site menu' })}
               onPointerDown={(event) => event.stopPropagation()}
-              initial={reduceMotion ? false : { y: -24, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -16, opacity: 0 }}
-              transition={{ duration: reduceMotion ? 0 : 0.42, ease: [0.22, 0.75, 0.2, 1] }}
+              initial={reduceMotion ? false : 'closed'}
+              animate="open"
+              exit="closed"
+              variants={{ closed: { y: reduceMotion ? 0 : -48, opacity: reduceMotion ? 1 : 0 }, open: { y: 0, opacity: 1 } }}
+              transition={{ duration: reduceMotion ? 0 : 0.34, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className={styles.menuTopline}>
                 <span>StimeMC</span>
@@ -169,7 +174,8 @@ export default function Navbar() {
 
               <div className={styles.menuGrid}>
                 {navigationGroups.map((group, groupIndex) => (
-                  <section key={group.id} className={styles.menuGroup}>
+                  <motion.section key={group.id} className={styles.menuGroup}
+                    variants={{ closed: { y: reduceMotion ? 0 : -8, opacity: reduceMotion ? 1 : 0, transition: { duration: reduceMotion ? 0 : 0.12 } }, open: { y: 0, opacity: 1, transition: { duration: reduceMotion ? 0 : 0.22, delay: reduceMotion ? 0 : 0.04 + groupIndex * 0.025 } } }}>
                     <p>{String(groupIndex + 1).padStart(2, '0')} · {labelFor(group)}</p>
                     <div>
                       {group.links.map((link) => (
@@ -187,7 +193,7 @@ export default function Navbar() {
                         </Link>
                       ))}
                     </div>
-                  </section>
+                  </motion.section>
                 ))}
               </div>
 

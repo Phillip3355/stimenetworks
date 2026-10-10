@@ -5,12 +5,14 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../components/LanguageProvider';
+import useMotionPreference from '../components/useMotionPreference';
+import scrollConversation from '../components/scrollConversation';
 import { supabase } from '../client/supabase';
 import { listInquiries, listMessages, sendMessage, deleteInquiry } from '../client/inquiries';
 import { listReports, publishReport, deleteReport } from '../client/reports';
 import { useAuthSession } from '../client/useAuthSession';
 import { INPUT_LIMITS, normalizeReportSlug } from '../shared/inputPolicy.mjs';
-import styles from '../styles/server-mechanism.module.css';
+import styles from '../styles/functional.module.css';
 
 interface Inquiry {
   id: string;
@@ -38,14 +40,20 @@ const inquiryIdPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-
 
 export default function TaskboardPage() {
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<TaskboardLoading />}>
       <TaskboardContent />
     </Suspense>
   );
 }
 
+function TaskboardLoading() {
+  const { t } = useLanguage();
+  return <main className={styles.main}><div className={styles.sectionContent}><div className={styles.loadingState} role="status" aria-busy="true"><div className={styles.spinner} aria-hidden="true" /><p>{t('로그인 상태 확인 중...', 'Checking your session...')}</p></div></div></main>;
+}
+
 function TaskboardContent() {
   const { t } = useLanguage();
+  const reduceMotion = useMotionPreference();
   const searchParams = useSearchParams();
   const inquiryIdFromUrl = searchParams.get('inquiry');
   const requestedInquiryId = inquiryIdPattern.test(inquiryIdFromUrl ?? '') ? inquiryIdFromUrl : null;
@@ -76,8 +84,8 @@ function TaskboardContent() {
 
   // 자동 스크롤
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+    scrollConversation(messagesEndRef.current, reduceMotion);
+  }, [messages, reduceMotion]);
 
   // 2. 어드민 인증이 완료되었을 때 모든 문의 목록 실시간 동기화
   useEffect(() => {
@@ -325,31 +333,20 @@ function TaskboardContent() {
 
   return (
     <main className={styles.main}>
+      <div className={styles.consoleMasthead}><span>STIMEMC / ADMIN</span><Link href="/support">{t('문의 페이지', 'Support')} ↗</Link></div>
       <AnimatePresence mode="wait">
         {isAuthLoading ? (
           // 로딩 중 UI
-          <div style={{
-            minHeight: '80vh',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: 'var(--color-mute)'
-          }}>
-            <div style={{
-              width: '32px',
-              height: '32px',
-              border: '3px solid var(--color-hairline)',
-              borderTopColor: 'var(--color-primary)',
-              borderRadius: '50%',
-              animation: 'spin 1s linear infinite'
-            }} />
-            <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+          <div className={styles.loadingState} role="status" aria-busy="true">
+            <div className={styles.spinner} aria-hidden="true" />
+            <p>{t('로그인 상태 확인 중...', 'Checking your session...')}</p>
           </div>
         ) : !user ? (
           // ================= [화면 1: 어드민 로그인 유도창] =================
           <motion.div
             key="login-gate"
-            initial={{ opacity: 0, y: 16 }}
+            className={styles.gateFrame}
+            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -16 }}
             style={{
@@ -429,7 +426,8 @@ function TaskboardContent() {
           // ================= [화면 2: 관리자 권한 없는 경우의 차단창] =================
           <motion.div
             key="access-denied"
-            initial={{ opacity: 0, y: 16 }}
+            className={styles.gateFrame}
+            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -16 }}
             style={{
@@ -457,7 +455,7 @@ function TaskboardContent() {
               }}
             >
               <div>
-                <span style={{ fontSize: '3rem' }}>🚫</span>
+                <span className={styles.deniedLabel}>ACCESS / RESTRICTED</span>
                 <h1 style={{ fontSize: '1.6rem', fontWeight: 800, margin: '12px 0 0', color: '#ef4444' }}>
                   Access Denied
                 </h1>
@@ -499,13 +497,14 @@ function TaskboardContent() {
           // ================= [화면 3: 어드민 실시간 상담 콘솔] =================
           <motion.div
             key="dashboard"
-            initial={{ opacity: 0 }}
+            initial={reduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className={styles.sectionCanvas}
             style={{ padding: '40px 0' }}
           >
             <div className={styles.sectionContent}>
+              <div className={styles.workspaceBoundary}>
               {/* 대시보드 타이틀 헤더 */}
               <div className={styles.adminPanelHeader} style={{
                 display: 'flex',
@@ -517,6 +516,7 @@ function TaskboardContent() {
               }}>
                 <div>
                   <p className={styles.eyebrow}>StimeMC Admin Platform</p>
+                  <h1 className={styles.consoleTitle}>{t('관리자 콘솔', 'Administrator console')}</h1>
                   <div className={styles.adminTabList} style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap', marginTop: '12px' }}>
                     <button
                       onClick={() => setActiveTab('support')}
@@ -598,6 +598,10 @@ function TaskboardContent() {
                         return (
                           <div
                             key={item.id}
+                            role="button"
+                            tabIndex={0}
+                            aria-pressed={isSelected}
+                            onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setSelectedInquiry(item); } }}
                             onClick={() => setSelectedInquiry(item)}
                             className={`${styles.inquiryListItem} ${isSelected ? styles.inquiryListItemSelected : ''}`}
                             style={{
@@ -614,7 +618,7 @@ function TaskboardContent() {
                           >
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                               <strong style={{ color: 'var(--color-ink)', fontSize: '0.95rem' }}>{item.nickname}</strong>
-                              <span style={{
+                              <span className={isPending ? styles.statusPending : styles.statusReplied} style={{
                                 fontSize: '0.75rem',
                                 padding: '4px 8px',
                                 borderRadius: '12px',
@@ -637,7 +641,7 @@ function TaskboardContent() {
                 </div>
 
                 {/* 2-2. 우측: 상세 실시간 채팅 창 */}
-                <div className={styles.chatPanel}>
+                <motion.div data-chat-panel key={selectedInquiry?.id ?? 'empty-inquiry'} className={styles.chatPanel} initial={reduceMotion ? false : { opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.2, ease: [0.22, 0.75, 0.2, 1] }}>
                   {selectedInquiry ? (
                     <>
                       {/* 상세 창 헤더 */}
@@ -721,12 +725,7 @@ function TaskboardContent() {
                               }}>
                                 {msg.message}
                               </div>
-                              <span style={{
-                                fontSize: '0.75rem',
-                                color: 'var(--color-mute)',
-                                marginTop: '4px',
-                                padding: '0 4px'
-                              }}>
+                              <span className={styles.chatTimestamp}>
                                 {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                               </span>
                             </div>
@@ -749,7 +748,6 @@ function TaskboardContent() {
                       >
                         <input
                           type="text"
-                          className={styles.chatReplyInput}
                           placeholder={t('답장을 작성해 주세요...', 'Type your reply...')}
                           value={replyText}
                           onChange={(e) => setReplyText(e.target.value)}
@@ -768,7 +766,6 @@ function TaskboardContent() {
                         <button
                           type="submit"
                           disabled={isSubmittingReply}
-                          className={styles.chatSendButton}
                           style={{
                             background: 'var(--color-ink)',
                             border: 'none',
@@ -785,25 +782,17 @@ function TaskboardContent() {
                       </form>
                     </>
                   ) : (
-                    <div style={{
-                      flexGrow: 1,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: 'var(--color-mute)',
-                      flexDirection: 'column',
-                      gap: '8px'
-                    }}>
-                      <span style={{ fontSize: '2rem' }}>💬</span>
+                    <div className={styles.emptyState}>
+                      <span className={styles.emptyMarker} aria-hidden="true">↗</span>
                       <p>{t('조회할 문의 티켓을 왼쪽 목록에서 선택해 주세요.', 'Select a support ticket from the list to view.')}</p>
                     </div>
                   )}
-                </div>
+                </motion.div>
               </div>
             )}
 
               {activeTab === 'report' && (
-                <div className={styles.dashboardGrid} style={{ gridTemplateColumns: '1fr', gap: '32px' }}>
+                <motion.div className={`${styles.dashboardGrid} ${styles.reportGrid}`} initial={reduceMotion ? false : { opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.2, ease: [0.22, 0.75, 0.2, 1] }}>
                   <div className={styles.reportSurface} style={{
                     border: '1px solid var(--color-hairline)', borderRadius: 'var(--radius-sm)', background: '#ffffff',
                     padding: '32px', display: 'flex', flexDirection: 'column', gap: '24px'
@@ -846,7 +835,7 @@ function TaskboardContent() {
                         />
                       </div>
                       {reportFeedback && (
-                        <div style={{
+                        <div className={styles.formFeedback} role="status" aria-live="polite" style={{
                           padding: '12px', borderRadius: 'var(--radius-sm)', fontWeight: 600,
                           background: reportFeedback.includes('오류') || reportFeedback.includes('실패') || reportFeedback.includes('입력') || reportFeedback.includes('존재') ? '#fef2f2' : '#ecfdf5',
                           color: reportFeedback.includes('오류') || reportFeedback.includes('실패') || reportFeedback.includes('입력') || reportFeedback.includes('존재') ? '#ef4444' : '#10b981'
@@ -909,9 +898,10 @@ function TaskboardContent() {
                       )}
                     </div>
                   </div>
-                </div>
+                </motion.div>
               )}
 
+              </div>
             </div>
           </motion.div>
         )}

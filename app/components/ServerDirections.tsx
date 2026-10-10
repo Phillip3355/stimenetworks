@@ -7,7 +7,7 @@ import styles from '../styles/home-sections.module.css';
 export default function ServerDirections() {
   const { language, t } = useLanguage();
   return (
-    <section className={styles.section} aria-labelledby="directions-title">
+    <section data-scroll-reveal className={styles.section} aria-labelledby="directions-title">
       <div className={styles.container}>
         <header className={styles.header}><p className={styles.eyebrow}>TWO DIRECTIONS / ONE STIME</p><h2 id="directions-title">{t('서로 다른 플레이의 방향.', 'Different ways to play.')}</h2></header>
         <div className={styles.directions}>

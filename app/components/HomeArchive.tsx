@@ -19,14 +19,14 @@ export default function HomeArchive() {
   return (
     <section className={styles.section} aria-labelledby="archive-title">
       <div className={styles.container}>
-        <header className={styles.header}>
+        <header data-scroll-reveal className={styles.header}>
           <p className={styles.eyebrow}>STIMEMC ARCHIVE</p>
           <h2 id="archive-title">{t('함께 쌓아온 장면들.', 'Scenes we built together.')}</h2>
           <p>{t('기존 StimeMC 서버의 실제 기록입니다. The Great War와 Survival의 화면이 아닙니다.', 'Real records from previous StimeMC servers. These are not screenshots of The Great War or Survival.')}</p>
         </header>
         <div className={styles.archiveGrid}>
           {images.map((image, index) => (
-            <figure key={image.src} className={index === 0 ? styles.archiveLead : ''}>
+            <figure data-scroll-reveal key={image.src} className={index === 0 ? styles.archiveLead : ''}>
               <div className={styles.archiveImage}>
                 <Image src={image.src} alt={t(`기존 StimeMC 서버 기록: ${image.ko}`, `StimeMC archive: ${image.en}`)} fill sizes={index === 0 ? '(max-width: 760px) calc(100vw - 40px), (max-width: 1100px) calc(100vw - 40px), (max-width: 1440px) 48vw, 690px' : '(max-width: 600px) calc(100vw - 40px), (max-width: 1100px) 46vw, (max-width: 1440px) 23vw, 335px'} />
               </div>

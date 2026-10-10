@@ -1,0 +1,66 @@
+{
+  "checks": [
+    {
+      "case": "mobile breadcrumb target",
+      "width": 51.65625,
+      "height": 32
+    },
+    {
+      "case": "rule indices at 200 percent text",
+      "cells": [
+        {
+          "label": "01",
+          "width": 22,
+          "contentWidth": 29
+        },
+        {
+          "label": "02",
+          "width": 22,
+          "contentWidth": 29
+        },
+        {
+          "label": "03",
+          "width": 22,
+          "contentWidth": 29
+        },
+        {
+          "label": "04",
+          "width": 22,
+          "contentWidth": 29
+        },
+        {
+          "label": "05",
+          "width": 22,
+          "contentWidth": 29
+        },
+        {
+          "label": "06",
+          "width": 22,
+          "contentWidth": 29
+        },
+        {
+          "label": "07",
+          "width": 22,
+          "contentWidth": 29
+        },
+        {
+          "label": "08",
+          "width": 22,
+          "contentWidth": 29
+        }
+      ]
+    },
+    {
+      "case": "desktop route search target",
+      "width": 152.3125,
+      "height": 40,
+      "font": "13px"
+    },
+    {
+      "case": "published copy DOM fixture",
+      "panelInnerWidth": 670,
+      "connectionWrapperWidth": 190,
+      "copyButtonWidth": 156
+    }
+  ]
+}

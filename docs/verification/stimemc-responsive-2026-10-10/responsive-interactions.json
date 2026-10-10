@@ -1,0 +1,1108 @@
+{
+  "checks": [
+    {
+      "case": "guest drawer",
+      "width": 280,
+      "height": 653,
+      "language": "ko",
+      "state": "choice",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 280,
+      "height": 653,
+      "language": "ko",
+      "state": "create form",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 280,
+      "height": 653,
+      "language": "ko",
+      "state": "lookup form",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "menu",
+      "width": 280,
+      "height": 653,
+      "language": "ko",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 280,
+      "height": 653,
+      "language": "en",
+      "state": "choice",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 280,
+      "height": 653,
+      "language": "en",
+      "state": "create form",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 280,
+      "height": 653,
+      "language": "en",
+      "state": "lookup form",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "menu",
+      "width": 280,
+      "height": 653,
+      "language": "en",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 320,
+      "height": 740,
+      "language": "ko",
+      "state": "choice",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 320,
+      "height": 740,
+      "language": "ko",
+      "state": "create form",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 320,
+      "height": 740,
+      "language": "ko",
+      "state": "lookup form",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "menu",
+      "width": 320,
+      "height": 740,
+      "language": "ko",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 320,
+      "height": 740,
+      "language": "en",
+      "state": "choice",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 320,
+      "height": 740,
+      "language": "en",
+      "state": "create form",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 320,
+      "height": 740,
+      "language": "en",
+      "state": "lookup form",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "menu",
+      "width": 320,
+      "height": 740,
+      "language": "en",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 390,
+      "height": 330,
+      "language": "ko",
+      "state": "choice",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 390,
+      "height": 330,
+      "language": "ko",
+      "state": "create form",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 390,
+      "height": 330,
+      "language": "ko",
+      "state": "lookup form",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "menu",
+      "width": 390,
+      "height": 330,
+      "language": "ko",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 390,
+      "height": 330,
+      "language": "en",
+      "state": "choice",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 390,
+      "height": 330,
+      "language": "en",
+      "state": "create form",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 390,
+      "height": 330,
+      "language": "en",
+      "state": "lookup form",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "menu",
+      "width": 390,
+      "height": 330,
+      "language": "en",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 653,
+      "height": 360,
+      "language": "ko",
+      "state": "choice",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 653,
+      "height": 360,
+      "language": "ko",
+      "state": "create form",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 653,
+      "height": 360,
+      "language": "ko",
+      "state": "lookup form",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "menu",
+      "width": 653,
+      "height": 360,
+      "language": "ko",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 653,
+      "height": 360,
+      "language": "en",
+      "state": "choice",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 653,
+      "height": 360,
+      "language": "en",
+      "state": "create form",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 653,
+      "height": 360,
+      "language": "en",
+      "state": "lookup form",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "menu",
+      "width": 653,
+      "height": 360,
+      "language": "en",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 740,
+      "height": 360,
+      "language": "ko",
+      "state": "choice",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 740,
+      "height": 360,
+      "language": "ko",
+      "state": "create form",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 740,
+      "height": 360,
+      "language": "ko",
+      "state": "lookup form",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "menu",
+      "width": 740,
+      "height": 360,
+      "language": "ko",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 740,
+      "height": 360,
+      "language": "en",
+      "state": "choice",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 740,
+      "height": 360,
+      "language": "en",
+      "state": "create form",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 740,
+      "height": 360,
+      "language": "en",
+      "state": "lookup form",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "menu",
+      "width": 740,
+      "height": 360,
+      "language": "en",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 844,
+      "height": 390,
+      "language": "ko",
+      "state": "choice",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 844,
+      "height": 390,
+      "language": "ko",
+      "state": "create form",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 844,
+      "height": 390,
+      "language": "ko",
+      "state": "lookup form",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "menu",
+      "width": 844,
+      "height": 390,
+      "language": "ko",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 844,
+      "height": 390,
+      "language": "en",
+      "state": "choice",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 844,
+      "height": 390,
+      "language": "en",
+      "state": "create form",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "guest drawer",
+      "width": 844,
+      "height": 390,
+      "language": "en",
+      "state": "lookup form",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "menu",
+      "width": 844,
+      "height": 390,
+      "language": "en",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "fold resize with menu open",
+      "width": 280,
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "fold resize with menu open",
+      "width": 653,
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "fold resize with menu open",
+      "width": 280,
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "ko",
+      "route": "/",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "ko",
+      "route": "/servers",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "ko",
+      "route": "/servers/the-great-war",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "ko",
+      "route": "/servers/survival",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "ko",
+      "route": "/join",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "ko",
+      "route": "/rules",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "ko",
+      "route": "/recovery-guidelines",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "ko",
+      "route": "/news",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "ko",
+      "route": "/News",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "ko",
+      "route": "/__test-only-markdown",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "ko",
+      "route": "/updates",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "ko",
+      "route": "/history",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "ko",
+      "route": "/server-mechanism",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "ko",
+      "route": "/support",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "ko",
+      "route": "/taskboard",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "ko",
+      "route": "/auth/callback",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "ko",
+      "route": "/__nonexistent-responsive-page",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "en",
+      "route": "/",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "en",
+      "route": "/servers",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "en",
+      "route": "/servers/the-great-war",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "en",
+      "route": "/servers/survival",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "en",
+      "route": "/join",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "en",
+      "route": "/rules",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "en",
+      "route": "/recovery-guidelines",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "en",
+      "route": "/news",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "en",
+      "route": "/News",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "en",
+      "route": "/__test-only-markdown",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "en",
+      "route": "/updates",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "en",
+      "route": "/history",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "en",
+      "route": "/server-mechanism",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "en",
+      "route": "/support",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "en",
+      "route": "/taskboard",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "en",
+      "route": "/auth/callback",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 390,
+      "language": "en",
+      "route": "/__nonexistent-responsive-page",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "ko",
+      "route": "/",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "ko",
+      "route": "/servers",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "ko",
+      "route": "/servers/the-great-war",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "ko",
+      "route": "/servers/survival",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "ko",
+      "route": "/join",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "ko",
+      "route": "/rules",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "ko",
+      "route": "/recovery-guidelines",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "ko",
+      "route": "/news",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "ko",
+      "route": "/News",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "ko",
+      "route": "/__test-only-markdown",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "ko",
+      "route": "/updates",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "ko",
+      "route": "/history",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "ko",
+      "route": "/server-mechanism",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "ko",
+      "route": "/support",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "ko",
+      "route": "/taskboard",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "ko",
+      "route": "/auth/callback",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "ko",
+      "route": "/__nonexistent-responsive-page",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "en",
+      "route": "/",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "en",
+      "route": "/servers",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "en",
+      "route": "/servers/the-great-war",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "en",
+      "route": "/servers/survival",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "en",
+      "route": "/join",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "en",
+      "route": "/rules",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "en",
+      "route": "/recovery-guidelines",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "en",
+      "route": "/news",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "en",
+      "route": "/News",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "en",
+      "route": "/__test-only-markdown",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "en",
+      "route": "/updates",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "en",
+      "route": "/history",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "en",
+      "route": "/server-mechanism",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "en",
+      "route": "/support",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "en",
+      "route": "/taskboard",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "en",
+      "route": "/auth/callback",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    },
+    {
+      "case": "200 percent prose and controls",
+      "width": 1366,
+      "language": "en",
+      "route": "/__nonexistent-responsive-page",
+      "overflow": false,
+      "bounds": [],
+      "clipped": []
+    }
+  ],
+  "failures": [],
+  "errors": [],
+  "writes": []
+}

@@ -1,8 +1,10 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useSyncExternalStore } from 'react';
 import Link from 'next/link';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import useMotionPreference from '../components/useMotionPreference';
+import scrollConversation from '../components/scrollConversation';
 import { useLanguage } from '../components/LanguageProvider';
 import { supabase } from '../client/supabase';
 import { listInquiries, listMessages, sendMessage } from '../client/inquiries';
@@ -14,7 +16,15 @@ import {
   notifyInquiryCreated,
   notifyInquiryMessageCreated,
 } from '../client/inquiryAlertClient.mjs';
-import styles from '../styles/server-mechanism.module.css';
+import styles from '../styles/functional.module.css';
+
+function subscribeDrawerViewport(onChange: () => void) {
+  const query = window.matchMedia('(max-width: 760px)');
+  query.addEventListener('change', onChange);
+  return () => query.removeEventListener('change', onChange);
+}
+const drawerIsMobile = () => window.matchMedia('(max-width: 760px)').matches;
+const drawerServerSnapshot = () => false;
 
 interface Inquiry {
   id: string;
@@ -46,7 +56,7 @@ interface InquiryChatProps {
 function InquiryChat({ inquiry, messages, newMessage, onMessageChange, onSubmit, onBack, messagesEndRef, translate }: InquiryChatProps) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      <div style={{ padding: '20px 24px', borderBottom: '1px solid var(--color-hairline)', background: 'var(--color-canvas)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div className={styles.conversationHeader}>
         <div>
           <button
             type="button"
@@ -79,7 +89,7 @@ function InquiryChat({ inquiry, messages, newMessage, onMessageChange, onSubmit,
               }}>
                 {msg.message}
               </div>
-              <span style={{ fontSize: '0.75rem', color: 'var(--color-mute)', marginTop: '4px', padding: '0 4px' }}>
+              <span className={styles.chatTimestamp}>
                 {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </span>
             </div>
@@ -105,7 +115,8 @@ function InquiryChat({ inquiry, messages, newMessage, onMessageChange, onSubmit,
 
 export default function SupportPage() {
   const { t } = useLanguage();
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useMotionPreference();
+  const isMobileDrawer = useSyncExternalStore(subscribeDrawerViewport, drawerIsMobile, drawerServerSnapshot);
 
   // 상태 관리
   const { user, isAdmin, isAuthLoading } = useAuthSession();
@@ -133,25 +144,34 @@ export default function SupportPage() {
   const guestDialogRef = useRef<HTMLDialogElement>(null);
   const guestNoticeRef = useRef<HTMLDialogElement>(null);
   const supportMainRef = useRef<HTMLElement>(null);
+  const restoreGuestModalRef = useRef<(() => void) | null>(null);
   const isGuestModalOpen = Boolean(guestDialog || guestCodeNotice);
 
   const drawerTransition = reduceMotion
     ? { duration: 0 }
-    : { type: 'spring' as const, stiffness: 320, damping: 30, mass: 0.9 };
+    : { duration: 0.36, ease: [0.22, 0.75, 0.2, 1] as const };
+  const drawerHidden = { y: reduceMotion ? 0 : isMobileDrawer ? '100%' : 18, opacity: reduceMotion || isMobileDrawer ? 1 : 0 };
+
+  const finishGuestExit = () => {
+    if (!isGuestModalOpen) restoreGuestModalRef.current?.();
+  };
 
   useEffect(() => {
-    if (!isGuestModalOpen) return;
+    if (!isGuestModalOpen || restoreGuestModalRef.current) return;
 
     const previousOverflow = document.body.style.overflow;
     const trigger = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     const supportMain = supportMainRef.current;
     document.body.style.overflow = 'hidden';
-    return () => {
+    restoreGuestModalRef.current = () => {
       supportMain?.querySelectorAll<HTMLDialogElement>('dialog').forEach(dialog => dialog.close());
       document.body.style.overflow = previousOverflow;
       (trigger?.isConnected ? trigger : supportMain?.isConnected ? supportMain : null)?.focus({ preventScroll: true });
+      restoreGuestModalRef.current = null;
     };
   }, [isGuestModalOpen]);
+
+  useEffect(() => () => restoreGuestModalRef.current?.(), []);
 
   useEffect(() => {
     const dialog = guestCodeNotice ? guestNoticeRef.current : guestDialog ? guestDialogRef.current : null;
@@ -194,8 +214,8 @@ export default function SupportPage() {
 
   // 채팅방 자동 스크롤
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+    scrollConversation(messagesEndRef.current, reduceMotion);
+  }, [messages, reduceMotion]);
 
   useEffect(() => {
     if (user) setNickname(user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split('@')[0] || '');
@@ -477,37 +497,29 @@ export default function SupportPage() {
 
   return (
     <main ref={supportMainRef} tabIndex={-1} className={styles.main}>
-      <section className={styles.heroSection}>
-        <div className={styles.heroContent}>
-          <motion.h1 className={styles.heroTitle} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            {t('도움이 필요하신가요?', 'Need a hand?')}
-          </motion.h1>
-          <motion.p className={styles.heroSubtitle} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}>
-            {t(
-              '궁금한 점이나 플레이 중 생긴 문제를 남겨주세요. 답변을 확인하고 같은 화면에서 대화를 이어갈 수 있습니다.',
-              'Tell us what you are curious about or what went wrong in game, then check the reply and continue the conversation here.'
-            )}
-          </motion.p>
-        </div>
-      </section>
+      <header className={styles.portalHeader}>
+        <div><p className={styles.eyebrow}>SUPPORT</p><h1>{t('도움이 필요하신가요?', 'Need a hand?')}</h1><p className={styles.portalLead}>{t('궁금한 점이나 플레이 중 생긴 문제를 남겨주세요. 답변을 확인하고 같은 화면에서 대화를 이어갈 수 있습니다.', 'Tell us what you are curious about or what went wrong in game, then check the reply and continue the conversation here.')}</p></div>
+        <nav className={styles.guideShortcuts} aria-label={t('도움말 안내', 'Help guides')}>
+          <Link href="/rules">{t('서버 규칙', 'Server rules')} <span aria-hidden="true">↗</span></Link>
+          <Link href="/recovery-guidelines">{t('복구 가이드라인', 'Recovery guidelines')} <span aria-hidden="true">↗</span></Link>
+          <Link href="/join">{t('접속 안내', 'Connection guide')} <span aria-hidden="true">↗</span></Link>
+        </nav>
+      </header>
 
       <section className={styles.sectionCanvas}>
         <div className={styles.sectionContent}>
+          <div className={styles.workspaceBoundary}>
           {isLoading || isAuthLoading ? (
-            <div style={{ textAlign: 'center', padding: '60px 0', color: 'var(--color-mute)' }}>
-              <div style={{
-                width: '32px', height: '32px', border: '3px solid var(--color-hairline)', borderTopColor: 'var(--color-primary)',
-                borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 16px'
-              }} />
-              <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+            <div className={styles.loadingState} role="status" aria-busy="true">
+              <div className={styles.spinner} aria-hidden="true" />
               <p>{t('데이터 불러오는 중...', 'Loading data...')}</p>
             </div>
           ) : !user && selectedInquiry ? (
             <motion.div
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+              initial={reduceMotion ? false : { opacity: 0 }} animate={{ opacity: 1 }}
               className={`${styles.dashboardGrid} ${styles.supportGrid} ${styles.guestSupportGrid} ${styles.activeChat}`}
             >
-              <div className={styles.chatPanel}>
+              <div data-chat-panel className={styles.chatPanel}>
                 <InquiryChat
                   inquiry={selectedInquiry}
                   messages={messages}
@@ -523,10 +535,10 @@ export default function SupportPage() {
           ) : !user ? (
             // ================= [구글 비로그인 상태 UI] =================
             <motion.div
-              initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+              initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
               className={styles.authChoiceGrid}
             >
-              <article className={`${styles.timelineCard} ${styles.authChoiceCard} ${styles.authChoiceCardPrimary}`}>
+              <article className={`${styles.timelineCard} ${styles.authChoiceCard}`}>
                 <span className={styles.cornerSquare} />
                 <div className={styles.authChoiceCopy}>
                   <p className={styles.authChoiceEyebrow}>{t('로그인 문의', 'SIGNED-IN SUPPORT')}</p>
@@ -538,7 +550,7 @@ export default function SupportPage() {
                     'Connect your Google account to start a private conversation and pick up where you left off whenever you return.'
                   )}
                 </p>
-                <button onClick={handleGoogleSignIn} className={`${styles.authChoiceButton} ${styles.authChoiceButtonPrimary}`}>
+                <button onClick={handleGoogleSignIn} className={styles.authChoiceButton}>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                     <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -549,7 +561,7 @@ export default function SupportPage() {
                 </button>
               </article>
 
-              <article className={`${styles.timelineCard} ${styles.authChoiceCard} ${styles.authChoiceCardSecondary}`}>
+              <article className={`${styles.timelineCard} ${styles.authChoiceCard}`}>
                 <span className={styles.cornerSquare} />
                 <div className={styles.authChoiceCopy}>
                   <p className={styles.authChoiceEyebrow}>{t('로그인 없이 문의', 'NO ACCOUNT NEEDED')}</p>
@@ -568,10 +580,9 @@ export default function SupportPage() {
             </motion.div>
           ) : isAdmin ? (
             // ================= [관리자 계정 경고 배너] =================
-            <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-              <article className={styles.timelineCard} style={{ padding: '36px', textAlign: 'center', borderColor: '#f59e0b' }}>
-                <span className={styles.cornerSquare} style={{ backgroundColor: '#f59e0b' }} />
-                <h3 className={styles.timelineTitle} style={{ color: '#d97706' }}>{t('관리자 계정 접근 안내', 'Admin Account Detected')}</h3>
+            <div className={styles.adminHandoff}>
+              <article className={`${styles.timelineCard} ${styles.adminHandoffCard}`}>
+                <h3 className={styles.timelineTitle}>{t('관리자 계정 접근 안내', 'Admin Account Detected')}</h3>
                 <p className={styles.timelineText} style={{ marginBottom: '24px' }}>
                   {t(
                     '관리자 그룹에 할당된 구글 계정으로 로그인되어 있습니다. 유저 문의 상담 및 답변 관리를 위해 어드민 대시보드 콘솔로 이동해 주세요.',
@@ -590,7 +601,7 @@ export default function SupportPage() {
           ) : (
             // ================= [로그인 완료된 유저 대시보드 스플릿 레이아웃] =================
             <motion.div
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+              initial={reduceMotion ? false : { opacity: 0 }} animate={{ opacity: 1 }}
               className={`${styles.dashboardGrid} ${styles.supportGrid} ${
                 (selectedInquiry || isCreatingNew) ? styles.activeChat : ''
               }`}
@@ -601,9 +612,9 @@ export default function SupportPage() {
                 <div style={{
                   border: '1px solid var(--color-hairline)', borderRadius: 'var(--radius-sm)', background: 'var(--color-surface)', padding: '20px'
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+                  <div className={styles.memberAccountHeader}>
                     <strong style={{ fontSize: '1.1rem', color: 'var(--color-ink)' }}>{nickname}</strong>
-                    <button onClick={handleSignOut} style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600 }}>
+                    <button onClick={handleSignOut} className={styles.secondaryAction}>
                       {t('로그아웃', 'Sign Out')}
                     </button>
                   </div>
@@ -614,19 +625,16 @@ export default function SupportPage() {
                 <div style={{
                   border: '1px solid var(--color-hairline)', borderRadius: 'var(--radius-sm)', background: 'var(--color-surface)', display: 'flex', flexDirection: 'column', overflow: 'hidden', flexGrow: 1
                 }}>
-                  <div style={{
+                  <div className={styles.memberListHeader} style={{
                     padding: '16px', borderBottom: '1px solid var(--color-hairline)', background: 'var(--color-canvas)',
                     display: 'flex', justifyContent: 'space-between', alignItems: 'center'
                   }}>
                     <span style={{ fontWeight: 700, color: 'var(--color-ink)' }}>{t('내 문의 내역', 'My Inquiries')}</span>
                     <button
+                      className={styles.primaryAction}
                       onClick={() => { setIsCreatingNew(true); setSelectedInquiry(null); }}
-                      style={{
-                        background: 'var(--color-ink)', color: 'var(--color-canvas)', border: 'none', borderRadius: '4px',
-                        padding: '6px 12px', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer'
-                      }}
                     >
-                      + {t('새 문의', 'New')}
+                      + {t('새 문의', 'New inquiry')}
                     </button>
                   </div>
                   
@@ -642,6 +650,11 @@ export default function SupportPage() {
                         return (
                           <div
                             key={item.id}
+                            role="button"
+                            tabIndex={0}
+                            aria-pressed={isSelected}
+                            className={`${styles.inquiryListItem} ${isSelected ? styles.inquiryListItemSelected : ''}`}
+                            onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setSelectedInquiry(item); setIsCreatingNew(false); } }}
                             onClick={() => { setSelectedInquiry(item); setIsCreatingNew(false); }}
                             style={{
                               padding: '16px', borderBottom: '1px solid var(--color-hairline)', cursor: 'pointer',
@@ -651,7 +664,7 @@ export default function SupportPage() {
                           >
                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
                               <strong style={{ fontSize: '0.95rem', color: 'var(--color-ink)' }}>{item.inquiry_code}</strong>
-                              <span style={{
+                              <span className={isReplied ? styles.statusReplied : styles.statusPending} style={{
                                 fontSize: '0.7rem', padding: '2px 8px', borderRadius: '12px', fontWeight: 700,
                                 background: isReplied ? '#e0f2fe' : '#fef3c7',
                                 color: isReplied ? '#0284c7' : '#d97706'
@@ -671,7 +684,7 @@ export default function SupportPage() {
               </div>
 
               {/* 우측 패널: 채팅방 또는 새 문의 폼 */}
-              <div className={styles.chatPanel}>
+              <motion.div data-chat-panel key={selectedInquiry?.id ?? (isCreatingNew ? 'new-inquiry' : 'empty-inquiry')} className={styles.chatPanel} initial={reduceMotion ? false : { opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.2, ease: [0.22, 0.75, 0.2, 1] }}>
                 {isCreatingNew ? (
                   // ================= [새 문의 작성 폼] =================
                   <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
@@ -694,7 +707,7 @@ export default function SupportPage() {
                       </p>
                     </div>
                     
-                    <form onSubmit={handleCreateInquiry} style={{ padding: '32px 24px', flexGrow: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                    <form className={styles.inquiryForm} onSubmit={handleCreateInquiry}>
                       {/* 마인크래프트 닉네임 작성 */}
                       <div>
                         <label htmlFor="member-inquiry-nickname" style={{ display: 'block', fontWeight: 700, marginBottom: '8px', color: 'var(--color-ink)' }}>
@@ -777,6 +790,7 @@ export default function SupportPage() {
                       <button
                         type="submit"
                         disabled={isSubmitting}
+                        className={styles.modalSubmit}
                         style={{
                           marginTop: '16px', padding: '16px', background: 'var(--color-ink)', color: 'var(--color-canvas)',
                           border: 'none', borderRadius: 'var(--radius-sm)', fontWeight: 800, fontSize: '1.05rem', cursor: 'pointer'
@@ -799,16 +813,17 @@ export default function SupportPage() {
                   />
                 ) : (
                   // ================= [빈 화면 (선택 안됨)] =================
-                  <div style={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-mute)', flexDirection: 'column', gap: '12px' }}>
-                    <span style={{ fontSize: '3rem' }}>💡</span>
+                  <div className={styles.emptyState}>
+                    <span className={styles.emptyMarker} aria-hidden="true">↗</span>
                     <p>{t('왼쪽에서 문의 내역을 선택하거나 [새 문의] 버튼을 눌러주세요.', 'Select a ticket or create a new one.')}</p>
                   </div>
                 )}
-              </div>
+              </motion.div>
             </motion.div>
           )}
 
-          <AnimatePresence>
+          </div>
+          <AnimatePresence onExitComplete={finishGuestExit}>
             {guestDialog && (
               <motion.div
                 className={styles.modalBackdrop}
@@ -825,9 +840,9 @@ export default function SupportPage() {
                   role="dialog"
                   aria-modal="true"
                   aria-labelledby="guest-inquiry-title"
-                  initial={{ y: reduceMotion ? 0 : '100%', opacity: reduceMotion ? 1 : 0.7 }}
+                  initial={drawerHidden}
                   animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: reduceMotion ? 0 : '100%', opacity: reduceMotion ? 1 : 0.7 }}
+                  exit={drawerHidden}
                   transition={drawerTransition}
                   onCancel={handleGuestModalCancel}
                   onKeyDown={handleGuestModalKeyDown}
@@ -860,7 +875,7 @@ export default function SupportPage() {
                         initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: reduceMotion ? 0 : -10 }}
-                        transition={{ duration: reduceMotion ? 0 : 0.18 }}
+                        transition={{ duration: reduceMotion ? 0 : 0.2, ease: [0.22, 0.75, 0.2, 1] }}
                       >
                         <p className={styles.timelineText}>{t('로그인 없이 문의를 남기거나, 캡처해 둔 문의번호로 이전 대화에 다시 들어갈 수 있습니다.', 'Start without signing in, or use your saved inquiry code to return to an earlier conversation.')}</p>
                         <div className={styles.guestChoiceGrid}>
@@ -885,7 +900,7 @@ export default function SupportPage() {
                         initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: reduceMotion ? 0 : -10 }}
-                        transition={{ duration: reduceMotion ? 0 : 0.18 }}
+                        transition={{ duration: reduceMotion ? 0 : 0.2, ease: [0.22, 0.75, 0.2, 1] }}
                       >
                         <div>
                           <label htmlFor="guest-inquiry-nickname">{t('마인크래프트 닉네임', 'Minecraft Nickname')} <span aria-hidden="true">*</span></label>
@@ -923,7 +938,7 @@ export default function SupportPage() {
                         initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: reduceMotion ? 0 : -10 }}
-                        transition={{ duration: reduceMotion ? 0 : 0.18 }}
+                        transition={{ duration: reduceMotion ? 0 : 0.2, ease: [0.22, 0.75, 0.2, 1] }}
                       >
                         <p className={styles.timelineText}>{t('문의 접수 후 캡처해 둔 고유번호를 입력해 주세요.', 'Enter the unique code you captured after submitting your inquiry.')}</p>
                         <div>
@@ -941,7 +956,7 @@ export default function SupportPage() {
             )}
           </AnimatePresence>
 
-          <AnimatePresence>
+          <AnimatePresence onExitComplete={finishGuestExit}>
             {guestCodeNotice && (
               <motion.div
                 className={styles.modalBackdrop}
@@ -960,9 +975,9 @@ export default function SupportPage() {
                   onCancel={handleGuestModalCancel}
                   onKeyDown={handleGuestModalKeyDown}
                   tabIndex={-1}
-                  initial={{ y: reduceMotion ? 0 : '100%', opacity: reduceMotion ? 1 : 0.7 }}
+                  initial={drawerHidden}
                   animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: reduceMotion ? 0 : '100%', opacity: reduceMotion ? 1 : 0.7 }}
+                  exit={drawerHidden}
                   transition={drawerTransition}
                 >
                   <div className={styles.modalGrip} aria-hidden="true" />
@@ -979,7 +994,7 @@ export default function SupportPage() {
           </AnimatePresence>
 
           {errorText && (
-            <div style={{ maxWidth: '600px', margin: '24px auto 0', padding: '16px', background: '#fef2f2', border: '1px solid #fee2e2', borderRadius: 'var(--radius-sm)', color: '#ef4444', textAlign: 'center', fontSize: '0.9rem', fontWeight: 500 }}>
+            <div className={styles.errorNotice} role="alert">
               {errorText}
             </div>
           )}

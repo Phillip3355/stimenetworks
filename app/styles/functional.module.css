@@ -1,0 +1,178 @@
+.main { min-height: 60svh; padding-top: calc(var(--nav-height) + env(safe-area-inset-top)); padding-bottom: 48px; background: var(--color-canvas); color: var(--color-ink); font-family: var(--font-sans), sans-serif; }
+.sectionContent, .consoleMasthead, .portalHeader { width: min(1180px, calc(100% - 64px)); margin: 0 auto; min-width: 0; }
+.workspaceBoundary { container-type: inline-size; min-width: 0; }
+.sectionCanvas { padding: 24px 0; }
+.main > .sectionContent { padding-top: 32px; }
+.main :is(button,a,input,select,textarea):focus-visible, .inquiryListItem:focus-visible { outline: 2px solid var(--color-accent) !important; outline-offset: 3px; }
+.main :is(button,input,select) { min-height: 44px; }
+.main :is(button,input,textarea,select) { font-family: var(--font-sans), sans-serif; }
+.main button { cursor: pointer; }
+.main button:disabled { cursor: wait; opacity: .5; }
+.main :is(input,textarea,select) { min-width: 0; max-width: 100%; border: 1px solid var(--color-hairline-strong) !important; border-radius: 8px !important; background: var(--color-canvas) !important; color: var(--color-ink) !important; padding: 10px 12px !important; font-size: 16px !important; line-height: 1.5; }
+.main :is(input,textarea)::placeholder { color: var(--color-mute); opacity: 1; }
+.main textarea { resize: vertical; }
+.main form { min-width: 0; }
+.main label { font-size: 14px; font-weight: 500 !important; line-height: 1.5; }
+.main :is(h1,h2,h3,h4,p,strong,code) { overflow-wrap: anywhere; }
+.main :is(h1,h2,h3,h4) { font-family: var(--font-sans), sans-serif; font-weight: 600 !important; line-height: 1.3; }
+.eyebrow { margin: 0; font: 500 12px/1.5 var(--font-mono), monospace; color: var(--color-mute); letter-spacing: .02em; }
+.portalHeader { display: grid; grid-template-columns: minmax(0,1fr) 260px; align-items: start; gap: 64px; padding: 36px 0 24px; border-bottom: 1px solid var(--color-hairline); }
+.portalHeader h1 { margin: 12px 0 16px; font-size: 36px; letter-spacing: -.03em; }
+.portalLead { margin: 0; max-width: 64ch; color: var(--color-body); font-size: 16px; line-height: 1.5; }
+.guideShortcuts { display: grid; border: 1px solid var(--color-hairline); border-radius: 12px; overflow: hidden; }
+.guideShortcuts a { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 44px; padding: 12px 16px; background: var(--color-canvas); color: var(--color-body); font-size: 14px; text-decoration: none; }
+.guideShortcuts a + a { border-top: 1px solid var(--color-hairline); }
+.guideShortcuts a:hover { background: var(--color-surface); color: var(--color-ink); }
+.guideShortcuts span { color: var(--color-mute); }
+.authChoiceGrid { display: flex; flex-direction: column; border: 1px solid var(--color-hairline); border-radius: 12px; overflow: hidden; }
+.timelineCard { min-width: 0; padding: 24px; border: 1px solid var(--color-hairline); border-radius: 12px; background: var(--color-canvas); }
+.cornerSquare { display: none; }
+.authChoiceCard { display: grid; grid-template-columns: 230px minmax(0,1fr) 220px; align-items: center; gap: 24px; padding: 28px; border: 0; border-radius: 0; }
+.authChoiceCard + .authChoiceCard { border-top: 1px solid var(--color-hairline); }
+.authChoiceCopy { min-width: 0; }
+.authChoiceEyebrow { margin: 0 0 8px; font: 500 12px/1.5 var(--font-sans), sans-serif; color: var(--color-mute); letter-spacing: .02em; }
+.timelineTitle { margin: 0; font-size: 20px; letter-spacing: -.02em; color: var(--color-ink); }
+.timelineText { margin: 0; color: var(--color-body); font-size: 16px; line-height: 1.5; word-break: keep-all; }
+.primaryAction, .authChoiceButton, .buttonOutline, .modalSubmit, .adminConsoleButton, .adminGateButton { display: inline-flex !important; align-items: center; justify-content: center; gap: 10px; min-width: 44px; min-height: 44px; padding: 10px 16px !important; border: 1px solid var(--color-primary) !important; border-radius: 8px !important; background: var(--color-primary) !important; color: var(--color-on-primary) !important; font-size: 14px !important; font-weight: 500 !important; line-height: 1.5; text-decoration: none; transition: background 160ms ease; }
+.secondaryAction { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 10px 12px; border: 1px solid var(--color-hairline-strong); border-radius: 8px; background: var(--color-canvas); color: var(--color-body); font-size: 14px; font-weight: 500; line-height: 1.5; }
+.secondaryAction:hover { background: var(--color-surface-raised); }
+.memberAccountHeader, .memberListHeader { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; min-width: 0; }
+.memberAccountHeader { margin-bottom: 12px; }
+.memberAccountHeader strong { min-width: 0; flex: 1 1 100px; }
+.memberAccountHeader button, .memberListHeader button { flex-shrink: 0; }
+.authChoiceButton { width: 100%; }
+.authChoiceButtonSecondary { border-color: var(--color-hairline-strong) !important; background: var(--color-canvas) !important; color: var(--color-ink) !important; }
+.authChoiceButton:hover, .buttonOutline:hover, .modalSubmit:hover, .adminGateButton:hover, .adminConsoleButton:hover { background: #252525 !important; }
+.authChoiceButtonSecondary:hover { background: var(--color-surface) !important; }
+.dashboardGrid { display: grid; min-width: 0; gap: 0; border: 1px solid var(--color-hairline); border-radius: 12px; overflow: hidden; }
+.supportGrid, .taskboardGrid { grid-template-columns: 300px minmax(0,1fr); }
+.guestSupportGrid { grid-template-columns: 1fr; }
+.listPanel { min-width: 0; min-height: 0; height: 620px; display: flex; flex-direction: column; background: var(--color-surface); border-right: 1px solid var(--color-hairline); }
+.listPanel > div { border: 0 !important; border-radius: 0 !important; background: var(--color-surface) !important; }
+.listPanel > div:first-child { border-bottom: 1px solid var(--color-hairline) !important; }
+.listPanel > div:last-child { min-height: 0; }
+.listPanel > div:last-child > div:first-child { background: var(--color-surface) !important; }
+.listPanelBox, .chatPanel { min-width: 0; min-height: 0; height: 620px; display: flex; flex-direction: column; overflow: hidden; border: 0; border-radius: 0; background: var(--color-canvas); }
+.listPanelBox { border-right: 1px solid var(--color-hairline); background: var(--color-surface); }
+.chatPanel h3 { font-size: 20px; }
+.chatPanel { scroll-margin-top: calc(var(--nav-height) + 16px + env(safe-area-inset-top)); }
+.chatPanel h4 { font-size: 16px; }
+.chatPanel > div { min-width: 0; min-height: 0; }
+.conversationHeader { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-bottom: 1px solid var(--color-hairline); background: var(--color-canvas); }
+.panelSectionHeader { flex: 0 0 auto; padding: 20px !important; background: var(--color-surface) !important; color: var(--color-ink); font-size: 14px; font-weight: 600 !important; }
+.inquiryListItem { min-width: 0; min-height: 80px; padding: 20px !important; border-left: 3px solid transparent !important; border-bottom: 1px solid var(--color-hairline) !important; background: var(--color-surface) !important; transition: background 160ms ease; }
+.inquiryListItem:hover { background: var(--color-surface-raised) !important; }
+.inquiryListItemSelected { border-left-color: var(--color-primary) !important; background: var(--color-canvas) !important; }
+.inquiryListItem strong { font-family: var(--font-sans), sans-serif; font-size: 14px !important; font-weight: 600; }
+.inquiryListItem > div { flex-wrap: wrap; gap: 8px; }
+.statusPending, .statusReplied { display: inline-flex; align-items: center; padding: 3px 7px !important; border: 1px solid var(--color-hairline); border-radius: 4px !important; font-size: 13px !important; font-weight: 500 !important; line-height: 1.5; }
+.statusPending { background: var(--color-surface-raised) !important; color: var(--color-body) !important; }
+.statusReplied { background: #e9fbf6 !important; color: var(--color-accent) !important; border-color: #baeade !important; }
+.chatFeed, .chatMessages { min-width: 0; min-height: 0; background: var(--color-canvas) !important; scrollbar-width: thin; scrollbar-color: var(--color-hairline-strong) var(--color-canvas); }
+.chatMessages { flex-grow: 1; overflow-y: auto; }
+.chatMessageRow { min-width: 0; width: 100%; }
+.chatTimestamp { margin-top: 4px; padding: 0 4px; color: var(--color-mute); font-size: 13px; line-height: 1.5; }
+.emptyState { height: 100%; flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 32px; text-align: center; color: var(--color-mute); font-size: 16px; line-height: 1.5; }
+.emptyState p { max-width: 40ch; margin: 0; }
+.emptyMarker { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid var(--color-hairline); border-radius: 8px; background: var(--color-surface); font-family: var(--font-mono), monospace; font-size: 20px; }
+.chatBubbleAdmin, .chatBubbleUser { max-width: min(82%, 600px) !important; padding: 12px 16px !important; border: 1px solid var(--color-hairline) !important; border-radius: 8px !important; box-shadow: none !important; color: var(--color-ink) !important; font-size: 16px !important; line-height: 1.5 !important; word-break: normal !important; overflow-wrap: anywhere; }
+.chatBubbleAdmin { background: var(--color-surface) !important; }
+.chatBubbleUser { background: var(--color-canvas) !important; }
+.chatComposer { display: grid !important; grid-template-columns: minmax(0,1fr) auto; gap: 12px !important; padding: 16px 20px max(16px,env(safe-area-inset-bottom)) !important; background: var(--color-canvas) !important; }
+.chatComposer > input { width: 100%; min-width: 0; }
+.chatComposer > button { min-width: 72px; padding: 10px 16px !important; border: 1px solid var(--color-primary) !important; border-radius: 8px !important; background: var(--color-primary) !important; color: var(--color-on-primary) !important; font-weight: 500 !important; font-size: 14px !important; }
+.inquiryForm { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px; padding: 24px; flex-grow: 1; min-height: 0; overflow-y: auto; align-content: start; }
+.inquiryForm > div:nth-of-type(n+3), .inquiryForm > button { grid-column: 1 / -1; }
+.inquiryForm :is(input,select,textarea) { width: 100%; }
+.mobileBackButton { display: none !important; }
+.guestSupportGrid .mobileBackButton { display: inline-flex !important; }
+.adminHandoff { width: min(100%,680px); margin: 0 auto; }
+.adminHandoffCard { display: grid; gap: 20px; }
+.consoleMasthead { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 20px 0 12px; border-bottom: 1px solid var(--color-hairline); }
+.consoleMasthead span { color: var(--color-mute); font: 12px/1.5 var(--font-mono), monospace; }
+.consoleMasthead a { display: inline-flex; align-items: center; min-height: 44px; color: var(--color-body); font-size: 14px; text-decoration: none; }
+.consoleTitle { margin: 8px 0 16px; color: var(--color-ink); font-size: 28px; letter-spacing: -.025em; }
+.gateFrame { min-height: 0 !important; padding: 40px 24px 48px !important; }
+.adminGateCard, .adminAccessCard { width: min(100%,640px) !important; max-width: 640px !important; display: grid !important; grid-template-columns: 1fr; gap: 24px !important; padding: 32px !important; border: 1px solid var(--color-hairline) !important; border-radius: 12px !important; background: var(--color-canvas) !important; box-shadow: none !important; text-align: left !important; }
+.adminAccessCard a { display: inline-flex; align-items: center; min-height: 44px; }
+.adminGateCard h1, .adminAccessCard h1 { font-size: 28px !important; color: var(--color-ink) !important; }
+.adminGateCard > div > span, .deniedLabel { font: 12px/1.5 var(--font-mono), monospace; font-size: 12px !important; letter-spacing: .02em !important; color: var(--color-mute) !important; }
+.adminGateCard p, .adminAccessCard p { margin: 0; color: var(--color-body) !important; font-size: 16px !important; line-height: 1.5 !important; }
+.adminGateButton { width: 100%; }
+.adminPanelHeader { display: grid !important; grid-template-columns: minmax(0,1fr) auto; align-items: end !important; gap: 24px; padding-bottom: 20px !important; margin-bottom: 24px !important; }
+.adminAccountBar { min-width: 0; max-width: 360px; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px !important; }
+.adminAccountEmail { min-width: 0; overflow-wrap: anywhere; font-size: 13px !important; }
+.adminTabList { gap: 20px !important; }
+.adminTab { min-height: 44px; padding: 10px 0 !important; border: 0 !important; border-bottom: 2px solid transparent !important; border-radius: 0 !important; background: transparent !important; color: var(--color-mute) !important; font-size: 14px !important; font-weight: 500 !important; }
+.adminTabActive { border-bottom-color: var(--color-primary) !important; color: var(--color-ink) !important; }
+.adminLogoutButton { min-height: 44px; padding: 10px 16px !important; border: 1px solid var(--color-hairline-strong) !important; border-radius: 8px !important; color: var(--color-body) !important; font-size: 14px; background: var(--color-canvas) !important; }
+.adminChatHeader { flex: 0 0 auto; gap: 16px; padding: 20px !important; background: var(--color-canvas) !important; }
+.adminChatHeader > div { min-width: 0; }
+.adminChatHeader > button { flex-shrink: 0; background: var(--color-canvas) !important; border: 1px solid #fecaca !important; color: var(--color-danger) !important; border-radius: 8px !important; font-size: 14px !important; }
+.reportGrid { grid-template-columns: minmax(0,1.45fr) minmax(280px,.75fr); gap: 24px; border: 0; border-radius: 0; align-items: start; overflow: visible; }
+.reportSurface { min-width: 0; padding: 24px !important; border: 1px solid var(--color-hairline) !important; border-radius: 12px !important; background: var(--color-canvas) !important; color: var(--color-body); gap: 20px !important; }
+.reportSurface h3 { color: var(--color-ink); font-size: 22px; }
+.reportSurface input { width: 100%; }
+.reportSurface textarea { font-family: var(--font-mono), monospace; font-size: 16px !important; }
+.reportSurface form > div > div { flex-wrap: wrap; }
+.reportSurface form > div > div > input { flex-basis: 100%; }
+.reportPublishButton { min-height: 44px; border-radius: 8px !important; background: var(--color-primary) !important; color: var(--color-on-primary) !important; font-size: 14px !important; font-weight: 500 !important; }
+.reportList { padding: 0 !important; overflow: hidden; }
+.reportListItems { min-width: 0; overflow-y: auto; }
+.reportListItem { align-items: stretch !important; flex-direction: column; gap: 16px; background: var(--color-canvas); }
+.reportListItem > div:first-child { min-width: 0; }
+.reportListItem strong { font-family: var(--font-mono), monospace; font-size: 14px !important; font-weight: 500; }
+.reportActions { display: grid !important; grid-template-columns: 1fr 1fr; gap: 8px; }
+.reportViewButton, .reportDeleteButton { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 12px !important; border: 1px solid var(--color-hairline-strong) !important; border-radius: 8px !important; background: var(--color-canvas) !important; color: var(--color-ink) !important; font-size: 14px !important; font-weight: 500 !important; }
+.reportDeleteButton { border-color: #fecaca !important; color: var(--color-danger) !important; }
+.loadingState { min-height: 140px; display: flex; align-items: center; justify-content: center; gap: 16px; color: var(--color-body); font-size: 16px; }
+.consoleMasthead + div.loadingState { width: min(640px,calc(100% - 48px)); margin: 24px auto; }
+.loadingState p { margin: 0; }
+.spinner { width: 24px; height: 24px; flex-shrink: 0; border: 2px solid var(--color-hairline); border-top-color: var(--color-primary); border-radius: 50%; animation: spin 900ms linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.errorNotice { margin: 24px 0 0; padding: 14px 16px; border: 1px solid #fecaca; border-radius: 8px; background: #fef2f2; color: var(--color-danger); font-size: 14px; line-height: 1.5; overflow-wrap: anywhere; }
+.formFeedback { font-size: 14px; line-height: 1.5; overflow-wrap: anywhere; }
+.modalBackdrop { position: fixed; inset: 0; z-index: 110; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgb(17 24 39 / .25); }
+.modalCard, .codeNotice { position: fixed; inset: 0; height: fit-content; width: min(640px,calc(100% - 48px)); max-width: none; max-height: calc(100svh - 48px); margin: auto; padding: 0; overflow-y: auto; border: 1px solid var(--color-hairline); border-radius: 12px; background: var(--color-canvas); color: var(--color-ink); scrollbar-width: thin; }
+.modalCard::backdrop, .codeNotice::backdrop { background: transparent; }
+.modalGrip { display: none; }
+.modalHeader { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 24px; border-bottom: 1px solid var(--color-hairline); background: var(--color-canvas); }
+.modalHeaderMenu { align-items: center; }
+.modalTitle { margin: 8px 0 0; color: var(--color-ink); font-size: 24px; letter-spacing: -.02em; }
+.modalClose { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 44px; height: 44px; padding: 0; border: 1px solid var(--color-hairline); border-radius: 8px; background: var(--color-canvas); color: var(--color-mute); font-size: 24px; }
+.modalClose:hover { background: var(--color-surface); color: var(--color-ink); }
+.modalBody, .modalForm { padding: 24px; }
+.modalBody > .timelineText { margin-bottom: 20px; }
+.modalForm { display: grid; gap: 20px; }
+.modalForm label { display: block; margin-bottom: 8px; color: var(--color-body); }
+.modalForm :is(input,textarea,select) { width: 100%; }
+.guestChoiceGrid { display: flex; flex-direction: column; border: 1px solid var(--color-hairline); border-radius: 8px; overflow: hidden; }
+.guestChoice { display: grid; grid-template-columns: 150px minmax(0,1fr); gap: 16px; align-items: center; min-height: 80px; padding: 20px; border: 0; background: var(--color-canvas); color: var(--color-ink); text-align: left; }
+.guestChoice + .guestChoice { border-top: 1px solid var(--color-hairline); }
+.guestChoice strong { font-size: 16px; font-weight: 600; }
+.guestChoice span { color: var(--color-body); font-size: 14px; line-height: 1.5; }
+.guestChoice:hover { background: var(--color-surface); }
+.codeNotice { padding: 28px; }
+.guestInquiryCode { display: block; margin: 20px 0; padding: 16px; border: 1px solid #baeade; border-radius: 8px; background: #e9fbf6; color: var(--color-accent); font: 500 clamp(20px,4vw,28px)/1.5 var(--font-mono), monospace; overflow-wrap: anywhere; }
+.codeNotice .modalSubmit { width: 100%; margin-top: 24px; }
+.main [style*='background: rgb(254, 242, 242)'] { background: #fef2f2 !important; color: var(--color-danger) !important; border-color: #fecaca !important; }
+.main [style*='background: rgb(236, 253, 245)'] { background: #e9fbf6 !important; color: var(--color-accent) !important; }
+@container (max-width: 620px) {
+  .supportGrid, .taskboardGrid, .reportGrid { grid-template-columns: 1fr; }
+  .listPanel, .listPanelBox { border-right: 0; }
+  .chatPanel { display: none; }
+  .activeChat .listPanel, .activeChat .listPanelBox { display: none; }
+  .activeChat .chatPanel { display: flex; }
+  .mobileBackButton { display: inline-flex !important; }
+  .inquiryForm { grid-template-columns: 1fr; }
+  .inquiryForm > div:nth-of-type(n+3), .inquiryForm > button { grid-column: 1; }
+  .adminPanelHeader { grid-template-columns: 1fr; }
+  .adminAccountBar { max-width: none; justify-content: flex-start; }
+  .adminChatHeader { flex-direction: column; align-items: stretch !important; }
+  .adminChatHeader > button { width: 100%; }
+}
+@media (max-width: 1100px) { .authChoiceCard { grid-template-columns: 210px minmax(0,1fr); } .authChoiceButton { grid-column: 2; width: fit-content; } .authChoiceCopy { grid-row: span 2; } .portalHeader { gap: 32px; } .reportGrid { grid-template-columns: 1fr; } .adminPanelHeader { grid-template-columns: 1fr; align-items: start !important; gap: 16px; } .adminAccountBar { max-width: none; justify-content: flex-start; } }
+@media (max-width: 760px) { .main { padding-bottom: 24px; } .sectionContent, .consoleMasthead, .portalHeader { width: calc(100% - 32px); } .portalHeader { grid-template-columns: 1fr; gap: 24px; padding: 28px 0 20px; } .portalHeader h1 { font-size: 30px; } .guideShortcuts { display: flex; flex-wrap: wrap; border: 0; gap: 8px; } .guideShortcuts a { border: 1px solid var(--color-hairline) !important; border-radius: 8px; padding: 10px 12px; } .authChoiceCard { grid-template-columns: 1fr; gap: 16px; padding: 24px 20px; } .authChoiceCopy { grid-row: auto; } .authChoiceButton { grid-column: auto; width: 100%; } .supportGrid, .taskboardGrid { grid-template-columns: 1fr; } .listPanel, .listPanelBox { height: min(620px,75svh); border-right: 0; } .chatPanel { display: none; } .activeChat .listPanel, .activeChat .listPanelBox { display: none; } .activeChat .chatPanel { display: flex; height: calc(100svh - var(--nav-height) - 32px); min-height: 400px; } .mobileBackButton { display: inline-flex !important; } .conversationHeader, .chatPanel > div > div:first-child { padding: 16px 20px !important; } .chatFeed, .chatMessages { padding: 20px 16px !important; } .chatBubbleAdmin, .chatBubbleUser { max-width: 90% !important; } .inquiryForm { grid-template-columns: 1fr; padding: 20px; } .inquiryForm > div:nth-of-type(n+3), .inquiryForm > button { grid-column: 1; } .adminChatHeader { flex-direction: column; align-items: stretch !important; padding: 16px !important; gap: 12px; } .adminChatHeader > button { width: 100%; } .gateFrame { padding: 28px 16px 36px !important; } .adminGateCard, .adminAccessCard { padding: 24px !important; } .consoleTitle { font-size: 26px; } .modalBackdrop { align-items: flex-end; padding: 0; } .modalCard, .codeNotice { inset: auto 0 0; margin: 0; width: 100%; max-height: calc(100svh - 12px); border-radius: 12px 12px 0 0; padding-bottom: env(safe-area-inset-bottom); } .modalGrip { display: block; width: 40px; height: 4px; margin: 12px auto 0; border-radius: 4px; background: var(--color-hairline-strong); } .modalHeader, .modalBody, .modalForm { padding: 20px; } .modalHeader { gap: 12px; } .codeNotice { padding: 0 20px max(24px,env(safe-area-inset-bottom)); } .codeNotice > .eyebrow { margin-top: 24px; } .guestChoice { grid-template-columns: 1fr; gap: 8px; padding: 16px; } }
+@media (max-width: 430px) { .chatComposer { grid-template-columns: 1fr; gap: 8px !important; padding: 12px 16px max(12px,env(safe-area-inset-bottom)) !important; } .consoleMasthead { gap: 12px; } .consoleMasthead span { font-size: 12px; } .consoleMasthead a { font-size: 13px; } .adminAccountBar { flex-direction: column; align-items: flex-start !important; } }
+@container (max-width: 620px) { .authChoiceCard { grid-template-columns: 1fr; gap: 16px; } .authChoiceCopy { grid-row: auto; } .authChoiceButton { grid-column: auto; width: 100%; } }
+@media (prefers-reduced-motion: reduce) { .spinner { animation: none; } .modalCard, .codeNotice, .chatPanel { transform: none !important; } .authChoiceButton, .buttonOutline, .modalSubmit, .inquiryListItem { transition: none; } }
