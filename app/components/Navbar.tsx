@@ -15,6 +15,7 @@ export default function Navbar() {
   const reduceMotion = useMotionPreference();
   const { language, toggleLanguage } = useLanguage();
   const [menuState, setMenuState] = useState({ open: false, pathname });
+  const [dismissedDesktopGroup, setDismissedDesktopGroup] = useState<string | null>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
@@ -26,16 +27,30 @@ export default function Navbar() {
   const desktopLinks = navigationGroups.filter((group) => group.id !== 'join');
 
   useEffect(() => {
+    const onDesktopEscape = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape' || !window.matchMedia('(min-width: 1024px)').matches) return;
+      const group = headerRef.current?.querySelector<HTMLElement>('[data-desktop-group]:hover, [data-desktop-group]:focus-within');
+      if (!group) return;
+      event.preventDefault();
+      setDismissedDesktopGroup(group.dataset.desktopGroup ?? null);
+      if (group.contains(document.activeElement)) group.querySelector<HTMLElement>('a')?.focus();
+    };
+    document.addEventListener('keydown', onDesktopEscape);
+    return () => document.removeEventListener('keydown', onDesktopEscape);
+  }, []);
+
+  useEffect(() => {
     if (!isOpen) return;
 
     const previousOverflow = document.body.style.overflow;
     const trigger = triggerRef.current;
+    const header = headerRef.current;
     document.body.style.overflow = 'hidden';
     const focusable = panelRef.current?.querySelectorAll<HTMLElement>(
       'a[href], button:not([disabled])',
     );
     focusable?.[0]?.focus();
-    const background = [headerRef.current, ...document.querySelectorAll<HTMLElement>('[data-menu-background]')]
+    const background = [header, ...document.querySelectorAll<HTMLElement>('[data-menu-background]')]
       .filter((element): element is HTMLElement => element !== null);
     const previousBackground = background.map((element) => ({
       element, inert: element.inert, ariaHidden: element.getAttribute('aria-hidden'),
@@ -66,16 +81,24 @@ export default function Navbar() {
       }
     };
 
+    const desktopMedia = window.matchMedia('(min-width: 1024px)');
+    const onDesktopChange = () => {
+      if (desktopMedia.matches) setMenuState({ open: false, pathname });
+    };
+
     document.addEventListener('keydown', onKeyDown);
+    desktopMedia.addEventListener('change', onDesktopChange);
     return () => {
       document.body.style.overflow = previousOverflow;
       document.removeEventListener('keydown', onKeyDown);
+      desktopMedia.removeEventListener('change', onDesktopChange);
       previousBackground.forEach(({ element, inert, ariaHidden }) => {
         element.inert = inert;
         if (ariaHidden === null) element.removeAttribute('aria-hidden');
         else element.setAttribute('aria-hidden', ariaHidden);
       });
-      trigger?.focus();
+      if (desktopMedia.matches) header?.querySelector<HTMLElement>('nav a')?.focus();
+      else trigger?.focus();
     };
   }, [isOpen, pathname]);
 
@@ -98,14 +121,31 @@ export default function Navbar() {
           <div className={styles.desktopActions}>
             <nav className={styles.desktopLinks} aria-label="Primary navigation">
               {desktopLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={pathname === link.href ? styles.activeLink : undefined}
-                  aria-current={pathname === link.href ? 'page' : undefined}
+                <div
+                  key={link.id}
+                  className={styles.desktopGroup}
+                  data-desktop-group={link.id}
+                  data-dismissed={dismissedDesktopGroup === link.id || undefined}
+                  onMouseEnter={() => setDismissedDesktopGroup(null)}
+                  onFocusCapture={(event) => {
+                    if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setDismissedDesktopGroup(null);
+                  }}
                 >
-                  {labelFor(link)}
-                </Link>
+                  <Link
+                    href={link.href}
+                    className={pathname === link.href ? styles.activeLink : undefined}
+                    aria-current={pathname === link.href ? 'page' : undefined}
+                  >
+                    {labelFor(link)}
+                  </Link>
+                  <div className={styles.desktopSubmenu}>
+                    {link.links.map((item) => (
+                      <Link key={item.href} href={item.href} aria-current={pathname === item.href ? 'page' : undefined}>
+                        {labelFor(item)}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
               ))}
             </nav>
 

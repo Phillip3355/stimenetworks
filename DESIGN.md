@@ -213,13 +213,23 @@ The white shared header retains navigation, language control and the compact men
 
 - Metadata and image captions stay at least 12px. Body copy remains 16px/1.5. All form inputs use 16px to preserve legibility and avoid automatic mobile input zoom.
 - Buttons, mobile links, breadcrumbs and touch navigation provide at least 44px targets. Desktop information navigation expands to 44px when a coarse pointer is detected.
-- At 280px cover-screen widths, the header keeps its controls reachable with compact spacing. The hero title scales between 28px and 36px below 480px; edition/world cards stack below 480px.
+- At 280px cover-screen widths, the header keeps its controls reachable with compact spacing. The hero title scales between 28px and 36px below 480px; server destinations stack while the two edition sources remain side by side above their shared bridge.
 - Inquiry and administration workspaces collapse according to their actual container width. Dialogs fit short viewports, scroll internally and keep their close control visible. Safe-area spacing remains part of their layout.
 - Conversations open below the fixed navigation on stacked layouts. Incoming-message scrolling stays inside the message feed so it does not push the composer below the viewport.
 - Numeric rule/recovery markers and news arrows use content-sized columns so enlarged text does not clip. Published connection controls span the complete server panel and preserve a readable manual-copy fallback.
 - Markdown code and tables retain native horizontal scrolling and visible keyboard focus. Muted text uses #5b687a to meet contrast on raised gray surfaces.
 
 ## Content and verification
+
+### Homepage readability — 2026-10-11
+
+- At 1024px and above, primary navigation replaces the hamburger. Its sublinks remain available through hover and keyboard focus; Escape dismisses a group and returns focus to its primary link. Crossing that breakpoint dismisses an open mobile menu and restores focus to visible navigation.
+- Below 480px the hero jump link retains a visible label in a full-width 44px control. Hero and closing CTA groups share centered alignment on mobile.
+- Server panels stack their image and copy below 1024px. Below 480px their identity and compact lifecycle badge occupy deliberate rows, and the brand rail shortens to SERVER GROUP. The former separate directions section is represented by one core direction per card; complete directions remain on each server detail page.
+- Java and Bedrock remain parallel sources at every width, with the shared connector converging on Geyser. Korean bridge copy keeps words together. Destination servers may stack independently.
+- Below 768px all seven archive images occupy a native horizontal scroll-snap rail with a visible scrolling hint, keyboard focus and individual scene captions. Desktop retains its lead image and two-column grid. No autoplay is added.
+- Important homepage metadata uses 13px; descriptive captions use 14px and body text color. Decorative section labels retain their quieter hierarchy. Changes stay scoped to the affected components rather than altering global type or color tokens.
+- Between 768px and 1100px footer menus use three equal groups followed by two equal groups that fill the second row.
 
 `app/shared/serverGroup.mjs` and `app/shared/siteContent.mjs` remain factual authorities. THE GREAT WAR is CURRENT / PREPARING; SURVIVAL is PLANNED / COMING LATER. These labels do not imply live access. Unpublished connection, version and release values remain unpublished. Archive screenshots do not establish either new server's map. Historical text, policies, bilingual states and backend authorization are preserved.
 

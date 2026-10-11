@@ -24,13 +24,14 @@ export default function HomeArchive() {
           <h2 id="archive-title">{t('함께 쌓아온 장면들.', 'Scenes we built together.')}</h2>
           <p>{t('기존 StimeMC 서버의 실제 기록입니다. The Great War와 Survival의 화면이 아닙니다.', 'Real records from previous StimeMC servers. These are not screenshots of The Great War or Survival.')}</p>
         </header>
-        <div className={styles.archiveGrid}>
+        <p className={styles.archiveHint}>{t('옆으로 넘겨 더 보기', 'Scroll sideways to see more')} <span aria-hidden="true">→</span></p>
+        <div className={styles.archiveGrid} role="region" aria-labelledby="archive-title" tabIndex={0}>
           {images.map((image, index) => (
             <figure data-scroll-reveal key={image.src} className={index === 0 ? styles.archiveLead : ''}>
               <div className={styles.archiveImage}>
-                <Image src={image.src} alt={t(`기존 StimeMC 서버 기록: ${image.ko}`, `StimeMC archive: ${image.en}`)} fill sizes={index === 0 ? '(max-width: 760px) calc(100vw - 40px), (max-width: 1100px) calc(100vw - 40px), (max-width: 1440px) 48vw, 690px' : '(max-width: 600px) calc(100vw - 40px), (max-width: 1100px) 46vw, (max-width: 1440px) 23vw, 335px'} />
+                <Image src={image.src} alt={t(`기존 StimeMC 서버 기록: ${image.ko}`, `StimeMC archive: ${image.en}`)} fill sizes={index === 0 ? '(max-width: 767px) min(84vw, 320px), (max-width: 1344px) calc(100vw - 64px), 1280px' : '(max-width: 767px) min(84vw, 320px), (max-width: 1344px) calc((100vw - 88px) / 2), 628px'} />
               </div>
-              <figcaption><span>ARCHIVE / 0{index + 1}</span><span>{t('기존 서버 기록', 'Previous server record')}</span></figcaption>
+              <figcaption><span>0{index + 1} / 07</span><span>{t(image.ko, image.en)}</span></figcaption>
             </figure>
           ))}
         </div>

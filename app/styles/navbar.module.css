@@ -10,12 +10,18 @@
 .desktopLinks { display: flex; align-items: center; gap: 28px; }
 .desktopLinks a { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; font-size: 14px; font-weight: 500; color: var(--color-body); text-decoration: none; }
 .desktopLinks a:hover,.desktopLinks .activeLink { color: var(--color-brand-green-deep); }
+.desktopGroup { position: relative; }
+.desktopSubmenu { position: absolute; top: 100%; left: -16px; width: max-content; max-width: 260px; display: grid; padding: 8px; border: 1px solid var(--color-hairline); border-radius: 8px; background: white; box-shadow: 0 12px 28px rgba(15,23,42,.08); visibility: hidden; }
+.desktopSubmenu a { justify-content: start; padding: 10px 12px; border-radius: 4px; font-weight: 400; }
+.desktopSubmenu a:hover,.desktopSubmenu a:focus-visible { background: var(--color-surface); }
+.desktopGroup:hover .desktopSubmenu,.desktopGroup:focus-within .desktopSubmenu { visibility: visible; }
+.desktopGroup[data-dismissed] .desktopSubmenu { visibility: hidden; }
 .joinLink { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 9px 18px; background: var(--color-primary); color: white; border-radius: 8px; font-size: 14px; font-weight: 500; text-decoration: none; }
 .joinLink:hover { background: var(--color-charcoal); }
 .locale { display: flex; align-items: center; justify-content: center; gap: 8px; min-width: 44px; min-height: 44px; padding: 0; border: 0; background: transparent; color: var(--color-steel); }
 .locale span { font-size: 13px; }
 .locale .localeActive { color: var(--color-ink); }
-.menuButton { width: 44px; min-height: 44px; border: 0; background: transparent; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 6px; }
+.menuButton { width: 44px; min-height: 44px; border: 0; background: transparent; display: none; flex-direction: column; justify-content: center; align-items: center; gap: 6px; }
 .menuButton span { width: 18px; height: 1px; background: var(--color-ink); }
 .menuLayer { position: fixed; inset: 0; z-index: 1100; display: grid; align-items: start; }
 .backdrop { position: absolute; inset: 0; background: rgba(15,23,42,.28); border: 0; border-radius: 0; }
@@ -29,7 +35,7 @@
 .menuGroup a { display: flex; align-items: center; min-height: 44px; font-size: 14px; line-height: 1.5; color: var(--color-body); text-decoration: none; overflow-wrap: anywhere; }
 .menuGroup a:hover,.menuGroup .menuLinkActive { color: var(--color-brand-green-deep); }
 .menuFootnote { border-top: 1px solid var(--color-hairline); padding-top: 20px; color: var(--color-steel); font-size: 13px; line-height: 1.5; }
-@media (max-width: 1023px) { .desktopLinks { display: none; } .menuGrid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 1023px) { .desktopLinks { display: none; } .menuButton { display: flex; } .menuGrid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
 @media (max-width: 767px) { .headerInner { width: calc(100% - 32px); gap: 12px; } .desktopActions { gap: 12px; } .brandName { font-size: 18px; } .brandMark { width: 16px; height: 16px; } .brand { gap: 8px; } .joinLink { min-height: 44px; padding: 10px 14px; } .locale { min-height: 44px; gap: 7px; } .menuButton { width: 44px; min-height: 44px; } .menuPanel { width: calc(100% - 24px); margin: calc(12px + env(safe-area-inset-top)) auto; padding: 20px; } .menuGroup a,.closeButton { min-height: 44px; } }
 @media (max-width: 400px) { .desktopActions { gap: 6px; } .brandName { font-size: 17px; } .joinLink { padding-inline: 12px; } .menuGrid { grid-template-columns: 1fr; gap: 20px; } }
 @media (max-width: 359px) { .headerInner { gap: 8px; } .brand { gap: 6px; } .brandName { font-size: 16px; } .desktopActions { gap: 4px; } .joinLink { padding-inline: 10px; } .locale { gap: 4px; } .menuPanel { padding: 16px; } .menuTopline { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 12px; } .menuTopline > span { grid-column: 1; grid-row: 1; } .menuTopline > button:last-child { grid-column: 2; grid-row: 1; } .menuTopline > button:first-of-type { grid-column: 1 / -1; grid-row: 2; } }

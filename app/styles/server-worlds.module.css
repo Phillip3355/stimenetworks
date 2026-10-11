@@ -4,9 +4,9 @@
 .eyebrow { color: var(--color-steel); font-size: 12px; font-weight: 600; letter-spacing: .5px; }
 .heading h2 { font-size: 48px; font-weight: 600; line-height: 1.1; letter-spacing: -1px; word-break: keep-all; }
 .heading > p:last-child { font-size: 16px; color: var(--color-body); line-height: 1.5; }
-.brandRail { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; border-block: 1px solid var(--color-hairline); margin-bottom: 32px; }
+.brandRail { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 16px 0; border-block: 1px solid var(--color-hairline); margin-bottom: 32px; }
 .brandRail > span:first-child { font-size: 18px; font-weight: 600; letter-spacing: -.5px; }
-.brandRail > span:last-child { font: 12px/1.5 var(--font-mono); color: var(--color-steel); }
+.brandRail > span:last-child { font: 13px/1.5 var(--font-sans); letter-spacing: .5px; color: var(--color-steel); white-space: nowrap; }
 .worldList { display: grid; gap: 32px; }
 .panel { display: grid; grid-template-columns: 1.55fr 1fr; min-width: 0; border: 1px solid var(--color-hairline); border-radius: 16px; overflow: hidden; background: white; }
 .visual { position: relative; min-height: 380px; background: var(--color-surface); overflow: hidden; }
@@ -14,15 +14,19 @@
 .panel:hover .visual img { transform: scale(1.025); }
 .visual figcaption { position: absolute; left: 20px; bottom: 20px; max-width: calc(100% - 40px); padding: 8px 12px; border-radius: 6px; background: rgba(255,255,255,.94); color: var(--color-charcoal); font-size: 13px; line-height: 1.5; }
 .panelCopy { padding: 32px; display: flex; flex-direction: column; align-items: start; }
-.panelTop { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; width: 100%; margin-bottom: 36px; color: var(--color-steel); font: 12px/1.4 var(--font-mono); }
-.status { padding: 4px 8px; border: 1px solid var(--color-hairline); border-radius: 999px; color: var(--color-steel); font-size: 12px; }
+.panelTop { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; width: 100%; margin-bottom: 28px; color: var(--color-steel); font-size: 13px; line-height: 1.5; }
+.panelIdentity { display: inline-flex; align-items: baseline; flex-wrap: wrap; gap: 8px; min-width: 0; }
+.panelNumber { font-family: var(--font-mono); white-space: nowrap; }
+.status { padding: 4px 8px; border: 1px solid var(--color-hairline); border-radius: 999px; color: var(--color-steel); font-size: 13px; white-space: nowrap; }
 .panel:first-child .status { background: var(--color-brand-green-soft); color: var(--color-brand-green-deep); border-color: #c4eadc; }
 .panelCopy h3 { font-size: 36px; font-weight: 600; line-height: 1.2; letter-spacing: -.5px; }
 .state { margin-top: 12px; color: var(--color-steel); font-size: 13px; line-height: 1.5; }
 .description { margin-top: 20px; font-size: 16px; line-height: 1.5; color: var(--color-body); word-break: keep-all; }
-.badge { margin-top: 24px; font: 12px/1.4 var(--font-mono); color: var(--color-steel); }
+.direction { margin-top: 12px; font-size: 14px; line-height: 1.6; color: var(--color-body); word-break: keep-all; }
+.badge { margin-top: 24px; font: 13px/1.5 var(--font-mono); color: var(--color-steel); }
 .link { display: inline-flex; align-items: center; justify-content: space-between; gap: 32px; min-height: 44px; margin-top: 28px; padding: 10px 20px; border-radius: 8px; background: var(--color-primary); color: white; font-size: 14px; font-weight: 500; text-decoration: none; }
 .link:hover { background: var(--color-charcoal); }
-@media (max-width: 1023px) { .scene { padding: 64px 0; } .heading h2 { font-size: 36px; } .panel { grid-template-columns: 1.1fr 1fr; } .panelCopy { padding: 24px; } .panelCopy h3 { font-size: 28px; } .panelTop { margin-bottom: 24px; } }
-@media (max-width: 767px) { .stage { width: calc(100% - 32px); } .scene { padding: 48px 0; } .heading h2 { font-size: 32px; } .heading { margin-bottom: 28px; } .brandRail > span:last-child { font-size: 12px; max-width: 20ch; text-align: right; } .panel { display: flex; flex-direction: column; transform: none !important; border-radius: 12px; } .visual { min-height: 260px; } .panelCopy { padding: 24px; } .panelTop { margin-bottom: 20px; } .panelCopy h3 { font-size: 28px; } .link { min-height: 44px; width: 100%; } .visual figcaption { left: 16px; bottom: 16px; font-size: 13px; } }
+@media (max-width: 1023px) { .scene { padding: 64px 0; } .heading h2 { font-size: 36px; } .panel { grid-template-columns: 1fr; } .visual { min-height: 0; height: clamp(260px,36vw,340px); } .panelCopy { padding: 24px; } .panelCopy h3 { font-size: 28px; } .panelTop { margin-bottom: 24px; } }
+@media (max-width: 767px) { .stage { width: calc(100% - 32px); } .scene { padding: 48px 0; } .heading h2 { font-size: 32px; } .heading { margin-bottom: 28px; } .panel { display: flex; flex-direction: column; transform: none !important; border-radius: 12px; } .visual { height: 260px; } .panelCopy { padding: 24px; } .panelTop { margin-bottom: 20px; } .panelCopy h3 { font-size: 28px; } .link { min-height: 44px; width: 100%; } .visual figcaption { left: 16px; bottom: 16px; font-size: 13px; } }
+@media (max-width: 479px) { .brandFull { display: none; } .panelCopy { padding: 20px; } .panelTop { display: grid; grid-template-columns: minmax(0,1fr); justify-items: start; gap: 8px; } .badge { font-family: var(--font-sans); } }
 @media (prefers-reduced-motion: reduce) { .panel { transform: none !important; } .visual img { transition: none; } .panel:hover .visual img { transform: none; } }

@@ -1,0 +1,1557 @@
+{
+  "checks": [
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 280,
+      "language": "ko",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 280,
+      "language": "ko"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 280,
+      "language": "ko"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 280,
+      "language": "ko"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 280,
+      "language": "ko"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 280,
+      "language": "ko"
+    },
+    {
+      "name": "Hero and closing actions share alignment",
+      "passed": true,
+      "width": 280,
+      "language": "ko"
+    },
+    {
+      "name": "Archive scrolls sideways in one compact row",
+      "passed": true,
+      "width": 280,
+      "language": "ko"
+    },
+    {
+      "name": "Archive images retain readable card widths",
+      "passed": true,
+      "width": 280,
+      "language": "ko"
+    },
+    {
+      "name": "Both editions feed the same bridge",
+      "passed": true,
+      "width": 280,
+      "language": "ko"
+    },
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 320,
+      "language": "ko",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 320,
+      "language": "ko"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 320,
+      "language": "ko"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 320,
+      "language": "ko"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 320,
+      "language": "ko"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 320,
+      "language": "ko"
+    },
+    {
+      "name": "Hero and closing actions share alignment",
+      "passed": true,
+      "width": 320,
+      "language": "ko"
+    },
+    {
+      "name": "Archive scrolls sideways in one compact row",
+      "passed": true,
+      "width": 320,
+      "language": "ko"
+    },
+    {
+      "name": "Archive images retain readable card widths",
+      "passed": true,
+      "width": 320,
+      "language": "ko"
+    },
+    {
+      "name": "Both editions feed the same bridge",
+      "passed": true,
+      "width": 320,
+      "language": "ko"
+    },
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 360,
+      "language": "ko",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 360,
+      "language": "ko"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 360,
+      "language": "ko"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 360,
+      "language": "ko"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 360,
+      "language": "ko"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 360,
+      "language": "ko"
+    },
+    {
+      "name": "Hero and closing actions share alignment",
+      "passed": true,
+      "width": 360,
+      "language": "ko"
+    },
+    {
+      "name": "Archive scrolls sideways in one compact row",
+      "passed": true,
+      "width": 360,
+      "language": "ko"
+    },
+    {
+      "name": "Archive images retain readable card widths",
+      "passed": true,
+      "width": 360,
+      "language": "ko"
+    },
+    {
+      "name": "Both editions feed the same bridge",
+      "passed": true,
+      "width": 360,
+      "language": "ko"
+    },
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 430,
+      "language": "ko",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 430,
+      "language": "ko"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 430,
+      "language": "ko"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 430,
+      "language": "ko"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 430,
+      "language": "ko"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 430,
+      "language": "ko"
+    },
+    {
+      "name": "Hero and closing actions share alignment",
+      "passed": true,
+      "width": 430,
+      "language": "ko"
+    },
+    {
+      "name": "Archive scrolls sideways in one compact row",
+      "passed": true,
+      "width": 430,
+      "language": "ko"
+    },
+    {
+      "name": "Archive images retain readable card widths",
+      "passed": true,
+      "width": 430,
+      "language": "ko"
+    },
+    {
+      "name": "Both editions feed the same bridge",
+      "passed": true,
+      "width": 430,
+      "language": "ko"
+    },
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 479,
+      "language": "ko",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 479,
+      "language": "ko"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 479,
+      "language": "ko"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 479,
+      "language": "ko"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 479,
+      "language": "ko"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 479,
+      "language": "ko"
+    },
+    {
+      "name": "Hero and closing actions share alignment",
+      "passed": true,
+      "width": 479,
+      "language": "ko"
+    },
+    {
+      "name": "Archive scrolls sideways in one compact row",
+      "passed": true,
+      "width": 479,
+      "language": "ko"
+    },
+    {
+      "name": "Archive images retain readable card widths",
+      "passed": true,
+      "width": 479,
+      "language": "ko"
+    },
+    {
+      "name": "Both editions feed the same bridge",
+      "passed": true,
+      "width": 479,
+      "language": "ko"
+    },
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 480,
+      "language": "ko",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 480,
+      "language": "ko"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 480,
+      "language": "ko"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 480,
+      "language": "ko"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 480,
+      "language": "ko"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 480,
+      "language": "ko"
+    },
+    {
+      "name": "Hero and closing actions share alignment",
+      "passed": true,
+      "width": 480,
+      "language": "ko"
+    },
+    {
+      "name": "Archive scrolls sideways in one compact row",
+      "passed": true,
+      "width": 480,
+      "language": "ko"
+    },
+    {
+      "name": "Archive images retain readable card widths",
+      "passed": true,
+      "width": 480,
+      "language": "ko"
+    },
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 767,
+      "language": "ko",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 767,
+      "language": "ko"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 767,
+      "language": "ko"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 767,
+      "language": "ko"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 767,
+      "language": "ko"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 767,
+      "language": "ko"
+    },
+    {
+      "name": "Hero and closing actions share alignment",
+      "passed": true,
+      "width": 767,
+      "language": "ko"
+    },
+    {
+      "name": "Archive scrolls sideways in one compact row",
+      "passed": true,
+      "width": 767,
+      "language": "ko"
+    },
+    {
+      "name": "Archive images retain readable card widths",
+      "passed": true,
+      "width": 767,
+      "language": "ko"
+    },
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 768,
+      "language": "ko",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 768,
+      "language": "ko"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 768,
+      "language": "ko"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 768,
+      "language": "ko"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 768,
+      "language": "ko"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 768,
+      "language": "ko"
+    },
+    {
+      "name": "Tablet card text has the full panel width",
+      "passed": true,
+      "width": 768,
+      "language": "ko"
+    },
+    {
+      "name": "Tablet footer second row fills its available width",
+      "passed": true,
+      "width": 768,
+      "language": "ko"
+    },
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 900,
+      "language": "ko",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 900,
+      "language": "ko"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 900,
+      "language": "ko"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 900,
+      "language": "ko"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 900,
+      "language": "ko"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 900,
+      "language": "ko"
+    },
+    {
+      "name": "Tablet card text has the full panel width",
+      "passed": true,
+      "width": 900,
+      "language": "ko"
+    },
+    {
+      "name": "Tablet footer second row fills its available width",
+      "passed": true,
+      "width": 900,
+      "language": "ko"
+    },
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 1023,
+      "language": "ko",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 1023,
+      "language": "ko"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 1023,
+      "language": "ko"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 1023,
+      "language": "ko"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 1023,
+      "language": "ko"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 1023,
+      "language": "ko"
+    },
+    {
+      "name": "Tablet card text has the full panel width",
+      "passed": true,
+      "width": 1023,
+      "language": "ko"
+    },
+    {
+      "name": "Tablet footer second row fills its available width",
+      "passed": true,
+      "width": 1023,
+      "language": "ko"
+    },
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 1024,
+      "language": "ko",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 1024,
+      "language": "ko"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 1024,
+      "language": "ko"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 1024,
+      "language": "ko"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 1024,
+      "language": "ko"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 1024,
+      "language": "ko"
+    },
+    {
+      "name": "Tablet footer second row fills its available width",
+      "passed": true,
+      "width": 1024,
+      "language": "ko"
+    },
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 1100,
+      "language": "ko",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 1100,
+      "language": "ko"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 1100,
+      "language": "ko"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 1100,
+      "language": "ko"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 1100,
+      "language": "ko"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 1100,
+      "language": "ko"
+    },
+    {
+      "name": "Tablet footer second row fills its available width",
+      "passed": true,
+      "width": 1100,
+      "language": "ko"
+    },
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 1366,
+      "language": "ko",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 1366,
+      "language": "ko"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 1366,
+      "language": "ko"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 1366,
+      "language": "ko"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 1366,
+      "language": "ko"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 1366,
+      "language": "ko"
+    },
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 1440,
+      "language": "ko",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 1440,
+      "language": "ko"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 1440,
+      "language": "ko"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 1440,
+      "language": "ko"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 1440,
+      "language": "ko"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 1440,
+      "language": "ko"
+    },
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 280,
+      "language": "en",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 280,
+      "language": "en"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 280,
+      "language": "en"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 280,
+      "language": "en"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 280,
+      "language": "en"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 280,
+      "language": "en"
+    },
+    {
+      "name": "Hero and closing actions share alignment",
+      "passed": true,
+      "width": 280,
+      "language": "en"
+    },
+    {
+      "name": "Archive scrolls sideways in one compact row",
+      "passed": true,
+      "width": 280,
+      "language": "en"
+    },
+    {
+      "name": "Archive images retain readable card widths",
+      "passed": true,
+      "width": 280,
+      "language": "en"
+    },
+    {
+      "name": "Both editions feed the same bridge",
+      "passed": true,
+      "width": 280,
+      "language": "en"
+    },
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 320,
+      "language": "en",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 320,
+      "language": "en"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 320,
+      "language": "en"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 320,
+      "language": "en"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 320,
+      "language": "en"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 320,
+      "language": "en"
+    },
+    {
+      "name": "Hero and closing actions share alignment",
+      "passed": true,
+      "width": 320,
+      "language": "en"
+    },
+    {
+      "name": "Archive scrolls sideways in one compact row",
+      "passed": true,
+      "width": 320,
+      "language": "en"
+    },
+    {
+      "name": "Archive images retain readable card widths",
+      "passed": true,
+      "width": 320,
+      "language": "en"
+    },
+    {
+      "name": "Both editions feed the same bridge",
+      "passed": true,
+      "width": 320,
+      "language": "en"
+    },
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 360,
+      "language": "en",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 360,
+      "language": "en"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 360,
+      "language": "en"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 360,
+      "language": "en"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 360,
+      "language": "en"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 360,
+      "language": "en"
+    },
+    {
+      "name": "Hero and closing actions share alignment",
+      "passed": true,
+      "width": 360,
+      "language": "en"
+    },
+    {
+      "name": "Archive scrolls sideways in one compact row",
+      "passed": true,
+      "width": 360,
+      "language": "en"
+    },
+    {
+      "name": "Archive images retain readable card widths",
+      "passed": true,
+      "width": 360,
+      "language": "en"
+    },
+    {
+      "name": "Both editions feed the same bridge",
+      "passed": true,
+      "width": 360,
+      "language": "en"
+    },
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 430,
+      "language": "en",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 430,
+      "language": "en"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 430,
+      "language": "en"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 430,
+      "language": "en"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 430,
+      "language": "en"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 430,
+      "language": "en"
+    },
+    {
+      "name": "Hero and closing actions share alignment",
+      "passed": true,
+      "width": 430,
+      "language": "en"
+    },
+    {
+      "name": "Archive scrolls sideways in one compact row",
+      "passed": true,
+      "width": 430,
+      "language": "en"
+    },
+    {
+      "name": "Archive images retain readable card widths",
+      "passed": true,
+      "width": 430,
+      "language": "en"
+    },
+    {
+      "name": "Both editions feed the same bridge",
+      "passed": true,
+      "width": 430,
+      "language": "en"
+    },
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 479,
+      "language": "en",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 479,
+      "language": "en"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 479,
+      "language": "en"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 479,
+      "language": "en"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 479,
+      "language": "en"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 479,
+      "language": "en"
+    },
+    {
+      "name": "Hero and closing actions share alignment",
+      "passed": true,
+      "width": 479,
+      "language": "en"
+    },
+    {
+      "name": "Archive scrolls sideways in one compact row",
+      "passed": true,
+      "width": 479,
+      "language": "en"
+    },
+    {
+      "name": "Archive images retain readable card widths",
+      "passed": true,
+      "width": 479,
+      "language": "en"
+    },
+    {
+      "name": "Both editions feed the same bridge",
+      "passed": true,
+      "width": 479,
+      "language": "en"
+    },
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 480,
+      "language": "en",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 480,
+      "language": "en"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 480,
+      "language": "en"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 480,
+      "language": "en"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 480,
+      "language": "en"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 480,
+      "language": "en"
+    },
+    {
+      "name": "Hero and closing actions share alignment",
+      "passed": true,
+      "width": 480,
+      "language": "en"
+    },
+    {
+      "name": "Archive scrolls sideways in one compact row",
+      "passed": true,
+      "width": 480,
+      "language": "en"
+    },
+    {
+      "name": "Archive images retain readable card widths",
+      "passed": true,
+      "width": 480,
+      "language": "en"
+    },
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 767,
+      "language": "en",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 767,
+      "language": "en"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 767,
+      "language": "en"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 767,
+      "language": "en"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 767,
+      "language": "en"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 767,
+      "language": "en"
+    },
+    {
+      "name": "Hero and closing actions share alignment",
+      "passed": true,
+      "width": 767,
+      "language": "en"
+    },
+    {
+      "name": "Archive scrolls sideways in one compact row",
+      "passed": true,
+      "width": 767,
+      "language": "en"
+    },
+    {
+      "name": "Archive images retain readable card widths",
+      "passed": true,
+      "width": 767,
+      "language": "en"
+    },
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 768,
+      "language": "en",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 768,
+      "language": "en"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 768,
+      "language": "en"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 768,
+      "language": "en"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 768,
+      "language": "en"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 768,
+      "language": "en"
+    },
+    {
+      "name": "Tablet card text has the full panel width",
+      "passed": true,
+      "width": 768,
+      "language": "en"
+    },
+    {
+      "name": "Tablet footer second row fills its available width",
+      "passed": true,
+      "width": 768,
+      "language": "en"
+    },
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 900,
+      "language": "en",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 900,
+      "language": "en"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 900,
+      "language": "en"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 900,
+      "language": "en"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 900,
+      "language": "en"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 900,
+      "language": "en"
+    },
+    {
+      "name": "Tablet card text has the full panel width",
+      "passed": true,
+      "width": 900,
+      "language": "en"
+    },
+    {
+      "name": "Tablet footer second row fills its available width",
+      "passed": true,
+      "width": 900,
+      "language": "en"
+    },
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 1023,
+      "language": "en",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 1023,
+      "language": "en"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 1023,
+      "language": "en"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 1023,
+      "language": "en"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 1023,
+      "language": "en"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 1023,
+      "language": "en"
+    },
+    {
+      "name": "Tablet card text has the full panel width",
+      "passed": true,
+      "width": 1023,
+      "language": "en"
+    },
+    {
+      "name": "Tablet footer second row fills its available width",
+      "passed": true,
+      "width": 1023,
+      "language": "en"
+    },
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 1024,
+      "language": "en",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 1024,
+      "language": "en"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 1024,
+      "language": "en"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 1024,
+      "language": "en"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 1024,
+      "language": "en"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 1024,
+      "language": "en"
+    },
+    {
+      "name": "Tablet footer second row fills its available width",
+      "passed": true,
+      "width": 1024,
+      "language": "en"
+    },
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 1100,
+      "language": "en",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 1100,
+      "language": "en"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 1100,
+      "language": "en"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 1100,
+      "language": "en"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 1100,
+      "language": "en"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 1100,
+      "language": "en"
+    },
+    {
+      "name": "Tablet footer second row fills its available width",
+      "passed": true,
+      "width": 1100,
+      "language": "en"
+    },
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 1366,
+      "language": "en",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 1366,
+      "language": "en"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 1366,
+      "language": "en"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 1366,
+      "language": "en"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 1366,
+      "language": "en"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 1366,
+      "language": "en"
+    },
+    {
+      "name": "No page overflow or clipped prose",
+      "passed": true,
+      "width": 1440,
+      "language": "en",
+      "clipped": []
+    },
+    {
+      "name": "One navigation mode per breakpoint",
+      "passed": true,
+      "width": 1440,
+      "language": "en"
+    },
+    {
+      "name": "Jump link retains a readable label and touch target",
+      "passed": true,
+      "width": 1440,
+      "language": "en"
+    },
+    {
+      "name": "Server introduction occurs once",
+      "passed": true,
+      "width": 1440,
+      "language": "en"
+    },
+    {
+      "name": "Archive captions describe distinct images",
+      "passed": true,
+      "width": 1440,
+      "language": "en"
+    },
+    {
+      "name": "Important metadata remains readable",
+      "passed": true,
+      "width": 1440,
+      "language": "en"
+    },
+    {
+      "name": "All seven archive images remain reachable",
+      "passed": true
+    },
+    {
+      "name": "Archive can receive keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "Keyboard moves the archive rail",
+      "passed": true
+    },
+    {
+      "name": "Mobile menu traps focus",
+      "passed": true
+    },
+    {
+      "name": "Escape returns focus to the menu trigger",
+      "passed": true
+    },
+    {
+      "name": "Desktop resize dismisses the mobile menu",
+      "passed": true
+    },
+    {
+      "name": "Desktop exposes detailed navigation",
+      "passed": true
+    },
+    {
+      "name": "Desktop sublinks work without hover",
+      "passed": true
+    },
+    {
+      "name": "Escape dismisses desktop sublinks and restores primary-link focus",
+      "passed": true
+    },
+    {
+      "name": "Keyboard can reopen a dismissed desktop group",
+      "passed": true
+    },
+    {
+      "name": "Escape dismisses hover-only navigation without stealing focus",
+      "passed": true
+    },
+    {
+      "name": "Archive remains visible with normal motion",
+      "passed": true
+    },
+    {
+      "name": "Shared components still fit related pages",
+      "passed": true,
+      "width": 280,
+      "route": "/servers"
+    },
+    {
+      "name": "Shared components still fit related pages",
+      "passed": true,
+      "width": 360,
+      "route": "/servers"
+    },
+    {
+      "name": "Shared components still fit related pages",
+      "passed": true,
+      "width": 768,
+      "route": "/servers"
+    },
+    {
+      "name": "Shared components still fit related pages",
+      "passed": true,
+      "width": 1024,
+      "route": "/servers"
+    },
+    {
+      "name": "Shared components still fit related pages",
+      "passed": true,
+      "width": 280,
+      "route": "/server-mechanism"
+    },
+    {
+      "name": "Shared components still fit related pages",
+      "passed": true,
+      "width": 360,
+      "route": "/server-mechanism"
+    },
+    {
+      "name": "Shared components still fit related pages",
+      "passed": true,
+      "width": 768,
+      "route": "/server-mechanism"
+    },
+    {
+      "name": "Shared components still fit related pages",
+      "passed": true,
+      "width": 1024,
+      "route": "/server-mechanism"
+    },
+    {
+      "name": "No unexpected browser errors",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "name": "No mutation requests",
+      "passed": true,
+      "writes": []
+    }
+  ],
+  "failures": [],
+  "errors": [],
+  "writes": []
+}

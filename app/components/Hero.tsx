@@ -29,7 +29,7 @@ export default function Hero() {
           <motion.div className={styles.world} style={reduced ? undefined : { scale }}><Image src="/image copy 10.png" alt={t('기존 StimeMC 서버 기록: 마을과 농장이 이어지는 Minecraft 풍경','StimeMC archive: a Minecraft landscape of villages and farms')} fill priority sizes="(max-width: 767px) calc(100vw - 32px), (max-width: 1344px) calc(100vw - 64px), 1280px" /></motion.div>
           <div className={styles.imageLabel}><span>STIMEMC ARCHIVE</span><span>{t('배경 · 기존 StimeMC 서버 기록','Background · Previous StimeMC world')}</span></div>
         </div>
-        <figcaption className={styles.meta}><div><span>JAVA × BEDROCK</span><p>{group.hasActive ? t('서로 다른 세계, 함께하는 플레이','Different worlds. Play together.') : t('현재의 준비, 다음 세계의 계획','Preparing today. Planning what follows.')}</p></div><a href="#worlds-title" aria-label={t('서버 소개로 이동','Scroll to our servers')}>{t('세계 만나보기','DISCOVER WORLDS')} <span aria-hidden="true">↓</span></a></figcaption>
+        <figcaption className={styles.meta}><div><span>JAVA × BEDROCK</span><p>{group.hasActive ? t('서로 다른 세계, 함께하는 플레이','Different worlds. Play together.') : t('현재의 준비, 다음 세계의 계획','Preparing today. Planning what follows.')}</p></div><a href="#worlds-title" aria-label={t('서버 소개로 이동','Scroll to our servers')}>{t('세계 보기','Discover worlds')} <span aria-hidden="true">↓</span></a></figcaption>
       </motion.figure>
     </div>
   </section>;

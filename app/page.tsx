@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import Hero from './components/Hero';
 import ServerWorlds from './components/ServerWorlds';
-import ServerDirections from './components/ServerDirections';
 import CrossplayBridge from './components/CrossplayBridge';
 import HomeArchive from './components/HomeArchive';
 import HomeNews from './components/HomeNews';
@@ -24,7 +23,6 @@ export default async function Home() {
     <main>
       <Hero />
       <ServerWorlds reveal />
-      <ServerDirections />
       <CrossplayBridge />
       <HomeArchive />
       <HomeNews {...news} />
