@@ -82,6 +82,19 @@ test('database enforces authorization even when the browser is bypassed', async 
     await asUser(db, admin, `INSERT INTO inquiry_messages(inquiry_id,sender,message) VALUES ('${ticket}','admin','reply')`);
     await asUser(db, admin, "INSERT INTO reports(slug,content) VALUES ('news-test','Public report')");
   });
+  await t.test('admins can edit case-sensitive News without changing its ID, link or publication date', async () => {
+    const original = (await asUser(db, admin, "INSERT INTO reports(slug,content) VALUES ('News','Original news') RETURNING id,slug,created_at")).rows[0];
+    const updated = (await asUser(db, admin, `UPDATE reports SET content='Revised news' WHERE id='${original.id}' RETURNING id,slug,content,created_at`)).rows[0];
+    assert.equal(updated.id, original.id);
+    assert.equal(updated.slug, 'News');
+    assert.equal(updated.created_at.getTime(), original.created_at.getTime());
+    assert.equal(updated.content, 'Revised news');
+    for (const slug of ['news', 'news/october', 'api/test', 'auth/callback', 'taskboard']) {
+      await assert.rejects(() => asUser(db, admin, `INSERT INTO reports(slug,content) VALUES ('${slug}','Invalid route')`), error => error.code === '23514');
+    }
+    const denied = await asUser(db, owner, `UPDATE reports SET content='Forged' WHERE id='${original.id}' RETURNING id`);
+    assert.equal(denied.rows.length, 0);
+  });
   await t.test('unconfirmed admin email is denied', async () => {
     await db.exec(`UPDATE auth.users SET email_confirmed_at=NULL WHERE id='${admin}'`);
     assert.equal((await asUser(db, admin, 'SELECT public.is_support_admin() AS allowed')).rows[0].allowed, false);
@@ -125,6 +138,18 @@ test('database enforces authorization even when the browser is bypassed', async 
     await db.exec(await readFile(new URL('../database/migrations/20260907_security_hardening.sql',import.meta.url),'utf8'));
     assert.equal((await db.query('SELECT count(*) AS n FROM inquiries')).rows[0].n,before);
     await assert.rejects(()=>asUser(db,owner,"INSERT INTO reports(slug,content) VALUES ('still-denied','fake')"));
+  });
+  await t.test('the case-sensitive path migration upgrades legacy News safely and can run twice', async () => {
+    const before = (await db.query("SELECT id,created_at FROM reports WHERE slug='News'")).rows[0];
+    const migration = await readFile(new URL('../database/migrations/20261013_case_sensitive_report_paths.sql', import.meta.url), 'utf8');
+    await db.exec(migration);
+    await db.exec(migration);
+    const updated = (await asUser(db, admin, "UPDATE reports SET content='Legacy report edited' WHERE slug='News' RETURNING id,slug,content,created_at")).rows[0];
+    assert.equal(updated.id, before.id);
+    assert.equal(updated.created_at.getTime(), before.created_at.getTime());
+    assert.equal(updated.slug, 'News');
+    assert.equal(updated.content, 'Legacy report edited');
+    await assert.rejects(() => asUser(db, admin, "INSERT INTO reports(slug,content) VALUES ('news','Reserved archive')"), error => error.code === '23514');
   });
   await t.test('migrations remove legacy join requests without losing support data and can run twice', async () => {
     const before = (await db.query(`SELECT

@@ -52,6 +52,12 @@ test('report routes reject traversal, external destinations and reserved paths',
   for (const value of ['../support','//evil.test','https://evil.test','auth/callback','api/test','news','a?x=1','a#b','a%2fb']) assert.equal(normalizeReportSlug(value),null);
   assert.equal(normalizeReportSlug('/report/공지-1'),'report/공지-1');
 });
+test('report editing preserves existing case-sensitive News links while reserving the lowercase archive route', () => {
+  assert.equal(normalizeReportSlug('News'), 'News');
+  assert.equal(normalizeReportSlug('/News'), 'News');
+  assert.equal(normalizeReportSlug('news'), null);
+  assert.equal(normalizeReportSlug('news/october'), null);
+});
 test('inquiry validation bounds all fields before submitting', () => {
   const valid = { nickname:'Steve',inquiryType:'기타',content:'내용',purpose:'목적' };
   assert.equal(validInquiryInput(valid),true);

@@ -9,9 +9,10 @@ import useMotionPreference from '../components/useMotionPreference';
 import scrollConversation from '../components/scrollConversation';
 import { supabase } from '../client/supabase';
 import { listInquiries, listMessages, sendMessage, deleteInquiry } from '../client/inquiries';
-import { listReports, publishReport, deleteReport } from '../client/reports';
+import { listReports, publishReport, getReport, updateReport, deleteReport } from '../client/reports';
 import { useAuthSession } from '../client/useAuthSession';
 import { INPUT_LIMITS, normalizeReportSlug } from '../shared/inputPolicy.mjs';
+import { copyReportLink } from '../shared/reportManagement.mjs';
 import styles from '../styles/functional.module.css';
 
 interface Inquiry {
@@ -76,6 +77,13 @@ function TaskboardContent() {
   const [reportContent, setReportContent] = useState('');
   const [isPublishingReport, setIsPublishingReport] = useState(false);
   const [reportFeedback, setReportFeedback] = useState('');
+  const [reportFeedbackIsError, setReportFeedbackIsError] = useState(false);
+  const [editingReportId, setEditingReportId] = useState<string | null>(null);
+  const [loadingReportId, setLoadingReportId] = useState<string | null>(null);
+  const [deletingReportId, setDeletingReportId] = useState<string | null>(null);
+  const [copyFeedback, setCopyFeedback] = useState<{ id: string; state: string; value: string } | null>(null);
+  const reportEditorRef = useRef<HTMLDivElement>(null);
+  const reportSlugRef = useRef<HTMLInputElement>(null);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const appliedInquiryRef = useRef<string | null>(null);
@@ -276,10 +284,50 @@ function TaskboardContent() {
     }
   };
 
-  // 보고서 발행 처리
+  const handleCancelReportEdit = () => {
+    setEditingReportId(null);
+    setReportSlug('');
+    setReportContent('');
+    setReportFeedback('');
+    setReportFeedbackIsError(false);
+  };
+
+  const handleEditReport = async (id: string) => {
+    if (!isAdmin || isPublishingReport || loadingReportId || deletingReportId) return;
+    setLoadingReportId(id);
+    setReportFeedback('');
+    setReportFeedbackIsError(false);
+    try {
+      const { data, error } = await getReport(id);
+      if (error || !data) throw error ?? new Error('Report not found');
+      setEditingReportId(data.id);
+      setReportSlug(data.slug);
+      setReportContent(data.content);
+    } catch (err) {
+      console.error('Failed to load report:', err);
+      setReportFeedbackIsError(true);
+      setReportFeedback(t('보고서를 불러오지 못했습니다. 다시 시도해주세요.', 'Could not load the report. Please try again.'));
+    } finally {
+      setLoadingReportId(null);
+      requestAnimationFrame(() => {
+        reportEditorRef.current?.scrollIntoView({ behavior: reduceMotion ? 'instant' : 'smooth', block: 'start' });
+        reportSlugRef.current?.focus({ preventScroll: true });
+      });
+    }
+  };
+
+  const handleCopyReportLink = async (item: ReportRecord) => {
+    const feedback = await copyReportLink(item.slug, window.location.origin, navigator.clipboard);
+    setCopyFeedback({ id: item.id, ...feedback });
+  };
+
+  // 보고서 발행 및 수정 처리
   const handlePublishReport = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isAdmin || isPublishingReport || loadingReportId || deletingReportId) return;
+    setReportFeedbackIsError(false);
     if (!reportSlug.trim() || !reportContent.trim()) {
+      setReportFeedbackIsError(true);
       setReportFeedback(t('URL 경로와 내용을 모두 입력해주세요.', 'Please enter both URL path and content.'));
       return;
     }
@@ -288,13 +336,17 @@ function TaskboardContent() {
 
     const formattedSlug = normalizeReportSlug(reportSlug);
     if (!formattedSlug || reportContent.length > INPUT_LIMITS.report) {
+      setReportFeedbackIsError(true);
       setReportFeedback(t('유효한 URL 경로와 200,000자 이내의 내용을 입력해 주세요.', 'Enter a valid path and content within 200,000 characters.'));
       setIsPublishingReport(false);
       return;
     }
 
     try {
-      const { error } = await publishReport(formattedSlug, reportContent);
+      const result = editingReportId
+        ? await updateReport(editingReportId, formattedSlug, reportContent)
+        : await publishReport(formattedSlug, reportContent);
+      const { error } = result;
 
       if (error) {
         if (error.code === '23505') {
@@ -303,14 +355,23 @@ function TaskboardContent() {
         throw error;
       }
 
+      if (editingReportId && result.data) {
+        const updated = result.data as ReportRecord;
+        setReports((prev) => prev.map((item) => item.id === updated.id ? updated : item));
+        setCopyFeedback((prev) => prev?.id === updated.id ? null : prev);
+      }
+      setEditingReportId(null);
       setReportSlug('');
       setReportContent('');
-      setReportFeedback(t('보고서가 성공적으로 발행되었습니다!', 'Report published successfully!'));
-      
-      setTimeout(() => setReportFeedback(''), 3000);
+      setReportFeedback(editingReportId
+        ? t('보고서 수정이 저장되었습니다.', 'Report changes saved successfully.')
+        : t('보고서가 성공적으로 발행되었습니다!', 'Report published successfully!'));
     } catch (err: unknown) {
       console.error(err);
-      setReportFeedback(err instanceof Error ? err.message : t('보고서 발행 중 오류가 발생했습니다.', 'Error occurred while publishing.'));
+      setReportFeedbackIsError(true);
+      setReportFeedback(err instanceof Error ? err.message : editingReportId
+        ? t('보고서 수정에 실패했습니다. 입력한 내용은 유지됩니다.', 'Could not save the report. Your edits have been kept.')
+        : t('보고서 발행 중 오류가 발생했습니다.', 'Error occurred while publishing.'));
     } finally {
       setIsPublishingReport(false);
     }
@@ -318,16 +379,22 @@ function TaskboardContent() {
 
   // 보고서 삭제 처리
   const handleDeleteReport = async (id: string) => {
+    if (!isAdmin || isPublishingReport || loadingReportId || deletingReportId) return;
     const confirmDelete = window.confirm(t('정말로 이 보고서를 삭제하시겠습니까?', 'Are you sure you want to delete this report?'));
     if (!confirmDelete) return;
 
+    setDeletingReportId(id);
     try {
       const { error } = await deleteReport(id);
       if (error) throw error;
       setReports((prev) => prev.filter((r) => r.id !== id));
+      if (editingReportId === id) handleCancelReportEdit();
+      setCopyFeedback((prev) => prev?.id === id ? null : prev);
     } catch (err) {
       console.error('Failed to delete report:', err);
       alert(t('삭제에 실패했습니다.', 'Failed to delete.'));
+    } finally {
+      setDeletingReportId(null);
     }
   };
 
@@ -793,24 +860,27 @@ function TaskboardContent() {
 
               {activeTab === 'report' && (
                 <motion.div className={`${styles.dashboardGrid} ${styles.reportGrid}`} initial={reduceMotion ? false : { opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.2, ease: [0.22, 0.75, 0.2, 1] }}>
-                  <div className={styles.reportSurface} style={{
+                  <div ref={reportEditorRef} className={`${styles.reportSurface} ${styles.reportEditor}`} style={{
                     border: '1px solid var(--color-hairline)', borderRadius: 'var(--radius-sm)', background: '#ffffff',
                     padding: '32px', display: 'flex', flexDirection: 'column', gap: '24px'
                   }}>
-                    <h3 style={{ margin: 0, fontWeight: 800 }}>{t('새 보고서 발행', 'Publish New Report')}</h3>
-                    <form onSubmit={handlePublishReport} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                    <h3 style={{ margin: 0, fontWeight: 800 }}>{editingReportId ? t('보고서 수정', 'Edit Report') : t('새 보고서 발행', 'Publish New Report')}</h3>
+                    <form onSubmit={handlePublishReport} aria-busy={isPublishingReport || !!loadingReportId} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                       <div>
-                        <label style={{ display: 'block', fontWeight: 700, marginBottom: '8px', color: 'var(--color-ink)' }}>
+                        <label htmlFor="report-slug" style={{ display: 'block', fontWeight: 700, marginBottom: '8px', color: 'var(--color-ink)' }}>
                           {t('게시될 URL 경로 (Slug)', 'URL Path (Slug)')}
                         </label>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <span style={{ color: 'var(--color-mute)', fontWeight: 600 }}>stimemc.xyz/</span>
                           <input
+                            id="report-slug"
+                            ref={reportSlugRef}
                             type="text"
                             placeholder="예: report/june-update 또는 notice"
                             value={reportSlug}
                             onChange={(e) => setReportSlug(e.target.value)}
                             required
+                            disabled={isPublishingReport || !!loadingReportId || !!deletingReportId}
                             style={{
                               flexGrow: 1, padding: '12px 16px', borderRadius: 'var(--radius-sm)',
                               border: '1px solid var(--color-hairline)', fontSize: '0.95rem', background: '#fff'
@@ -819,14 +889,17 @@ function TaskboardContent() {
                         </div>
                       </div>
                       <div>
-                        <label style={{ display: 'block', fontWeight: 700, marginBottom: '8px', color: 'var(--color-ink)' }}>
+                        <label htmlFor="report-content" style={{ display: 'block', fontWeight: 700, marginBottom: '8px', color: 'var(--color-ink)' }}>
                           {t('보고서 본문 (Markdown 지원)', 'Report Content (Markdown)')}
                         </label>
                         <textarea
+                          id="report-content"
                           placeholder={t('여기에 보고서 내용을 입력하세요. 마크다운 문법을 지원합니다.', 'Enter your report content here. Markdown is supported.')}
                           value={reportContent}
                           onChange={(e) => setReportContent(e.target.value)}
                           required
+                          disabled={isPublishingReport || !!loadingReportId || !!deletingReportId}
+                          maxLength={INPUT_LIMITS.report}
                           rows={12}
                           style={{
                             width: '100%', padding: '16px', borderRadius: 'var(--radius-sm)',
@@ -837,23 +910,30 @@ function TaskboardContent() {
                       {reportFeedback && (
                         <div className={styles.formFeedback} role="status" aria-live="polite" style={{
                           padding: '12px', borderRadius: 'var(--radius-sm)', fontWeight: 600,
-                          background: reportFeedback.includes('오류') || reportFeedback.includes('실패') || reportFeedback.includes('입력') || reportFeedback.includes('존재') ? '#fef2f2' : '#ecfdf5',
-                          color: reportFeedback.includes('오류') || reportFeedback.includes('실패') || reportFeedback.includes('입력') || reportFeedback.includes('존재') ? '#ef4444' : '#10b981'
+                          background: reportFeedbackIsError ? '#fef2f2' : '#ecfdf5',
+                          color: reportFeedbackIsError ? '#ef4444' : '#10b981'
                         }}>
                           {reportFeedback}
                         </div>
                       )}
                       <button
                         type="submit"
-                        disabled={isPublishingReport}
+                        disabled={isPublishingReport || !!loadingReportId || !!deletingReportId}
                         className={styles.reportPublishButton}
                         style={{
                           padding: '16px',
                           border: 'none', borderRadius: 'var(--radius-sm)', fontWeight: 800, fontSize: '1.05rem', cursor: 'pointer'
                         }}
                       >
-                        {isPublishingReport ? t('발행 중...', 'Publishing...') : t('즉시 발행하기', 'Publish Now')}
+                        {loadingReportId ? t('불러오는 중...', 'Loading...') : isPublishingReport
+                          ? editingReportId ? t('저장 중...', 'Saving...') : t('발행 중...', 'Publishing...')
+                          : editingReportId ? t('수정 저장', 'Save Changes') : t('즉시 발행하기', 'Publish Now')}
                       </button>
+                      {editingReportId && (
+                        <button type="button" className={styles.secondaryAction} onClick={handleCancelReportEdit} disabled={isPublishingReport || !!loadingReportId || !!deletingReportId}>
+                          {t('수정 취소', 'Cancel Editing')}
+                        </button>
+                      )}
                     </form>
                   </div>
 
@@ -887,12 +967,28 @@ function TaskboardContent() {
                               }}>
                                 {t('보기', 'View')}
                               </a>
-                              <button onClick={() => handleDeleteReport(item.id)} className={styles.reportDeleteButton} style={{
+                              <button type="button" onClick={() => handleEditReport(item.id)} disabled={isPublishingReport || !!loadingReportId || !!deletingReportId} className={styles.reportEditButton}>
+                                {loadingReportId === item.id ? t('불러오는 중...', 'Loading...') : t('수정하기', 'Edit')}
+                              </button>
+                              <button type="button" onClick={() => handleCopyReportLink(item)} className={styles.reportCopyButton}>
+                                {copyFeedback?.id === item.id && copyFeedback.state === 'copied' ? t('복사됨', 'Copied') : t('링크 복사', 'Copy Link')}
+                              </button>
+                              <button type="button" onClick={() => handleDeleteReport(item.id)} disabled={isPublishingReport || !!loadingReportId || !!deletingReportId} className={styles.reportDeleteButton} style={{
                                 padding: '6px 12px', background: '#fef2f2', color: '#ef4444', border: 'none', borderRadius: 'var(--radius-sm)', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem'
                               }}>
-                                {t('삭제', 'Delete')}
+                                {deletingReportId === item.id ? t('삭제 중...', 'Deleting...') : t('삭제', 'Delete')}
                               </button>
                             </div>
+                            {copyFeedback?.id === item.id && (
+                              <div className={styles.formFeedback} role="status" aria-live="polite">
+                                {copyFeedback.state === 'copied' ? t('링크를 복사했습니다.', 'Link copied.') : (
+                                  <>
+                                    <label htmlFor={`report-link-${item.id}`}>{t('자동 복사가 차단되었습니다. 아래 주소를 직접 복사해주세요.', 'Automatic copying is unavailable. Copy the address below.')}</label>
+                                    <input id={`report-link-${item.id}`} type="text" readOnly value={copyFeedback.value} onFocus={(e) => e.currentTarget.select()} />
+                                  </>
+                                )}
+                              </div>
+                            )}
                           </div>
                         ))
                       )}
