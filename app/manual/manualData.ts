@@ -18,21 +18,19 @@ export const toc = [
   { id: 'ref-commands', label: '전체 명령어' },
   { id: 'ref-rules', label: 'Core·게임 규칙' },
   { id: 'ref-trouble', label: '문제 해결·백업' },
-  { id: 'ref-testbed', label: '베타 시험장' },
 ];
 
 export const step2Cmds: Cmd[] = [
-  { cmd: '/worldborder center <x> <z>', desc: '월드 경계 중심', role: A },
-  { cmd: '/worldborder set <크기>', desc: '월드 경계 크기', role: A },
-  { cmd: '/setworldspawn <x> <y> <z>', desc: '바닐라 월드 스폰', role: A },
-  { cmd: '/seasonadmin neutralspawn <x> <y> <z>', desc: '이벤트 무소속 스폰 기준', role: A },
+  { cmd: '/worldborder center 0 0', desc: '월드 경계 중심', role: A },
+  { cmd: '/worldborder set 4000', desc: '월드 경계 크기 4000×4000', role: A },
+  { cmd: '/setworldspawn 0 65 0', desc: '바닐라 월드 스폰 (월드 중앙)', role: A },
+  { cmd: '/seasonadmin neutralspawn 0 65 0', desc: '이벤트 무소속 스폰 기준 (월드 중앙, 영토 밖)', role: A },
 ];
 
-export const step3Template: Cmd = { cmd: '/seasonadmin create <id> <이름> <minX> <maxX> <minZ> <maxZ> <chunkX> <chunkZ> <minY> <maxY>', desc: '국가 생성 템플릿 (인자 순서)', role: A };
 export const step3Cmds: Cmd[] = [
-  { cmd: '/seasonadmin create a "A국" 0 127 0 127 0 0 64 70', desc: 'A국 생성 예시', role: A },
-  { cmd: '/seasonadmin create b "B국" 160 287 0 127 10 0 64 70', desc: 'B국 생성 예시', role: A },
-  { cmd: '/seasonadmin create c "C국" 320 447 0 127 20 0 64 70', desc: 'C국 생성 예시', role: A },
+  { cmd: '/seasonadmin create a "A국" -2000 -1001 -2000 -1001 -113 -113 64 70', desc: 'A국 생성 (북서 모서리)', role: A },
+  { cmd: '/seasonadmin create b "B국" 1000 1999 -2000 -1001 112 -113 64 70', desc: 'B국 생성 (북동 모서리)', role: A },
+  { cmd: '/seasonadmin create c "C국" -2000 -1001 1000 1999 -113 112 64 70', desc: 'C국 생성 (남서 모서리)', role: A },
   { cmd: '/war diagnostics', desc: '국가·Core·스폰 진단', role: A },
 ];
 
@@ -191,19 +189,3 @@ export const backupNotes = [
   'HP 설정을 낮출 때는 기존 저장 HP와 충돌할 수 있으므로 백업 후 데이터를 확인한다. Bedrock 이름·UUID 연속성, 메뉴 클릭·Core 공격은 실제 배포 스택에서 확인한다.',
 ];
 
-export const testbed: { title: string; note?: string; cmds: string[] }[] = [
-  { title: '1. 시험장 청크 임시 로드', note: '범위 248청크, 한 번의 256청크 제한 내. 기존 월드에서는 기존 강제 로드 항목을 먼저 확인하고 기존 항목을 해제하지 않는다.', cmds: ['/forceload query', '/forceload add -48 0 447 127'] },
-  { title: '2. 로드 확인', note: '몇 초 기다린 뒤 실행. 출력이 없거나 /fill이 로드 오류를 내면 기다린 후 해당 단계부터 다시 실행한다. 등록만으로 실제 로드를 확정하지 않는다.', cmds: [
-    '/execute if loaded 0 64 0 run say A_start_loaded', '/execute if loaded 127 64 127 run say A_end_loaded',
-    '/execute if loaded 160 64 0 run say B_start_loaded', '/execute if loaded 287 64 127 run say B_end_loaded',
-    '/execute if loaded 320 64 0 run say C_start_loaded', '/execute if loaded 447 64 127 run say C_end_loaded',
-    '/execute if loaded -40 64 0 run say neutral_start_loaded', '/execute if loaded -25 64 15 run say neutral_end_loaded'] },
-  { title: '3. 지면·공간 준비', note: '바닥 Y64, 서 있는 위치 Y65, 기본 오버월드 최고 블록 Y319 기준.', cmds: [
-    '/worldborder center 224 64', '/worldborder set 1024',
-    '/fill 0 64 0 127 64 127 minecraft:stone', '/fill 160 64 0 287 64 127 minecraft:stone', '/fill 320 64 0 447 64 127 minecraft:stone',
-    '/fill -40 64 0 -25 64 15 minecraft:stone', '/fill -40 64 7 447 64 9 minecraft:stone',
-    '/fill 0 65 0 15 71 15 minecraft:air', '/fill 160 65 0 175 71 15 minecraft:air', '/fill 320 65 0 335 71 15 minecraft:air', '/fill -40 65 0 -25 71 15 minecraft:air',
-    '/fill 60 65 60 66 319 66 minecraft:air', '/fill 220 65 60 226 319 66 minecraft:air', '/fill 380 65 60 386 319 66 minecraft:air',
-    '/setworldspawn -32 65 8', '/seasonadmin neutralspawn -32 65 8'] },
-  { title: '4. 임시 로드 해제', note: '기본 셋업의 국가 생성·Core/스폰 확인을 마친 다음, 이번에 추가한 임시 로드만 해제한다. 기존 강제 로드와 겹치면 이번에 추가한 청크를 구분해서 해제한다.', cmds: ['/forceload remove -48 0 447 127'] },
-];
