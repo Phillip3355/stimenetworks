@@ -37,23 +37,29 @@ export const step1Cmds: Cmd[] = [
 ];
 
 export const step2Cmds: Cmd[] = [
-  { cmd: '/worldborder center <x> <z>', desc: '월드 경계 중심', role: A },
-  { cmd: '/worldborder set <크기>', desc: '월드 경계 크기', role: A },
-  { cmd: '/setworldspawn <x> <y> <z>', desc: '바닐라 월드 스폰', role: A },
-  { cmd: '/seasonadmin neutralspawn <x> <y> <z>', desc: '이벤트 중립 스폰 탐색 기준', role: A },
+  { cmd: '/worldborder center 0 0', desc: '월드 경계 중심', role: A },
+  { cmd: '/worldborder set 4000', desc: '월드 경계 4000×4000 (X/Z -2000~1999)', role: A },
+  { cmd: '/setworldspawn 0 65 0', desc: '바닐라 월드 스폰(중앙)', role: A },
+  { cmd: '/seasonadmin neutralspawn 0 65 0', desc: '이벤트 중립 스폰 탐색 기준(중앙, 영토 밖)', role: A },
+];
+export const step2Table = [
+  ['a (북서)', '-2000~-1001', '-2000~-1001', '1000×1000'],
+  ['b (북동)', '1000~1999', '-2000~-1001', '1000×1000'],
+  ['c (남서)', '-2000~-1001', '1000~1999', '1000×1000'],
+  ['중립 스폰', '0', '0', '모든 영토 밖'],
 ];
 
 export const step3Template: Cmd = { cmd: '/seasonadmin create <id> <이름> <minX> <maxX> <minZ> <maxZ> <spawnX> <spawnY> <spawnZ>', desc: '국가 생성 템플릿 (인자 순서)', role: A };
 export const step3Cmds: Cmd[] = [
-  { cmd: '/seasonadmin create a "A국" 0 127 0 127 8 65 8', desc: 'A국 생성 예시', role: A },
-  { cmd: '/seasonadmin create b "B국" 160 287 0 127 168 65 8', desc: 'B국 생성 예시', role: A },
-  { cmd: '/seasonadmin create c "C국" 320 447 0 127 328 65 8', desc: 'C국 생성 예시', role: A },
+  { cmd: '/seasonadmin create a "A국" -2000 -1001 -2000 -1001 -1800 65 -1800', desc: 'A국(북서 모서리) 생성 예시', role: A },
+  { cmd: '/seasonadmin create b "B국" 1000 1999 -2000 -1001 1200 65 -1800', desc: 'B국(북동 모서리) 생성 예시', role: A },
+  { cmd: '/seasonadmin create c "C국" -2000 -1001 1000 1999 -1800 65 1200', desc: 'C국(남서 모서리) 생성 예시', role: A },
   { cmd: '/war diagnostics', desc: '국가·Core·스폰 진단', role: A },
 ];
 export const step3Table = [
-  ['a', '0~127', '0~127', '8, 65, 8', '0, 0'],
-  ['b', '160~287', '0~127', '168, 65, 8', '10, 0'],
-  ['c', '320~447', '0~127', '328, 65, 8', '20, 0'],
+  ['a', '-2000~-1001', '-2000~-1001', '-1800, 65, -1800', '-113, -113'],
+  ['b', '1000~1999', '-2000~-1001', '1200, 65, -1800', '75, -113'],
+  ['c', '-2000~-1001', '1000~1999', '-1800, 65, 1200', '-113, 75'],
 ];
 
 export const step4Cmds: Cmd[] = [
@@ -76,9 +82,9 @@ export const step5Own: Cmd[] = [
   { cmd: '/nation core status', desc: '레벨·HP·좌표·다음 강화 비용', role: M },
 ];
 export const step5Admin: Cmd[] = [
-  { cmd: '/seasonadmin spawn a 8 65 8', desc: 'a국 스폰 지정·수정', role: A },
-  { cmd: '/seasonadmin spawn b 168 65 8', desc: 'b국 스폰 지정·수정', role: A },
-  { cmd: '/seasonadmin spawn c 328 65 8', desc: 'c국 스폰 지정·수정', role: A },
+  { cmd: '/seasonadmin spawn a -1800 65 -1800', desc: 'a국 스폰 지정·수정', role: A },
+  { cmd: '/seasonadmin spawn b 1200 65 -1800', desc: 'b국 스폰 지정·수정', role: A },
+  { cmd: '/seasonadmin spawn c -1800 65 1200', desc: 'c국 스폰 지정·수정', role: A },
 ];
 
 export const step6Cmds: Cmd[] = [

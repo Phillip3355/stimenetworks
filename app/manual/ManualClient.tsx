@@ -6,7 +6,7 @@ import { copyText, hasPlaceholder, joinCommands, resolveCommand, splitPlaceholde
 import {
   backupNotes, checklist, coreLevels, coreRules, lobbyText, migration, patchCards, protectionNotes, protectionRows,
   refAdmin, refAdminNote, refDanger, refPlayers, refPlayersNote, refVanilla, refWar, spawnFallback, spawnFallbackNote,
-  step1Cmds, step2Cmds, step3Cmds, step3Table, step3Template, step4Cmds, step4Verify, step5Admin, step5Leader, step5Own,
+  step1Cmds, step2Cmds, step2Table, step3Cmds, step3Table, step3Template, step4Cmds, step4Verify, step5Admin, step5Leader, step5Own,
   step6Cmds, step7Normal, step7Test, testbed, toc, troubles, type Cmd, type CmdGroup,
 } from './manualData';
 
@@ -135,7 +135,7 @@ export default function ManualClient() {
       <h1>Stime Seasonal War 셋업 매뉴얼</h1>
       <p className={styles.lead}>관리자·셋업 담당자를 위한 설치, 국가 설정, 스폰 지정, 전쟁 운영 안내</p>
       <ul className={styles.facts} aria-label="환경 정보">
-        {['2026-10-16 규칙 기준', 'Minecraft 26.3', 'Fabric', 'Java 25', '서버 전용'].map(f => <li key={f}>{f}</li>)}
+        {['2026-10-16 규칙 기준', 'Minecraft 26.3', 'Fabric', 'Java 25', '서버 전용', '월드 4000×4000', '국가 1000×1000'].map(f => <li key={f}>{f}</li>)}
       </ul>
       <p className={styles.small}>이 모드는 기존 길드·경제 모드와 별개입니다. 이 페이지의 복사 버튼은 클립보드에 복사만 하며, 서버에서 명령을 실행하지 않습니다. Minecraft 채팅에서는 명령을 한 줄씩 실행하세요. 이 문서 개정은 새로운 접속 시험 결과가 아니며, 실제 Bedrock/Geyser 접속은 별도로 확인해야 합니다.</p>
       <nav className={styles.toc} aria-label="매뉴얼 목차">
@@ -163,12 +163,18 @@ export default function ManualClient() {
 
     <Step id="step-2" n={2} title="지형·중립 로비 준비" goal="국가 영토, 국가 스폰 주변, 중립 스폰(로비)의 지형을 준비한다." verify="영토 좌표표가 있고 중립 스폰이 모든 국가 영토 밖이며, 스폰 지점에 바닥과 서 있을 빈 공간이 있다.">
       <ul className={styles.bullets}>
+        <li>월드 경계는 중심 <code>0 0</code>, 크기 <code>4000</code> → X/Z <b>-2000 ~ 1999</b>. 국가 영토는 각각 <b>1000×1000</b> 블록이며 서로 겹치지 않는다.</li>
         <li>지형·건물은 관리자가 직접 만든다. 이 모드는 월드나 기지를 자동 건설하지 않는다.</li>
         <li>안전지대는 없다. 스폰은 <b>블록 한 개</b>를 지정하며, 그 블록의 16×16 청크 전체(모든 높이)가 스폰 청크다. 청크 좌표는 <code>floor(블록 좌표 / 16)</code>이고 음수는 내림이다.</li>
         <li>스폰 청크 전체가 국가 영토 안에 있어야 한다. 발판은 자동 생성되지 않는다.</li>
         <li><b>중립 스폰은 모든 국가 영토 밖</b>에 둔다. <code>setworldspawn</code>(바닐라)과 <code>neutralspawn</code>(이벤트 무소속)은 별개다. 무소속 로비는 이 중립 스폰 주변이다.</li>
         <li>스폰 청크 지형이 일부 훼손돼도 대체 착지를 시도하지만, 주변에 단단한 바닥과 빈 공간을 남겨 두는 편이 안전하다.</li>
       </ul>
+      <h3 className={styles.sub}>3개국 배치 (모서리 3곳, 남동쪽은 비워 둠)</h3>
+      <div className={styles.tableWrap}><table className={styles.table}>
+        <thead><tr><th>ID</th><th>영토 X</th><th>영토 Z</th><th>크기</th></tr></thead>
+        <tbody>{step2Table.map(r => <tr key={r[0]}>{r.map((c, i) => <td key={i}>{c}</td>)}</tr>)}</tbody>
+      </table></div>
       <CmdList names={names} cmds={step2Cmds} />
     </Step>
 
@@ -176,7 +182,7 @@ export default function ManualClient() {
       <ul className={styles.bullets}>
         <li>인자는 9개: <code>id 이름 minX maxX minZ maxZ spawnX spawnY spawnZ</code>. 영토와 스폰 모두 <b>블록 좌표</b>이며 min/max 양끝 포함이다.</li>
         <li>ID는 영문 소문자·숫자·<code>_</code>·<code>-</code> 1~32자. 공백이 있는 이름은 따옴표로 감싼다.</li>
-        <li><b>Core와 스폰 간격 규칙</b>: 모든 ACTIVE 국가의 스폰 청크와 모든 ACTIVE Core 몸체(3×3이 닿는 청크) 사이에 온전한 청크 하나 이상을 띄운다. 예시 영토 하나가 128×128이어도 이 규칙은 같다.</li>
+        <li><b>Core와 스폰 간격 규칙</b>: 모든 ACTIVE 국가의 스폰 청크와 모든 ACTIVE Core 몸체(3×3이 닿는 청크) 사이에 온전한 청크 하나 이상을 띄운다. 예시 Core는 영토 중앙 근처에 자동 배치되므로 모서리 쪽 스폰과 충분히 떨어진다.</li>
         <li><code>Core 생성 대기</code>가 나오면 지면·하늘·공간·간격을 정리한 뒤 <code>/seasonadmin respawncore &lt;id&gt;</code> 후 진단한다.</li>
       </ul>
       <CmdList names={names} cmds={[step3Template]} copyAll={false} />
@@ -297,7 +303,7 @@ export default function ManualClient() {
     </Fold>
 
     <Fold id="ref-testbed" title="선택: 새 베타 월드 시험장" hint="새 베타 월드 전용 — /fill이 지정 지형을 덮어씁니다">
-      <p className={styles.warnStrong}>새 베타 월드 전용 — /fill이 지정 지형을 덮어씁니다. 운영 월드에서는 실행하지 마세요.</p>
+      <p className={styles.warnStrong}>새 베타 월드 전용 — /fill이 지정 지형을 덮어씁니다. 운영 월드에서는 실행하지 마세요. 이 시험장은 128×128 소형 국가로 빠르게 확인하기 위한 별도 월드이며, 운영 기준(월드 4000×4000, 국가 1000×1000)이 아닙니다.</p>
       {testbed.map(t => <div key={t.title} className={styles.group}>
         <h4>{t.title}</h4>{t.note && <p className={styles.note}>{t.note}</p>}
         <CmdList names={names} cmds={t.cmds.map(cmd => ({ cmd, desc: '시험장', role: '관리자' as const }))} allLabel="이 블록 명령어 모두 복사" />
