@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 import styles from '../styles/manual.module.css';
 import { copyText, hasPlaceholder, joinCommands, resolveCommand, splitPlaceholders } from '../shared/manualCommands.mjs';
 import {
-  backupNotes, checklist, coreLevels, coreRules, lobbyText, migration, patchCards, protectionNotes, protectionRows,
+  backupNotes, checklist, coreSite, finalCheck, openCmds, openNotes, preopenCmds, preopenNotes, preopenTable, coreLevels, coreRules, lobbyText, migration, patchCards, protectionNotes, protectionRows,
   refAdmin, refAdminNote, refDanger, refPlayers, refPlayersNote, refVanilla, refWar, spawnFallback, spawnFallbackNote,
   step1Cmds, step2Cmds, step2Table, step3Cmds, step3Table, step3Template, step4Cmds, step4Verify, step5Admin, step5Leader, step5Own,
   step6Cmds, step7Normal, step7Test, testbed, toc, troubles, type Cmd, type CmdGroup,
@@ -135,7 +135,7 @@ export default function ManualClient() {
       <h1>Stime Seasonal War 셋업 매뉴얼</h1>
       <p className={styles.lead}>관리자·셋업 담당자를 위한 설치, 국가 설정, 스폰 지정, 전쟁 운영 안내</p>
       <ul className={styles.facts} aria-label="환경 정보">
-        {['2026-10-16 규칙 기준', 'Minecraft 26.3', 'Fabric', 'Java 25', '서버 전용', '월드 4000×4000', '국가 1000×1000'].map(f => <li key={f}>{f}</li>)}
+        {['2026-10-18 기준', 'Minecraft 26.3', 'Fabric', 'Java 25', '서버 전용', '월드 4000×4000', '국가 1000×1000'].map(f => <li key={f}>{f}</li>)}
       </ul>
       <p className={styles.small}>이 모드는 기존 길드·경제 모드와 별개입니다. 이 페이지의 복사 버튼은 클립보드에 복사만 하며, 서버에서 명령을 실행하지 않습니다. Minecraft 채팅에서는 명령을 한 줄씩 실행하세요. 이 문서 개정은 새로운 접속 시험 결과가 아니며, 실제 Bedrock/Geyser 접속은 별도로 확인해야 합니다.</p>
       <nav className={styles.toc} aria-label="매뉴얼 목차">
@@ -168,7 +168,9 @@ export default function ManualClient() {
         <li>안전지대는 없다. 스폰은 <b>블록 한 개</b>를 지정하며, 그 블록의 16×16 청크 전체(모든 높이)가 스폰 청크다. 청크 좌표는 <code>floor(블록 좌표 / 16)</code>이고 음수는 내림이다.</li>
         <li>스폰 청크 전체가 국가 영토 안에 있어야 한다. 발판은 자동 생성되지 않는다.</li>
         <li><b>중립 스폰은 모든 국가 영토 밖</b>에 둔다. <code>setworldspawn</code>(바닐라)과 <code>neutralspawn</code>(이벤트 무소속)은 별개다. 무소속 로비는 이 중립 스폰 주변이다.</li>
-        <li>스폰 청크 지형이 일부 훼손돼도 대체 착지를 시도하지만, 주변에 단단한 바닥과 빈 공간을 남겨 두는 편이 안전하다.</li>
+        <li>스폰은 지정 블록 고정 착지가 아니다. <b>스폰 청크에서 가장 높은 설 수 있는 지표면</b>을 먼저 찾으므로, 높은 지붕이 있으면 지붕 위에 스폰될 수 있다. 지하를 막는 대신 원하는 지표면 착지 공간을 확보한다.</li>
+        <li>관리자 명령은 OP/콘솔로 실행하며 콘솔에서는 맨 앞 <code>/</code>를 뺀다. 처음 셋업은 오버월드에서 통일한다. 모드가 월드를 생성하거나 시즌을 초기화하지 않는다.</li>
+        <li>운영 월드에서 베타 시험장의 <code>/fill</code>·<code>/worldborder</code> 예시를 그대로 실행하지 마세요. 실제 건축물과 운영 경계가 바뀝니다.</li>
       </ul>
       <h3 className={styles.sub}>3개국 배치 (모서리 3곳, 남동쪽은 비워 둠)</h3>
       <div className={styles.tableWrap}><table className={styles.table}>
@@ -183,9 +185,11 @@ export default function ManualClient() {
         <li>인자는 9개: <code>id 이름 minX maxX minZ maxZ spawnX spawnY spawnZ</code>. 영토와 스폰 모두 <b>블록 좌표</b>이며 min/max 양끝 포함이다.</li>
         <li>ID는 영문 소문자·숫자·<code>_</code>·<code>-</code> 1~32자. 공백이 있는 이름은 따옴표로 감싼다.</li>
         <li><b>Core와 스폰 간격 규칙</b>: 모든 ACTIVE 국가의 스폰 청크와 모든 ACTIVE Core 몸체(3×3이 닿는 청크) 사이에 온전한 청크 하나 이상을 띄운다. 예시 Core는 영토 중앙 근처에 자동 배치되므로 모서리 쪽 스폰과 충분히 떨어진다.</li>
+        <li>활성 국가의 Core는 영토 중앙 주변에서 자동 탐색한다. 생성 실패 메시지가 나도 국가 등록은 완료됐을 수 있으니 같은 ID로 재생성하지 말고 진단부터 확인한다.</li>
         <li><code>Core 생성 대기</code>가 나오면 지면·하늘·공간·간격을 정리한 뒤 <code>/seasonadmin respawncore &lt;id&gt;</code> 후 진단한다.</li>
       </ul>
       <CmdList names={names} cmds={[step3Template]} copyAll={false} />
+      <div className={styles.infoBox}><strong>Core 자리 조건</strong><ul>{coreSite.map(n => <li key={n}>{n}</li>)}</ul></div>
       <h3 className={styles.sub}>3개국 예시</h3>
       <p className={styles.warn}>예시 좌표입니다. 실제 지형에 맞게 바꾸되 영토가 겹치지 않는지, 스폰 청크가 영토 안인지 확인하세요.</p>
       <div className={styles.tableWrap}><table className={styles.table}>
@@ -195,7 +199,16 @@ export default function ManualClient() {
       <CmdList names={names} cmds={step3Cmds} />
     </Step>
 
-    <Step id="step-4" n={4} title="초기 플레이어 배정" goal="관리자가 첫 인원을 국가에 나눈다." verify="/seasonadmin player, /seasonadmin nation 으로 배정과 인원을 확인했다.">
+    <Step id="step-4" n={4} title="초기 배정 — 사전 등록(PREOPEN) 또는 관리자 배정" goal="외부 투표로 정해진 참가자가 국가를 고르게 하거나, 관리자가 직접 나눈다." verify="/seasonadmin player, /seasonadmin nation 으로 배정과 인원을 확인했다.">
+      <h3 className={styles.sub}>방식 A: 사전 국가 등록 (PREOPEN)</h3>
+      <p className={styles.note}>외부 투표로 국가가 정해진 참가자가 직접 국가를 선택하는 방식입니다. NORMAL 상태이고 준비/전쟁 예약이 없어야 켤 수 있습니다.</p>
+      <CmdList names={names} cmds={preopenCmds} />
+      <div className={styles.tableWrap}><table className={styles.table}>
+        <thead><tr><th>대상</th><th>PREOPEN 동작</th></tr></thead>
+        <tbody>{preopenTable.map(r => <tr key={r[0]}><td>{r[0]}</td><td>{r[1]}</td></tr>)}</tbody>
+      </table></div>
+      <ul className={styles.bullets}>{preopenNotes.map(n => <li key={n}>{n}</li>)}</ul>
+      <h3 className={styles.sub}>방식 B: 관리자 직접 배정</h3>
       {nameInputs}
       <ul className={styles.bullets}>
         <li>일반 무소속은 중립 스폰 주변 로비에 머문다. 가입하면 잠금이 풀리고, <b>WAR 중에도 가입</b>할 수 있다(SEASON_END만 불가). WAR 중 가입은 본국으로 이동하며 스폰 보호를 받는다.</li>
@@ -231,9 +244,14 @@ export default function ManualClient() {
       <CmdList names={names} cmds={step6Cmds} />
     </Step>
 
-    <Step id="step-7" n={7} title="준비·전쟁 예약" goal="준비 시작과 전쟁 시작을 각각 예약한다." verify="/war status 의 예약 시각이 의도와 같다.">
+    <Step id="step-7" n={7} title="정식 오픈" goal="사전 등록을 끝내고 일반 운영으로 전환한다." verify="/war status 가 정상이고 /war diagnostics 에 오류가 없다. (PREOPEN을 쓰지 않았다면 이 단계는 건너뛴다.)">
+      <ul className={styles.bullets}>{openNotes.map(n => <li key={n}>{n}</li>)}</ul>
+      <CmdList names={names} cmds={openCmds} />
+    </Step>
+
+    <Step id="step-8" n={8} title="준비·전쟁 예약" goal="준비 시작과 전쟁 시작을 각각 예약한다." verify="/war status 의 예약 시각이 의도와 같다.">
       <ul className={styles.bullets}>
-        <li>두 시간 모두 <b>명령 실행 시점부터</b>의 상대 시간이다. 준비가 전쟁보다 앞서야 하며 재시작해도 유지된다.</li>
+        <li>두 시간 모두 <b>명령 실행 시점부터</b>의 상대 시간이며 실제 시각으로 저장되어 재시작해도 연장되지 않는다(기본 표시 시간대 Asia/Seoul). 준비가 전쟁보다 앞서야 하며 재시작해도 유지된다.</li>
         <li>전쟁 시작 검증에서 Core 존재·스폰·간격이 확인된다. 실패하면 <code>/war diagnostics</code>로 원인을 고친 뒤 다시 예약한다.</li>
         <li><b>PREPARATION</b>: 타국 영토 진입 금지(지하·상공 포함). <b>WAR</b>: 국가원 본국 이동, Core 이전·강화·스폰 지정 잠금, 적 Core 전투 시작. 로비 가입은 계속 가능.</li>
         <li><b>Core 첫 파괴로 한 국가만 탈락하며 그 WAR는 즉시 종료.</b> 2개국 이상 남으면 NORMAL, 하나 남으면 SEASON_END.</li>
@@ -300,6 +318,8 @@ export default function ManualClient() {
     <Fold id="ref-checklist" title="개장 전 체크리스트" hint="실제 접속으로 확인할 항목">
       <p className={styles.note}>이 목록은 확인할 항목이며, 통과했다는 기록이 아닙니다. Java·Bedrock 접속은 담당자가 각각 직접 확인하세요.</p>
       <ul className={styles.bullets}>{checklist.map(n => <li key={n}>{n}</li>)}</ul>
+      <h3 className={styles.sub}>오픈 전 최종 확인 — 한 번만</h3>
+      <ul className={styles.bullets}>{finalCheck.map(n => <li key={n}>{n}</li>)}</ul>
     </Fold>
 
     <Fold id="ref-testbed" title="선택: 새 베타 월드 시험장" hint="새 베타 월드 전용 — /fill이 지정 지형을 덮어씁니다">

@@ -12,10 +12,11 @@ export const toc = [
   { id: 'step-1', label: '1. 설치' },
   { id: 'step-2', label: '2. 지형·로비' },
   { id: 'step-3', label: '3. 국가 생성' },
-  { id: 'step-4', label: '4. 초기 배정' },
+  { id: 'step-4', label: '4. 배정·PREOPEN' },
   { id: 'step-5', label: '5. 국가장·스폰' },
   { id: 'step-6', label: '6. 점검·백업' },
-  { id: 'step-7', label: '7. 전쟁 예약' },
+  { id: 'step-7', label: '7. 정식 오픈' },
+  { id: 'step-8', label: '8. 전쟁 예약' },
   { id: 'ref-gimmick', label: '스폰·로비 기믹' },
   { id: 'ref-commands', label: '전체 명령어' },
   { id: 'ref-rules', label: 'Core·승패' },
@@ -116,16 +117,16 @@ export const protectionNotes = [
   '실제로 도착한 청크를 기준으로 하며 같은 청크 안에서는 높이가 달라져도 유지된다. 청크 밖이나 다른 차원으로 나가면 종료되고, 돌아와도 다시 생기지 않는다.',
   '개체 근접 공격 시도, 또는 피해 원인의 공격자가 본인으로 식별된 화살·폭발 등의 공격으로 즉시 종료한다. 피해를 받는 것, 자기 자신에게 가한 피해, 길들인 동물의 공격은 본인의 보호를 해제하지 않는다.',
   '일반 피해를 막는 기능이다. /kill·공허 같은 무적 무시 피해는 예외이며, 폭발 밀쳐내기나 비피해 상태 효과까지 막지는 않는다.',
+  '일반 재접속으로 보호를 반복해서 받을 수 없다. 스폰 청크 상시 무적이 아니다.',
   '남은 시간·해제 이유는 액션바로 안내한다. 재시작 후 남은 보호 시간을 복원하지 않는다.',
   '건물·상자·다른 사람을 보호하지 않는다. 별도 보호 켜기/끄기 명령은 없다.',
 ];
 export const spawnFallback = [
-  '지정 블록·지정 높이 주변부터 스폰 청크의 ±16 Y 범위.',
-  '스폰 청크의 나머지 모든 높이.',
-  '스폰 청크에서 3청크 범위의 자국 영토 지표면.',
-  '전부 실패하면 중립 스폰으로 대피하고, 필요한 본국 귀환은 재시도.',
+  '먼저 스폰 청크에서 가장 높은 설 수 있는 지표면을 찾는다. 높이가 같으면 지정 블록과 가까운 곳을 우선한다. 높은 지붕이 있으면 지붕 위에 스폰될 수 있다.',
+  '청크가 훼손되면 자국 주변 지표면 → 지정 높이 근처 → 청크의 나머지 높이 순서로 탐색한다.',
+  '끝내 실패하면 중립 로비로 대피하고, 필요한 본국 귀환은 재시도한다.',
 ];
-export const spawnFallbackNote = '발판을 자동 생성하지 않으며 매번 지정 좌표에 정확히 서는 것도 아니다. 보호를 부여하는 필수 귀환 중 중립 스폰으로 대피해도 실제 도착 청크에서 개인 스폰 보호를 받는다. WAR에서 미완료 귀환은 해당 WAR 동안 재시도하고, 실패 재시도 간격은 최대 약 30초까지 늘어난다. 다른 상태의 필수 귀환은 600틱 후 실패를 안내할 수 있다. 중립 대피를 본국 귀환 완료로 설명하지 않는다.';
+export const spawnFallbackNote = '스폰은 지정 블록 고정 착지가 아니며 발판을 자동 생성하지 않는다. 지하를 막는 대신 원하는 지표면 착지 공간을 확보하고, 진단 후 일반 계정으로 실제 착지를 한 번 확인한다. 보호를 부여하는 필수 귀환 중 중립 스폰으로 대피해도 실제 도착 청크에서 개인 스폰 보호를 받는다. WAR에서 미완료 귀환은 해당 WAR 동안 재시도하고 실패 재시도 간격은 최대 약 30초까지 늘어난다. 중립 대피를 본국 귀환 완료로 설명하지 않는다.';
 export const lobbyText = 'SEASON_END 전 무소속 비관리자는 중립 스폰 주변에서 국가를 선택한다. 잠긴 동안 받는 피해도 차단되며, 이는 200틱 개인 스폰 보호와 별개다. 움직임·공격·사용 제한은 플레이어 상태에 적용하며 로비 건물을 보호하는 구역 기능이 아니다. OP와 SEASON_END는 로비 잠금 예외다. 가입·배정 해제·탈락·밴 해제 이후 소속을 확인한다.';
 
 export const refAdmin: CmdGroup[] = [{
@@ -143,7 +144,7 @@ export const refAdmin: CmdGroup[] = [{
     { cmd: '/seasonadmin reset <대상>', desc: '소속·국가장 해제; 온라인은 중립 이동·로비 대상', role: A, danger: '결과: 소속과 국가장 직위가 사라집니다. 서버 밴은 해제되지 않습니다.' },
     { cmd: '/seasonadmin player <대상>', desc: '소속·역할·가입 가능 상태 조회', role: A },
     { cmd: '/seasonadmin nation <id>', desc: '국가·영토·국가 스폰 좌표·Core 상세 조회', role: A },
-    { cmd: '/seasonadmin respawncore <id>', desc: 'ACTIVE Core 개체 복구; 저장 HP·레벨·좌표 유지', role: A },
+    { cmd: '/seasonadmin respawncore <id>', desc: 'Core 엔티티 복구; HP·강화·좌표 유지. /kill이나 국가 재생성으로 복구 금지', role: A },
     { cmd: '/seasonadmin tpcore <id>', desc: '활성 Core 저장 위치로 이동; 플레이어 전용', role: A },
     { cmd: '/seasonadmin neutralspawn', desc: '내 위치를 중립 스폰 탐색 기준으로 설정; 플레이어 전용', role: A },
     { cmd: '/seasonadmin neutralspawn <x> <y> <z>', desc: '중립 기준 좌표 설정; ACTIVE 영토 밖', role: A },
@@ -156,19 +157,25 @@ export const refAdminNote = [
   '스폰·영토 좌표는 정수 블록 좌표, 중립 좌표는 소수 사용 가능.',
   '생성·중립 좌표는 실행 차원 기준, 좌표형 국가 스폰은 해당 국가 차원 기준. 일반 서버 콘솔의 생성은 기본 오버월드.',
   '생성 이름은 공백 포함 시 따옴표로 감싸고, rename은 뒤의 나머지 문자열을 그대로 이름으로 쓴다.',
+  '좌표 입력 명령의 차원 규칙은 명령별로 다르다. 처음 셋업은 오버월드에서 통일한다. 영토·스폰 수정은 기존 국가의 차원을 사용한다.',
+  '국가장 지정은 먼저 해당 국가 소속이어야 하며, 온라인 이름 또는 전체 서버 UUID를 쓴다. 공백이 있는 이름은 "*Bedrock Name"처럼 따옴표로 감싼다.',
+  '관리자 setcore 명령은 없다. 원하는 위치에 Core를 두려면 국가장이 그 위치에서 /nation core relocate를 실행한다.',
   '복구는 지형 수리·Core 최대 HP 회복·탈락국 부활 기능이 아니다.',
 ];
 
 export const refWar: CmdGroup[] = [{
   title: '관리자: 전쟁',
-  note: '기간은 양수 한 값과 단위 s/m/h/d: 30s, 5m, 2h, 1d.',
+  note: '기간은 양수 한 값과 단위 s/m/h/d: 30s, 5m, 2h, 1d. 예약은 실제 시각으로 저장되어 재시작해도 연장되지 않고, 기본 표시 시간대는 Asia/Seoul. PREOPEN 중에는 준비/전쟁 시작·예약·상태 강제 변경이 차단된다.',
   cmds: [
-    { cmd: '/war prepare', desc: 'NORMAL에서 준비 즉시 시작', role: A },
+    { cmd: '/war preopen on', desc: 'NORMAL·예약 없음일 때 사전 등록 켜기', role: A },
+    { cmd: '/war preopen off', desc: '정식 오픈; 소속·국가장·Core 유지, 등록 참가자 재접속 허용', role: A },
+    { cmd: '/war preopen status', desc: '사전 등록 상태 조회', role: A },
+    { cmd: '/war prepare', desc: 'NORMAL에서 준비 즉시 시작; 타국 활성 영토 진입 차단·퇴거', role: A },
     { cmd: '/war prepare <기간>', desc: '지금부터 해당 기간 뒤 준비 예약; NORMAL에서 설정', role: A },
     { cmd: '/war start', desc: 'NORMAL/PREPARATION에서 Core·스폰·간격 검사 후 WAR 즉시 시작', role: A },
     { cmd: '/war start <기간>', desc: 'NORMAL/PREPARATION에서 지금부터 해당 기간 뒤 WAR 예약', role: A },
-    { cmd: '/war cancel', desc: '예약만 취소, 현재 단계 유지', role: A, danger: '결과: 예약만 지워지고 현재 단계는 그대로 유지됩니다.' },
-    { cmd: '/war end', desc: 'NORMAL 복귀·생존 Core 회복·예약 취소; SEASON_END에서는 거절', role: A, danger: '결과: NORMAL로 돌아가고 예약이 취소되며 생존 Core가 회복됩니다.' },
+    { cmd: '/war cancel', desc: '준비·전쟁 예약을 모두 취소, 현재 단계 유지', role: A, danger: '결과: 두 예약이 모두 지워지고 현재 단계는 그대로 유지됩니다.' },
+    { cmd: '/war end', desc: '강제 NORMAL 전환·예약 취소·생존 Core 회복; PREOPEN/SEASON_END에서는 거절', role: A, danger: '결과: NORMAL로 돌아가고 예약이 취소되며 생존 Core가 회복됩니다.' },
     { cmd: '/war diagnostics', desc: 'Core 배치·스폰·중립 로비·인원·국가장·예약 진단', role: A },
   ],
 }];
@@ -177,8 +184,8 @@ export const refDanger: CmdGroup = {
   title: '고급·위험 명령 (추방·탈락·강제 상태 전환)',
   note: '시즌 리셋 기능이 아닙니다. 결과를 확인하고 백업이 있을 때만 사용하세요.',
   cmds: [
-    { cmd: '/seasonadmin deactivate <id>', desc: '국가 영구 탈락; 같은 시즌 재활성화 불가', role: A, danger: '결과: 해당 국가는 이번 시즌에서 영구 탈락하며 되돌릴 수 없습니다.' },
-    { cmd: '/nation expel <대상> confirm', desc: '자국 다른 국가원 영구 서버 UUID 밴 + 소속 제거', role: L, danger: '결과: 대상이 서버에서 영구 밴되고 소속도 제거됩니다. 국가에서만 내보내는 명령이 아닙니다.' },
+    { cmd: '/seasonadmin deactivate <id>', desc: '되돌릴 수 없는 수동 탈락; 일반 장애 복구에 사용 금지', role: A, danger: '결과: 해당 국가는 이번 시즌에서 영구 탈락하며 되돌릴 수 없습니다.' },
+    { cmd: '/nation expel <대상> confirm', desc: '경고 후 같은 연결에서 약 30초 안에 확인해야 하는 서버 영구 UUID 밴 + 소속 제거', role: L, danger: '결과: 대상이 서버에서 영구 밴되고 소속도 제거됩니다. 국가에서만 내보내는 명령이 아닙니다.' },
     { cmd: '/war state NORMAL', desc: '명시적 NORMAL 전환; 탈락국 복구 아님', role: A, danger: '결과: 단계만 NORMAL로 바뀌며 탈락한 국가는 복구되지 않습니다.' },
     { cmd: '/war state PREPARATION', desc: '일반 준비 시작 규칙으로 전환', role: A, danger: '결과: 준비 단계가 시작되어 타국 영토 진입 제한이 적용됩니다.' },
     { cmd: '/war state WAR', desc: '일반 WAR 시작 검증을 거쳐 전환', role: A, danger: '결과: 검증 통과 시 전쟁이 시작되어 Core 전투가 열립니다.' },
@@ -200,7 +207,7 @@ export const refPlayers: Cmd[] = [
   { cmd: '/nation core relocate', desc: '현재 위치로 Core 이전', role: L },
   { cmd: '/nation core upgrade', desc: '실제 다이아몬드로 다음 단계 즉시 결제', role: L },
   { cmd: '/nation expel', desc: '추방 메뉴', role: L },
-  { cmd: '/nation expel <대상>', desc: '경고만 표시; 아직 추방하지 않음', role: L },
+  { cmd: '/nation expel <대상>', desc: '영구 밴 경고만 표시; 아직 추방하지 않음', role: L },
 ];
 export const refPlayersNote = '스폰 지정·이전·강화는 NORMAL/PREPARATION만 가능합니다. 추방은 WAR/SEASON_END에도 가능하고 자기 자신·타국원은 불가합니다. /nation join <id>와 /nation core upgrade 명령은 즉시 처리하며 GUI는 확인을 거칩니다. 추방 확정 명령은 위 "고급·위험 명령"에 있습니다. 관리자 /pardon 후 복귀해도 소속은 무소속이며 인벤토리·발전과제는 삭제되지 않습니다.';
 
@@ -252,6 +259,8 @@ export const troubles = [
   ['전쟁 시작 실패', '/war diagnostics로 Core 존재·배치·간격·국가 스폰 확인. 중립 로비도 운영상 별도 점검'],
   ['예약 시간이 지났는데 WAR 아님', '/war status와 로그 확인. 검증 실패로 취소됐다면 수리 후 다시 예약. 저장·런타임 오류는 재시도될 수 있음'],
   ['저장됐지만 후속 실패 메시지', '조회로 현재 저장 상태부터 확인. 생성·결제 무작정 반복 금지'],
+  ['PREOPEN 중 접속이 끊김/재접속 불가', '정상 동작. 국가 선택 후 퇴장하고 /war preopen off 전까지 재접속이 제한된다. 관리자는 예외'],
+  ['정식 오픈 후 가입 거절', '활성 국가 인원 차이가 2 이상이 되는 가입은 거절. 관리자 assign으로 조정'],
   ['추방 후 접속 불가', '관리자 /pardon <이름>. reset은 밴 해제 명령이 아님'],
   ['탈락국 복구를 원함', '동일 시즌 재활성화 불가. 사전 백업 복원 또는 새 시즌 데이터 준비'],
 ];
@@ -293,4 +302,50 @@ export const testbed: { title: string; note?: string; cmds: string[] }[] = [
     '/fill 60 65 60 66 319 66 minecraft:air', '/fill 220 65 60 226 319 66 minecraft:air', '/fill 380 65 60 386 319 66 minecraft:air',
     '/setworldspawn -32 65 8', '/seasonadmin neutralspawn -32 65 8'] },
   { title: '4. 임시 로드 해제', note: '국가 생성·Core·스폰 점검을 마친 후 이번에 추가한 임시 로드만 해제합니다. 기존 강제 로드가 있던 월드라면 겹치는 기존 청크를 해제하지 않도록 구분하세요.', cmds: ['/forceload remove -48 0 447 127'] },
+];
+
+export const preopenCmds: Cmd[] = [
+  { cmd: '/war status', desc: 'NORMAL이고 준비/전쟁 예약이 없는지 확인', role: P },
+  { cmd: '/war preopen on', desc: '사전 국가 등록 켜기', role: A },
+  { cmd: '/war preopen status', desc: '사전 등록 상태 조회', role: A },
+];
+export const preopenTable = [
+  ['무국가 일반 참가자', '로비 고정, 국가 선택만 가능. 이동·전투·블록 조작·일반 아이템 조작 제한'],
+  ['국가 선택 완료', '소속 저장 후 접속 종료. PREOPEN 종료 전까지 재접속 제한'],
+  ['이미 국가가 있는 일반 참가자', '모드 활성화 시 접속 종료, 이후 접속 제한'],
+  ['관리자', '등록 접속 제한과 로비 잠금 예외'],
+];
+export const preopenNotes = [
+  'PREOPEN에서만 가입 인원 균형 제한이 해제된다. 잘못 고른 국가를 자동 판별하거나 외부 투표 명단과 대조하지 않는다.',
+  '접속 종료는 밴이 아니며 종료 안내에 선택한 국가가 표시된다.',
+  '등록 실수 수정: /seasonadmin reset <대상> 후 다시 선택하게 하거나 /seasonadmin assign <대상> <국가>로 배정한다.',
+  '전환 전 참가자에게 열린 상자와 커서 아이템을 정리하도록 안내한다. 반환 아이템이 인벤토리에 안 들어가면 소유자 전용·무기한 바닥 드롭이 되며, 불·용암·폭발·호퍼·외부 아이템 정리 모드까지 보호되지는 않는다.',
+];
+export const openCmds: Cmd[] = [
+  { cmd: '/war preopen off', desc: '정식 오픈 (사전 등록 종료)', role: A },
+  { cmd: '/war status', desc: '단계 확인', role: P },
+  { cmd: '/war diagnostics', desc: '오픈 직후 종합 진단', role: A },
+];
+export const openNotes = [
+  '기존 소속·국가장·Core·강화는 유지되고, 등록 참가자는 다시 접속할 수 있다.',
+  '일반 신규 가입은 가입 후 활성 국가의 최대 인원 − 최소 인원이 2 미만이어야 한다. 오프라인 멤버도 포함한다.',
+  'PREOPEN에서 인원이 크게 벌어졌다면 오픈 후 가장 작은 국가 가입도 거절될 수 있다. 외부 명단을 기준으로 관리자 강제 배정으로 맞춘다. 모드가 자동 재분배하지 않는다.',
+  '무국가 일반 참가자는 계속 로비에 고정된다. 가입은 SEASON_END 외 모든 단계에서 가능하고, WAR 가입자는 자국 스폰으로 이동한다.',
+  '안전구역은 없다. 스폰 청크도 출입·건축·파괴·약탈·전투가 가능하며, PREPARATION의 타국 영토 진입 제한만 별도로 적용된다.',
+];
+export const coreSite = [
+  '자국 영토 안, 영토·월드 경계에서 여유를 둔다. 자동 탐색은 영토 중앙 반경 32블록이다.',
+  '3×3×3 몸체 공간이 비어 있어야 한다.',
+  '중심 한 칸의 몸체 위(Y+3)부터 하늘까지 열려 있어야 한다. 청크 전체나 주변 아홉 열의 상공을 비울 필요는 없다.',
+  '중심 아래 블록은 액체·위험 블록이 아닌, 위쪽 면 전체를 지지하는 바닥이어야 한다(아랫반블록 불가).',
+  '아홉 칸의 바닥에 베드락이 없어야 한다.',
+  '모든 활성 국가의 스폰 청크와 Core 몸체가 닿는 모든 청크 사이에 최소 한 청크가 있어야 한다. 청크 좌표 가로·세로 차이 중 큰 값이 2 이상.',
+  '생성 실패 메시지가 나도 국가 등록은 완료됐을 수 있다. 같은 ID로 재생성하지 말고 진단부터 확인한다.',
+];
+export const finalCheck = [
+  '일반 계정으로 국가 선택·퇴장 → PREOPEN off 후 재접속.',
+  '세 국가 Core 존재·HP·배치 검사와 실제 스폰 착지.',
+  '관리자 두 명이 예약을 바꾼 뒤 오래된 확인창 실행이 거절되는지.',
+  'Java와 Bedrock 각각 메뉴·Core 타격·리스폰·귀환 보호.',
+  '전쟁 동접 부하/TPS는 별도 실측. 자동 테스트 통과 수가 수용 인원을 증명하지 않는다.',
 ];
